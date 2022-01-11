@@ -118,3 +118,9 @@
 ## commit 규칙
 
 220111 || what_how
+
+
+
+## ERD
+
+![tt](README.assets/tt.png)
