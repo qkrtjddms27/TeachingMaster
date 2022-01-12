@@ -123,4 +123,15 @@
 
 ## ERD
 
-![tt](README.assets/tt.png)
+![tt2 (1)](README.assets/tt2 (1).png)
+
+
+
+### 스토리보드
+
+---
+
+![ㅅㅌㄹ](README.assets/ㅅㅌㄹ.png)
+
+[스토리보드링크](https://www.figma.com/file/COFtDlmHGiKRHsNe8TZvWh/%E3%85%85%E3%85%8C%E3%84%B9?node-id=0%3A1)
+
