@@ -135,3 +135,12 @@
 
 [스토리보드링크](https://www.figma.com/file/COFtDlmHGiKRHsNe8TZvWh/%E3%85%85%E3%85%8C%E3%84%B9?node-id=0%3A1)
 
+
+
+### 와이어 프레임
+
+---
+
+![와이어프레임_web](C:\Users\SSAFY\Desktop\싸피_공통_플젝\S06P11E107\README.assets\와이어프레임_web.PNG)
+
+![와이어프레임_app](C:\Users\SSAFY\Desktop\싸피_공통_플젝\S06P11E107\README.assets\와이어프레임_app.PNG)
