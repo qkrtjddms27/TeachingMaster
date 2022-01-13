@@ -123,7 +123,7 @@
 
 ## ERD
 
-![tt2 (1)](README.assets/tt2 (1).png)
+![tt2 (1)](README.assets/tt2.png)
 
 
 
@@ -141,6 +141,6 @@
 
 ---
 
-![와이어프레임_web](C:\Users\SSAFY\Desktop\싸피_공통_플젝\S06P11E107\README.assets\와이어프레임_web.PNG)
+![와이어프레임_web](README.assets\와이어프레임_web.PNG)
 
-![와이어프레임_app](C:\Users\SSAFY\Desktop\싸피_공통_플젝\S06P11E107\README.assets\와이어프레임_app.PNG)
+![와이어프레임_app](README.assets\와이어프레임_app.PNG)
