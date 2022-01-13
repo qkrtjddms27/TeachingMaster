@@ -141,6 +141,6 @@
 
 ---
 
-![와이어프레임_web](README.assets\와이어프레임_web.PNG)
+![와이어프레임_web](README.assets/와이어프레임_web.PNG)
 
-![와이어프레임_app](README.assets\와이어프레임_app.PNG)
+![와이어프레임_app](README.assets/와이어프레임_app.PNG)
