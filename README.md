@@ -123,7 +123,7 @@
 
 ## ERD
 
-![tt2 (1)](README.assets/tt2.png)
+![ERD_220114](README.assets/ERD_220114.png)
 
 
 
@@ -141,6 +141,6 @@
 
 ---
 
-![와이어프레임_web](README.assets/와이어프레임_web.PNG)
+![wireframe_web_220114](README.assets/wireframe_web_220114.PNG)
 
-![와이어프레임_app](README.assets/와이어프레임_app.PNG)
+![wireframe_app_220114](README.assets/wireframe_app_220114.PNG)
