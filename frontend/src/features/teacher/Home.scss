@@ -1,0 +1,30 @@
+.class-box {
+  display: flex;
+  justify-content: center;
+}
+.classTitle {
+  margin-top: 4rem;
+}
+
+.teacher-box {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  height: 35rem;
+  width: 60rem;
+  background-color: rgb(92, 129, 179);
+  margin-top: 3rem;
+  border-radius: 30px;
+  .teacher {
+    margin-top: 5rem;
+    justify-self: center;
+    .image {
+    }
+    .name {
+      margin: 2rem;
+    }
+  }
+  button {
+    margin: 1rem;
+  }
+}

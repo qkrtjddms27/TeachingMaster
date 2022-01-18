@@ -3,7 +3,7 @@ import React from 'react'
 const Settings = () => {
   return (
     <div>
-      <h1>this is SETTINGS</h1>
+      세팅
     </div>
   )
 }

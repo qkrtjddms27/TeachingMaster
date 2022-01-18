@@ -1,0 +1,24 @@
+.DrawerHeader {
+  background-color: rgb(69, 148, 170);
+  text-align: center;
+}
+.sidebar-button {
+}
+.teacher_name {
+  margin-top: 0.5rem;
+  color: white;
+}
+.DrawerBody {
+  background-color: rgb(87, 142, 156);
+  // text-align: center;
+  .Icon {
+    margin-right: 1rem;
+  }
+  a {
+    margin-top: 2rem;
+    display: block;
+    color: white;
+    font-weight: 500;
+    font-size: 1.5rem;
+  }
+}
