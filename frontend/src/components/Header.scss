@@ -1,0 +1,23 @@
+.header-box {
+  display: flex;
+  height: 5rem;
+}
+.header-left {
+  flex: 1;
+}
+.header-title {
+  font-size: 2rem;
+  flex: 8;
+  text-align: center;
+  &:hover {
+    font-size: 2.5rem;
+    transition: 1s ease-out;
+  }
+}
+.header-right {
+  align-self: center;
+  cursor: pointer;
+  a {
+    margin-right: 1rem;
+  }
+}
