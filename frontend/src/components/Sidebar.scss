@@ -1,5 +1,6 @@
 .DrawerHeader {
-  background-color: rgb(69, 148, 170);
+  // background: linear-gradient(70deg, #3e46d3 0%, #8f94fb 100%);
+  background-color: #5c5a8f;
   text-align: center;
 }
 .sidebar-button {
@@ -9,7 +10,8 @@
   color: white;
 }
 .DrawerBody {
-  background-color: rgb(87, 142, 156);
+  background-color: #525181;
+  // background: linear-gradient(70deg, #4e54c8 0%, #8f94fb 100%);
   // text-align: center;
   .Icon {
     margin-right: 1rem;
