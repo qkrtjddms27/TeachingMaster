@@ -31,7 +31,7 @@ const Login = () => {
       <Spacer/>
       <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center" >
         <Avatar bg="teal.500" />
-        <Heading color="teal.400">Welcome</Heading>
+        <Heading color="teal.400">Teaching Master</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={handleSubmit}>
             <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md" >
@@ -51,7 +51,7 @@ const Login = () => {
                 </InputGroup>
               </FormControl>
               <Button borderRadius={0} type="submit" variant="solid" colorScheme="teal" width="full" >
-                Login
+                SignUp
               </Button>
             </Stack>
           </form>
@@ -60,7 +60,7 @@ const Login = () => {
       <Box>
         New to us?{" "}
         <Link color="teal.500" to="/signup">
-          Sign Up
+          회원가입
         </Link>
       </Box>
       <Spacer/>
