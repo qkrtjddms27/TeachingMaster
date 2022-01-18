@@ -1,24 +1,15 @@
-# ssafy-vue
+# npm 필수 다운로드 
 
-## Project setup
-```
-npm install
-```
+### npm -v 8.1.2
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### react-router-dom@5
 
-### Compiles and minifies for production
-```
-npm run build
-```
+###  reduxjs/toolkit react-redux
 
-### Lints and fixes files
-```
-npm run lint
-```
+### sass-loader sass
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### react-bootstrap bootstrap@5.1.3
+
+### @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^5
+
+### semantic-ui-react semantic-ui-css
