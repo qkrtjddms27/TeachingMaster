@@ -34,7 +34,7 @@ function Sidebar() {
           <DrawerBody className="DrawerBody">
             <Link onClick={onClose} to="/home"><MoonIcon className='Icon'/>홈</Link>
             <Link onClick={onClose} to="/student"><MoonIcon className='Icon'/>학생</Link>
-            <Link onClick={onClose} to="/quiz"><MoonIcon className='Icon'/>퀴즈</Link>
+            <Link onClick={onClose} to="/quiz/folder"><MoonIcon className='Icon'/>퀴즈</Link>
             <Link onClick={onClose} to="/conference"><MoonIcon className='Icon'/>수업중</Link>
             <Link onClick={onClose} to="/myconference"><MoonIcon className='Icon'/>내수업내역</Link>
             <Link onClick={onClose} to="/settings"><MoonIcon className='Icon'/>환경설정</Link>
