@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Flex, Heading, Text, Input, Button, InputGroup, Stack, Box, Link, Avatar, FormControl, InputRightElement, Spacer, RadioGroup, Radio } from "@chakra-ui/react";
 
-
+// 담임유무 Yes면 학년, 반 선택버튼 뜨게하기
+// 등록버튼 누르면 유효한지(비밀번호 같은가? 빈칸 없는가?) 확인 -> 유효하지 않으면 alert
 const Signup = () => {
   // password, confirmPassword 보일까? 말까?
   const [showPassword, setShowPassword] = useState(false);
@@ -19,10 +20,20 @@ const Signup = () => {
   const [userId, setUserId] = useState('')
   const [userPassword, setUserPassword] = useState('')
   const [confirmUserPassword, setConfirmUserPassword] = useState('')
-  const [isClassTeacher, setIsClassTeacher] = useState(false)
+  const [isClassTeacher, setIsClassTeacher] = useState('1')
   const [grade, setGrade] = useState('')
   const [group, setGroup] = useState('')
   const [pic, setPic] = useState('')
+
+
+  useEffect(() => {
+    console.log('담임인가?', isClassTeacher)
+    if (isClassTeacher === '2') {
+      // 학년 반 선택하는거 보이게
+    } else {
+      // 학년 반 선택하는거 안보이게
+    }
+  }, [isClassTeacher])
 
 
   // // 비번과 비번확인이 같은가? 다른가?
@@ -100,9 +111,9 @@ const Signup = () => {
                 </InputGroup>
               </FormControl>
               {/* 담임 여부 */}
-              <RadioGroup defaultValue='2'>
+              <RadioGroup defaultValue='1' onChange={setIsClassTeacher} value={isClassTeacher}>
                 <Stack spacing={5} direction='row'>
-                  <Text>담임인가요?</Text>
+              <Text>담임인가요?</Text>
                   <Radio colorScheme='red' value='1'>
                     No
                   </Radio>

@@ -3,10 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import routes from './routes';
 import Header from './components/Header'
+import './App.scss'
 
 function App() {
   return (
-    <div>
+    <div className='App'>
       <ChakraProvider>
         <Header/>
         {routes.map(route=>{
