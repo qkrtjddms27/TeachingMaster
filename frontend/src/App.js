@@ -1,16 +1,18 @@
 import {Route} from 'react-router-dom'
-import Navbar from './components/Navbar';
-import Settings from './features/settings/Settings';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ChakraProvider } from '@chakra-ui/react'
+import routes from './routes';
+import Header from './components/Header'
 
 function App() {
   return (
     <div>
       <ChakraProvider>
-        <Navbar/>
-        <h1>하이</h1>
-        <Route path="/settings" exact component={Settings}></Route>
+        <Header/>
+        {routes.map(route=>{
+          return (
+            <Route key={route.path} path={route.path} component = {route.component}/>
+          )})}
       </ChakraProvider>
     </div>
   );
