@@ -13,7 +13,7 @@ import com.querydsl.core.types.Path;
  * QTeacher is a Querydsl query type for Teacher
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QTeacher extends EntityPathBase<Teacher> {
+public class QTeacher extends EntityPathBase<User> {
 
     private static final long serialVersionUID = -1993379360L;
 
@@ -37,15 +37,15 @@ public class QTeacher extends EntityPathBase<Teacher> {
     public final StringPath teacherProfile = createString("teacherProfile");
 
     public QTeacher(String variable) {
-        super(Teacher.class, forVariable(variable));
+        super(User.class, forVariable(variable));
     }
 
-    public QTeacher(Path<? extends Teacher> path) {
+    public QTeacher(Path<? extends User> path) {
         super(path.getType(), path.getMetadata());
     }
 
     public QTeacher(PathMetadata metadata) {
-        super(Teacher.class, metadata);
+        super(User.class, metadata);
     }
 
 }

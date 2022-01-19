@@ -36,12 +36,8 @@ public class Quiz {
     @Column(nullable = false)
     private int quizGrade;
 
-    @JoinColumn(name = "teacher_id")
-    Teacher teacher;
+    @JoinColumn(name = "user_id")
+    User user;
 
-    private String teacherId;
-
-    private int folderIndex;
-
-
+    private Folder folder;
 }

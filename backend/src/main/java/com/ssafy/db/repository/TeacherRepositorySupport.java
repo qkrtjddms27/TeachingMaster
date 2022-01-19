@@ -2,7 +2,7 @@ package com.ssafy.db.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.db.entity.QTeacher;
-import com.ssafy.db.entity.Teacher;
+import com.ssafy.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,10 +17,10 @@ public class TeacherRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
     QTeacher qTeacher = QTeacher.teacher;
 
-    public Optional<Teacher> findTeacherByTeacherId(String teacherId) {
-        Teacher teacher = jpaQueryFactory.select(qTeacher).from(qTeacher)
+    public Optional<User> findTeacherByTeacherId(String teacherId) {
+        User user = jpaQueryFactory.select(qTeacher).from(qTeacher)
                 .where(qTeacher.teacherId.eq(teacherId)).fetchOne();
-        if(teacher == null) return Optional.empty();
-        return Optional.ofNullable(teacher);
+        if(user == null) return Optional.empty();
+        return Optional.ofNullable(user);
     }
 }
