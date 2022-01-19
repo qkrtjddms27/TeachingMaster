@@ -5,18 +5,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Getter
 @Setter
-public class Memo {
+@IdClass(MemoId.class)
+public class Memo implements Serializable {
     //식별관계
-    @Id @JoinColumn(name = "studentId")
-    private Student student;
+    @Id
+    @JoinColumn(name = "studentId")
+    private long studentId;
 
-    @Id @JoinColumn(name = "userId")
-    private User user;
+    @Id
+    @JoinColumn(name = "userId")
+    private long userId;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date memoDate;

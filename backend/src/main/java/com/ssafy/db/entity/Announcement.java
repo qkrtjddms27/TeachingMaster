@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -23,6 +24,10 @@ public class Announcement {
 
     @Column(length = 100)
     private String announcementMemo;
+
     private int announcementScore;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date announcementDate;
 
 }
