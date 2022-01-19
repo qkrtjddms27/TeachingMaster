@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * 유저 모델 정의.
@@ -20,20 +18,23 @@ public class User {
     @Column(length = 20)
     private String userId;
 
-    private boolean master;
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    String password;
 
     @Column(length = 20 ,nullable = false)
     private String userName;
 
     @Column(length = 100)
     private String userProfile;
+
     private boolean userHomeroom;
 
-    //FK
-//    private int classId;
+    private boolean master;
+
+    @ManyToOne
+    @JoinColumn(name = "roomId")
     private Room room;
 
-    @JsonIgnore
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    String password;
+
 }
