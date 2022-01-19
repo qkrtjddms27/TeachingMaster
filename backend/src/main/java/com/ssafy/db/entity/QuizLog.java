@@ -16,10 +16,10 @@ import java.util.Date;
 public class QuizLog implements Serializable {
     //학생 연결
     //Student student;
-//    @Id
-//    @ManyToOne
-//    @JoinColumn(name = "studentId")
-//    private Student student;
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "studentId")
+    private Student student;
 
     //퀴즈 연결
     //Quiz quiz;
