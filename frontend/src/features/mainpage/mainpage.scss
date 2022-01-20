@@ -1,0 +1,63 @@
+.Main1 {
+  @keyframes typing {
+    0% {
+      width: 0%;
+    }
+    50% {
+      width: 100%;
+    }
+    100% {
+      width: 0%;
+    }
+  }
+  background-color: rgb(22, 21, 21);
+  height: 100vh;
+  .typing {
+    text-transform: capitalize;
+    white-space: nowrap;
+    color: transparent;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    // 텍스트를 정 가운데에 고정시키려면 필수
+    &::before {
+      content: "we are teaching master...";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: #fffefe;
+      overflow: hidden;
+      border-right: 3px solid rgb(238, 237, 237);
+      // 커서역할을 하는것
+      animation: typing 8s steps(30) infinite;
+    }
+  }
+}
+
+.Main2 {
+  background-color: cadetblue;
+  height: 100vh;
+  .text {
+    height: 4rem;
+    overflow-y: hidden;
+    display: block;
+    // margin-bottom: 1rem;
+  }
+  p {
+    font-size: 3rem;
+    line-height: 4rem;
+    transform: translateY(4rem);
+    transition: all 0.5s ease;
+  }
+}
+.text.show p {
+  transform: translateY();
+}
+.Main3 {
+  background-color: rgb(184, 114, 155);
+  height: 100vh;
+}
