@@ -22,13 +22,15 @@ public class QAnnouncement extends EntityPathBase<Announcement> {
 
     public static final QAnnouncement announcement = new QAnnouncement("announcement");
 
+    public final DateTimePath<java.util.Date> announcementDate = createDateTime("announcementDate", java.util.Date.class);
+
     public final NumberPath<Long> announcementIndex = createNumber("announcementIndex", Long.class);
 
     public final StringPath announcementMemo = createString("announcementMemo");
 
     public final NumberPath<Integer> announcementScore = createNumber("announcementScore", Integer.class);
 
-    public final SimplePath<Student> student = createSimple("student", Student.class);
+    public final QStudent student;
 
     public final QUser user;
 
@@ -50,7 +52,8 @@ public class QAnnouncement extends EntityPathBase<Announcement> {
 
     public QAnnouncement(Class<? extends Announcement> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
+        this.student = inits.isInitialized("student") ? new QStudent(forProperty("student"), inits.get("student")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }
