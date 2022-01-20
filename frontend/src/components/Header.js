@@ -8,14 +8,11 @@ const Header = () => {
   return (
     <div>
       <Box className='header-box' 
-      bg='linear-gradient(90deg, #141e30 0%, #243b55 100%)' 
       w='100%' p={4} color='white'>
         <Sidebar className='header-left'/>
-        <div className='header-title'>
-          <Link to ="/">
-            Teaching Master
-          </Link>
-        </div>
+        <Link className='header-title' to ="/">
+          Teaching Master
+        </Link>  
         <div className='header-right'>
           {iflogin? <div>로그아웃</div>:
             <div>
