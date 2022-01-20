@@ -1,23 +1,35 @@
 .header-box {
   display: flex;
   height: 5rem;
+  background-color: #a3846662;
+  // background: linear-gradient(70deg, #a38566, #ac8459, #a5825c);
 }
 .header-left {
   flex: 1;
 }
 .header-title {
   font-size: 2rem;
+  font-weight: bold;
+  color: rgb(85, 72, 36);
   flex: 8;
   text-align: center;
+  min-width: 265px;
   &:hover {
-    font-size: 2.5rem;
-    transition: 1s ease-out;
+    color: #533516;
+    transform: translateX(15px);
+
+    transition: 0.2s ease;
   }
 }
 .header-right {
   align-self: center;
   cursor: pointer;
+  min-width: 144px;
   a {
     margin-right: 1rem;
+    font-weight: bold;
+    &:hover {
+      color: #6e4f30;
+    }
   }
 }

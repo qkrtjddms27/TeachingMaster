@@ -3,28 +3,100 @@
   justify-content: center;
 }
 .classTitle {
-  margin-top: 4rem;
+  margin-top: 5rem;
 }
-
-.user-box {
+.grade-class {
+  margin-top: 2rem;
+  color: #3a67fa;
+}
+.teacher-box {
+  margin-top: 5rem;
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  height: 35rem;
-  width: 60rem;
-  background-color: rgb(92, 129, 179);
-  margin-top: 3rem;
-  border-radius: 30px;
-  .user {
-    margin-top: 5rem;
-    justify-self: center;
+  height: 100%;
+  width: 50rem;
+  background-color: rgb(253, 253, 253);
+  border-radius: 10px;
+  .teacher {
+    // flex-direction: column;
+    margin-top: 4rem;
+    align-items: center;
+
+    .image-box {
+      justify-content: center;
+    }
     .image {
+      margin: auto;
+      width: 12rem;
+      height: 12rem;
+      border-radius: 70%;
     }
     .name {
-      margin: 2rem;
+      margin-top: 4rem;
+      color: #3a67fa;
     }
   }
-  button {
-    margin: 1rem;
+}
+
+.when-open {
+  margin-top: 3.5rem;
+  display: flex;
+  height: 5rem;
+  line-height: 5rem;
+  .class-enter {
+    flex: 1;
+    background-color: #b5a18c;
+    color: white;
+    font-size: x-large;
+    font-weight: 1000;
+    border-radius: 0 0 0 10px;
+    cursor: pointer;
+  }
+  .class-close {
+    flex: 1;
+    color: white;
+    font-weight: 1000;
+    font-size: x-large;
+    background-color: #5b360d;
+    border-radius: 0 0 10px 0;
+    cursor: pointer;
+  }
+}
+.when-close {
+  margin-top: 3.5rem;
+  height: 5rem;
+  line-height: 5rem;
+  .class-open {
+    flex: 1;
+    background-color: #b5a18c;
+    color: white;
+    font-size: x-large;
+    font-weight: 1000;
+    border-radius: 0 0 5px 5px;
+    cursor: pointer;
+  }
+}
+
+.quizbox {
+  margin-top: 5rem;
+  margin-left: 5rem;
+  width: 300px;
+  height: 450px;
+  background-color: rgb(253, 253, 253);
+  border-radius: 10px;
+  text-align: center;
+  .empty {
+    height: 2rem;
+  }
+  .title {
+    background-color: white;
+    margin-top: 3rem;
+    font-size: x-large;
+    font-weight: 1000;
+  }
+  .quizlist {
+    margin-top: 3rem;
+    flex-direction: column;
   }
 }

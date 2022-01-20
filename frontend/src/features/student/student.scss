@@ -1,4 +1,121 @@
+.CARD {
+  // 빈 공간(사이즈 맞춰줘야해)
+  width: 17rem;
+  height: 21rem;
+
+  background-color: #f1eae9;
+  border: none;
+  margin-top: 5rem;
+  margin-left: 5rem;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
 .cards {
-  margin-top: 3rem;
-  justify-content: center;
+  margin-right: 10rem;
+  flex: 3;
+}
+
+.f-cardbox {
+  width: 17rem;
+  height: 21rem;
+
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 15px;
+  .image {
+    margin: auto;
+    margin-top: 3.5rem;
+    width: 9rem;
+    height: 9rem;
+    border-radius: 100%;
+  }
+  .card-title {
+    font-weight: 1000;
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+  }
+  .stars {
+    // margin-top: 0.3rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    user-select: none;
+  }
+}
+.b-cardbox {
+  //카드뒷면
+  position: absolute;
+  width: 17rem;
+  height: 21rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  .img-name-star {
+    display: flex;
+    .image {
+      margin: 2rem;
+      width: 6rem;
+      height: 6rem;
+      border-radius: 100%;
+    }
+    .card-title {
+      font-weight: 1000;
+      font-size: 1.5rem;
+      margin-top: 2.8rem;
+    }
+    .stars {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+  }
+  .contents {
+    flex-direction: column;
+    font-size: 0.8rem;
+
+    p {
+      display: block;
+      font-weight: 600;
+    }
+  }
+  .memo {
+    flex-direction: column;
+    margin: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    .memotitle {
+      font-size: 1rem;
+      margin: auto;
+      font-weight: 700;
+    }
+  }
+}
+
+.CARD > .f-cardbox {
+  // 카드 앞면 정의 (색)
+  transform: perspective(600px) rotateY(0deg);
+  background-color: rgb(245, 245, 245);
+  backface-visibility: hidden;
+  transition: transform 0.5s linear 0s;
+}
+.CARD > .b-cardbox {
+  // 카드 뒷면 정의 (색)
+  // background: linear-gradient(90deg, #e0eafc 0%, #a0b6d4 100%, #e0eafc 0%);
+  transform: perspective(600px) rotateY(180deg);
+  backface-visibility: hidden;
+  transition: transform 0.6s linear 0s;
+  &#odd {
+    background: linear-gradient(90deg, #e0eafc 0%, #a0b6d4 100%, #e0eafc 0%);
+  }
+  &#even {
+    background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 100%);
+  }
+}
+.CARD:hover > .f-cardbox {
+  transform: perspective(600px) rotateY(-180deg);
+}
+.CARD:hover > .b-cardbox {
+  transform: perspective(600px) rotateY(0deg);
 }

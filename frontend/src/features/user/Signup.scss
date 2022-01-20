@@ -1,7 +1,113 @@
-.signup-flex {
-  flex-direction: column;
-  width: 100%;
-  height: 75vh;
-  // justify-content: center;
+// signup
+.signup-bg {
+  height: 160vh;
+  background-color: #f1eae9;
+  .signup {
+    margin: 3rem;
+    padding: 2rem 3rem;
+    min-width: 815px;
+    display: flex;
+    flex-flow: column;
+    background-color: #ffffff;
+    border: #B5A18C solid 1px;
+    border-radius: 5px;
+    .signup-agreement {
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .signup-agreement>li {
+    list-style: none;
+    border-top-left-radius: 15%;
+    border-bottom-right-radius: 15%;
+    padding: 1.5rem;
+    &.li-gray {
+      border: 1px solid gray;
+    }
+    &.li-orange {
+      border: 1px solid orange;
+    }
+    .signup-p {
+      display: inline-block;
+      padding: 0 10px;
+    }
+  }
+  .signup-agreement>span {
+    padding: 50px;
+  }
+}
+// step
+.step-button {
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  margin: 2rem 0 0 0;
+  &.prev-button {
+    color: #f8f8f8;
+    &:hover {
+      background-color: #c7baac;
+      transition: 0.3s ease-in;
+    }
+  }
+  &.next-button {
+    color: #f8f8f8;
+    &:hover {
+      background-color: #472b0a;
+      transition: 0.3s ease-in;
+    }
+  }
+}
+// step1
+.step1-content {
+  border: 1px solid gray;
+  margin: 1rem 0;
+  padding: 1rem;
+}
+.step1-stack {
+  margin: 1rem 0;
+  padding: 1rem 0;
+}
+.step1-first {
+  display: flex;
+  justify-content: space-between;
+}
+.step1-chk-box {
+  display: flex;
+  justify-content: flex-end;
+}
+.step1-stack:last-child {
+  margin: 0;
   align-items: center;
+  padding: 0;
+}
+// step2
+.step2 {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  height: 20rem;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+}
+.step2-stack {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.step-button {
+  margin: 0;
+}
+.lr {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  .step2-line {
+    border: 1px solid whitesmoke;
+    width: 0.1px;
+    height: 100%;
+  }
 }

@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
-import { Flex, Heading, Input, Button, InputGroup, Stack, Box, Link, Avatar, FormControl, InputRightElement, Spacer } from "@chakra-ui/react";
+import { Flex, Text, Input, Button, InputGroup, Stack, Box, InputLeftElement, FormControl, InputRightElement, Spacer, chakra, Image } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import { FaUserAlt, FaLock } from "react-icons/fa"
 import './Login.scss'
+import tmlogo from './tmlogo.jpg'
 
+const CFaUserAlt = chakra(FaUserAlt)
+const CFaLock = chakra(FaLock)
 
 const Login = () => {
   // password 보일까? 말까?
@@ -30,19 +35,21 @@ const Login = () => {
     <Flex className="login-flex">
       <Spacer/>
       <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center" >
-        <Avatar bg="teal.500" />
-        <Heading color="teal.400">Teaching Master</Heading>
-        <Box minW={{ base: "90%", md: "468px" }}>
-          <form onSubmit={handleSubmit}>
-            <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md" >
+          <form onSubmit={handleSubmit} className="justify-center">
+            <Stack spacing={4} boxShadow="xl" className="login-form">
+              <Image src={tmlogo}/>
+              <Text color="black" className="login-title">티칭마스터의 다양한 서비스를 누려보세요</Text>
+              <Spacer/>
               <FormControl>
                 <InputGroup>
-                  <Input type="text" placeholder="ID" onChange={onChangeId} value={userId} />
+                  <InputLeftElement pointerEvents="none" children={<CFaUserAlt color="gray.300" />} />
+                  <Input type="text" placeholder="아이디" onChange={onChangeId} value={userId} focusBorderColor="#B5A18C" />
                 </InputGroup>
               </FormControl>
               <FormControl>
                 <InputGroup>
-                  <Input type={showPassword ? "text" : "password"} placeholder="Password" onChange={onChangePassword} value={userPassword}/>
+                  <InputLeftElement pointerEvents="none" children={<CFaLock color="gray.300" />} />
+                  <Input type={showPassword ? "text" : "password"} placeholder="비밀번호" onChange={onChangePassword} value={userPassword}  focusBorderColor="#B5A18C" />
                   <InputRightElement width="4.5rem">
                     <Button h="1.75rem" size="sm" onMouseEnter={handleShowClick} onMouseLeave={handleShowClick}>
                       {showPassword ? "Hide" : "Show"}
@@ -50,19 +57,16 @@ const Login = () => {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
-              <Button borderRadius={0} type="submit" variant="solid" colorScheme="teal" width="full" >
-                SignUp
+              <Spacer/>
+              <Button borderRadius={0} type="submit" variant="solid" width="full" textColor="#F8F8F8" className="login-button" bgColor="#B5A18C" colorScheme="#5B360D">
+                로그인
               </Button>
+              <Box color="#B5A18C" className="justify-center">
+                <Link to="/signup">회원가입</Link>
+              </Box>
             </Stack>
           </form>
-        </Box>
       </Stack>
-      <Box>
-        New to us?{" "}
-        <Link color="teal.500" to="/signup">
-          회원가입
-        </Link>
-      </Box>
       <Spacer/>
     </Flex>
   );

@@ -1,7 +1,30 @@
 .login-flex {
   flex-direction: column;
   width: 100%;
-  height: 75vh;
-  // justify-content: center;
+  height: 100vh;
+  justify-content: center;
   align-items: center;
+}
+.login-button {
+  &:hover {
+    background-color: #5B360D;
+    transition: 0.3s ease-in;
+  }
+}
+.login-title {
+  text-align: center;
+}
+.justify-center {
+  display: flex;
+  justify-content: center;
+}
+.login-form {
+  padding: 2rem 3rem 3rem 3rem;
+  background-color: #ffffff;
+  border: #B5A18C solid 1px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  width: 50%;
+  min-width: 400px;
 }
