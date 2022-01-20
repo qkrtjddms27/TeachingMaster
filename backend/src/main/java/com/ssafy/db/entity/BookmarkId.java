@@ -8,6 +8,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookmarkId implements Serializable {
-    private long userId;
-    private long quizId;
+    private String user;
+    private long quiz;
 }

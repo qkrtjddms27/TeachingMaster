@@ -13,7 +13,7 @@ import java.util.Date;
 @Setter
 @EqualsAndHashCode
 @IdClass(QuizLogId.class)
-public class QuizLog implements Serializable {
+public class QuizLog {
     //학생 연결
     //Student student;
     @Id

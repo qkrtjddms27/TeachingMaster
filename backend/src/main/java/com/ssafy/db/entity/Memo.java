@@ -12,15 +12,17 @@ import java.util.Date;
 @Getter
 @Setter
 @IdClass(MemoId.class)
-public class Memo implements Serializable {
+public class Memo {
     //식별관계
     @Id
+    @ManyToOne
     @JoinColumn(name = "studentId")
-    private long studentId;
+    private Student student;
 
     @Id
+    @ManyToOne
     @JoinColumn(name = "userId")
-    private long userId;
+    private User user;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date memoDate;

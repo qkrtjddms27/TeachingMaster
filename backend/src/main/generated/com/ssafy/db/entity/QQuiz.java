@@ -22,7 +22,7 @@ public class QQuiz extends EntityPathBase<Quiz> {
 
     public static final QQuiz quiz = new QQuiz("quiz");
 
-    public final SimplePath<Folder> folder = createSimple("folder", Folder.class);
+    public final QFolder folder;
 
     public final BooleanPath openStatus = createBoolean("openStatus");
 
@@ -32,7 +32,7 @@ public class QQuiz extends EntityPathBase<Quiz> {
 
     public final NumberPath<Integer> quizGrade = createNumber("quizGrade", Integer.class);
 
-    public final NumberPath<Integer> quizId = createNumber("quizId", Integer.class);
+    public final NumberPath<Long> quizId = createNumber("quizId", Long.class);
 
     public final StringPath quizPhoto = createString("quizPhoto");
 
@@ -62,7 +62,8 @@ public class QQuiz extends EntityPathBase<Quiz> {
 
     public QQuiz(Class<? extends Quiz> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
+        this.folder = inits.isInitialized("folder") ? new QFolder(forProperty("folder"), inits.get("folder")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }
