@@ -1,3 +1,4 @@
+import MainPage from './features/mainpage/MainPage';
 import Settings from './features/sets/Settings';
 import Login from './features/user/Login'
 import Signup from './features/user/Signup'
@@ -17,7 +18,7 @@ export default [
     name: "내홈페이지"
   },
   {
-    path: ["/","/login"],
+    path: "/login",
     component: Login,
     name: "로그인페이지",
     exact:true,
@@ -72,5 +73,10 @@ export default [
     component: Myconference,
     name: "myconference"
   },
+  {
+    path: "/",
+    component:MainPage,
+    name:'메인페이지'
+  }
   
 ]
