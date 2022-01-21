@@ -3,6 +3,7 @@ package com.ssafy.db.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.checkerframework.checker.units.qual.C;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;

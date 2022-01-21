@@ -1,6 +1,9 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.UserUpdateReq;
+import com.ssafy.db.entity.Room;
 import com.ssafy.db.entity.User;
+import com.ssafy.db.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,10 @@ import com.ssafy.db.repository.UserRepositorySupport;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
-	
+
+	@Autowired
+	RoomRepository roomRepository;
+
 	@Autowired
 	UserRepositorySupport userRepositorySupport;
 	
@@ -33,7 +39,15 @@ public class UserServiceImpl implements UserService {
 		user.setUserHomeroom(userRegisterInfo.getUserHomeroom());
 		user.setUserProfile(userRegisterInfo.getUserProfile());
 		user.setMaster(userRegisterInfo.getMaster());
-		// user.setClassId();
+
+		Room room = new Room();
+		room.setRoomNum(userRegisterInfo.getRoomNum());
+		room.setRoomGrade(userRegisterInfo.getRoomGrade());
+
+		roomRepository.save(room);
+
+		user.setRoom(room);
+
 		return userRepository.save(user);
 	}
 
@@ -41,6 +55,41 @@ public class UserServiceImpl implements UserService {
 	public User getUserByUserId(String userId) {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).
 		User user = userRepositorySupport.findUserByUserId(userId).get();
+		System.out.print(user);
 		return user;
 	}
+
+	@Override
+	public User updateUser(User user, UserUpdateReq userUpdateInfo) {
+		// 유저 정보 수정
+		System.out.print(user);
+		user.setUserId(userUpdateInfo.getUserId());
+		user.setUserName(userUpdateInfo.getUserName());
+		user.setPassword(passwordEncoder.encode(userUpdateInfo.getPassword()));
+
+		user.setUserHomeroom(userUpdateInfo.getUserHomeroom());
+		user.setUserProfile(userUpdateInfo.getUserProfile());
+		user.setMaster(userUpdateInfo.getMaster());
+
+		Room room = user.getRoom();
+
+		room.setRoomNum(userUpdateInfo.getRoomNum());
+		room.setRoomGrade(userUpdateInfo.getRoomGrade());
+		roomRepository.save(room);
+
+		user.setRoom(room);
+
+		return userRepository.save(user);
+	}
+
+	@Override
+	public void deleteUserByUserId(String userId) {
+		//유저 정보 삭제(userId로)
+		//User user = userRepositorySupport.findUserByUserId(userId).get();
+
+		userRepository.delete(userRepositorySupport.findUserByUserId(userId).get());
+
+	}
+
+
 }
