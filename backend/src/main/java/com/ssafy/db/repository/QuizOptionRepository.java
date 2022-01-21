@@ -14,5 +14,7 @@ import java.util.Optional;
  */
 @Repository
 public interface QuizOptionRepository extends JpaRepository<QuizOption, Long> {
-//    Optional<QuizOption> findByQuiz(Quiz quiz);
+    List<QuizOption> findByQuiz(Quiz quiz);
+
+//  List<QuizOption> findAllByQuiz(Quiz remove_quiz);
 }
