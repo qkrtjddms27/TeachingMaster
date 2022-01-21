@@ -3,8 +3,8 @@ import Settings from './features/sets/Settings';
 import Login from './features/user/Login'
 import Signup from './features/user/Signup'
 import Home from './features/teacher/Home'
-import Student from './features/student/Student'
-import Folder from './features/quiz/Folder'
+import EveryStudent from './features/student/EveryStudent'
+import Folder from './features/quiz/EveryFolder'
 import Conference from './features/conference/Conference'
 import Myconference from './features/conference/Myfonference'
 import InFolder from './features/quiz/InFolder';
@@ -34,8 +34,8 @@ export default [
     name: "세팅"
   },
   {
-    path: "/student",
-    component: Student,
+    path: "/students",
+    component: EveryStudent,
     name: "학생목록페이지"
   },
   {
