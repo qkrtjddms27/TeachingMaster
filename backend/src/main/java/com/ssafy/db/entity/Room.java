@@ -16,7 +16,7 @@ public class Room {
 //  Room 기본키 생성 및 양방향 Mapping 시작(Conference와 Student)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roodId;
+    private Long roomId;
 //
 //    //Conference
 //    @OneToOne(mappedBy = "room")
