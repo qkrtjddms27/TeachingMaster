@@ -1,24 +1,48 @@
 .DrawerHeader {
-  background-color: rgb(69, 148, 170);
+  background-color: #a38566;
   text-align: center;
+  .teacher_image {
+    margin-left: 5rem;
+    margin-top: 1rem;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 70%;
+  }
 }
 .sidebar-button {
+  padding-bottom: 0;
+  cursor: pointer;
+  &:hover {
+    color: #6e4f30;
+    // transform: scale(1.1);
+    transition: 0.3s ease-in-out;
+  }
 }
 .teacher_name {
-  margin-top: 0.5rem;
-  color: white;
+  margin-top: 1.7rem;
+  margin-bottom: 1.2rem;
+  color: rgb(255, 255, 255);
+  font-size: 2rem;
 }
 .DrawerBody {
-  background-color: rgb(87, 142, 156);
-  // text-align: center;
+  background-color: #f1eae9;
   .Icon {
     margin-right: 1rem;
   }
   a {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
+    margin-left: 2rem;
     display: block;
-    color: white;
-    font-weight: 500;
+    color: rgb(85, 84, 84);
+    font-weight: 1000;
     font-size: 1.5rem;
   }
+  a:hover {
+    transform: translateX(-10px);
+    transition: 0.2s ease;
+    color: black;
+  }
+}
+.DrawerBody:hover a:not(:nover) {
+  opacity: 0.1;
 }

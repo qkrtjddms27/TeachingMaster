@@ -1,0 +1,111 @@
+.folder-icon {
+  height: 11rem;
+  transition: opacity 0.3s ease-in;
+
+  &:hover {
+    // transform: rotate(10deg);
+    animation: mySpinner 1.5s;
+    animation-iteration-count: infinite;
+  }
+}
+@keyframes mySpinner {
+  from {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  to {
+    transform: rotate(-10deg);
+  }
+}
+
+.every-folder {
+  border-radius: 20px;
+  background-color: #f1eae9;
+  width: 1500px;
+  margin: auto;
+  margin-top: 5rem;
+  .all-cart-mine {
+    margin: 8rem 4rem 8rem 4rem;
+    display: flex;
+    justify-content: space-around;
+    .all-cart-mine-title {
+      margin-top: 4rem;
+      text-align: center;
+    }
+  }
+  .title {
+    text-align: center;
+  }
+  .folders {
+  }
+}
+.add-button {
+  position: fixed;
+  height: 100px;
+  bottom: 10rem;
+  right: 20rem;
+  cursor: pointer;
+}
+
+.correct {
+  display: inline;
+  background-color: yellowgreen;
+}
+
+.quiz-update-page {
+  .input_title {
+    display: inline;
+    width: 30rem;
+    height: 2rem;
+    margin-left: 1rem;
+    &::placeholder {
+      color: rgb(49, 46, 46);
+      font-size: large;
+    }
+  }
+  .input_content {
+    display: inline;
+    width: 70%;
+    height: 10rem;
+    border: 1px solid rgb(105, 105, 105);
+    margin-left: 1rem;
+    &::placeholder {
+      color: rgb(49, 46, 46);
+      font-size: large;
+    }
+  }
+}
+
+.choices {
+  input {
+    margin-top: 0.5rem;
+  }
+}
+.folders {
+  .folder-icon {
+    height: 9rem;
+    transition: 0.3s ease-in;
+
+    &:hover {
+      // transform: rotate(10deg);
+      animation: mySpinner 1.5s;
+      animation-iteration-count: infinite;
+    }
+  }
+  .row {
+    margin-left: 2rem;
+    justify-content: center;
+    .col {
+      margin-top: 2rem;
+      display: flex;
+      .title {
+        margin-top: 2rem;
+        margin-bottom: 3rem;
+        font-size: 2rem;
+        text-align: center;
+      }
+    }
+  }
+}
