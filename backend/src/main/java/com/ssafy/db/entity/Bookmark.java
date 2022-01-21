@@ -13,12 +13,14 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 @IdClass(BookmarkId.class)
-public class Bookmark implements Serializable {
+public class Bookmark {
     @Id
+    @ManyToOne
     @JoinColumn(name = "userId")
-    private long userId;
+    private User user;
 
     @Id
+    @ManyToOne
     @JoinColumn(name = "quizId")
-    private long quizId;
+    private Quiz quiz;
 }
