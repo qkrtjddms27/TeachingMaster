@@ -1,9 +1,9 @@
 .CARD {
-  // 빈 공간(사이즈 맞춰줘야해)
+  // 빈 공간(사이즈 맞춰줘야해, 색도 뒤랑 맞추기)
   width: 17rem;
   height: 21rem;
-
-  background-color: #f1eae9;
+  // 배경이랑 맞추기
+  background-color: #d8c5b3;
   border: none;
   margin-top: 5rem;
   margin-left: 5rem;
@@ -57,6 +57,7 @@
     display: flex;
     .image {
       margin: 2rem;
+      margin-bottom: 1rem;
       width: 6rem;
       height: 6rem;
       border-radius: 100%;
@@ -64,31 +65,33 @@
     .card-title {
       font-weight: 1000;
       font-size: 1.5rem;
-      margin-top: 2.8rem;
+      margin-top: 2.7rem;
     }
     .stars {
       font-size: 1.2rem;
       font-weight: 700;
     }
   }
-  .contents {
-    flex-direction: column;
-    font-size: 0.8rem;
 
-    p {
-      display: block;
-      font-weight: 600;
-    }
-  }
   .memo {
     flex-direction: column;
     margin: 0.5rem;
     font-size: 0.7rem;
     font-weight: 700;
-    .memotitle {
+    .stars {
+      margin-left: 1rem;
+      margin-bottom: 1rem;
       font-size: 1rem;
-      margin: auto;
       font-weight: 700;
+    }
+    .memo-title {
+      font-size: 1rem;
+      margin-left: 6rem;
+      font-weight: 700;
+    }
+    .memo-content {
+      margin-left: 1rem;
+      font-size: 0.8rem;
     }
   }
 }
@@ -110,7 +113,7 @@
     background: linear-gradient(90deg, #e0eafc 0%, #a0b6d4 100%, #e0eafc 0%);
   }
   &#even {
-    background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 100%);
+    background: linear-gradient(90deg, #fad0c4, #ff9a9e);
   }
 }
 .CARD:hover > .f-cardbox {
