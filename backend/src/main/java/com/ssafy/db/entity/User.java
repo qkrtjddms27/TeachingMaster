@@ -30,11 +30,11 @@ public class User {
     @Column(length = 100)
     private String userProfile;
 
-    private boolean userHomeroom;
+    private Boolean userHomeroom;
 
-    private boolean master;
+    private Boolean master;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "roomId")
     private Room room;
 }
