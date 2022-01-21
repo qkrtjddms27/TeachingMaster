@@ -12,7 +12,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class QuizOption {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long optionIndex;          //index
 
     private Long optionId;             //문제번호
