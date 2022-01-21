@@ -161,6 +161,9 @@ dependencies {
     //IntelliJ에서는 하기 annotationProcessor를 쓰면 별도의 querydsl 플러그인 및 플러그인 설정이 불필요.
     annotationProcessor("com.querydsl:querydsl-apt:${querydslVer}:jpa")
 
+    // Email 어노테이션 추가
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
     implementation("com.squareup.retrofit2:retrofit:2.7.1")
     implementation("com.squareup.retrofit2:converter-jackson:2.7.1")
     implementation("com.squareup.okhttp3:logging-interceptor:3.9.0")

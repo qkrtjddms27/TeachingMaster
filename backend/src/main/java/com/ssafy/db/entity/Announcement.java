@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 public class Announcement {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long announcementIndex;
 
     @ManyToOne
