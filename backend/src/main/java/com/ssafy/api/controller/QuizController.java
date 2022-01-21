@@ -2,10 +2,12 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.QuizOptionRegisterReq;
 import com.ssafy.api.request.QuizRegisterReq;
+import com.ssafy.api.response.FolderRes;
 import com.ssafy.api.response.QuizOptionsRes;
 import com.ssafy.api.response.QuizRes;
 import com.ssafy.api.service.QuizService;
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.Folder;
 import com.ssafy.db.entity.Quiz;
 import com.ssafy.db.entity.QuizOption;
 import io.swagger.annotations.*;
@@ -100,6 +102,21 @@ public class QuizController {
         quizService.deleteQuiz(quizId);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @GetMapping("/folder/{user_id}")
+    @ApiOperation(value = "선생님 폴더 목록 불러오기", notes = "폴더 목록 Select")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<FolderRes>> select_folder(@PathVariable("user_id") String userId){
+        System.out.println("Controller" + userId);
+        List<Folder> list = quizService.selectFolders(userId);
+
+        return ResponseEntity.status(200).body(FolderRes.of(list));
     }
 
 }

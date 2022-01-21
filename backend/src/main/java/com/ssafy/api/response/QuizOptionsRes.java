@@ -1,7 +1,6 @@
 package com.ssafy.api.response;
 
 import com.ssafy.api.request.QuizOptionRegisterReq;
-import com.ssafy.db.entity.Folder;
 import com.ssafy.db.entity.Quiz;
 import com.ssafy.db.entity.QuizOption;
 import com.ssafy.db.entity.User;

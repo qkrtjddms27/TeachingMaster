@@ -1,6 +1,5 @@
 package com.ssafy.api.response;
 
-import com.ssafy.db.entity.Folder;
 import com.ssafy.db.entity.Quiz;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.ApiModel;

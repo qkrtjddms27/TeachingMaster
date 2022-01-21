@@ -2,8 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.QuizOptionRegisterReq;
 import com.ssafy.api.request.QuizRegisterReq;
-import com.ssafy.db.entity.Quiz;
-import com.ssafy.db.entity.QuizOption;
+import com.ssafy.db.entity.*;
 
 import java.util.List;
 
@@ -15,4 +14,6 @@ public interface QuizService {
     List<QuizOption> updateOption(List<QuizOptionRegisterReq> options);
 
     void deleteQuiz(Long quizId);
+
+    List<Folder> selectFolders(String userId);
 }

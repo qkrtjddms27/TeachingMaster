@@ -3,14 +3,8 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.QuizOptionRegisterReq;
 import com.ssafy.api.request.QuizRegisterReq;
-import com.ssafy.db.entity.Folder;
-import com.ssafy.db.entity.Quiz;
-import com.ssafy.db.entity.QuizOption;
-import com.ssafy.db.entity.User;
-import com.ssafy.db.repository.QuizOptionRepository;
-import com.ssafy.db.repository.QuizOptionRepositorySupport;
-import com.ssafy.db.repository.QuizRepository;
-import com.ssafy.db.repository.QuizRepositorySupport;
+import com.ssafy.db.entity.*;
+import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +28,12 @@ public class QuizServiceImpl implements QuizService{
 
     @Autowired
     QuizOptionRepositorySupport quizOptionRepositorySupport;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    FolderRepository folderRepository;
 
     @Override
     public Quiz createQuiz(QuizRegisterReq quizRegisterReq) {
@@ -131,6 +131,16 @@ public class QuizServiceImpl implements QuizService{
     public void deleteQuiz(Long quizId) {
         quizOptionRepositorySupport.deleteOptionsByQuiz(quizId);
         quizRepository.deleteById(quizId);
+    }
+
+    @Override
+    public List<Folder> selectFolders(String userId) {
+        User user = userRepository.findByUserId(userId).get();
+        System.out.println("Service1 : " + user.getUserId());
+        List<Folder> list = folderRepository.findByUser(user);
+//        System.out.println("Service2 : " + list.get(0).);
+
+        return list;
     }
 
 }
