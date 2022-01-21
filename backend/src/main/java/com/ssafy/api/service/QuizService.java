@@ -13,4 +13,6 @@ public interface QuizService {
 
     Quiz updateQuiz(QuizRegisterReq quizRegisterReq);
     List<QuizOption> updateOption(List<QuizOptionRegisterReq> options);
+
+    void deleteQuiz(Long quizId);
 }

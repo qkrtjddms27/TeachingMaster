@@ -14,6 +14,8 @@ import com.ssafy.db.repository.QuizRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -93,11 +95,16 @@ public class QuizServiceImpl implements QuizService{
     }
 
     @Override
+    @Transactional
     public List<QuizOption> updateOption(List<QuizOptionRegisterReq> options) {
         //해당 문제의 기존 보기들 전부 삭제
         Long quizId = options.get(0).getQuizId();
-        quizOptionRepositorySupport.deleteOptionsByQuizId(quizId);
-//        Optional<QuizOption> lists = quizOptionRepository.findByQuiz(quizId);
+        quizOptionRepositorySupport.deleteOptionsByQuiz(quizId);
+
+//        List<QuizOption> list  = quizOptionRepository.findByQuiz(remove_quiz);
+//        for (QuizOption option : list) {
+//            quizOptionRepository.deleteById(option.getOptionId());
+//        }
 //        System.out.println(lists.toString());
 
         List<QuizOption> quizList = new ArrayList<>();
@@ -117,6 +124,13 @@ public class QuizServiceImpl implements QuizService{
         }
 
         return quizOptionRepository.saveAll(quizList);
+    }
+
+    @Override
+    @Transactional
+    public void deleteQuiz(Long quizId) {
+        quizOptionRepositorySupport.deleteOptionsByQuiz(quizId);
+        quizRepository.deleteById(quizId);
     }
 
 }
