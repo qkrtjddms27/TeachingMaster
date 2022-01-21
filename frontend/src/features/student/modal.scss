@@ -1,0 +1,52 @@
+.title {
+  font-size: 3rem;
+}
+
+.ModalPage {
+  .Modalbox {
+  }
+}
+.body {
+  height: 100rem;
+  .img-name-star {
+    display: flex;
+    .image {
+      margin: 2rem;
+      width: 6rem;
+      height: 6rem;
+      border-radius: 100%;
+    }
+    .card-title {
+      font-weight: 1000;
+      font-size: 1.5rem;
+      margin-top: 2.8rem;
+    }
+    .stars {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+  }
+  .contents {
+    flex-direction: column;
+    font-size: 0.8rem;
+
+    p {
+      display: block;
+      font-weight: 600;
+    }
+  }
+  .memo {
+    flex-direction: column;
+    margin: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    .memotitle {
+      font-size: 1rem;
+      margin: auto;
+      font-weight: 700;
+    }
+  }
+}
+.go_update {
+  color: red;
+}

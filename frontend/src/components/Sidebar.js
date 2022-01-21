@@ -19,7 +19,7 @@ function Sidebar() {
   return (
     <>
       <HamburgerIcon className='sidebar-button' boxSize={12} onClick={onOpen}/>
-      <Drawer  placement='left' onClose={onClose} isOpen={isOpen}>
+      <Drawer size="xs" placement='left' onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent >
           <DrawerHeader className='DrawerHeader' borderBottomWidth='1px'>
@@ -30,7 +30,7 @@ function Sidebar() {
           <DrawerBody className="DrawerBody">
             {/* <MoonIcon className='Icon'/> */}
             <Link onClick={onClose} to="/home">홈</Link>
-            <Link onClick={onClose} to="/student">학생</Link>
+            <Link onClick={onClose} to="/students">학생</Link>
             <Link onClick={onClose} to="/quiz/folder">퀴즈</Link>
             <Link onClick={onClose} to="/conference">수업중</Link>
             <Link onClick={onClose} to="/myconference">내수업내역</Link>

@@ -2,9 +2,8 @@
   background-color: #a38566;
   text-align: center;
   .teacher_image {
-    margin: auto;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-left: 5rem;
+    margin-top: 1rem;
     width: 7rem;
     height: 7rem;
     border-radius: 70%;
@@ -38,14 +37,12 @@
     font-weight: 1000;
     font-size: 1.5rem;
   }
+  a:hover {
+    transform: translateX(-10px);
+    transition: 0.2s ease;
+    color: black;
+  }
 }
 .DrawerBody:hover a:not(:nover) {
   opacity: 0.1;
 }
-a:hover {
-  transform: translateX(-10px);
-  transition: 0.2s ease;
-  color: black;
-}
-
-//.바디 부분이 호버될때

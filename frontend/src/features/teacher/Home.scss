@@ -37,6 +37,10 @@
       color: #3a67fa;
     }
   }
+  &:hover {
+    transform: scale(1.02);
+    transition: 0.2s ease-in-out;
+  }
 }
 
 .when-open {
@@ -98,5 +102,9 @@
   .quizlist {
     margin-top: 3rem;
     flex-direction: column;
+  }
+  &:hover {
+    transform: scale(1.02);
+    transition: 0.2s ease-in-out;
   }
 }
