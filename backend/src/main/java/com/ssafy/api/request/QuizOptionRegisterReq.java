@@ -7,12 +7,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel("QuizRegisterRequest")
-public class QuizOption {
+@ApiModel("QuizOptionRegisterRequest")
+public class QuizOptionRegisterReq {
     @ApiModelProperty(name="보기 index")
-    int optionIndex;
+    long optionIndex;
     @ApiModelProperty(name="보기 번호")
-    int optionId;
+    long optionId;
     @ApiModelProperty(name="보기 내용")
     String optionContent;
     @ApiModelProperty(name="퀴즈 id")

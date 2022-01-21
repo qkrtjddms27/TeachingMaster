@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Quiz {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long quizId;                     //퀴즈아이디
 
     @Column(length = 10, nullable = false)
@@ -31,7 +31,7 @@ public class Quiz {
     @Column(nullable = false)
     private int quizAnswer;                 //퀴즈정답
 
-    private boolean openStatus;             //공개여부
+    private Boolean openStatus;             //공개여부
 
     private int quizTimeout;                //제한시간
 
@@ -42,9 +42,5 @@ public class Quiz {
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
-    
-    //개인폴더연결
-    @ManyToOne
-    @JoinColumn(name = "folderIndex")
-    private Folder folder;
+
 }

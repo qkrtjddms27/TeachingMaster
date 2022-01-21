@@ -1,27 +1,23 @@
 package com.ssafy.db.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.db.entity.QUser;
-
-import java.util.Optional;
-
-import com.ssafy.db.entity.User;
+import com.ssafy.db.entity.QQuiz;
+import com.ssafy.db.entity.Quiz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-/**
- * 유저 모델 관련 디비 쿼리 생성을 위한 구현 정의.
- */
+import java.util.Optional;
+
 @Repository
-public class UserRepositorySupport {
+public class QuizRepositorySupport {
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
-    QUser qUser = QUser.user;
+    QQuiz qQuiz = QQuiz.quiz;
 
-    public Optional<User> findUserByUserId(String userId) {
-        User user = jpaQueryFactory.select(qUser).from(qUser)
-                .where(qUser.userId.eq(userId)).fetchOne();
-        if(user == null) return Optional.empty();
-        return Optional.ofNullable(user);
+    public Optional<Quiz> findUserByQuizId(long quizId) {
+        Quiz quiz = jpaQueryFactory.select(qQuiz).from(qQuiz)
+                .where(qQuiz.quizId.eq(quizId)).fetchOne();
+        if(quiz == null) return Optional.empty();
+        return Optional.ofNullable(quiz);
     }
 }
