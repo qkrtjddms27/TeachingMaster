@@ -1,0 +1,82 @@
+.folder-icon {
+  height: 17rem;
+  transition: opacity 0.3s all ease;
+  &:hover {
+    // transform: rotate(10deg);
+    animation: mySpinner 2s;
+    animation-iteration-count: infinite;
+  }
+}
+@keyframes mySpinner {
+  from {
+    transform: rotate(-10deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  to {
+    transform: rotate(-10deg);
+  }
+}
+
+.every-folder {
+  background-color: whitesmoke;
+  width: 2000px;
+  margin: auto;
+  margin-top: 5rem;
+  .all-cart-mine {
+    margin-top: 8rem;
+    display: flex;
+    justify-content: space-around;
+    .all-cart-mine-title {
+      margin-top: 4rem;
+    }
+    .all {
+    }
+    .cart {
+    }
+    .mine {
+    }
+  }
+  .title {
+  }
+  .folders {
+  }
+}
+
+.correct {
+  display: inline;
+  background-color: yellowgreen;
+}
+
+.quiz-update-page {
+  .input_title {
+    display: inline;
+    width: 30rem;
+    height: 2rem;
+    margin-left: 1rem;
+    &::placeholder {
+      color: rgb(49, 46, 46);
+      font-size: large;
+    }
+  }
+  .input_content {
+    display: inline;
+    width: 70%;
+    height: 10rem;
+    border: 1px solid rgb(105, 105, 105);
+    margin-left: 1rem;
+    &::placeholder {
+      color: rgb(49, 46, 46);
+      font-size: large;
+    }
+  }
+}
+.title {
+  display: inline;
+}
+.choices {
+  input {
+    margin-top: 0.5rem;
+  }
+}
