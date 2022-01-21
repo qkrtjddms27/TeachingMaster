@@ -44,14 +44,14 @@
   display: flex;
   justify-content: space-around;
   margin: 2rem 0 0 0;
-  &.prev-button {
+  .prev-button {
     color: #f8f8f8;
     &:hover {
       background-color: #c7baac;
       transition: 0.3s ease-in;
     }
   }
-  &.next-button {
+  .next-button {
     color: #f8f8f8;
     &:hover {
       background-color: #472b0a;
@@ -86,28 +86,62 @@
 .step2 {
   border-top: 1px solid black;
   border-bottom: 1px solid black;
-  height: 20rem;
+  height: 15rem;
   display: flex;
   flex-flow: column;
   justify-content: space-around;
 }
-.step2-stack {
+.step2-stack1 {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.step2-stack2 {
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.step-button {
-  margin: 0;
-}
-.lr {
+.step2-line {
+  border: 0.1px solid gray;
+  background-color: gray;
+  width: 0.1px;
   height: 100%;
-  width: 50%;
+}
+.step2-form1 {
+  padding: 0 1rem 0 1rem;
+}
+.step2-form2 {
+  padding: 0 1rem 0 1rem;
   display: flex;
-  .step2-line {
-    border: 1px solid whitesmoke;
-    width: 0.1px;
-    height: 100%;
+  justify-content: space-around;
+  .step2-selects {
+    display: flex;
+    width: 50%;
   }
+}
+.step2-isclass {
+  display: flex;
+  align-items: center;
+  .step2-switch {
+    margin-left: 1rem;
+  }
+}
+// step3
+.step3-stack2 {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// step4
+.step4-link:hover {
+  color: #f8f8f8;
+  text-decoration: none;
 }
