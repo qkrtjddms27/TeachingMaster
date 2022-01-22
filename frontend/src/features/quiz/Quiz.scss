@@ -1,9 +1,10 @@
 .folder-icon {
-  height: 17rem;
-  transition: opacity 0.3s all ease;
+  height: 11rem;
+  transition: opacity 0.3s ease-in;
+
   &:hover {
     // transform: rotate(10deg);
-    animation: mySpinner 2s;
+    animation: mySpinner 1.5s;
     animation-iteration-count: infinite;
   }
 }
@@ -11,7 +12,7 @@
   from {
     transform: rotate(-10deg);
   }
-  25% {
+  50% {
     transform: rotate(10deg);
   }
   to {
@@ -20,28 +21,32 @@
 }
 
 .every-folder {
-  background-color: whitesmoke;
-  width: 2000px;
+  border-radius: 20px;
+  background-color: #f1eae9;
+  width: 1500px;
   margin: auto;
   margin-top: 5rem;
   .all-cart-mine {
-    margin-top: 8rem;
+    margin: 8rem 4rem 8rem 4rem;
     display: flex;
     justify-content: space-around;
     .all-cart-mine-title {
       margin-top: 4rem;
-    }
-    .all {
-    }
-    .cart {
-    }
-    .mine {
+      text-align: center;
     }
   }
   .title {
+    text-align: center;
   }
   .folders {
   }
+}
+.add-button {
+  position: fixed;
+  height: 100px;
+  bottom: 10rem;
+  right: 20rem;
+  cursor: pointer;
 }
 
 .correct {
@@ -72,11 +77,35 @@
     }
   }
 }
-.title {
-  display: inline;
-}
+
 .choices {
   input {
     margin-top: 0.5rem;
+  }
+}
+.folders {
+  .folder-icon {
+    height: 9rem;
+    transition: 0.3s ease-in;
+
+    &:hover {
+      // transform: rotate(10deg);
+      animation: mySpinner 1.5s;
+      animation-iteration-count: infinite;
+    }
+  }
+  .row {
+    margin-left: 2rem;
+    justify-content: center;
+    .col {
+      margin-top: 2rem;
+      display: flex;
+      .title {
+        margin-top: 2rem;
+        margin-bottom: 3rem;
+        font-size: 2rem;
+        text-align: center;
+      }
+    }
   }
 }

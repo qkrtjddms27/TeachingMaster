@@ -1,5 +1,5 @@
 import { Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './Signup.scss'
 import Step1 from './Step1'
 import Step2 from './Step2';
@@ -11,23 +11,24 @@ import Step4 from './Step4';
 const Signup = () => {
   const [step, setStep] = useState(1)
 
+
   return (
     <div className='signup-bg'>
       <div className='signup'>
         <ul className='signup-agreement'>
-          <li className={step === 1 ? 'li-orange' : 'li-gray'}>
+          <li className={step === 1 ? 'signup-li-orange' : 'signup-li-gray'}>
             <Text className='signup-p'>이용약관</Text>
           </li>
           <span>▶</span>
-          <li className={step === 2 ? 'li-orange' : 'li-gray'}>
+          <li className={step === 2 ? 'signup-li-orange' : 'signup-li-gray'}>
             <Text className='signup-p'>학교인증</Text>
           </li>
           <span>▶</span>
-          <li className={step === 3 ? 'li-orange' : 'li-gray'}>
+          <li className={step === 3 ? 'signup-li-orange' : 'signup-li-gray'}>
             <Text className='signup-p'>정보입력</Text>
           </li>
           <span>▶</span>
-          <li className={step === 4 ? 'li-orange' : 'li-gray'}>
+          <li className={step === 4 ? 'signup-li-orange' : 'signup-li-gray'}>
             <Text className='signup-p'>가입완료</Text>
           </li>
         </ul>

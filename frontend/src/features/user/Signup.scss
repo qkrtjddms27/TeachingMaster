@@ -1,16 +1,17 @@
 // signup
 .signup-bg {
   height: 160vh;
-  background-color: #f1eae9;
+  background-color: #d8c5b3;
   .signup {
     margin: 3rem;
     padding: 2rem 3rem;
-    min-width: 815px;
+    min-width: 1035px;
     display: flex;
     flex-flow: column;
     background-color: #ffffff;
     border: #B5A18C solid 1px;
     border-radius: 5px;
+    box-shadow: 1px 1px 1px;
     .signup-agreement {
       margin-bottom: 1rem;
       display: flex;
@@ -23,11 +24,14 @@
     border-top-left-radius: 15%;
     border-bottom-right-radius: 15%;
     padding: 1.5rem;
-    &.li-gray {
-      border: 1px solid gray;
+    &.signup-li-gray {
+      border: 3px solid gray;
     }
-    &.li-orange {
-      border: 1px solid orange;
+    &.signup-li-orange {
+      border: 4px solid orange;
+      p {
+        font-size: 1.5rem;
+      }
     }
     .signup-p {
       display: inline-block;
@@ -114,6 +118,13 @@
 }
 .step2-form1 {
   padding: 0 1rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  .step2-input {
+    width: 20rem;
+  }
 }
 .step2-form2 {
   padding: 0 1rem 0 1rem;
@@ -122,6 +133,9 @@
   .step2-selects {
     display: flex;
     width: 50%;
+    .chakra-select__wrapper {
+      margin-right: 2rem;
+    }
   }
 }
 .step2-isclass {
@@ -132,16 +146,83 @@
   }
 }
 // step3
-.step3-stack2 {
+.step3-form {
+  margin: 0 auto;
+  flex-wrap: wrap;
+  width: 45rem;
+  .step3-name-form {
+    margin: 1rem 0 1rem 0;
+  }
+  .step3-password-form {
+    margin: 1rem 0 1rem 0;
+  }
+}
+.step3-last {
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 // step4
-.step4-link:hover {
+.step4 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.step4-first {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  .step4-img {
+    width: 10rem;
+    height: 10rem;
+    margin-bottom: 1rem;
+  }
+  p>span {
+  color: #5c4428;
+  }
+}
+.step4-last {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 4.5rem;
+}
+.step4-button {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  line-height: 100%;
+  text-align:left;
+}
+.step4-link {
+  height: 56%;
+  width: 40.5%;
+  margin-top: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: #f8f8f8;
-  text-decoration: none;
+  &#step4-main {
+    background-color: #B5A18C;
+    &:hover {
+      background-color: #c7baac;
+      transition: 0.3s ease-in;
+      color: #f8f8f8;
+    }
+  }
+  &#step4-login {
+    background-color: #7e5526;
+    &:hover {
+      background-color: #472b0a;
+      transition: 0.3s ease-in;
+      color: #f8f8f8;
+    }
+  }
 }
