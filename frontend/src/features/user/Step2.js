@@ -1,5 +1,5 @@
 import { Stack, Button, Box, Text, FormControl, InputGroup, Input, 
-  InputRightElement, FormLabel, Select, Switch, Spacer  } from '@chakra-ui/react';
+  InputRightElement, FormLabel, Select, Switch  } from '@chakra-ui/react';
 import { useState, useEffect, useRef } from 'react';
 import './Signup.scss'
 import AlertDialogModal from '../../components/AlertModal';
@@ -30,12 +30,12 @@ const Step2 = ({ step, setStep }) => {
     }
   }
 
-  
   // 담임이면 학년, 반 입력 필수
   const [isClassTeacher, setIsClassTeacher] = useState(false)
   const [chkG, setChkG] = useState(false)
   const [grade, setGrade] = useState('')
   const [group, setGroup] = useState('')
+
   // 다음버튼
   const onClickHandle = () => {
     if (!chkSchool) {
@@ -54,7 +54,7 @@ const Step2 = ({ step, setStep }) => {
       setStep(step+1)
     }
   }
-  
+
   // 학교코드 인증 안했는데 담임체크하려고 하면 튕기기
   const mounted = useRef(false)
   useEffect(() => {
@@ -74,7 +74,7 @@ const Step2 = ({ step, setStep }) => {
         {/* 학교코드 */}
         <FormControl className='step2-form1'>
           <FormLabel>School Code</FormLabel>
-          <InputGroup>
+          <InputGroup className='step2-input'>
             <Input type="text" placeholder="School Code" onChange={(e) => setSchoolCode(e.target.value)} value={schoolCode} autoFocus />
             <InputRightElement width="4.5rem">
               <Button h="1.75rem" size="sm" type='submit' onClick={handleSchoolCheck}>확인</Button>
@@ -92,7 +92,7 @@ const Step2 = ({ step, setStep }) => {
           {/* 학년, 반 select */}
           {isClassTeacher ? (
           <FormControl isRequired className='step2-selects'>
-            <Select id='grade' placeholder='학년' variant='flushed' onChange={(e) => setGrade(e.target.value)}>
+            <Select className='step2-grade' placeholder='학년' variant='flushed' onChange={(e) => setGrade(e.target.value)}>
               <option value='1'>1학년</option>
               <option value='2'>2학년</option>
               <option value='3'>3학년</option>

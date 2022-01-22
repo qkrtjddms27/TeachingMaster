@@ -9,7 +9,7 @@ const MainPage = () => {
   <div>
     <Main1/>
     {/* <Main2/> */}
-    <Main3/>
+    {/* <Main3/> */}
   </div>)
 };
 
