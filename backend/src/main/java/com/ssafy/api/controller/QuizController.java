@@ -1,15 +1,12 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.QuizOptionRegisterReq;
 import com.ssafy.api.request.QuizRegisterReq;
 import com.ssafy.api.response.FolderRes;
-import com.ssafy.api.response.QuizOptionsRes;
 import com.ssafy.api.response.QuizRes;
 import com.ssafy.api.service.QuizService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Folder;
 import com.ssafy.db.entity.Quiz;
-import com.ssafy.db.entity.QuizOption;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +22,7 @@ public class QuizController {
     @Autowired
     QuizService quizService;
 
-    @PostMapping("/create/main")
+    @PostMapping("/create/{folder_id}")
     @ApiOperation(value = "quiz 등록", notes = "과목, 사진(필요시), 퀴즈제목, 내용, 정답, 공개여부,제한시간, 학년, 선생님ID, 폴더 ID로 퀴즈 생성")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -34,28 +31,13 @@ public class QuizController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<QuizRes> register_quiz(
-            @RequestBody @ApiParam(value="퀴즈 등록 정보", required = true) QuizRegisterReq quizInfo) {
+            @RequestBody @ApiParam(value="퀴즈 등록 정보", required = true) QuizRegisterReq quizInfo,
+            @PathVariable("folder_id") Long folderId) {
 
-        Quiz quiz =  quizService.createQuiz(quizInfo);
+        Quiz quiz =  quizService.createQuiz(quizInfo, folderId);
         return ResponseEntity.status(200).body(QuizRes.of(quiz));
     }
 
-
-    @PostMapping("/create/option")
-    @ApiOperation(value = "quiz option등록", notes = "항목들을 퀴즈의 보기들로 생성")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<List<QuizOptionsRes>> register_option(
-            @RequestBody @ApiParam(value="퀴즈 옵션 정보", required = true) List<QuizOptionRegisterReq> list) {
-
-        List<QuizOption> quizOptions = quizService.createOption(list);
-
-        return ResponseEntity.status(200).body(QuizOptionsRes.of(quizOptions));
-    }
 
     @PutMapping("/update/quiz")
     @ApiOperation(value = "quiz 수정", notes = "퀴즈 수정")
@@ -68,25 +50,10 @@ public class QuizController {
     public ResponseEntity<QuizRes> update_quiz(
             @RequestBody @ApiParam(value = "퀴즈 정보 수정", required = true) QuizRegisterReq quizInfo
     ){
+        System.out.println("quizController 들어옴");
         Quiz quiz = quizService.updateQuiz(quizInfo);
 
         return ResponseEntity.status(200).body(QuizRes.of(quiz));
-    }
-
-    @PutMapping("/update/option")
-    @ApiOperation(value = "quiz option 수정", notes = "퀴즈 옵션 수정")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<List<QuizOptionsRes>> update_quizOption(
-            @RequestBody @ApiParam(value = "퀴즈 옵션 정보 수정", required = true) List<QuizOptionRegisterReq> optionInfos
-    ){
-        List<QuizOption> lists = quizService.updateOption(optionInfos);
-
-        return ResponseEntity.status(200).body(QuizOptionsRes.of(lists));
     }
 
     @DeleteMapping("delete/{quiz_id}")
@@ -113,10 +80,37 @@ public class QuizController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<List<FolderRes>> select_folder(@PathVariable("user_id") String userId){
-        System.out.println("Controller" + userId);
         List<Folder> list = quizService.selectFolders(userId);
 
         return ResponseEntity.status(200).body(FolderRes.of(list));
+    }
+
+    @GetMapping("/find/folderQuiz/{folder_id}")
+    @ApiOperation(value = "해당 폴더의 퀴즈 목록 불러오기", notes = "퀴즈리스트 Select")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<QuizRes>> select_folderQuiz(@PathVariable("folder_id") Long folderId){
+        List<Quiz> quizList = quizService.selectsFolderQuiz(folderId);
+
+        return ResponseEntity.status(200).body(QuizRes.of(quizList));
+    }
+
+    @GetMapping("/find/Quiz/{quiz_id}")
+    @ApiOperation(value = "퀴즈 내용 불러오기", notes = "퀴즈 Select")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<QuizRes> select_folder(@PathVariable("quiz_id") Long quizId){
+        QuizRes quizRes = quizService.selectQuiz(quizId);
+
+        return ResponseEntity.status(200).body(quizRes);
     }
 
 }
