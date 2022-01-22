@@ -2,6 +2,10 @@ export const folders = [
   {id:1,title:"어려움"},
   {id:2,title:"보통"},
   {id:3,title:"쉬움"},
+  {id:4,title:"구거"},
+  {id:5,title:"여어"},
+  {id:6,title:"수항"},
+  {id:7,title:"체윸"},
 ]
 
 export const quizzes = [
