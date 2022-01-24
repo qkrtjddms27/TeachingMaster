@@ -6,13 +6,13 @@ import imgSrc from './bunny.png'
 
 
 // 회원가입이 완료되었습니다 페이지 -> 로그인 버튼 있으면 좋을듯?
-const Step4 = ({ step,setStep }) => {
+const Step4 = ({ userName }) => {
   return (
     <div className='step4'>
       <Stack className='step4-first'>
         <Image className='step4-img' src={imgSrc}/>
         <Text fontSize='3xl'>
-          <span>사용자이름</span>님의 회원가입을 축하합니다!
+          <span>{userName}</span>님의 회원가입을 축하합니다!
         </Text>
         <Text fontSize='2xl'>Teaching Master의 서비스를 마음껏 누려보세요</Text>
       </Stack>
