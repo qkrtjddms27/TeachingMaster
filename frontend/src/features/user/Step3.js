@@ -1,10 +1,13 @@
 import { Button, FormControl, InputGroup, Input, InputRightElement, Stack, FormLabel } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import AlertDialogModal from '../../components/AlertModal';
-
+import axios from 'axios'
 
 // 이름, 아이디, 비번, 비번확인 페이지
-const Step3 = ({ step, setStep }) => {
+const Step3 = ({ 
+  step, setStep, userName, setUserName, userId, setUserId, userPassword, setUserPassword,  
+  isClassTeacher, grade, group
+  }) => {
 
   // password, confirmPassword 보일지 말지 결정하는 부분
   const [showPassword, setShowPassword] = useState(false);
@@ -18,9 +21,10 @@ const Step3 = ({ step, setStep }) => {
     setIsSame(false)
   }, [])
 
-  const [userName, setUserName] = useState('')
-  const [userId, setUserId] = useState('')
-  const [userPassword, setUserPassword] = useState('')
+  // prop으로 옮김
+  // const [userName, setUserName] = useState('')
+  // const [userId, setUserId] = useState('')
+  // const [userPassword, setUserPassword] = useState('')
   const [confirmUserPassword, setConfirmUserPassword] = useState('')
 
   // 비번과 비번확인이 같은지 다른지
@@ -49,7 +53,27 @@ const Step3 = ({ step, setStep }) => {
       setUserPassword('')
       setConfirmUserPassword('')
     } else {
-      setStep(step+1)
+      const data = {
+        "master": false,
+        "password": userPassword,
+        "roomGrade": grade,
+        "roomNum": group,
+        "userHomeroom": isClassTeacher,
+        "userId": userId,
+        "userName": userName,
+        "userProfile": "profile"
+      }
+      axios(
+        {
+          url: "http://localhost:8080/api/v1/users",
+          method: "POST",
+          data,
+        }
+      )
+      .then(() => {
+        setStep(step+1)
+      })
+      .catch(err => console.log(err))
     }
   }
 

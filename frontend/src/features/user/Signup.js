@@ -13,11 +13,13 @@ const Signup = () => {
 
   // Step2
   const [isClassTeacher, setIsClassTeacher] = useState(false)
-  const [grade, setGrade] = useState('')
-  const [group, setGroup] = useState('')
+  const [grade, setGrade] = useState(0)
+  const [group, setGroup] = useState(0)
 
   // Step3
-
+  const [userName, setUserName] = useState('')
+  const [userId, setUserId] = useState('')
+  const [userPassword, setUserPassword] = useState('')
 
 
   return (
@@ -43,9 +45,18 @@ const Signup = () => {
         {step === 1 ? ( <Step1 step={step} setStep={setStep} /> ) : null}
         {step === 2 ? ( 
           <Step2 step={step} setStep={setStep} 
-            isClassTeacher={isClassTeacher} set/> ) : null}
-        {step === 3 ? ( <Step3 step={step} setStep={setStep} /> ) : null}
-        {step === 4 ? ( <Step4 step={step} setStep={setStep} /> ) : null}
+            isClassTeacher={isClassTeacher} setIsClassTeacher={setIsClassTeacher}
+            grade={grade} setGrade={setGrade}
+            group={group} setGroup={setGroup}
+          /> ) : null}
+        {step === 3 ? ( 
+          <Step3 step={step} setStep={setStep} 
+          userName={userName} setUserName={setUserName}
+          userId={userId} setUserId={setUserId}
+          userPassword={userPassword} setUserPassword={setUserPassword}
+          isClassTeacher={isClassTeacher} grade={grade} group={group}
+          /> ) : null}
+        {step === 4 ? ( <Step4 userName={userName} /> ) : null}
       </div>
     </div>
   );
