@@ -7,12 +7,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @ApiModel("QuizResponse")
-public class QuizRes {
+public class QuizLogRes {
+
+	@ApiModelProperty(name="학번")
+	String studentId;
+
 	@ApiModelProperty(name="문제 번호")
 	long quizId;
 	@ApiModelProperty(name="과목 이름", example="국어,영어,수학,사회,과학,기타")
@@ -31,18 +36,26 @@ public class QuizRes {
 	int quizTimeout;
 	@ApiModelProperty(name="학년", example="1,2,3,4,5,6")
 	int quizGrade;
-	@ApiModelProperty(name="선생님 id")
-	String userId;
 
 	@ApiModelProperty(name="보기")
 	String options[];
 
-	public static List<QuizRes> of(List<Quiz> quizList) {
+	@ApiModelProperty(name="정답 유무")
+	boolean quizResult;
 
-		List<QuizRes> resList = new ArrayList<>();
+	@ApiModelProperty(name="출제 날짜")
+	Date quizDate;
 
-		for (Quiz quiz : quizList) {
-			QuizRes res = new QuizRes();
+	@ApiModelProperty(name="선택한 답")
+	int selectAnswer;
+
+
+	public static List<QuizLogRes> of(List<QuizLogRes> quizList) {
+
+		List<QuizLogRes> resList = new ArrayList<>();
+
+		for (QuizLogRes quiz : quizList) {
+			QuizLogRes res = new QuizLogRes();
 			res.setQuizId(quiz.getQuizId());
 			res.setSubject(quiz.getSubject());
 			res.setQuizPhoto(quiz.getQuizPhoto());
@@ -52,7 +65,6 @@ public class QuizRes {
 			res.setOpenStatus(quiz.getOpenStatus());
 			res.setQuizTimeout(quiz.getQuizTimeout());
 			res.setQuizGrade(quiz.getQuizGrade());
-			res.setUserId(quiz.getUser().getUserId());
 
 			res.setOptions(quiz.getOptions());
 			resList.add(res);
@@ -61,23 +73,4 @@ public class QuizRes {
 		return resList;
 	}
 
-	public static QuizRes of(Quiz quiz) {
-
-		QuizRes res = new QuizRes();
-
-		res.setQuizId(quiz.getQuizId());
-		res.setSubject(quiz.getSubject());
-		res.setQuizPhoto(quiz.getQuizPhoto());
-		res.setQuizTitle(quiz.getQuizTitle());
-		res.setQuizContents(quiz.getQuizContents());
-		res.setQuizAnswer(quiz.getQuizAnswer());
-		res.setOpenStatus(quiz.getOpenStatus());
-		res.setQuizTimeout(quiz.getQuizTimeout());
-		res.setQuizGrade(quiz.getQuizGrade());
-
-		res.setUserId(quiz.getUser().getUserId());
-		res.setOptions(quiz.getOptions());
-
-		return res;
-	}
 }

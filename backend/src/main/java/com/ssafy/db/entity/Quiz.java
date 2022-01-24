@@ -38,6 +38,9 @@ public class Quiz {
     @Column(nullable = false)       
     private int quizGrade;                  //학년
 
+    private String options[];
+
+
     //선생님 연결
     @ManyToOne
     @JoinColumn(name = "userId")

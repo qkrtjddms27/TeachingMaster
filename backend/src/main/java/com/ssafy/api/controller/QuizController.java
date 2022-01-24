@@ -1,11 +1,12 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.QuizRegisterReq;
-import com.ssafy.api.response.FolderRes;
-import com.ssafy.api.response.QuizRes;
+import com.ssafy.api.response.*;
 import com.ssafy.api.service.QuizService;
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.Bookmark;
 import com.ssafy.db.entity.Folder;
+import com.ssafy.db.entity.FolderQuiz;
 import com.ssafy.db.entity.Quiz;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,10 @@ public class QuizController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<QuizRes> register_quiz(
-            @RequestBody @ApiParam(value="퀴즈 등록 정보", required = true) QuizRegisterReq quizInfo,
+            @RequestBody @ApiParam(value = "퀴즈 등록 정보", required = true) QuizRegisterReq quizInfo,
             @PathVariable("folder_id") Long folderId) {
 
-        Quiz quiz =  quizService.createQuiz(quizInfo, folderId);
+        Quiz quiz = quizService.createQuiz(quizInfo, folderId);
         return ResponseEntity.status(200).body(QuizRes.of(quiz));
     }
 
@@ -49,7 +50,7 @@ public class QuizController {
     })
     public ResponseEntity<QuizRes> update_quiz(
             @RequestBody @ApiParam(value = "퀴즈 정보 수정", required = true) QuizRegisterReq quizInfo
-    ){
+    ) {
         System.out.println("quizController 들어옴");
         Quiz quiz = quizService.updateQuiz(quizInfo);
 
@@ -64,7 +65,7 @@ public class QuizController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> delete_Quiz(@PathVariable("quiz_id") Long quizId){
+    public ResponseEntity<? extends BaseResponseBody> delete_Quiz(@PathVariable("quiz_id") Long quizId) {
 
         quizService.deleteQuiz(quizId);
 
@@ -79,7 +80,7 @@ public class QuizController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<List<FolderRes>> select_folder(@PathVariable("user_id") String userId){
+    public ResponseEntity<List<FolderRes>> select_folder(@PathVariable("user_id") String userId) {
         List<Folder> list = quizService.selectFolders(userId);
 
         return ResponseEntity.status(200).body(FolderRes.of(list));
@@ -93,11 +94,14 @@ public class QuizController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<List<QuizRes>> select_folderQuiz(@PathVariable("folder_id") Long folderId){
+    public ResponseEntity<List<QuizRes>> select_folderQuiz(
+            @PathVariable("folder_id") Long folderId
+    ) {
         List<Quiz> quizList = quizService.selectsFolderQuiz(folderId);
 
         return ResponseEntity.status(200).body(QuizRes.of(quizList));
     }
+
 
     @GetMapping("/find/Quiz/{quiz_id}")
     @ApiOperation(value = "퀴즈 내용 불러오기", notes = "퀴즈 Select")
@@ -107,10 +111,108 @@ public class QuizController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<QuizRes> select_folder(@PathVariable("quiz_id") Long quizId){
+    public ResponseEntity<QuizRes> select_folder(@PathVariable("quiz_id") Long quizId) {
         QuizRes quizRes = quizService.selectQuiz(quizId);
 
         return ResponseEntity.status(200).body(quizRes);
     }
 
+    @GetMapping("/findAll")
+    @ApiOperation(value = "전체 퀴즈 불러오기", notes = "퀴즈 Select")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<QuizRes>> select_quizAll() {
+        List<Quiz> quizList = quizService.selectQuizAll();
+
+        return ResponseEntity.status(200).body(QuizRes.of(quizList));
+    }
+
+    @PostMapping("/create/folder/{user_id}/{folder_name}")
+    @ApiOperation(value = "폴더 생성", notes = "폴더 create")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<FolderRes> create_folder(
+            @PathVariable("user_id") String userId,
+            @PathVariable("folder_name") String folder_name
+    ) {
+        Folder folder = quizService.createFolder(userId, folder_name);
+
+        return ResponseEntity.status(200).body(FolderRes.of(folder));
+    }
+
+    @PostMapping("/create/favor/{user_id}/{quiz_id}")
+    @ApiOperation(value = "즐겨찾기 등록", notes = "즐겨찾기 등록")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<BookMarkRes> create_favor(
+            @PathVariable("user_id") String userId,
+            @PathVariable("quiz_id") Long quiz_id
+    ) {
+
+        Bookmark bookmark = quizService.createFavor(userId, quiz_id);
+
+        return ResponseEntity.status(200).body(BookMarkRes.of(bookmark));
+    }
+
+    @GetMapping("/select/favor/{user_id}")
+    @ApiOperation(value = "즐겨찾기 보기", notes = "즐겨찾기 보기")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<QuizRes>> select_favor(
+            @PathVariable("user_id") String userId
+    ) {
+        List<Quiz> quizList = quizService.selectFavor(userId);
+
+        return ResponseEntity.status(200).body(QuizRes.of(quizList));
+    }
+
+    @PostMapping("/update/folder_mapping/{folder_id}/{quiz_id}")
+    @ApiOperation(value = "폴더에 퀴즈 넣기", notes = "폴더에 퀴즈 넣기")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<FolderQuizRes> update_folder_quiz_mapping(
+            @PathVariable("folder_id") Long folderId,
+            @PathVariable("quiz_id") Long quizId
+    ) {
+
+        FolderQuiz folderQuiz = quizService.insertQuiz(folderId, quizId);
+
+        return ResponseEntity.status(200).body(FolderQuizRes.of(folderQuiz));
+    }
+
+    @GetMapping("/select/quiz_log/{student_id}")
+    @ApiOperation(value = "학생 퀴즈 로그보기", notes = "학생 퀴즈 로그보기")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<QuizLogRes>> select_quizLog(
+            @PathVariable("student_id") String studentId
+            ) {
+        List<QuizLogRes> quizLogResList = quizService.selectQuizLog(studentId);
+
+        return ResponseEntity.status(200).body(quizLogResList);
+    }
 }

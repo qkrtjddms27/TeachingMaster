@@ -28,10 +28,21 @@ public class FolderRes {
 
 			folderRes.setFolderId(folder.getFolderId());
 			folderRes.setUserId(folder.getUser().getUserId());
-			folderRes.setFolderName(folder.getSubName());
+			folderRes.setFolderName(folder.getFolderName());
 
 			res.add(folderRes);
 		}
+
+		return res;
+	}
+
+	public static FolderRes of(Folder folder) {
+		FolderRes res = new FolderRes();
+
+		res.setFolderId(folder.getFolderId());
+		res.setUserId(folder.getUser().getUserId());
+		res.setFolderName(folder.getFolderName());
+
 
 		return res;
 	}

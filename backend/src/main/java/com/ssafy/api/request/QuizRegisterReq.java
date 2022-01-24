@@ -32,7 +32,7 @@ public class QuizRegisterReq {
     @ApiModelProperty(name="선생님 id")
     String userId;
 
-    @ApiModelProperty(name="보기 List")
-    List<QuizOptionRegisterReq> quizOptions;
+    @ApiModelProperty(name="보기")
+    String options[];
 
 }
