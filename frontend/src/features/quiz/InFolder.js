@@ -1,5 +1,6 @@
-import { Image, Select, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, 
-        Box, Text, Radio, RadioGroup, Stack } from '@chakra-ui/react'
+import {Image, Select, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, 
+        Box, Text, Radio, RadioGroup, Stack, Button, Popover, PopoverTrigger, PopoverContent, 
+        PopoverHeader, PopoverArrow, PopoverCloseButton, PopoverBody } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import onetwo from './plusicon.gif'
@@ -14,6 +15,10 @@ const InFolder = () => {
   let {id} = useParams()
   const [folder,setfolder] = useState({})
   const [quizlist,setQuizlist]  = useState([])
+
+
+  
+
   useEffect(()=>{
     setfolder(folders.filter(folder=>folder.id===Number(id))[0])
     setQuizlist(quizzes.filter(quiz =>quiz.folder_id===Number(id)))
@@ -23,17 +28,30 @@ const InFolder = () => {
 
       <div className='infolder-nav menu'>
         <li className='infolder-navmenu-li'>
-          <Link>전체보기</Link>
+          <Link to="#" className='infolder-li-a'>전체보기</Link>
         </li>
         <li>
-          <Link>즐겨찾기</Link>
+          <Link className='infolder-li-a' to="#">즐겨찾기</Link>
         </li>
         <li>
-          <Link>내가 만든 문제</Link>
+          <Link className='infolder-li-a' to="#">내가 만든 문제</Link>
         </li>
         <li>
           {/* 누르면 팝업이든 뭐든 띄워서 누르게하기 -> select하니까 모양이 망가짐 */}
-          <span>내폴더</span>
+          <Popover placement='top-start'>
+            <PopoverTrigger>
+              <span className='infolder-li-a'>내 폴더</span>
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverBody>
+                <li><Link to="#">어려워</Link></li>
+                <li><Link to="#">쉬워</Link></li>
+                <li><Link to="#">국</Link></li>
+                <li><Link to="#">영</Link></li>
+                <li><Link to="#">수</Link></li>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
         </li>
       </div>
 
@@ -66,8 +84,10 @@ const InFolder = () => {
       <div>
         <Accordion allowToggle>
           {qz.map(
-            (quiz) => (
-              <AccordionItem>
+            (quiz) => {
+            const url = `/quiz/${quiz.id}/update`
+            return (
+              <AccordionItem key={quiz.id}>
                 <h2>
                   <AccordionButton>
                     <Box className='infolder-quiz' flex='1'>
@@ -88,14 +108,34 @@ const InFolder = () => {
                     <Box boxSize='4%'></Box>
                     <Text>보기</Text>
                     <div className='infolder-quiz-last'>
-                      {quiz.choices.map(choice => (
-                        <div className={choice.num === quiz.answer ? 'infolder-correct' : ''}>{choice.num}) {choice.val}</div>
+                      {quiz.choices.map((choice, index) => (
+                        <div key={index} className={(index+1) === quiz.answer ? 'infolder-correct' : ''}>{index+1}) {choice}</div>
                       ))}
                     </div>
                   </div>
+                  <div>
+                    <Popover placement='top-start'>
+                      <PopoverTrigger>
+                        <Button>폴더</Button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverHeader fontWeight='semibold'>담을 폴더를 선택하세요</PopoverHeader>
+                        <PopoverArrow />
+                        <PopoverCloseButton />
+                        <PopoverBody>
+                          <li>어려워</li>
+                          <li>쉬워</li>
+                          <li>국</li>
+                          <li>영</li>
+                          <li>수</li>
+                        </PopoverBody>
+                      </PopoverContent>
+                    </Popover>
+                    <Link to={url}><Button>수정</Button></Link>
+                  </div>
                 </AccordionPanel>
               </AccordionItem>      
-            ))
+            )})
           }
         </Accordion>
       </div>
