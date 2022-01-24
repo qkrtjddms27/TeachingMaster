@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import { Flex, Text, Input, Button, InputGroup, Stack, Box, InputLeftElement, FormControl, InputRightElement, Spacer, chakra, Image, Heading, FormLabel } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { FaUserAlt, FaLock } from "react-icons/fa"
 import './Login.scss'
-import tmlogo from './data-protection.png'
+import axios from "axios";
+import AlertDialogModal from "../../components/AlertModal";
+
 
 const CFaUserAlt = chakra(FaUserAlt)
 const CFaLock = chakra(FaLock)
 
 const Login = () => {
+  let history = useHistory()
   // password 보일까? 말까?
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
@@ -22,35 +25,56 @@ const Login = () => {
   const onChangeId = (e) => setUserId(e.target.value)
   const onChangePassword = (e) => setUserPassword(e.target.value)
 
+  const [isOpen, setIsOpen] = useState(false)
+
   // 제출
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(userId, userPassword)
-    setUserId("")
-    setUserPassword("")
+    const data = {
+      "password": userPassword,
+      userId,
+    }
+    axios(
+      {
+        url: "http://localhost:8080/api/v1/auth/login",
+        method: "POST",
+        data,
+      }
+    )
+    .then(({data}) => {
+      console.log(data.message)
+      localStorage.setItem('jwt', data.accessToken)
+      history.push('/home')
+    })
+    .catch(err => {
+      console.log(err)
+      setIsOpen(true)
+      setUserId('')
+      setUserPassword('')
+      history.push('login')
+    })
   }
 
 
   return (
     <Flex className="login-flex">
+      <AlertDialogModal title="로그인에 실패했습니다" content="아이디와 비밀번호를 다시 입력해주세요" isOpen={isOpen} setIsOpen={setIsOpen} />
       <Spacer/>
       <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center" >
           <form onSubmit={handleSubmit} className="login-justify-center">
             <Stack spacing={4} className="login-form">
-              {/* <Image src={tmlogo}/> */}
               <Heading>Login</Heading>
+              <Spacer/>
               <Text color="black" className="login-title">티칭마스터의 다양한 서비스를 누려보세요</Text>
               <Spacer/>
               <FormControl>
                 <InputGroup>
-                  {/* <FormLabel>ID</FormLabel> */}
                   <InputLeftElement pointerEvents="none" children={<CFaUserAlt color="gray.300" />} />
                   <Input type="text" placeholder="아이디" onChange={onChangeId} value={userId} focusBorderColor="#B5A18C" />
                 </InputGroup>
               </FormControl>
               <FormControl>
                 <InputGroup>
-                  {/* <FormLabel>Password</FormLabel> */}
                   <InputLeftElement pointerEvents="none" children={<CFaLock color="gray.300" />} />
                   <Input type={showPassword ? "text" : "password"} placeholder="비밀번호" onChange={onChangePassword} value={userPassword}  focusBorderColor="#B5A18C" />
                   <InputRightElement width="4.5rem">

@@ -2,12 +2,12 @@ import { Button, FormControl, InputGroup, Input, InputRightElement, Stack, FormL
 import React, { useState, useEffect } from 'react';
 import AlertDialogModal from '../../components/AlertModal';
 import axios from 'axios'
+import { useHistory } from 'react-router-dom';
 
 // 이름, 아이디, 비번, 비번확인 페이지
-const Step3 = ({ 
-  step, setStep, userName, setUserName, userId, setUserId, userPassword, setUserPassword,  
-  isClassTeacher, grade, group
-  }) => {
+const Step3 = ({ step, setStep, userName, setUserName, userId, setUserId, userPassword, setUserPassword, isClassTeacher, grade, group }) => {
+
+  let history = useHistory()
 
   // password, confirmPassword 보일지 말지 결정하는 부분
   const [showPassword, setShowPassword] = useState(false);
@@ -40,7 +40,7 @@ const Step3 = ({
   const [naemCheck, setNameCheck] = useState(false)
   const [idCheck, setIdCheck] = useState(false)
   const [passwordErr, setpasswordErr] = useState(false)
-
+  const [isOpen, setIsOpen] = useState(false)
   // 제출
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -73,7 +73,12 @@ const Step3 = ({
       .then(() => {
         setStep(step+1)
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        console.log(err)
+        setIsOpen(true)
+        setStep(1)
+        history.push("/signup")
+      })
     }
   }
 
@@ -83,6 +88,7 @@ const Step3 = ({
       <AlertDialogModal title="다시 입력하세요" content="이름을 입력해주세요" isOpen={naemCheck} setIsOpen={setNameCheck} />
       <AlertDialogModal title="다시 입력하세요" content="아이디를 입력해주세요" isOpen={idCheck} setIsOpen={setIdCheck} />
       <AlertDialogModal title="다시 입력하세요" content="비밀번호를 다시 입력해주세요" isOpen={passwordErr} setIsOpen={setpasswordErr} />
+      <AlertDialogModal title="다시 시도하세요" content="회원가입에 실패했습니다" isOpen={isOpen} setIsOpen={setIsOpen} />
       <form onSubmit={handleSubmit}>
         <div className='step3-form'>
           {/* 이름 */}
