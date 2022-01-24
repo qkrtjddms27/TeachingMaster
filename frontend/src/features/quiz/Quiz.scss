@@ -1,5 +1,7 @@
 .folder-icon {
+  margin: auto;
   height: 11rem;
+  margin-top: 1rem;
   transition: opacity 0.3s ease-in;
 
   &:hover {
@@ -34,6 +36,12 @@
       margin-top: 4rem;
       text-align: center;
     }
+    .mine {
+      width: 20rem;
+      height: 20rem;
+      border-radius: 30%;
+      background-color: #d4d0d0;
+    }
   }
   .title {
     text-align: center;
@@ -41,14 +49,13 @@
   .folders {
   }
 }
-.add-button {
+.plus-button {
   position: fixed;
   height: 100px;
   bottom: 10rem;
   right: 20rem;
   cursor: pointer;
 }
-
 .correct {
   display: inline;
   background-color: yellowgreen;

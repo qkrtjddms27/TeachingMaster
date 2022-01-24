@@ -14,10 +14,10 @@ export const qz = [
   {id:5,subject:"수학",title:"빼기문제",
   content:"1-3은 -2이다!?",grade:2,answer:2,folder_id:2,
   choices: [{num: 1, val: 2}, {num: 2, val: 3}, {num: 3, val: 4}, {num: 4, val:'5'}]},
-  {id:2,subject:"국어",title:"국업문제",
+  {id:6,subject:"국어",title:"국업문제",
   content:"김소월은 누구인가요?",grade:2,answer:3,folder_id:2,
   choices: [{num: 1, val: '화가'}, {num: 2, val: '운동선수'}, {num: 3, val: '시인'}, {num: 4, val:'선생님'}]},
-  {id:3,subject:"영어",title:"eng?eng?",
+  {id:7,subject:"영어",title:"eng?eng?",
   content:"what is that?",grade:3,answer:3,folder_id:3,
   choices: [{num: 1, val: '수박'}, {num: 2, val: '사과'}, {num: 3, val: '딸기'}, {num: 4, val:'당근'}]},
 ]
