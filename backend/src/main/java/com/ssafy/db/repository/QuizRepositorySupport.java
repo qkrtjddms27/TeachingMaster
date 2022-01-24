@@ -1,6 +1,8 @@
 package com.ssafy.db.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.db.entity.QBookmark;
+import com.ssafy.db.entity.QQuiz;
 import com.ssafy.db.entity.Quiz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

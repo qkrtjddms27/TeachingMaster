@@ -4,6 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import java.util.Optional;
 
+import com.ssafy.db.entity.QUser;
 import com.ssafy.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

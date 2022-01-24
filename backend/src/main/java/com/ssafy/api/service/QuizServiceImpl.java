@@ -51,7 +51,12 @@ public class QuizServiceImpl implements QuizService{
         quiz.setOpenStatus(quizRegisterReq.getOpenStatus());
         quiz.setQuizTimeout(quizRegisterReq.getQuizTimeout());
         quiz.setQuizGrade(quizRegisterReq.getQuizGrade());
-        quiz.setOptions(quizRegisterReq.getOptions());
+
+        String[] options = quizRegisterReq.getOptions();
+        quiz.setOption1(options[0]);
+        quiz.setOption2(options[1]);
+        quiz.setOption3(options[2]);
+        quiz.setOption4(options[3]);
 
         //퀴즈 본문 저장
         User user = new User();
@@ -80,7 +85,11 @@ public class QuizServiceImpl implements QuizService{
         quiz.setOpenStatus(quizRegisterReq.getOpenStatus());
         quiz.setQuizTimeout(quizRegisterReq.getQuizTimeout());
         quiz.setQuizGrade(quizRegisterReq.getQuizGrade());
-        quiz.setOptions(quizRegisterReq.getOptions());
+        String[] options = quizRegisterReq.getOptions();
+        quiz.setOption1(options[0]);
+        quiz.setOption2(options[1]);
+        quiz.setOption3(options[2]);
+        quiz.setOption4(options[3]);
 
         User user = new User();
         user.setUserId(quizRegisterReq.getUserId());
@@ -108,7 +117,13 @@ public class QuizServiceImpl implements QuizService{
         quizRes.setQuizGrade(quiz.getQuizGrade());
         quizRes.setQuizGrade(quiz.getQuizGrade());
         quizRes.setUserId(quiz.getUser().getUserId());
-        quizRes.setOptions(quiz.getOptions());
+        String[] options = new String[4];
+        options[0] = quiz.getOption1();
+        options[1] = quiz.getOption2();
+        options[2] = quiz.getOption3();
+        options[3] = quiz.getOption4();
+
+        quizRes.setOptions(options);
 
         return quizRes;
     }
@@ -224,7 +239,14 @@ public class QuizServiceImpl implements QuizService{
             quizLogTemp.setOpenStatus(quiz.getOpenStatus());
             quizLogTemp.setQuizTimeout(quiz.getQuizTimeout());
             quizLogTemp.setQuizGrade(quiz.getQuizGrade());
-            quizLogTemp.setOptions(quiz.getOptions());
+
+            String[] options = new String[4];
+            options[0] = quiz.getOption1();
+            options[1] = quiz.getOption2();
+            options[2] = quiz.getOption3();
+            options[3] = quiz.getOption4();
+
+            quizLogTemp.setOptions(options);
 
             quizLogRes.add(quizLogTemp);
         }

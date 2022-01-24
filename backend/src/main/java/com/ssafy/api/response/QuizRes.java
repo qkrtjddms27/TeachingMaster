@@ -53,8 +53,13 @@ public class QuizRes {
 			res.setQuizTimeout(quiz.getQuizTimeout());
 			res.setQuizGrade(quiz.getQuizGrade());
 			res.setUserId(quiz.getUser().getUserId());
+			String[] options = new String[4];
+			options[0] = quiz.getOption1();
+			options[1] = quiz.getOption2();
+			options[2] = quiz.getOption3();
+			options[3] = quiz.getOption4();
 
-			res.setOptions(quiz.getOptions());
+			res.setOptions(options);
 			resList.add(res);
 		}
 
@@ -76,7 +81,13 @@ public class QuizRes {
 		res.setQuizGrade(quiz.getQuizGrade());
 
 		res.setUserId(quiz.getUser().getUserId());
-		res.setOptions(quiz.getOptions());
+		String[] options = new String[4];
+		options[0] = quiz.getOption1();
+		options[1] = quiz.getOption2();
+		options[2] = quiz.getOption3();
+		options[3] = quiz.getOption4();
+
+		res.setOptions(options);
 
 		return res;
 	}

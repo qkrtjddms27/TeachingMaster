@@ -22,7 +22,7 @@ public class Quiz {
     @Column(length = 100)
     private String quizPhoto;               //사진
 
-    @Column(length = 20, nullable = false)
+    @Column(nullable = false)
     private String quizTitle;               //퀴즈제목
 
     @Column(length = 500, nullable = false)
@@ -38,7 +38,11 @@ public class Quiz {
     @Column(nullable = false)       
     private int quizGrade;                  //학년
 
-    private String options[];
+    private String option1;
+    private String option2;
+    private String option3;
+    private String option4;
+
 
 
     //선생님 연결
