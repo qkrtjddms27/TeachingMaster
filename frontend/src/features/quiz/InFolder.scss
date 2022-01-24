@@ -11,29 +11,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  li a {
+  .infolder-li-a {
     font-weight: bold;
     font-size: 25px;
     text-decoration: none;
-    :hover {
-      cursor: pointer;
-      color: black;
-    }
+    position: relative;
     ::before {
       content: "";
-      height: 5px;
-      width: 10px;
-      background-color: #B5A18C;
+      height: 20px;
+      width: 20px;
+      background-color: red;
       border-radius: 10px;
       transition: 0.3s;
       position: absolute;
       bottom: 0;
       left: 0;
     }
-  }
-  li span {
-    font-weight: bold;
-    font-size: 25px;
+    :hover {
+      cursor: pointer;
+      color: black;
+    }
   }
 }
 .infolder-sub {
