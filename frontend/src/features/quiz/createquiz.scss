@@ -1,0 +1,135 @@
+.box {
+  border-radius: 5px;
+  background-color: #f1eae9;
+  box-shadow: 5px 5px 5px;
+  margin: auto;
+  margin-top: 1rem;
+  height: 59rem;
+  // min-width: 265px;
+  width: 1000px;
+  max-width: none;
+  .quiz-img {
+    height: 12rem;
+    margin: auto;
+    // margin-top: 30rem;
+  }
+  .title-box {
+    margin: auto;
+    width: 85%;
+    .title-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      // margin-left: 2.5rem;
+    }
+    .title-input {
+      width: 91%;
+      font-size: 1.2rem;
+      border-radius: 2px;
+      border: 0.1rem solid black;
+    }
+  }
+  p {
+    display: inline-block;
+    font-weight: 1000;
+  }
+  select {
+    margin-left: 1rem;
+    border-radius: 3px;
+    background-color: rgb(214, 210, 210);
+  }
+}
+.sub_time_grade_open-box {
+  width: 90%;
+  display: flex;
+  margin: 2rem 0 2rem 2.5rem;
+  justify-content: space-around;
+
+  .subject-box {
+    display: flex;
+    .subject-text {
+      width: 4rem;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+  }
+  .time-box {
+    display: flex;
+    .time-text {
+      width: 7rem;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+  }
+  .grade-box {
+    display: flex;
+    .grade-text {
+      width: 4rem;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+  }
+  .open-box {
+    margin-top: 0.5rem;
+    .chakra-radio {
+      border: rgb(131, 121, 121);
+    }
+  }
+}
+.content-box {
+  margin: auto;
+  width: 84%;
+  .content-input {
+    border: 0.1rem solid black;
+    height: 8rem;
+    resize: none;
+    border-radius: 2px;
+  }
+}
+.choice-box {
+  margin: auto;
+  width: 90%;
+  margin-top: 1rem;
+
+  .chakra-radio {
+    margin-top: 0.6rem;
+    margin-right: 1rem;
+    border: rgb(131, 121, 121);
+  }
+  .choice-text {
+    margin-left: 1.7rem;
+  }
+  input {
+    margin-bottom: 1rem;
+    width: 93%;
+    border-radius: 2px;
+    border: 0.1rem solid black;
+    background-color: rgb(255, 255, 255);
+    &#answer {
+      background-color: rgb(176, 230, 176);
+    }
+  }
+  .choice {
+    margin-top: 1rem;
+  }
+}
+.quiz-create-button {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  .prev-button {
+    color: #f8f8f8;
+    margin-right: 5rem;
+    &:hover {
+      background-color: #c7baac;
+      transition: 0.3s ease-in;
+    }
+  }
+  .submit-button {
+    color: #f8f8f8;
+    &:hover {
+      background-color: #472b0a;
+      transition: 0.3s ease-in;
+    }
+  }
+}

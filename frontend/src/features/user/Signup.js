@@ -11,6 +11,14 @@ import Step4 from './Step4';
 const Signup = () => {
   const [step, setStep] = useState(1)
 
+  // Step2
+  const [isClassTeacher, setIsClassTeacher] = useState(false)
+  const [grade, setGrade] = useState('')
+  const [group, setGroup] = useState('')
+
+  // Step3
+
+
 
   return (
     <div className='signup-bg'>
@@ -33,7 +41,9 @@ const Signup = () => {
           </li>
         </ul>
         {step === 1 ? ( <Step1 step={step} setStep={setStep} /> ) : null}
-        {step === 2 ? ( <Step2 step={step} setStep={setStep} /> ) : null}
+        {step === 2 ? ( 
+          <Step2 step={step} setStep={setStep} 
+            isClassTeacher={isClassTeacher} set/> ) : null}
         {step === 3 ? ( <Step3 step={step} setStep={setStep} /> ) : null}
         {step === 4 ? ( <Step4 step={step} setStep={setStep} /> ) : null}
       </div>

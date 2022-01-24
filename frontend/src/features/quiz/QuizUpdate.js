@@ -19,7 +19,7 @@ const QuizUpdate = () => {
 
         <Heading>수정페이지</Heading>
         <Heading className='title'>제목 :</Heading>
-        <Input variant='filled' className='input_title' placeholder={quiz.title}/>
+        <Input variant='filled' value={quiz.title} className='input_title' placeholder={quiz.title}/>
         <p>문제번호 : {quiz.id}(수정불가)</p> 
         <p>과목 : {quiz.subject}(인풋창)</p>
         <p>내용 : </p>

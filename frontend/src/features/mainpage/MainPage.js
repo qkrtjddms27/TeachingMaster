@@ -8,7 +8,7 @@ const MainPage = () => {
   return(
   <div>
     <Main1/>
-    {/* <Main2/> */}
+    <Main2/>
     {/* <Main3/> */}
   </div>)
 };
