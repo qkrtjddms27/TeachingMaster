@@ -3,21 +3,52 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Radio,RadioGroup,Stack,Textarea,Input,Button,Select } from '@chakra-ui/react';
 import './createquiz.scss'
-const Createquiz = () => {
+import { useParams } from 'react-router-dom';
+
+const Updatequiz = () => {
+  let {quiz_id} = useParams()
   let history = useHistory()
+  const [quiz,setQuiz] = useState([])
   const [userId,setUserId] = useState("anon")
-  const [title,setTitle] =useState("")
-  const [subject,setSubject] = useState("국어")
-  const [timeout,setTimeout] = useState(15)
-  const [grade,setGrade] = useState(1)
-  const [open,setOpen] =useState("true")
-  const [contents,setContents] = useState("")
-  const [answer,setAnswer] = useState(1)
-  const [choice,setChoice] = useState([1,2,3,4])
-  // useEffect = ()=>{
-  //   setUserId(localStorage.getItem("userId"))
-  // }
-  const Submit = ()=>{
+  const [title,setTitle] =useState(quiz.title)
+  const [subject,setSubject] = useState(quiz.subject)
+  const [timeout,setTimeout] = useState(quiz.timeout)
+  const [grade,setGrade] = useState(quiz.grade)
+  const [open,setOpen] =useState(quiz.open)
+  const [contents,setContents] = useState(quiz.contents)
+  const [answer,setAnswer] = useState(quiz.answer)
+  const [choice,setChoice] = useState(quiz.choice)
+
+  useEffect (()=>{
+    // setUserId(localStorage.getItem("userId"))
+    axios({
+      url:`http://localhost:8080/api/v1/quiz/${quiz_id}`,
+      method:"GET",
+      // headers: setToken()
+    })
+    .then(res=>{
+      setQuiz(res.data.quiz)
+    })
+    .catch(
+      setQuiz([])
+    )
+  },[])
+
+  const DELETE = ()=>{
+    axios({
+      url :`http://localhost:8080/api/v1/quiz/delete/${quiz_id}`,
+      method:"DELETE",
+      // headers:setToken()
+    }
+    ).then(res=>{
+      console.log(res)
+      history.push('/')
+    }).catch(err=>{
+      console.log(err)
+    })
+  }
+
+  const UPDATE = ()=>{
     const data ={
       "answer": answer,
       "contents": contents,
@@ -26,17 +57,15 @@ const Createquiz = () => {
       "subject": subject,
       "timeout": timeout,
       "title": title,
-      "id": 0,
+      "id": quiz_id,
       "userId": userId     
     }
     axios(
       {
-        url : "http://localhost:8080/api/v1/quiz/create/main",
-        mathod: "POST",
-        header:{
-          //setToken()
-        },
+        url : `http://localhost:8080/api/v1/quiz/update/${quiz_id}`,
+        mathod: "PUT",
         data,
+        // header:setToken(),
       }
     ).then(res=>
       console.log(res),
@@ -112,24 +141,23 @@ const Createquiz = () => {
       <div className='choice-box'>
       <p className='choice-text'>보기 :</p>
         <RadioGroup onChange={setAnswer} value={answer} >
-          <div className='choice'>
-            <Radio size='lg' colorScheme='orange' value ="1"/>
-            <Input id={answer==="1"?"answer":""} value={choice[0]} onChange={(e)=>setChoice(choice[0]= e.target.value)} />
-          </div>
-          <div className='choice'>
-            <Radio size='lg' colorScheme='orange' value ="2"/>
-            <Input id={answer==="2"?"answer":""} value={choice[1]} onChange={(e)=>setChoice(choice[1]= e.target.value)} />
-          </div>
-          <div className='choice'>
-            <Radio size='lg' colorScheme='orange' value ="3"/>
-            <Input id={answer==="3"?"answer":""} value={choice[2]} onChange={(e)=>setChoice(choice[2]= e.target.value)} />
-          </div>
-          <div className='choice'>
-            <Radio size='lg' colorScheme='orange' value ="4"/>
-            <Input id={answer==="4"?"answer":""} value={choice[3]} onChange={(e)=>setChoice(choice[3]= e.target.value)}/>
-          </div>
-        </RadioGroup>
-        <div></div>
+            <div className='choice'>
+              <Radio size='lg' colorScheme='orange' value ="1"/>
+              <Input id={answer==="1"?"answer":""} value={choice[0]} onChange={(e)=>setChoice(choice[0]= e.target.value)} />
+            </div>
+            <div className='choice'>
+              <Radio size='lg' colorScheme='orange' value ="2"/>
+              <Input id={answer==="2"?"answer":""} value={choice[1]} onChange={(e)=>setChoice(choice[1]= e.target.value)} />
+            </div>
+            <div className='choice'>
+              <Radio size='lg' colorScheme='orange' value ="3"/>
+              <Input id={answer==="3"?"answer":""} value={choice[2]} onChange={(e)=>setChoice(choice[2]= e.target.value)} />
+            </div>
+            <div className='choice'>
+              <Radio size='lg' colorScheme='orange' value ="4"/>
+              <Input id={answer==="4"?"answer":""} value={choice[3]} onChange={(e)=>setChoice(choice[3]= e.target.value)}/>
+            </div>
+          </RadioGroup>
       </div>
       <Stack className='step2-stack2'>
         <div className='quiz-create-button'>
@@ -137,8 +165,11 @@ const Createquiz = () => {
             bgColor="#B5A18C" colorScheme="#c7baac" width="48%" 
           >이전</Button>
           <Button borderRadius={0} variant="solid" className="submit-button" 
-            bgColor="#7e5526" colorScheme="#472b0a" width="48%" onClick={() => Submit()}
-          >제출</Button>
+            bgColor="#7e5526" colorScheme="#472b0a" width="48%" onClick={() => UPDATE()}
+          >수정하기</Button>
+          <Button borderRadius={0} variant="solid" className='prev-button' 
+            bgColor="#B5A18C" colorScheme="#c7baac" width="48%" onClick={()=> DELETE()}
+          >삭제</Button>
         </div>
       </Stack>
     </div>
@@ -146,4 +177,4 @@ const Createquiz = () => {
   );
 };
 
-export default Createquiz;
+export default Updatequiz;

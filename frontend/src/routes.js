@@ -9,7 +9,7 @@ import Conference from './features/conference/Conference'
 import Myconference from './features/conference/Myfonference'
 import InFolder from './features/quiz/InFolder';
 import QuizDetail from './features/quiz/QuizDetail';
-import QuizUpdate from './features/quiz/QuizUpdate';
+import Updatequiz from './features/quiz/Updatequiz';
 import Createquiz from './features/quiz/Createquiz';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
@@ -65,7 +65,7 @@ export default [
   },
   {
     path: "/quiz/:id/update",
-    component: QuizUpdate,
+    component: Updatequiz,
     name: "문제수정페이지",
     exact:true,
   },
