@@ -73,8 +73,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User updateUser(UserUpdateReq userUpdateInfo) {
 		// 유저 정보 수정
-		//User user = getUserByUserId(userUpdateInfo.getUserId());
-		User user = getUserByUserId("ssafy_web");
+		User user = getUserByUserId(userUpdateInfo.getUserId());
 
 		user.setUserId(userUpdateInfo.getUserId());
 		user.setUserName(userUpdateInfo.getUserName());
