@@ -46,7 +46,7 @@ export default [
     exact:true,
   },
   {
-    path: "/quiz/folder/:id",
+    path: "/quiz/folder/:thisFolder",
     component: InFolder,
     name: "폴더상세페이지",
     exact:true,

@@ -4,26 +4,35 @@ import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverArrow, P
 import { useState } from 'react'
 import add from './add.png'
 import axios from 'axios'
+import { setToken  } from '../../TOKEN';
 
-const AddQuizPopover = ({folders,setFolers}) => {
-  const [foldername,setFoldername ] = useState("")
-  const addFolder =()=>{
+const AddQuizPopover = ({myFolders, setMyFolders}) => {
+  const [folderName, setFolderName ] = useState("")
+  const addFolder = (e) => {
+    e.preventDefault()
+    const data = {
+      "userId": localStorage.getItem("userId"),
+      folderName
+    }
+    // axios({
+    //   url: `http://localhost:8080/api/v1/quiz/create/folder`,
+    //   method: "POST",
+    //   headers: setToken(),
+    //   data,
+    // })
     axios({
-      url:`http://localhost:8080/api/v1/quiz/{user_id}/create/folder/`,
-      method:"POST",
-      // headers: setToken()
-      data:{"folderName":foldername,"userId":localStorage.getItem("userId")}
+      url: `http://localhost:8080/api/v1/quiz/create/folder/${data.userId}/${folderName}`,
+      method: "POST",
+      headers: setToken(),
     })
-    .then((res)=>{
-      console.log(foldername)
-      setFoldername("")
-      // setFolers([])
+    .then(res => {
+      setMyFolders(myFolders => [...myFolders, res.data])
     })
-      
-    .catch((err)=>{
-      console.log(foldername)
-      setFoldername("");
-      console.log(err)})
+    .catch(err => {
+      console.log(folderName)
+      console.log(err)
+    })
+    setFolderName("");
   }
   return (
     <div>
@@ -38,12 +47,12 @@ const AddQuizPopover = ({folders,setFolers}) => {
             <PopoverArrow />
             <PopoverCloseButton />
             <PopoverBody>
-            <form onSubmit={()=>addFolder()}>
+            <form onSubmit={(e) => addFolder(e)}>
                 <InputGroup>
-                  <Input  onChange={(e)=>{setFoldername(e.target.value)}} 
-                    value={foldername} />
+                  <Input  onChange={(e) => {setFolderName(e.target.value)}} 
+                    value={folderName} autoFocus={true} />
                   <InputRightElement>
-                    <Button type='submit' colorScheme="cyan">
+                    <Button type='submit' colorScheme="green" variant="ghost">
                       추가
                     </Button>
                   </InputRightElement>
