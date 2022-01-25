@@ -1,28 +1,34 @@
 import { Box,Text,useDisclosure } from '@chakra-ui/react'
-import React from 'react'
+import React,{useState} from 'react'
 import { Card } from 'react-bootstrap'
-import ModalPage from './ModalPage'
+import ModalPage from './Modal/ModalPage'
 
 const StudentCard = ({student}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [mainOrUpate,setMainOrUpdate] = useState("main")
+  const Open = ()=>{
+    setMainOrUpdate("main")
+    onOpen()
+  }
 
   return (
     <>
       <Card className='CARD'  >
-        <Box className='f-cardbox' boxShadow="xl">
+        <Box className='f-cardbox' >
           <img className='image' alt='학생사진' 
             src={student.profile} />
           <div className='card-body'>
+          <Card.Text className='stars'>
+            ⭐{student.star}
+            </Card.Text>
             <Card.Title className='card-title'>
                 {student.name}
             </Card.Title>
-            <Card.Text className='stars'>
-            ⭐&nbsp;{student.star}
-            </Card.Text>
+            
           </div>
         </Box>
       
-        <Box onClick={onOpen} className='b-cardbox' id ={student.id%2===0?"odd":"even"} boxShadow="xl">
+        <Box onClick={onOpen} className='b-cardbox'>
           <div className='img-name-star'>
             <img className='image' alt='학생사진' src={student.profile} />
             <div>
@@ -41,8 +47,8 @@ const StudentCard = ({student}) => {
           
         </Box>
       </Card>
-      <ModalPage 
-      student={student} isOpen={isOpen} onOpen={onOpen} onClose={onClose} 
+      <ModalPage mainOrUpate={mainOrUpate} setMainOrUpdate={setMainOrUpdate}
+      student={student} isOpen={isOpen} onOpen={Open} onClose={onClose} 
       />
     </>
   )

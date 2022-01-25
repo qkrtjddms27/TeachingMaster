@@ -4,6 +4,7 @@ import React from 'react'
 const Settings = () => {
   return (
     <div>
+      여기는 세팅 페이지!
     </div>
   )
 }

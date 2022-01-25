@@ -7,29 +7,32 @@
   border: none;
   margin-top: 5rem;
   margin-left: 5rem;
-  border-radius: 15px;
+  border-radius: 5px;
   cursor: pointer;
 }
-
-.cards {
-  margin-right: 10rem;
-  flex: 3;
+.card-case {
+  width: 80%;
+  margin: auto;
+  .cards {
+    margin-right: 10rem;
+    flex: 3;
+  }
 }
-
 .f-cardbox {
   width: 17rem;
   height: 21rem;
-
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 15px;
+  border-radius: 5px;
+  box-shadow: 3px 3px 7px;
+
   .image {
     margin: auto;
     margin-top: 3.5rem;
-    width: 9rem;
-    height: 9rem;
+    width: 10rem;
+    height: 10rem;
     border-radius: 100%;
   }
   .card-title {
@@ -39,7 +42,7 @@
     margin-left: 0.5rem;
   }
   .stars {
-    // margin-top: 0.3rem;
+    margin-left: 0.7rem;
     font-size: 1.2rem;
     font-weight: 700;
     user-select: none;
@@ -52,7 +55,9 @@
   height: 21rem;
   display: flex;
   flex-direction: column;
-  border-radius: 15px;
+  border-radius: 5px;
+  box-shadow: 3px 3px 7px;
+
   .img-name-star {
     display: flex;
     .image {
@@ -109,12 +114,7 @@
   transform: perspective(600px) rotateY(180deg);
   backface-visibility: hidden;
   transition: transform 0.6s linear 0s;
-  &#odd {
-    background: linear-gradient(90deg, #e0eafc 0%, #a0b6d4 100%, #e0eafc 0%);
-  }
-  &#even {
-    background: linear-gradient(90deg, #fad0c4, #ff9a9e);
-  }
+  background-color: whitesmoke;
 }
 .CARD:hover > .f-cardbox {
   transform: perspective(600px) rotateY(-180deg);

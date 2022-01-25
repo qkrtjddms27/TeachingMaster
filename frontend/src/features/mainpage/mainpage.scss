@@ -1,15 +1,4 @@
 .Main1 {
-  @keyframes typing {
-    0% {
-      width: 0%;
-    }
-    50% {
-      width: 100%;
-    }
-    100% {
-      width: 0%;
-    }
-  }
   background-color: rgb(22, 21, 21);
   height: 100vh;
   .typing {
@@ -18,7 +7,7 @@
     color: transparent;
     margin: 0;
     position: absolute;
-    top: 50%;
+    top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
     // 텍스트를 정 가운데에 고정시키려면 필수
@@ -37,27 +26,26 @@
     }
   }
 }
-
-.Main2 {
-  background-color: cadetblue;
-  height: 100vh;
-  .text {
-    height: 4rem;
-    overflow-y: hidden;
-    display: block;
-    // margin-bottom: 1rem;
+@keyframes typing {
+  0% {
+    width: 0%;
   }
-  p {
-    font-size: 3rem;
-    line-height: 4rem;
-    transform: translateY(4rem);
-    transition: all 0.5s ease;
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
   }
 }
-.text.show p {
-  transform: translateY();
+.Main2 {
+  background-color: rgb(32, 32, 32);
+  background-image: url("https://images.pexels.com/photos/261909/pexels-photo-261909.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  height: 100vh;
+  .study {
+    margin-left: 10rem;
+    height: 50vh;
+  }
 }
 .Main3 {
-  background-color: rgb(184, 114, 155);
-  height: 100vh;
+  background-color: rgb(214, 199, 208);
 }
