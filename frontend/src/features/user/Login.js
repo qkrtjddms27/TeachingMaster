@@ -41,10 +41,10 @@ const Login = () => {
         data,
       }
     )
-    .then(({data}) => {
-      console.log('로그인성공')
-      localStorage.setItem('userId', userId)
-      localStorage.setItem('jwt', data.accessToken)
+    .then(res => {
+      const resUserData = JSON.parse(res.config.data)
+      localStorage.setItem('userId', resUserData.userId)
+      localStorage.setItem('jwt', res.data.accessToken)
       history.push('/home')
     })
     .catch(err => {
