@@ -2,17 +2,15 @@ import { useState, useEffect } from "react";
 import { Flex, Text, Input, Button, InputGroup, Stack, Box, InputLeftElement, FormControl, InputRightElement, Spacer, chakra, Image, Heading, FormLabel } from "@chakra-ui/react";
 import { Link, useHistory } from "react-router-dom";
 import { FaUserAlt, FaLock } from "react-icons/fa"
-import './Login.scss'
+import './scss/Login.scss'
 import axios from "axios";
 import AlertDialogModal from "../../components/AlertModal";
-
 
 const CFaUserAlt = chakra(FaUserAlt)
 const CFaLock = chakra(FaLock)
 
-const Login = () => {
+const Login = ({is_login,setIs_Login,user,setUser}) => {
   let history = useHistory()
-  // password 보일까? 말까?
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
   useEffect(() => {
@@ -43,10 +41,11 @@ const Login = () => {
     )
     .then(res => {
       const resUserData = JSON.parse(res.config.data)
+      setIs_Login(true)
       localStorage.setItem('userId', resUserData.userId)
       localStorage.setItem('jwt', res.data.accessToken)
-      history.push('/home')
-    })
+      setIs_Login(true)
+      history.push('/home')})
     .catch(err => {
       console.log(err)
       setIsOpen(true)

@@ -1,7 +1,7 @@
 import { Stack, Button, Box, Text, FormControl, InputGroup, Input, 
   InputRightElement, FormLabel, Select, Switch  } from '@chakra-ui/react';
 import { useState, useEffect, useRef } from 'react';
-import './Signup.scss'
+import './scss/Signup.scss'
 import AlertDialogModal from '../../components/AlertModal';
 
 

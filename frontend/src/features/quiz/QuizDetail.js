@@ -3,7 +3,7 @@ import { quizzes } from './quizzes'
 import { Link, useParams } from 'react-router-dom'
 import { Button, Heading } from '@chakra-ui/react'
 import { choices } from './quizzes'
-import './Quiz.scss'
+import './scss/Quiz.scss'
 
 const QuizDetail = () => {
   let {id} = useParams()

@@ -1,8 +1,8 @@
 // import { useState } from 'react';
 import { Stack, Image, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import './Signup.scss'
-import imgSrc from './bunny.png'
+import './scss/Signup.scss'
+import imgSrc from './image/bunny.png'
 
 
 // 회원가입이 완료되었습니다 페이지 -> 로그인 버튼 있으면 좋을듯?
