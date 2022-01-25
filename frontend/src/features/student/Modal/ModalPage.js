@@ -3,8 +3,8 @@ import {Modal,ModalOverlay,ModalContent,ModalHeader,ModalCloseButton,ModalBody }
 import './modal.scss'
 import ModalUpdate from './ModalUpdate';
 import ModalMain from './ModalMain'
-const ModalPage = ({isOpen, onOpen, onClose,student}) => {
-  const [mainOrUpate,setMainOrUpdate] = useState("main")
+import Modalquiz from './Modalquiz';
+const ModalPage = ({isOpen, onOpen, onClose,student,mainOrUpate,setMainOrUpdate}) => {
   return (
     <div className='ModalPage'>
       <Modal
@@ -23,10 +23,9 @@ const ModalPage = ({isOpen, onOpen, onClose,student}) => {
             <ModalCloseButton />
             <ModalBody>
               <div className='body'>
-                {mainOrUpate==="main"?
-                  <ModalMain change={setMainOrUpdate} onClose={onClose} student={student}/>:
-                  <ModalUpdate change={setMainOrUpdate} onClose={onClose} student={student} />
-                }       
+                {mainOrUpate==="main" && <ModalMain change={setMainOrUpdate} onClose={onClose} student={student}/>}
+                {mainOrUpate==="update" && <ModalUpdate change={setMainOrUpdate} onClose={onClose} student={student} /> }  
+                {mainOrUpate==="quiz" && <Modalquiz change={setMainOrUpdate} onClose={onClose} student={student}/>}       
               </div>              
           </ModalBody>
         </ModalContent>
