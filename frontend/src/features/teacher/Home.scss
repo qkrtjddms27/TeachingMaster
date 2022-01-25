@@ -96,14 +96,20 @@
     height: 2rem;
   }
   .title {
-    background-color: white;
-    margin-top: 3rem;
-    font-size: x-large;
+    background-color: rgb(253, 253, 253);
+    margin-top: 1rem;
+    font-size: 2rem;
     font-weight: 1000;
   }
   .quizlist {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 15rem;
     margin-top: 3rem;
     flex-direction: column;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   &:hover {
     transform: scale(1.05);
