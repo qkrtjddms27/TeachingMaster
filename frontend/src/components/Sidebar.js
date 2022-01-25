@@ -11,9 +11,7 @@ import {useDisclosure} from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
 const teacher = {teacher_profile:'https://blog.kakaocdn.net/dn/bAyJve/btqNr8wMiXi/rV0XKPT78iMnmkXlViEmk0/img.jpg'}
-function Sidebar() {
-  const userId = localStorage.getItem("userId")
-  // 선생님 정보를 받아와야하는데 ? 안되는걸
+function Sidebar({user,setUser}) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
@@ -24,7 +22,7 @@ function Sidebar() {
           <DrawerHeader className='DrawerHeader' borderBottomWidth='1px'>
           <img className='teacher_image' alt='선생님사진'
               src={teacher.teacher_profile} />
-            <div className='teacher_name'>{userId} 선생님</div>
+            <div className='teacher_name'>{user.userName} 선생님</div>
           </DrawerHeader>
           <DrawerBody className="DrawerBody">
             {/* <MoonIcon className='Icon'/> */}
