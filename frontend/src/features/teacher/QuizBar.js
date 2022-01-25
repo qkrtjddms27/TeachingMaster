@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@chakra-ui/react';
 const QuizBar = ({id}) => {
   return (
-  <Box className='quizbox' boxShadow="xl">
+  <Box className='quizbox'>
     <div className='empty'></div>
     <Box className='title'>⭐즐겨찾기</Box>
     <ul className='quizlist'>
