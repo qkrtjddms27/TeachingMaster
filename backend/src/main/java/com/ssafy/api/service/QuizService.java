@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.QuizRegisterReq;
+import com.ssafy.api.request.*;
+import com.ssafy.api.response.QuizAllRes;
 import com.ssafy.api.response.QuizLogRes;
 import com.ssafy.api.response.QuizRes;
 import com.ssafy.db.entity.*;
@@ -8,8 +9,8 @@ import com.ssafy.db.entity.*;
 import java.util.List;
 
 public interface QuizService {
-    Quiz createQuiz(QuizRegisterReq quizRegisterReq, Long folderId);
-    Quiz updateQuiz(QuizRegisterReq quizRegisterReq);
+    Quiz createQuiz(QuizRegisterReq quizRegisterReq);
+    Quiz updateQuiz(QuizUpdateReq quizUpdateReq);
     QuizRes selectQuiz(Long quizId);
 
     void deleteQuiz(Long quizId);
@@ -17,14 +18,14 @@ public interface QuizService {
     List<Folder> selectFolders(String userId);
     List<Quiz> selectsFolderQuiz(Long folderId);
 
-    List<Quiz> selectQuizAll();
+    List<QuizAllRes> selectQuizAll(String userId);
 
-    Folder createFolder(String userId, String folderName);
-    Bookmark createFavor(String userId, Long quizId);
+    Folder createFolder(FolderRegisterReq folderRegisterReq);
+    Bookmark createFavor(FavorRegisterReq favorRegisterReq);
 
     List<Quiz> selectFavor(String userId);
 
-    FolderQuiz insertQuiz(Long folderId, Long quizId);
+    FolderQuiz insertQuiz(FolderQuizEnterReq folderQuizEnterReq);
 
     List<QuizLogRes> selectQuizLog(String studentId);
 }
