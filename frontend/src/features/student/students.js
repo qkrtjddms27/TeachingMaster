@@ -1,4 +1,4 @@
-export const students = [
+export const studentss = [
   {id:1,name:"임현홍",phone:"010-1234-1234",profile:"https://img.insight.co.kr/static/2020/09/02/700/98j4263429d06416wy82.jpg",
   score:10,email:"asdf@naver.com",star:123,parent:"임아빠",address:"부산시해운대구",
   relation:"아버지",parentphone:"010-2312-4123",room_id:63},
