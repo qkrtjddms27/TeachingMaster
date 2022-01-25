@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Text, Checkbox, Stack, Button } from '@chakra-ui/react';
-import './Signup.scss'
+import './scss/Signup.scss'
 import AlertDialogModal from '../../components/AlertModal';
 
 

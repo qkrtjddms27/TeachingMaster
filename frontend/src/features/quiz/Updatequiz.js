@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Radio,RadioGroup,Stack,Textarea,Input,Button,Select } from '@chakra-ui/react';
-import './createquiz.scss'
+import './scss/createquiz.scss'
 import { useParams } from 'react-router-dom';
 
 const Updatequiz = () => {
