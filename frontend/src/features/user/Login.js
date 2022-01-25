@@ -42,7 +42,8 @@ const Login = () => {
       }
     )
     .then(({data}) => {
-      console.log(data.message)
+      console.log('로그인성공')
+      localStorage.setItem('userId', userId)
       localStorage.setItem('jwt', data.accessToken)
       history.push('/home')
     })
