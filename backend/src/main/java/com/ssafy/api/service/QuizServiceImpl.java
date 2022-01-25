@@ -1,7 +1,8 @@
 package com.ssafy.api.service;
 
 
-import com.ssafy.api.request.QuizRegisterReq;
+import com.ssafy.api.request.*;
+import com.ssafy.api.response.QuizAllRes;
 import com.ssafy.api.response.QuizLogRes;
 import com.ssafy.api.response.QuizRes;
 import com.ssafy.db.entity.*;
@@ -9,7 +10,6 @@ import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,8 +40,11 @@ public class QuizServiceImpl implements QuizService{
     @Autowired
     StudentRepository studentRepository;
 
+    @Autowired
+    FolderQuizRepositorySupport folderQuizRepositorySupport;
+
     @Override
-    public Quiz createQuiz(QuizRegisterReq quizRegisterReq, Long folderId) {
+    public Quiz createQuiz(QuizRegisterReq quizRegisterReq) {
         Quiz quiz = new Quiz();
         quiz.setSubject(quizRegisterReq.getSubject());
         quiz.setQuizPhoto(quizRegisterReq.getQuizPhoto());
@@ -66,7 +69,7 @@ public class QuizServiceImpl implements QuizService{
 
         //퀴즈와 폴더 매핑 후 FolderQuiz에 저장
         FolderQuiz folderQuiz = new FolderQuiz();
-        folderQuiz.setFolder(folderRepository.findById(folderId).get());
+        folderQuiz.setFolder(folderRepository.findById(quizRegisterReq.getFolderId()).get());
         folderQuiz.setQuiz(quizRes);
         folderQuizRepository.save(folderQuiz);
 
@@ -74,7 +77,7 @@ public class QuizServiceImpl implements QuizService{
     }
 
     @Override
-    public Quiz updateQuiz(QuizRegisterReq quizRegisterReq) {
+    public Quiz updateQuiz(QuizUpdateReq quizRegisterReq) {
         Quiz quiz = new Quiz();
         quiz.setQuizId(quizRegisterReq.getQuizId());
         quiz.setSubject(quizRegisterReq.getSubject());
@@ -166,17 +169,33 @@ public class QuizServiceImpl implements QuizService{
         return quizList;
     }
 
+
     @Override
-    public List<Quiz> selectQuizAll() {
-        List<Quiz> quizList = quizRepository.findAll();
-        return quizList;
+    public List<QuizAllRes> selectQuizAll(String userId) {
+
+//        List<Folder> folderList = folderRepository.findByUser(userRepository.findById(userId).get());
+//
+//        Map<Long, Boolean> myFolder = new HashMap<Long, Boolean>();
+//        for (Folder folder:folderList) {
+//            myFolder.put(folder.getFolderId(), true);
+//        }
+//
+//        List<Quiz> quizList = quizRepository.findAll();
+//        for (Quiz quiz:quizList) {
+//
+//        }
+        List<QuizAllRes> quizAllResList = folderQuizRepositorySupport.joinFolderQuiz(userId);
+
+        System.out.println(quizAllResList.get(0).getQuizId() + ", "+ quizAllResList.get(0).getQuizTitle());
+
+        return quizAllResList;
     }
 
     @Override
-    public Folder createFolder(String userId, String folderName) {
+    public Folder createFolder(FolderRegisterReq folderRegisterReq) {
         Folder folder = new Folder();
-        folder.setUser(userRepository.findById(userId).get());
-        folder.setFolderName(folderName);
+        folder.setUser(userRepository.findById(folderRegisterReq.getUserId()).get());
+        folder.setFolderName(folderRegisterReq.getFolderName());
 
         Folder folderRes = folderRepository.save(folder);
 
@@ -184,10 +203,10 @@ public class QuizServiceImpl implements QuizService{
     }
 
     @Override
-    public Bookmark createFavor(String userId, Long quizId) {
+    public Bookmark createFavor(FavorRegisterReq favorRegisterReq) {
         Bookmark bookmark = new Bookmark();
-        bookmark.setQuiz(quizRepository.findById(quizId).get());
-        bookmark.setUser(userRepository.findById(userId).get());
+        bookmark.setQuiz(quizRepository.findById(favorRegisterReq.getQuizId()).get());
+        bookmark.setUser(userRepository.findById(favorRegisterReq.getUserId()).get());
 
         Bookmark bookmarkRes = bookMarkRepository.save(bookmark);
 
@@ -206,10 +225,10 @@ public class QuizServiceImpl implements QuizService{
     }
 
     @Override
-    public FolderQuiz insertQuiz(Long folderId, Long quizId) {
+    public FolderQuiz insertQuiz(FolderQuizEnterReq folderQuizEnterReq) {
         FolderQuiz folderQuiz = new FolderQuiz();
-        folderQuiz.setQuiz(quizRepository.findById(quizId).get());
-        folderQuiz.setFolder(folderRepository.findById(folderId).get());
+        folderQuiz.setQuiz(quizRepository.findById(folderQuizEnterReq.getQuizId()).get());
+        folderQuiz.setFolder(folderRepository.findById(folderQuizEnterReq.getFolderId()).get());
 
         FolderQuiz folderQuizRes = folderQuizRepository.save(folderQuiz);
 

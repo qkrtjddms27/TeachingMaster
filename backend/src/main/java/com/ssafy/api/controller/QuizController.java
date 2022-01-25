@@ -1,6 +1,6 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.QuizRegisterReq;
+import com.ssafy.api.request.*;
 import com.ssafy.api.response.*;
 import com.ssafy.api.service.QuizService;
 import com.ssafy.common.model.response.BaseResponseBody;
@@ -23,7 +23,7 @@ public class QuizController {
     @Autowired
     QuizService quizService;
 
-    @PostMapping("/create/{folder_id}")
+    @PostMapping("/create")
     @ApiOperation(value = "quiz 등록", notes = "과목, 사진(필요시), 퀴즈제목, 내용, 정답, 공개여부,제한시간, 학년, 선생님ID, 폴더 ID로 퀴즈 생성")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -32,10 +32,8 @@ public class QuizController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<QuizRes> register_quiz(
-            @RequestBody @ApiParam(value = "퀴즈 등록 정보", required = true) QuizRegisterReq quizInfo,
-            @PathVariable("folder_id") Long folderId) {
-
-        Quiz quiz = quizService.createQuiz(quizInfo, folderId);
+            @RequestBody @ApiParam(value = "퀴즈 등록 정보", required = true) QuizRegisterReq quizInfo) {
+        Quiz quiz = quizService.createQuiz(quizInfo);
         return ResponseEntity.status(200).body(QuizRes.of(quiz));
     }
 
@@ -49,7 +47,7 @@ public class QuizController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<QuizRes> update_quiz(
-            @RequestBody @ApiParam(value = "퀴즈 정보 수정", required = true) QuizRegisterReq quizInfo
+            @RequestBody @ApiParam(value = "퀴즈 정보 수정", required = true) QuizUpdateReq quizInfo
     ) {
         System.out.println("quizController 들어옴");
         Quiz quiz = quizService.updateQuiz(quizInfo);
@@ -117,7 +115,7 @@ public class QuizController {
         return ResponseEntity.status(200).body(quizRes);
     }
 
-    @GetMapping("/findAll")
+    @GetMapping("/findAll/{user_id}")
     @ApiOperation(value = "전체 퀴즈 불러오기", notes = "퀴즈 Select")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -125,13 +123,11 @@ public class QuizController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<List<QuizRes>> select_quizAll() {
-        List<Quiz> quizList = quizService.selectQuizAll();
-
-        return ResponseEntity.status(200).body(QuizRes.of(quizList));
+    public ResponseEntity<List<QuizAllRes>> select_quizAll(@PathVariable("user_id") String userId) {
+        return ResponseEntity.status(200).body(quizService.selectQuizAll(userId));
     }
 
-    @PostMapping("/create/folder/{user_id}/{folder_name}")
+    @PostMapping("/create/folder")
     @ApiOperation(value = "폴더 생성", notes = "폴더 create")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -140,15 +136,14 @@ public class QuizController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<FolderRes> create_folder(
-            @PathVariable("user_id") String userId,
-            @PathVariable("folder_name") String folder_name
-    ) {
-        Folder folder = quizService.createFolder(userId, folder_name);
+            @RequestBody FolderRegisterReq folderRegisterReq
+            ) {
+        Folder folder = quizService.createFolder(folderRegisterReq);
 
         return ResponseEntity.status(200).body(FolderRes.of(folder));
     }
 
-    @PostMapping("/create/favor/{user_id}/{quiz_id}")
+    @PostMapping("/create/favor")
     @ApiOperation(value = "즐겨찾기 등록", notes = "즐겨찾기 등록")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -157,11 +152,10 @@ public class QuizController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<BookMarkRes> create_favor(
-            @PathVariable("user_id") String userId,
-            @PathVariable("quiz_id") Long quiz_id
-    ) {
+            @RequestBody FavorRegisterReq favorRegisterReq
+            ) {
 
-        Bookmark bookmark = quizService.createFavor(userId, quiz_id);
+        Bookmark bookmark = quizService.createFavor(favorRegisterReq);
 
         return ResponseEntity.status(200).body(BookMarkRes.of(bookmark));
     }
@@ -182,7 +176,7 @@ public class QuizController {
         return ResponseEntity.status(200).body(QuizRes.of(quizList));
     }
 
-    @PostMapping("/update/folder_mapping/{folder_id}/{quiz_id}")
+    @PostMapping("/update/folder_mapping")
     @ApiOperation(value = "폴더에 퀴즈 넣기", notes = "폴더에 퀴즈 넣기")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -191,11 +185,10 @@ public class QuizController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<FolderQuizRes> update_folder_quiz_mapping(
-            @PathVariable("folder_id") Long folderId,
-            @PathVariable("quiz_id") Long quizId
-    ) {
+            @RequestBody FolderQuizEnterReq folderQuizEnterReq
+            ) {
 
-        FolderQuiz folderQuiz = quizService.insertQuiz(folderId, quizId);
+        FolderQuiz folderQuiz = quizService.insertQuiz(folderQuizEnterReq);
 
         return ResponseEntity.status(200).body(FolderQuizRes.of(folderQuiz));
     }

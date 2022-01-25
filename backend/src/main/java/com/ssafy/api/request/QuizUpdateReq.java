@@ -7,10 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel("QuizRegisterRequest")
-public class QuizRegisterReq {
-    @ApiModelProperty(name="소속 폴더 번호")
-    long folderId;
+@ApiModel("QuizUpdatesRequest")
+public class QuizUpdateReq {
     @ApiModelProperty(name="문제 번호")
     long quizId;
     @ApiModelProperty(name="과목 이름", example="국어,영어,수학,사회,과학,기타")
