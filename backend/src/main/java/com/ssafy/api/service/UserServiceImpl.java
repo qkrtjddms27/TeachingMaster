@@ -1,16 +1,19 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.UserUpdateReq;
+import com.ssafy.db.entity.Quiz;
 import com.ssafy.db.entity.Room;
 import com.ssafy.db.entity.User;
-import com.ssafy.db.repository.RoomRepository;
+import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.api.request.UserRegisterPostReq;
-import com.ssafy.db.repository.UserRepository;
-import com.ssafy.db.repository.UserRepositorySupport;
+
+import javax.transaction.Transactional;
+import java.util.List;
+
 
 /**
  *	유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -22,6 +25,12 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	RoomRepository roomRepository;
+
+	@Autowired
+	QuizRepositorySupport quizRepositorySupport;
+
+	@Autowired
+	QuizRepository quizRepository;
 
 	@Autowired
 	UserRepositorySupport userRepositorySupport;
@@ -94,9 +103,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteUserByUserId(String userId) {
 		//유저 정보 삭제(userId로)
-		//User user = userRepositorySupport.findUserByUserId(userId).get();
+		User user = userRepositorySupport.findUserByUserId("master").get();
+		List<Quiz> quizList = userRepositorySupport.findQuizByUserId(userId);
+
+		for (Quiz q:quizList) {
+			q.setUser(user);
+		}
 
 		userRepository.delete(userRepositorySupport.findUserByUserId(userId).get());
 
