@@ -10,6 +10,7 @@ import "aos/dist/aos.css"
 const Home = () => {
   useEffect(()=>{
     AOS.init()
+    
   })
   
   const [teacher,setTeacher] = useState({
