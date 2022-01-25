@@ -17,8 +17,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class User {
     @Id
-    @Column(length = 20)
-    private String userId;
+    @Column(length = 20 ,nullable = false)
+    private String userId ;
+
 
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -27,11 +28,13 @@ public class User {
     @Column(length = 20 ,nullable = false)
     private String userName;
 
-    @Column(length = 100)
+    @Column(length = 100 ,nullable = false)
     private String userProfile;
 
+    @Column(length = 100 ,nullable = false)
     private Boolean userHomeroom;
 
+    @Column(length = 100 ,nullable = false)
     private Boolean master;
 
     @ManyToOne(cascade = CascadeType.ALL)
