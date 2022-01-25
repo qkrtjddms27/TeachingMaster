@@ -1,4 +1,4 @@
-import './Sidebar.scss'
+import './scss/Sidebar.scss'
 import {HamburgerIcon} from '@chakra-ui/icons'
 import {
   Drawer,

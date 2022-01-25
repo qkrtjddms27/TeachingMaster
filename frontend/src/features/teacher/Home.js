@@ -1,12 +1,12 @@
 import React,{useState,useEffect} from 'react'
 import { Box,  Heading} from '@chakra-ui/react'
-import './Home.scss'
+import './scss/Home.scss'
 import QuizBar from './QuizBar'
 import AOS from 'aos'
 import "aos/dist/aos.css"
 import axios from 'axios'
-import { setToken } from '../../TOKEN'
-import Header from '../../components/Header'
+import {setToken} from '../../components/TOKEN'
+
 // 유저정보에서 선생님 사진 받아오기
 const Home = ({user}) => {
   console.log(user)

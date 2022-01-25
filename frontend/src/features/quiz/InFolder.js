@@ -4,11 +4,11 @@ import {Image, Select, Accordion, AccordionItem, AccordionButton, AccordionIcon,
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
-import { setToken } from '../../TOKEN'
-import onetwo from './plusicon.gif'
-import qicon from './qicon.png'
+import { setToken } from '../../components/TOKEN'
+import onetwo from './image/plusicon.gif'
+import qicon from './image/qicon.png'
 import { qz, myfd } from './qzz.js'
-import './InFolder.scss'
+import './scss/InFolder.scss'
 
 const InFolder = () => {
   let { thisFolder } = useParams()

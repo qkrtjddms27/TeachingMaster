@@ -2,12 +2,12 @@ import {Route,Switch} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import routes from './routes';
-import Header from './components/Header'
+import Header from './features/teacher/Header';
 import './App.scss'
 import Home from './features/teacher/Home';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
-import { setToken } from './TOKEN';
+import { setToken } from '../src/components/TOKEN'
 import Login from './features/user/Login';
 
 function App() {

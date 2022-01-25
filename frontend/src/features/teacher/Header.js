@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import { Box } from '@chakra-ui/react'
-import './Header.scss'
+import './scss/Header.scss'
 import Sidebar from './Sidebar'
 import { Link, useHistory } from 'react-router-dom'
 

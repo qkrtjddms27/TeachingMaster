@@ -3,13 +3,12 @@ import { Heading, Image } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import React,{ useEffect, useState } from 'react'
 import { Row,Col } from 'react-bootstrap'
-import star from './star.png'
+import star from './image/star.png'
 import axios from 'axios'
 import AddQuizPopover from './AddQuizPopover'
 import AOS from 'aos'
 import "aos/dist/aos.css"
-import { setToken } from '../../TOKEN'
-
+import { setToken } from '../../components/TOKEN'
 const Folder = () => {
   const userId = localStorage.getItem("userId")
 

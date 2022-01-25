@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Flex, Text, Input, Button, InputGroup, Stack, Box, InputLeftElement, FormControl, InputRightElement, Spacer, chakra, Image, Heading, FormLabel } from "@chakra-ui/react";
 import { Link, useHistory } from "react-router-dom";
 import { FaUserAlt, FaLock } from "react-icons/fa"
-import './Login.scss'
+import './scss/Login.scss'
 import axios from "axios";
 import AlertDialogModal from "../../components/AlertModal";
 

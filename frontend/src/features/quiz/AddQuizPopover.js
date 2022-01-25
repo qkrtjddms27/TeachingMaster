@@ -2,9 +2,9 @@ import React from 'react';
 import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverArrow, PopoverCloseButton, 
   PopoverBody, Button, Image, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import { useState } from 'react'
-import add from './add.png'
+import add from './image/add.png'
 import axios from 'axios'
-import { setToken  } from '../../TOKEN';
+import { setToken } from '../../components/TOKEN';
 
 const AddQuizPopover = ({myFolders, setMyFolders}) => {
   const [folderName, setFolderName ] = useState("")
