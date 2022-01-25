@@ -1,11 +1,12 @@
 // signup
 .signup-bg {
-  height: 160vh;
-  background-color: #d8c5b3;
+  height: 120vh;
+  width: 65%;
+  margin: auto;
   .signup {
+    min-width: 65rem;
     margin: 3rem;
     padding: 2rem 3rem;
-    min-width: 1035px;
     display: flex;
     flex-flow: column;
     background-color: #ffffff;

@@ -1,5 +1,7 @@
 .folder-icon {
+  margin: auto;
   height: 11rem;
+  margin-top: 1rem;
   transition: opacity 0.3s ease-in;
 
   &:hover {
@@ -23,7 +25,7 @@
 .every-folder {
   border-radius: 20px;
   background-color: #f1eae9;
-  width: 1500px;
+  width: 65%;
   margin: auto;
   margin-top: 5rem;
   .all-cart-mine {
@@ -34,6 +36,13 @@
       margin-top: 4rem;
       text-align: center;
     }
+    .mine {
+      width: 20rem;
+      height: 20rem;
+      border-radius: 5%;
+      color: rgb(12, 12, 12);
+      // background-color: #c3ad94;
+    }
   }
   .title {
     text-align: center;
@@ -41,14 +50,13 @@
   .folders {
   }
 }
-.add-button {
+.plus-button {
   position: fixed;
   height: 100px;
   bottom: 10rem;
   right: 20rem;
   cursor: pointer;
 }
-
 .correct {
   display: inline;
   background-color: yellowgreen;

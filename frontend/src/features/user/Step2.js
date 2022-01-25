@@ -6,7 +6,7 @@ import AlertDialogModal from '../../components/AlertModal';
 
 
 // 학교코드 & 담임여부(학년, 반) 페이지
-const Step2 = ({ step, setStep }) => {
+const Step2 = ({ step, setStep, isClassTeacher, setIsClassTeacher, grade, setGrade, group, setGroup }) => {
   // 숫자 하나 넣으면 배열 return하는 함수
   const range = (size) => Array.from({length: size}, (_, index) => index + 1)
 
@@ -30,11 +30,11 @@ const Step2 = ({ step, setStep }) => {
     }
   }
 
-  // 담임이면 학년, 반 입력 필수
-  const [isClassTeacher, setIsClassTeacher] = useState(false)
+  // 담임이면 학년, 반 입력 필수 -> prop으로 옮김
+  // const [isClassTeacher, setIsClassTeacher] = useState(false)
+  // const [grade, setGrade] = useState('')
+  // const [group, setGroup] = useState('')
   const [chkG, setChkG] = useState(false)
-  const [grade, setGrade] = useState('')
-  const [group, setGroup] = useState('')
 
   // 다음버튼
   const onClickHandle = () => {
