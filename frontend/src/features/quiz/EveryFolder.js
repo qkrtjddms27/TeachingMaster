@@ -8,8 +8,13 @@ import star from './star.png'
 import add from './add.png'
 import axios from 'axios'
 import AddQuizPopover from './AddQuizPopover'
+import AOS from 'aos'
+import "aos/dist/aos.css"
 
-const Folder = ({}) => {
+const Folder = () => {
+  useEffect(()=>{
+    AOS.init()
+  })
   const user_id = localStorage.getItem("userId")
   const [Imgurls,setImgurls] = useState([])
   const [folderss,setFolderss] = useState(folders)
@@ -45,15 +50,15 @@ const Folder = ({}) => {
       <Heading className='title'>폴더들</Heading>
       {/* <br/> */}
       <div className='all-cart-mine'>
-        <div className='mine'>
+        <div data-aos="fade-down" data-aos-duration="1500" className='mine'>
           <Link to="#"><img className='folder-icon' src={Imgurl1} alt='그림'/></Link>                    
           <Heading className='all-cart-mine-title'>전체보기</Heading>
         </div>
-        <div className='mine'>
+        <div data-aos="fade-up" data-aos-duration="1500" className='mine'>
           <Link to="#"><Image className='folder-icon' src={star} alt='즐겨찾기'/></Link>          
           <Heading className='all-cart-mine-title'>즐겨찾기</Heading>
         </div>
-        <div className='mine'>
+        <div data-aos="fade-down" data-aos-duration="1500" className='mine'>
           <Link to="#"><img className='folder-icon' src={Imgurl2} alt='그림'/></Link>
           <Heading className='all-cart-mine-title'>내가 만든문제</Heading>
         </div>
@@ -66,7 +71,9 @@ const Folder = ({}) => {
             const Imgurl = `https://cdn-icons-png.flaticon.com/512/1081/${Imgurls[index]}.png`
             return (
               <Col className='col' sm = {3} key={folder.id}>
-                <div key={url}>
+                <div data-aos="fade-up"
+                      data-aos-easing="linear"
+                      data-aos-duration="1500" key={url}>
                   <Link to={url}><img className='folder-icon' src={Imgurl} alt='그림'/></Link>
                   <p className='title'>{folder.title}</p>
                 </div>

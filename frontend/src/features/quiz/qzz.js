@@ -39,4 +39,3 @@ export const myfd = [
   {folder_id: 5, folder_name:'영'},
   {folder_id: 6, folder_name:'수'},
 ]
-
