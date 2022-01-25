@@ -2,6 +2,7 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.StudentRegisterPostReq;
 import com.ssafy.api.request.StudentInfoUpdateReq;
+import com.ssafy.api.response.StudentListRes;
 import com.ssafy.api.response.StudentRes;
 import com.ssafy.api.service.StudentService;
 import com.ssafy.common.model.response.BaseResponseBody;
@@ -10,6 +11,8 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 인증 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -21,6 +24,18 @@ public class StudentController {
 
     @Autowired
     StudentService studentService;
+
+    @PostMapping("/studentAll")
+    @ApiOperation(value = "모든 학생 조회", notes = "모든 학생들 정보 조회")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })ResponseEntity<? extends  BaseResponseBody> searchAll() {
+        List<Student> students = studentService.searchAll();
+        return ResponseEntity.status(200).body(StudentListRes.of(students,200,"Success"));
+    }
 
     @GetMapping("/{student_id}")
     @ApiOperation(value = "학생 조회", notes = "아이디를 통해 회원가입 한다.")
