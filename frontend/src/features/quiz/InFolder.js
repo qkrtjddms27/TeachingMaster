@@ -3,20 +3,64 @@ import {Image, Select, Accordion, AccordionItem, AccordionButton, AccordionIcon,
         PopoverHeader, PopoverArrow, PopoverCloseButton, PopoverBody, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import axios from 'axios'
+import { setToken } from '../../TOKEN'
 import onetwo from './plusicon.gif'
 import qicon from './qicon.png'
-// import EachQuiz from './EachQuiz'
-import { folders, quizzes } from './quizzes'
 import { qz, myfd } from './qzz.js'
 import './InFolder.scss'
 
 const InFolder = () => {
-  let {id} = useParams()
-  const [folder,setfolder] = useState({})
-  const [quizlist,setQuizlist]  = useState([])
+  let { thisFolder } = useParams()
+  const userId = localStorage.getItem('userId')
 
-
+  // 페이지가 처음 랜더링되면 퀴즈목록 요청을 보냄
+  const [qz, setQz] = useState([])
   const [qzList, setQzList] = useState([])
+  useEffect(() => {
+    let url
+    if (thisFolder === 'all') {
+      url = 'http://localhost:8080/api/v1/quiz/findAll'
+    } else if (thisFolder === 'bookmark') {
+      url = `http://localhost:8080/api/v1/quiz/select/favor/${userId}`
+    } else if (thisFolder === 'imade') {
+      url = 'http://localhost:8080/api/v1/quiz/findAll'
+    } else {
+      url = `http://localhost:8080/api/v1/quiz/find/folderQuiz/${thisFolder}`
+    }
+    axios({
+      url,
+      method: "GET",
+      headers: setToken()
+    })
+    .then(({data}) => {
+      setQz(data)
+      setQzList(data)
+      console.log(data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }, [])
+
+  // 퀴즈목록 담기면 폴더목록 요청 보냄
+  const [myfd, setMyfd] = useState([])
+  useEffect(() => {
+    axios({
+      url: `http://localhost:8080/api/v1/quiz/folder/${userId}`,
+      method: "GET",
+      headers: setToken()
+    })
+    .then(({data}) => {
+      setMyfd(data)
+      console.log(data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }, [qz])
+
+  // 학년이나 과목이 바뀌면 바꿔 보여줘야 함
   const [sub, setSub] = useState('전체')
   const [grade, setGrade] = useState('all')
   useEffect(() => {
@@ -36,12 +80,6 @@ const InFolder = () => {
   }, [sub, grade])
 
 
-  // useEffect(()=>{
-  //   setfolder(folders.filter(folder=>folder.id===Number(id))[0])
-  //   setQuizlist(quizzes.filter(quiz =>quiz.folder_id===Number(id)))
-  // },[id])
-
-
   return (
     <div className='in-fd'>
       <div className='in-fd-nav'>
@@ -58,12 +96,10 @@ const InFolder = () => {
           {/* 누르면 팝업이든 뭐든 띄워서 누르게하기 -> select하니까 모양이 망가짐 */}
           <MenuButton className='in-fd-menu'><span className='in-fd-sp'>내 폴더</span></MenuButton>
           <MenuList>
-            {myfd.map(fd => {
-              // 이름으로 할까 id로 할까? 한글로 보내면 깨지지 않을까?
-              const url = `/quiz/folder/${fd.folder_id}`
-              // const url = `/quiz/folder/${fd.folder_name}`
+            {myfd.map(({folderId, folderName}) => {
+              const url = `${folderId}`
               return (
-                <MenuItem key={fd.folder_id}><Link to={url}>{fd.folder_name}</Link></MenuItem>
+                <MenuItem key={folderId}><Link to={url}>{folderName}</Link></MenuItem>
               )
             })}
           </MenuList>
@@ -119,7 +155,7 @@ const InFolder = () => {
                     <Text>내용</Text>
                     <Text className='in-fd-quiz-last'>{quiz.content}</Text>
                   </div>
-                  <div className='in-fd-quiz'>
+                  {/* <div className='in-fd-quiz'>
                     <Box boxSize='4%'></Box>
                     <Text>보기</Text>
                     <div className='in-fd-quiz-last'>
@@ -127,7 +163,7 @@ const InFolder = () => {
                         <div key={index} className={(index+1) === quiz.answer ? 'in-fd-correct' : ''}>{index+1}) {choice}</div>
                       ))}
                     </div>
-                  </div>
+                  </div> */}
                   <div>
                     <Popover placement='top-start'>
                       <PopoverTrigger>
@@ -154,11 +190,6 @@ const InFolder = () => {
           }
         </Accordion>
       </div>
-
-
-      {/* {quizlist.map(quiz=>{ 
-        return(<EachQuiz key={quiz.id} quiz={quiz}/>)
-      })} */}
     </div>
   )
 }
