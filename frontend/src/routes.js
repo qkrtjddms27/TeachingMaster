@@ -13,17 +13,7 @@ import Updatequiz from './features/quiz/Updatequiz';
 import Createquiz from './features/quiz/Createquiz';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
-  {
-    path: "/home",
-    component: Home,
-    name: "내홈페이지"
-  },
-  {
-    path: "/login",
-    component: Login,
-    name: "로그인페이지",
-    exact:true,
-  },
+
   {
     path: "/signup",
     component: Signup,
@@ -46,7 +36,7 @@ export default [
     exact:true,
   },
   {
-    path: "/quiz/folder/:id",
+    path: "/quiz/folder/:thisFolder",
     component: InFolder,
     name: "폴더상세페이지",
     exact:true,
