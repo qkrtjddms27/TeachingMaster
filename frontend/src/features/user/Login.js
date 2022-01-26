@@ -39,11 +39,9 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
         data,
       }
     )
-    .then(res => {
-      const resUserData = JSON.parse(res.config.data)
+    .then(({data}) => {
       setIs_Login(true)
-      localStorage.setItem('userId', resUserData.userId)
-      localStorage.setItem('jwt', res.data.accessToken)
+      localStorage.setItem('jwt', data.accessToken)
       setIs_Login(true)
       history.push('/home')})
     .catch(err => {

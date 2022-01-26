@@ -88,3 +88,13 @@
 .in-fd-quiz-open {
   background-color: whitesmoke;
 }
+.in-fd-btns {
+  display: flex;
+  justify-content: end;
+  .in-fd-btn2 {
+    margin: 0 2rem;
+  }
+  img:hover {
+    cursor: pointer;
+  }
+}

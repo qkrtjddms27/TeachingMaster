@@ -1,26 +1,29 @@
 import React from 'react';
 import { Button } from '@chakra-ui/react';
-import './modal.scss'
+import '../scss/modal.scss'
 
 const ModalMain = ({change,student,onClose}) => {
   return (
     <div className='modal-main'>
       <div className='left'>
         <div className='left_top' >
-          <img className='image' alt='학생사진' src={student.profile} />
+          {/* <img className='image' alt='학생사진' src={student.studentProfile} /> */}
+          <img className='image' alt='학생사진' src="https://blog.kakaocdn.net/dn/bAyJve/btqNr8wMiXi/rV0XKPT78iMnmkXlViEmk0/img.jpg" />
           <div>
-            <div className='name'>{student.name}</div>
-            <div className='stars'>이번주 ⭐&nbsp;{student.star}</div>
-            <div className='stars'>누적&emsp;&nbsp;⭐&nbsp;{student.star*2}</div>
+            <div className='name'>{student.studentName}</div>
+            <div className='stars'>이번주 ⭐&nbsp;{student.countingStar}</div>
+            <div className='stars'>누적&emsp;&nbsp;⭐&nbsp;{student.studentScore}</div>
+            <p>{student.room.roomGrade}학년 {student.room.roomNum}반</p>
           </div>
         </div>
         <div className='left_bot'>
           <div className='contents'>  
-            <p>메일주소 : {student.email}</p>
-            <p>연락처 : {student.phone}</p>
-            <p>보호자 성함 : 김동수</p>
-            <p>보호자 관계 : 아버지</p>
-            <p>보호자 연락처: {student.phone}</p>
+            <p>메일주소 : {student.studentEmail}</p>
+            <p>연락처 : {student.studentPhone}</p>
+            <p>주소 : {student.address}</p>
+            <p>보호자 성함 : {student.parentsName}</p>
+            <p>보호자 관계 : {student.relation}</p>
+            <p>보호자 연락처: {student.parentsPhone}</p>
           </div>
           <Button onClick={()=>{change("quiz")}}>퀴즈 내역 보기</Button>
         </div>

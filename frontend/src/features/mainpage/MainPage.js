@@ -1,6 +1,6 @@
 import React from 'react';
 import {Heading} from '@chakra-ui/react'
-import './mainpage.scss'
+import './scss/mainpage.scss'
 import Main1 from './Main1';
 import Main2 from './Main2';
 import Main3 from './Main3';

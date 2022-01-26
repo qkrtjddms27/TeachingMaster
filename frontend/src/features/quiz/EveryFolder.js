@@ -10,7 +10,7 @@ import AOS from 'aos'
 import "aos/dist/aos.css"
 import { setToken } from '../../components/TOKEN'
 const Folder = () => {
-  const userId = localStorage.getItem("userId")
+  const {userId} = JSON.parse(localStorage.getItem("user"))
 
   // 폴더에 주는 효과
   useEffect(() => {
