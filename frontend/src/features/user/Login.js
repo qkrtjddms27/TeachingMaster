@@ -5,6 +5,7 @@ import { FaUserAlt, FaLock } from "react-icons/fa"
 import './scss/Login.scss'
 import axios from "axios";
 import AlertDialogModal from "../../components/AlertModal";
+import { setToken } from "../../components/TOKEN";
 
 const CFaUserAlt = chakra(FaUserAlt)
 const CFaLock = chakra(FaLock)
@@ -42,8 +43,26 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
     .then(({data}) => {
       setIs_Login(true)
       localStorage.setItem('jwt', data.accessToken)
+      localStorage.setItem('userId', userId)
       setIs_Login(true)
-      history.push('/home')})
+      history.push('/home')
+      
+      axios({
+        url:"http://localhost:8080/api/v1/users/me",
+        method:"GET",
+        headers:setToken(),
+      })
+        .then(res=>{
+          localStorage.setItem('user',JSON.stringify(res.data)) 
+          setUser(res.data)
+          setIs_Login(true)
+        })
+          // 비밀번호 빼고 저장하기 object -> string으로 저장되게 하기 사용할때는 parse를 이용
+        .catch(err=>{
+          console.log(err)
+          console.log('App.js getme ERROR')
+        })})
+
     .catch(err => {
       console.log(err)
       setIsOpen(true)

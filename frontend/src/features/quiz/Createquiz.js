@@ -3,9 +3,11 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Radio,RadioGroup,Stack,Textarea,Input,Button,Select } from '@chakra-ui/react';
 import './scss/createquiz.scss'
+import { setToken } from '../../components/TOKEN';
 const Createquiz = () => {
+  
   let history = useHistory()
-  const [userId,setUserId] = useState("anon")
+  const [userId,setUserId] = useState(localStorage.getItem("userId"))
   const [title,setTitle] =useState("")
   const [subject,setSubject] = useState("국어")
   const [timeout,setTimeout] = useState(15)
@@ -13,37 +15,42 @@ const Createquiz = () => {
   const [open,setOpen] =useState("true")
   const [contents,setContents] = useState("")
   const [answer,setAnswer] = useState(1)
-  const [choice,setChoice] = useState([1,2,3,4])
-  // useEffect = ()=>{
+  const [choice1,setChoice1] = useState("")
+  const [choice2,setChoice2] = useState("")
+  const [choice3,setChoice3] = useState("")
+  const [choice4,setChoice4] = useState("")
+  // useEffect = ()=>{ 
   //   setUserId(localStorage.getItem("userId"))
   // }
-  const Submit = ()=>{
+  const onSubmit = ()=>{
     const data ={
-      "answer": answer,
-      "contents": contents,
-      "grade": grade,
-      "status": open,
-      "subject": subject,
-      "timeout": timeout,
-      "title": title,
-      "id": 0,
-      "userId": userId     
+      // folderId는 없앨것
+      "folderId": 1,
+      "openStatus": open,
+      "options": [choice1,choice2,choice3,choice4],
+      "quizAnswer": Number(answer),
+      "quizContents": contents,
+      "quizGrade": Number(grade),
+      "quizId": 0,
+      "quizPhoto": "noPhoto",
+      "quizTimeout": Number(timeout),
+      "quizTitle": title,
+      "subject":subject,
+      "userId": userId
     }
     axios(
       {
-        url : "http://localhost:8080/api/v1/quiz/create/main",
-        mathod: "POST",
-        header:{
-          //setToken()
-        },
+        url : "http://localhost:8080/api/v1/quiz/create",
+        method: "PUT",
         data,
+        headers : setToken()
       }
     ).then(res=>
-      console.log(res),
-      history.push("/home")
-    ).catch(err=>
-      alert(err)
-    )
+      history.push("/quiz/folder/imade")
+    ).catch(err=>{
+      console.log(data)
+      alert('실패')
+    })
   }
   return (
   <div>
@@ -114,19 +121,19 @@ const Createquiz = () => {
         <RadioGroup onChange={setAnswer} value={answer} >
           <div className='choice'>
             <Radio size='lg' colorScheme='orange' value ="1"/>
-            <Input id={answer==="1"?"answer":""} value={choice[0]} onChange={(e)=>setChoice(choice[0]= e.target.value)} />
+            <Input id={answer==="1"?"answer":""} value={choice1} onChange={(e)=>setChoice1(e.target.value)} />
           </div>
           <div className='choice'>
             <Radio size='lg' colorScheme='orange' value ="2"/>
-            <Input id={answer==="2"?"answer":""} value={choice[1]} onChange={(e)=>setChoice(choice[1]= e.target.value)} />
+            <Input id={answer==="2"?"answer":""} value={choice2} onChange={(e)=>setChoice2(e.target.value)} />
           </div>
           <div className='choice'>
             <Radio size='lg' colorScheme='orange' value ="3"/>
-            <Input id={answer==="3"?"answer":""} value={choice[2]} onChange={(e)=>setChoice(choice[2]= e.target.value)} />
+            <Input id={answer==="3"?"answer":""} value={choice3} onChange={(e)=>setChoice3(e.target.value)} />
           </div>
           <div className='choice'>
             <Radio size='lg' colorScheme='orange' value ="4"/>
-            <Input id={answer==="4"?"answer":""} value={choice[3]} onChange={(e)=>setChoice(choice[3]= e.target.value)}/>
+            <Input id={answer==="4"?"answer":""} value={choice4} onChange={(e)=>setChoice4(e.target.value)}/>
           </div>
         </RadioGroup>
         <div></div>
@@ -137,7 +144,7 @@ const Createquiz = () => {
             bgColor="#B5A18C" colorScheme="#c7baac" width="48%" 
           >이전</Button>
           <Button borderRadius={0} variant="solid" className="submit-button" 
-            bgColor="#7e5526" colorScheme="#472b0a" width="48%" onClick={() => Submit()}
+            bgColor="#7e5526" colorScheme="#472b0a" width="48%" onClick={() => onSubmit()}
           >제출</Button>
         </div>
       </Stack>

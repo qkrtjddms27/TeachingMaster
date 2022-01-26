@@ -1,10 +1,14 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import { Box } from '@chakra-ui/react'
 import './scss/Header.scss'
 import Sidebar from './Sidebar'
 import { Link, useHistory } from 'react-router-dom'
 
 const Header = ({is_login,setIs_Login,user,setUser}) => {
+  useEffect(()=>{
+    const isUser = localStorage.getItem("user")
+    if (isUser){setIs_Login(true)}
+  },[])
   const history = useHistory()
   const logout = ()=>{
     localStorage.clear()
