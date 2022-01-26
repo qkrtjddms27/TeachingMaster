@@ -8,8 +8,7 @@ import axios from 'axios'
 import {setToken} from '../../components/TOKEN'
 
 // 유저정보에서 선생님 사진 받아오기
-const Home = ({user}) => {
-  console.log(user)
+const Home = ({user,setUser}) => {
   const [quiz,setQuiz] =useState([])
   useEffect(()=>{
     AOS.init()
@@ -24,12 +23,15 @@ const Home = ({user}) => {
     })
     .then(res=>{
       setQuiz(res.data)
+      setUser(JSON.parse(localStorage.getItem("user")))
+      console.log(user)
     })
     .catch(err=>{
       console.log("홈 문제받기 에러")
       console.log(err)
     })
   },[])
+
   
   const [classTitle,setClassTitle] = useState("🎈 행복이 가득한")
   const [class_open,setClass_open] =useState(true)
@@ -42,7 +44,7 @@ const Home = ({user}) => {
         {/* 껍데기 */}
         <Box className='teacher-box' data-aos="fade-right"
             data-aos-duration="1000"
-            data-aos-easing="ease-in-sine">
+            data-aos-easing="line">
             {/* 선생님 페이지 */}
             <Heading className='classTitle'>{classTitle}</Heading>
             <Heading className='grade-class'>{user.roomGrade}학년 {user.roomNum}반</Heading>
@@ -64,7 +66,7 @@ const Home = ({user}) => {
           </Box>
         <div data-aos="fade-up"
             data-aos-duration="1000"
-            data-aos-easing="ease-in-sine">
+            data-aos-easing="line">
               <QuizBar quiz={quiz} className='quizbar' userId={user.userId} user={user}/>      
         </div>
         
