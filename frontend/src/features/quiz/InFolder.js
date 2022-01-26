@@ -71,28 +71,28 @@ const InFolder = () => {
     })
   }, [qz])
 
-  // 처음에 공개된것만 보여줘야함
-  // 보여줄 퀴즈 리스트
+  // 보여줄 퀴즈 리스트 (처음에 공개되거나 내가만든 것만)
   const [qzList, setQzList] = useState([])
   useEffect(() => {
-  setQzList(qz.filter(quiz => quiz.openStatus || quiz.userId === userId))
+  setQzList(qz)
+  // setQzList(qz.filter(quiz => quiz.openStatus || quiz.userId === userId))
   }, [myfd])
 
 
   // 학년이나 과목이 바뀌면 바꿔 보여줘야 함
   useEffect(() => {
   if (grade === 'all') {
-  if (sub === '전체') {
-    setQzList(qz)
-  } else {
-    setQzList(qz.filter(quiz => quiz.subject === sub && (quiz => quiz.openStatus || quiz.userId === userId)))
-  }
+    if (sub === '전체') {
+      setQzList(qz)
+    } else {
+      setQzList(qz.filter(quiz => quiz.subject === sub))
+    }
   } else {
     if (sub === '전체') {
-    setQzList(qz.filter(quiz => quiz.quizGrade === Number(grade) && (quiz => quiz.openStatus || quiz.userId === userId)))
-  } else {
-    setQzList(qz.filter(quiz => quiz.quizGrade === Number(grade) && quiz.subject === sub && (quiz => quiz.openStatus || quiz.userId === userId)))
-  }
+      setQzList(qz.filter(quiz => quiz.quizGrade === Number(grade)))
+    } else {
+      setQzList(qz.filter(quiz => quiz.quizGrade === Number(grade)))
+    }
   }
   }, [sub, grade])
 
