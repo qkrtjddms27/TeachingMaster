@@ -15,6 +15,7 @@
   justify-content: space-around;
   align-items: center;
   padding: 0.5rem 0;
+  border-bottom: 1px solid #472b0a;
   :hover {
     background-color: cornsilk;
     text-decoration: none;
@@ -83,9 +84,16 @@
     margin-left: 2rem;
     width: 42rem;
     .in-fd-correct {
-      background-color: yellowgreen;
+      background-color: rgb(207, 248, 152);
+      // background-color: yellowgreen;
+      // background-color: #a7f5f5;
     }
   }
+}
+
+// Accordion
+.accordion {
+  width: 60rem;
 }
 .in-fd-quiz-open {
   background-color: whitesmoke;
@@ -111,6 +119,31 @@
       cursor: pointer;
       width: 3rem;
       transition: ease;
+    }
+  }
+}
+
+.in-fd-scroll {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 45rem;
+  margin-top: 1rem;
+  flex-direction: column;
+  &::-webkit-scrollbar {
+    visibility: hidden;
+    width: 7px;
+  }
+  &:hover {
+    &::-webkit-scrollbar {
+      visibility: visible;
+      width: 7px;
+    }
+    &::-webkit-scrollbar-thumb {
+      // background-color: #33cccc;
+      background-color: #a7f5f5;
+      border-radius: 10px;
+      background-clip: padding-box;
+      border: 1px solid transparent;
     }
   }
 }

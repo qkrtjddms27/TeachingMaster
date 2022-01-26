@@ -6,6 +6,7 @@ import axios from 'axios'
 import { setToken } from '../../components/TOKEN'
 import onetwo from './image/plusicon.gif'
 import qicon from './image/qicon.png'
+import aicon from './image/question.png'
 import './scss/InFolder.scss'
 import inmyfolder from './image/inmyfolder.png'
 import edit from './image/edit.png'
@@ -142,92 +143,104 @@ const InFolder = () => {
         </Menu>
       </div>
 
-      <div>
-        <Image className='in-fd-img' src={onetwo} boxSize='30%' alt='띵동' />
-      </div>
 
-      <div className='in-fd-sub'>
-        <p className='in-fd-each-sub' onClick={() => setSub('전체')}><span className='line'>전체</span></p>
-        <p className='in-fd-each-sub' onClick={() => setSub('Korean')}><span className='line'>국어</span></p>
-        <p className='in-fd-each-sub' onClick={() => setSub('English')}><span className='line'>영어</span></p>
-        <p className='in-fd-each-sub' onClick={() => setSub('Math')}><span className='line'>수학</span></p>
-        <p className='in-fd-each-sub' onClick={() => setSub('Society')}><span className='line'>사회</span></p>
-        <p className='in-fd-each-sub' onClick={() => setSub('Science')}><span className='line'>과학</span></p>
-        <p className='in-fd-each-sub' onClick={() => setSub('기타')}><span className='line'>기타</span></p>
-      </div>
 
-      <div className='in-fd-grade'>
-        <Select onChange={(e) => setGrade(e.target.value)}>
-          <option value='all'>전체</option>
-          <option value={1}>1학년</option>
-          <option value={2}>2학년</option>
-          <option value={3}>3학년</option>
-          <option value={4}>4학년</option>
-          <option value={5}>5학년</option>
-          <option value={6}>6학년</option>
-        </Select>
-      </div>
+      <div className='in-fd-scroll'>
 
-      <div>
-        <Accordion allowToggle>
-          {qzList.map(
-            ({quizId, subject, quizAnswer, quizContents, quizTitle, options}, idx) => {
-            const qzUpdateUrl = `/quiz/${quizId}/update`
-            return (
-              <AccordionItem key={idx}>
-                <h2>
-                  <AccordionButton>
-                    <Box className='in-fd-quiz' flex='1'>
-                      <Image src={qicon} boxSize='4%' alt='Q?' />
-                      <Text>{subject}</Text>
-                      <Text>{quizTitle}</Text>
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4} className='in-fd-quiz-open'>
-                  <div className='in-fd-quiz'>
-                    <Image src={qicon} boxSize='4%' alt='A!' />
-                    <Text>내용</Text>
-                    <Text className='in-fd-quiz-last'>{quizContents}</Text>
-                  </div>
-                  <div className='in-fd-quiz'>
-                    <Box boxSize='4%'></Box>
-                    <Text>보기</Text>
-                    <div className='in-fd-quiz-last'>
-                      {options.map((op, idx) => (
-                        <div key={idx} className={(idx+1) === quizAnswer ? 'in-fd-correct' : ''}>{idx+1}) {op}</div>
-                      ))}
+        <div>
+          <Image className='in-fd-img' src={onetwo} boxSize='30%' alt='띵동' />
+        </div>
+
+        <div className='in-fd-sub'>
+          <p className='in-fd-each-sub' onClick={() => setSub('전체')}><span className='line'>전체</span></p>
+          <p className='in-fd-each-sub' onClick={() => setSub('Korean')}><span className='line'>국어</span></p>
+          <p className='in-fd-each-sub' onClick={() => setSub('English')}><span className='line'>영어</span></p>
+          <p className='in-fd-each-sub' onClick={() => setSub('Math')}><span className='line'>수학</span></p>
+          <p className='in-fd-each-sub' onClick={() => setSub('Society')}><span className='line'>사회</span></p>
+          <p className='in-fd-each-sub' onClick={() => setSub('Science')}><span className='line'>과학</span></p>
+          <p className='in-fd-each-sub' onClick={() => setSub('기타')}><span className='line'>기타</span></p>
+        </div>
+
+        <div className='in-fd-grade'>
+          <Select onChange={(e) => setGrade(e.target.value)}>
+            <option value='all'>전체</option>
+            <option value={1}>1학년</option>
+            <option value={2}>2학년</option>
+            <option value={3}>3학년</option>
+            <option value={4}>4학년</option>
+            <option value={5}>5학년</option>
+            <option value={6}>6학년</option>
+          </Select>
+        </div>
+
+        <div className='accordion'>
+          <Accordion allowToggle>
+            {qzList.map(
+              ({quizId, subject, quizAnswer, quizContents, quizTitle, options}, idx) => {
+              const qzUpdateUrl = `/quiz/${quizId}/update`
+              return (
+                <AccordionItem key={idx}>
+                  <h2>
+                    <AccordionButton>
+                      <Box className='in-fd-quiz' flex='1'>
+                        <Image src={qicon} boxSize='4%' alt='Q?' />
+                        <Text>{subject}</Text>
+                        <Text>{quizTitle}</Text>
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </h2>
+                  <AccordionPanel pb={4} className='in-fd-quiz-open'>
+                    <div className='in-fd-quiz in-fd-acco-content'>
+                      <Image src={aicon} boxSize='4%' alt='A!' />
+                      <Text>내용</Text>
+                      <Text className='in-fd-quiz-last'>{quizContents}</Text>
                     </div>
-                  </div>
-                  <div className='in-fd-btns'>
-                    <Menu>
-                      <MenuButton><Image src={inmyfolder} boxSize="25px" /></MenuButton>
-                      <MenuList>
-                        {myfd.map((fd, idx) => (
-                          <MenuItem key={idx}>
-                            <span onClick={() => quizAddFolder(fd.folderId, quizId)}>
-                              {fd.folderName}
-                            </span>
-                          </MenuItem>
+                    <div style={{"height":"0.5rem"}}></div>
+                    <div className='in-fd-quiz'>
+                      <Box boxSize='4%'></Box>
+                      <Text>보기</Text>
+                      <div className='in-fd-quiz-last'>
+                        {options.map((op, idx) => (
+                          <div key={idx} className={(idx+1) === quizAnswer ? 'in-fd-correct' : ''}>{idx+1}) {op}</div>
                         ))}
-                      </MenuList>
-                    </Menu>
-                    <Link to={qzUpdateUrl}><Image className='in-fd-btn2' src={edit} boxSize="25px" /></Link>
-                    <Image src={star3} boxSize="25px" />
-                  </div>
-                </AccordionPanel>
-              </AccordionItem>      
-            )})
-          }
-        </Accordion>
+                      </div>
+                    </div>
+                    <div className='in-fd-btns'>
+                      <Menu>
+                        <MenuButton title="폴더에 추가!"><Image src={inmyfolder} boxSize="25px" /></MenuButton>
+                        <MenuList>
+                          {myfd.map((fd, idx) => (
+                            <MenuItem key={idx}>
+                              <span onClick={() => quizAddFolder(fd.folderId, quizId)}>
+                                {fd.folderName}
+                              </span>
+                            </MenuItem>
+                          ))}
+                        </MenuList>
+                      </Menu>
+                      <Link title="퀴즈 수정!" to={qzUpdateUrl}><Image className='in-fd-btn2' src={edit} boxSize="25px" /></Link>
+                      <Image title="즐겨찾기!" src={star3} boxSize="25px" />
+                    </div>
+                  </AccordionPanel>
+                </AccordionItem>      
+              )})
+            }
+          </Accordion>
+        </div>
       </div>
+
     </div>
 
-    <div className='in-fd-fileadd' title='퀴즈 생성'>
+
+
+    <div className='in-fd-fileadd' title='퀴즈 생성!'>
       <div></div>
       <Link to="/quiz/create"><Image src={fileadd} className='in-fd-add-quiz' /></Link>
     </div>
+
+
+
   </div>
   )
 }
