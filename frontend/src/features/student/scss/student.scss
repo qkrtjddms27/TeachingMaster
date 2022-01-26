@@ -3,21 +3,14 @@
   width: 17rem;
   height: 21rem;
   // 배경이랑 맞추기
-  background-color: #d8c5b3;
+  background-color: whitesmoke;
   border: none;
   margin-top: 5rem;
   margin-left: 5rem;
   border-radius: 5px;
   cursor: pointer;
 }
-.card-case {
-  width: 80%;
-  margin: auto;
-  .cards {
-    margin-right: 10rem;
-    flex: 3;
-  }
-}
+
 .f-cardbox {
   width: 17rem;
   height: 21rem;
@@ -121,4 +114,77 @@
 }
 .CARD:hover > .b-cardbox {
   transform: perspective(600px) rotateY(0deg);
+}
+
+.card-case {
+  width: 80%;
+  min-height: 100vh;
+  margin: auto;
+  border-radius: 10px;
+  background-color: whitesmoke;
+  .cards {
+    margin-right: 10rem;
+  }
+}
+.grade_room_box {
+  margin-top: 3rem;
+}
+.grade_select {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem 0;
+  color: #5b360d;
+  .grade-text {
+    margin-top: 3rem;
+    font-size: 1.5rem;
+  }
+  :hover {
+    cursor: pointer;
+  }
+  span {
+    text-decoration: none;
+    text-align: center;
+    width: 5rem;
+    display: inline-block;
+    position: relative;
+
+    &:hover {
+      color: #000000;
+      font-weight: bold;
+    }
+    &:after {
+      background: none repeat scroll 0 0 transparent;
+      bottom: 0;
+      content: "";
+      display: block;
+      height: 2px;
+      left: 50%;
+      position: absolute;
+      background: #ffb000;
+      transition: width 0.3s ease 0s, left 0.3s ease 0s;
+      width: 0;
+    }
+    &:hover::after {
+      width: 100%;
+      left: 0;
+    }
+  }
+}
+
+.room_select {
+  margin-top: 1.5rem;
+  display: inline-block;
+  margin-left: 5rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  width: 10%;
+}
+
+.myroom_select {
+  margin-top: 1.7rem;
+  margin-left: 5rem;
+}
+.myroom_select2 {
+  margin-left: 5rem;
 }
