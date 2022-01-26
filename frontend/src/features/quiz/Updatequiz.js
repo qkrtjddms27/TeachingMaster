@@ -108,7 +108,6 @@ const Updatequiz = () => {
       </div>
       <div className='sub_time_grade_open-box'>
         <div className='subject-box'>
-          {/* <p className='subject-text'>과목: </p> */}
           <Select value={subject} onChange={(e)=>setSubject(e.target.value)} className='subject-select'>
             <option value="korean">국어</option>
             <option value="english">영어</option>
@@ -119,7 +118,6 @@ const Updatequiz = () => {
           </Select>
         </div>
         <div className='time-box'>
-          {/* <p className='time-text'>제한시간: </p> */}
           <Select value={timeout} onChange={(e)=>setTimeout(e.target.value)} className='time-select'>
             <option value={15}>15초</option>
             <option value={30}>30초</option>
@@ -129,7 +127,6 @@ const Updatequiz = () => {
           </Select>
         </div>
         <div className='grade-box'>
-          {/* <p className='grade-text'>학년: </p> */}
           <Select value={grade} onChange={(e)=>setGrade(e.target.value)} className='grade-select'>
             <option value={1}>1학년</option>
             <option value={2}>2학년</option>

@@ -19,9 +19,6 @@ const Createquiz = () => {
   const [choice2,setChoice2] = useState("")
   const [choice3,setChoice3] = useState("")
   const [choice4,setChoice4] = useState("")
-  // useEffect = ()=>{ 
-  //   setUserId(localStorage.getItem("userId"))
-  // }
   const onSubmit = ()=>{
     const data ={
       // folderId는 없앨것
