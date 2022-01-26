@@ -13,9 +13,7 @@ import Login from './features/user/Login';
 function App() {
   const [is_login,setIs_Login] =useState(false)
   const [user,setUser] = useState([])
-  
-  
-  
+
   return (
     <div className='App'>
       <ChakraProvider>

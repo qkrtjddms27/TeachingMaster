@@ -104,11 +104,25 @@
   .quizlist {
     overflow-x: hidden;
     overflow-y: scroll;
-    height: 15rem;
-    margin-top: 3rem;
+    height: 18rem;
+    font-weight: 600;
+    margin-top: 1rem;
     flex-direction: column;
     &::-webkit-scrollbar {
-      display: none;
+      visibility: hidden;
+      width: 7px;
+    }
+    &:hover {
+      &::-webkit-scrollbar {
+        visibility: visible;
+        width: 7px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #6bcaa6;
+        border-radius: 10px;
+        background-clip: padding-box;
+        border: 1px solid transparent;
+      }
     }
   }
   &:hover {
