@@ -2,7 +2,7 @@
 import { Heading, Image } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import React,{ useEffect, useState } from 'react'
-import { Row,Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import star from './image/star.png'
 import axios from 'axios'
 import AddQuizPopover from './AddQuizPopover'
@@ -35,7 +35,8 @@ const Folder = () => {
       setMyFolders([])
     })
   }, [])
-  
+
+
   // 폴더에 사용할 이미지 주소 만들기
   const [imgUrls, setImgUrls] = useState([])
   useEffect(() => {
@@ -53,22 +54,26 @@ const Folder = () => {
 
   return (
     <div className="every-folder">
-      <Heading className='title'>폴더들</Heading>
+      <div className="ev-fd"></div>
 
-      <div className='all-cart-mine'>
-        <div data-aos="fade-down" data-aos-duration="1500" className='mine'>
-          <Link to="/quiz/folder/all"><img className='folder-icon' src={Imgurl1} alt='그림'/></Link>                    
-          <Heading className='all-cart-mine-title'>전체보기</Heading>
+
+      <div>
+        <Heading className='title'>폴더들</Heading>
+
+        <div className='all-cart-mine'>
+          <div data-aos="fade-down" data-aos-duration="1500" className='mine'>
+            <Link to="/quiz/folder/all"><img className='folder-icon' src={Imgurl1} alt='그림'/></Link>                    
+            <Heading className='all-cart-mine-title'>전체보기</Heading>
+          </div>
+          <div data-aos="fade-up" data-aos-duration="1500" className='mine'>
+            <Link to="/quiz/folder/bookmark"><Image className='folder-icon' src={star} alt='즐겨찾기'/></Link>          
+            <Heading className='all-cart-mine-title'>즐겨찾기</Heading>
+          </div>
+          <div data-aos="fade-down" data-aos-duration="1500" className='mine'>
+            <Link to="/quiz/folder/imade"><img className='folder-icon' src={Imgurl2} alt='그림'/></Link>
+            <Heading className='all-cart-mine-title'>내가 만든문제</Heading>
+          </div>
         </div>
-        <div data-aos="fade-up" data-aos-duration="1500" className='mine'>
-          <Link to="/quiz/folder/bookmark"><Image className='folder-icon' src={star} alt='즐겨찾기'/></Link>          
-          <Heading className='all-cart-mine-title'>즐겨찾기</Heading>
-        </div>
-        <div data-aos="fade-down" data-aos-duration="1500" className='mine'>
-          <Link to="/quiz/folder/imade"><img className='folder-icon' src={Imgurl2} alt='그림'/></Link>
-          <Heading className='all-cart-mine-title'>내가 만든문제</Heading>
-        </div>
-      </div>
 
 
 
@@ -94,9 +99,11 @@ const Folder = () => {
 
 
 
-      <div>
+      <div className="ev-fd-bottom">
+        <div></div>
         <AddQuizPopover myFolders={myFolders} setMyFolders={setMyFolders}  />
       </div>
+
     </div>
   )
 }
