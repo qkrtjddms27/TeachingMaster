@@ -66,6 +66,25 @@ public class QuizRepositorySupport {
 
         return quizAllResList;
     }
+
+    public List<QuizAllRes> findFolderQuiz(Long folderId, String userId) {
+
+        List<QuizAllRes> quizAllResList = jpaQueryFactory
+                .select(Projections.bean(QuizAllRes.class, qQuiz.quizId, qQuiz.subject, qQuiz.quizPhoto , qQuiz.quizTitle
+                        ,qQuiz.quizContents, qQuiz.quizAnswer, qQuiz.openStatus, qQuiz.quizTimeout
+                        ,qQuiz.quizGrade, qQuiz.user.userId, qQuiz.option1, qQuiz.option2, qQuiz.option3
+                        ,qQuiz.option4
+
+                        ,new CaseBuilder().when(qQuiz.quizId
+                                .in(jpaQueryFactory.select(qBookmark.quiz.quizId).from(qBookmark)
+                                        .where(qBookmark.user.userId.eq(userId)))).then(true).otherwise(false).as("bookMarkCheck")))
+
+                .from(qQuiz).leftJoin(qBookmark).on(qBookmark.quiz.quizId.eq(qQuiz.quizId))
+                .where(qQuiz.quizId
+                        .in(jpaQueryFactory.select(qFolderQuiz.quiz.quizId).from(qFolderQuiz).where(qFolderQuiz.folder.folderId.eq(folderId)))).fetch();
+
+        return quizAllResList;
+    }
 }
 //Quiz를 BookMark, Folder에 있는지 없는지 체크해서 return
 //    select q.*,
