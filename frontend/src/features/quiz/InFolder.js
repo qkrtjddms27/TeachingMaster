@@ -1,16 +1,16 @@
 import {Image, Select, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, 
-        Box, Text, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
+  Box, Text, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import { setToken } from '../../components/TOKEN'
 import onetwo from './image/plusicon.gif'
 import qicon from './image/qicon.png'
-// import { qz, myfd } from './qzz.js'
 import './scss/InFolder.scss'
 import inmyfolder from './image/inmyfolder.png'
 import edit from './image/edit.png'
 import star3 from './image/star3.png'
+import fileadd from './image/fileadd.png'
 
 
 const InFolder = () => {
@@ -24,16 +24,12 @@ const InFolder = () => {
 
   // 페이지가 처음 랜더링되면 퀴즈목록 요청을 보냄 -> 전체 퀴즈들은 지니고 있어야함
   const [qz, setQz] = useState([])
-  // 보여줄 퀴즈 리스트
-  const [qzList, setQzList] = useState([])
   useEffect(() => {
     let url
-    if (thisFolder === 'all') {
-      url = `http://localhost:8080/api/v1/quiz/findAll/${userId}`               // 누가 만들었든 상관없는 전체 문제
+    if (thisFolder === 'all' || thisFolder === 'imade') {
+      url = `http://localhost:8080/api/v1/quiz/findAll/${userId}`               // 전체 문제 or 내가만든 문제
     } else if (thisFolder === 'bookmark') {
       url = `http://localhost:8080/api/v1/quiz/select/favor/${userId}`          // 즐겨찾기한 문제
-    } else if (thisFolder === 'imade') {
-      url = 'http://localhost:8080/api/v1/quiz/findAll'                         // 내가 만든 문제
     } else {
       url = `http://localhost:8080/api/v1/quiz/find/folderQuiz/${thisFolder}`   // 내 폴더안에 있는 문제
     }
@@ -43,10 +39,16 @@ const InFolder = () => {
       headers: setToken()
     })
     .then(({data}) => {
-      setQz(data)
-      setQzList(data)
+      if (thisFolder === 'imade') {
+        setQz(data.filter(quiz => quiz.userId === userId))
+      } else {
+        setQz(data.filter(quiz => quiz.openStatus || quiz.userId === userId))
+      }
+    // console.log('axios url:', url)
+      console.log('res.data:', data)
     })
     .catch(err => {
+      console.log(thisFolder + '에 요청보냈는데 오류났다')
       console.log(err)
     })
   }, [])
@@ -63,30 +65,39 @@ const InFolder = () => {
       setMyfd(data)
     })
     .catch(err => {
+      console.log('내가 가진 폴더 리스트 받아와야하는데 오류났다')
       console.log(err)
     })
   }, [qz])
 
+  // 처음에 공개된것만 보여줘야함
+  // 보여줄 퀴즈 리스트
+  const [qzList, setQzList] = useState([])
+  useEffect(() => {
+  setQzList(qz.filter(quiz => quiz.openStatus || quiz.userId === userId))
+  }, [myfd])
+
+
   // 학년이나 과목이 바뀌면 바꿔 보여줘야 함
   useEffect(() => {
-    if (grade === 'all') {
-      if (sub === '전체') {
-        setQzList(qz)
-      } else {
-        setQzList(qz.filter(quiz => quiz.subject === sub))
-      }
-    } else {
-      if (sub === '전체') {
-        setQzList(qz.filter(quiz => quiz.quizGrade === Number(grade)))
-      } else {
-        setQzList(qz.filter(quiz => quiz.quizGrade === Number(grade) && quiz.subject === sub))
-      }
-    }
+  if (grade === 'all') {
+  if (sub === '전체') {
+    setQzList(qz)
+  } else {
+    setQzList(qz.filter(quiz => quiz.subject === sub && (quiz => quiz.openStatus || quiz.userId === userId)))
+  }
+  } else {
+    if (sub === '전체') {
+    setQzList(qz.filter(quiz => quiz.quizGrade === Number(grade) && (quiz => quiz.openStatus || quiz.userId === userId)))
+  } else {
+    setQzList(qz.filter(quiz => quiz.quizGrade === Number(grade) && quiz.subject === sub && (quiz => quiz.openStatus || quiz.userId === userId)))
+  }
+  }
   }, [sub, grade])
 
 
   const quizAddFolder = (folderId, quizId) => {
-    console.log(folderId, quizId)
+    console.log("폴더아이디:", folderId, "퀴즈아이디:", quizId, "요청은 나중에 보낼게여...확인이 힘드네여...")
     // axios({
     //   url: 'http://localhost:8080/api/v1/quiz/update/folder_mapping',
     //   method: 'POST',
@@ -97,6 +108,7 @@ const InFolder = () => {
     //   console.log(res)
     // })
     // .catch(err => {
+    //   console.log('폴더이 퀴즈 담다가 오류났다')
     //   console.log(err)
     // })
   }
@@ -104,6 +116,9 @@ const InFolder = () => {
 
   return (
     <div className='in-fd'>
+    <div className='in-fd-fileadd'></div>
+
+    <div>
       <div className='in-fd-nav'>
         <div className='in-fd-menu'>
           <Link className='in-fd-a' to="/quiz/folder/all"><span className='in-fd-sp'>전체보기</span></Link>
@@ -157,7 +172,7 @@ const InFolder = () => {
         <Accordion allowToggle>
           {qzList.map(
             ({quizId, subject, quizAnswer, quizContents, quizTitle, options}, idx) => {
-            const url = `/quiz/${quizId}/update`
+            const qzUpdateUrl = `/quiz/${quizId}/update`
             return (
               <AccordionItem key={idx}>
                 <h2>
@@ -187,16 +202,19 @@ const InFolder = () => {
                   </div>
                   <div className='in-fd-btns'>
                     <Menu>
-                      <MenuButton><Image src={inmyfolder} boxSize="25px"></Image></MenuButton>
+                      <MenuButton><Image src={inmyfolder} boxSize="25px" /></MenuButton>
                       <MenuList>
                         {myfd.map((fd, idx) => (
-                          <MenuItem key={idx}>{fd.folderName}</MenuItem>
-                          // <MenuItem key={idx} onClick={() => quizAddFolder(fd.folderId, quizId)}>{fd.folderName}</MenuItem>
+                          <MenuItem key={idx}>
+                            <span onClick={() => quizAddFolder(fd.folderId, quizId)}>
+                              {fd.folderName}
+                            </span>
+                          </MenuItem>
                         ))}
                       </MenuList>
                     </Menu>
-                    <Link to={url}><Image className='in-fd-btn2' src={edit} boxSize="25px"></Image></Link>
-                    <Image src={star3} boxSize="25px"></Image>
+                    <Link to={qzUpdateUrl}><Image className='in-fd-btn2' src={edit} boxSize="25px" /></Link>
+                    <Image src={star3} boxSize="25px" />
                   </div>
                 </AccordionPanel>
               </AccordionItem>      
@@ -204,8 +222,13 @@ const InFolder = () => {
           }
         </Accordion>
       </div>
-      <div></div>
     </div>
+
+    <div className='in-fd-fileadd' title='퀴즈 생성'>
+      <div></div>
+      <Link to="/quiz/create"><Image src={fileadd} className='in-fd-add-quiz' /></Link>
+    </div>
+  </div>
   )
 }
 
