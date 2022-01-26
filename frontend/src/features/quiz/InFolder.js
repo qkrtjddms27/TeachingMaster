@@ -78,7 +78,6 @@ const InFolder = () => {
   // setQzList(qz.filter(quiz => quiz.openStatus || quiz.userId === userId))
   }, [myfd])
 
-
   // 학년이나 과목이 바뀌면 바꿔 보여줘야 함
   useEffect(() => {
   if (grade === 'all') {
