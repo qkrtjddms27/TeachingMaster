@@ -7,6 +7,8 @@
   border: 1px solid #472b0a;
   border-radius: 2rem;
   box-shadow: 2px 3px 5px 0px;
+  display: flex;
+  justify-content: space-around;
 }
 .in-fd-nav {
   display: flex;
@@ -87,4 +89,28 @@
 }
 .in-fd-quiz-open {
   background-color: whitesmoke;
+}
+.in-fd-btns {
+  display: flex;
+  justify-content: end;
+  .in-fd-btn2 {
+    margin: 0 2rem;
+  }
+  img:hover {
+    cursor: pointer;
+  }
+}
+.in-fd-fileadd {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 3rem;
+  .in-fd-add-quiz {
+    width: 2.5rem;
+    &:hover {
+      cursor: pointer;
+      width: 3rem;
+      transition: ease;
+    }
+  }
 }

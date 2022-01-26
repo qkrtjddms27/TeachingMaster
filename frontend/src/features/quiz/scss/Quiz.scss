@@ -3,7 +3,6 @@
   height: 11rem;
   margin-top: 1rem;
   transition: opacity 0.3s ease-in;
-
   &:hover {
     // transform: rotate(10deg);
     animation: mySpinner 1.5s;
@@ -25,11 +24,22 @@
 .every-folder {
   border-radius: 20px;
   background-color: #f1eae9;
-  width: 65%;
-  margin: auto;
-  margin-top: 5rem;
+  width: 70rem;
+  margin: 5rem auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-evenly;
+  .ev-fd {
+    width: 6rem;
+  }
+  .ev-fd-bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
   .all-cart-mine {
-    margin: 8rem 4rem 8rem 4rem;
+    // margin: 8rem 4rem 8rem 4rem;
+    margin: 8rem 0;
     display: flex;
     justify-content: space-around;
     .all-cart-mine-title {
@@ -41,21 +51,19 @@
       height: 20rem;
       border-radius: 5%;
       color: rgb(12, 12, 12);
-      // background-color: #c3ad94;
+      .folder-icon {
+        height: 8rem;
+      }
     }
   }
   .title {
     text-align: center;
   }
-  .folders {
-  }
 }
 .plus-button {
-  position: fixed;
-  height: 100px;
-  bottom: 10rem;
-  right: 20rem;
+  width: 6rem;
   cursor: pointer;
+  margin-bottom: 4rem;
 }
 .correct {
   display: inline;
@@ -93,9 +101,8 @@
 }
 .folders {
   .folder-icon {
-    height: 9rem;
+    height: 6rem;
     transition: 0.3s ease-in;
-
     &:hover {
       // transform: rotate(10deg);
       animation: mySpinner 1.5s;
@@ -103,11 +110,12 @@
     }
   }
   .row {
-    margin-left: 2rem;
     justify-content: center;
     .col {
-      margin-top: 2rem;
       display: flex;
+      div {
+        margin: auto;
+      }
       .title {
         margin-top: 2rem;
         margin-bottom: 3rem;

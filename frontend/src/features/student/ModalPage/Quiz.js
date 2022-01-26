@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@chakra-ui/react';
-import './modal.scss'
+import '../scss/modal.scss'
 
 const Modalquiz = ({change,student,onClose}) => {
   const [quizzes,setQuizzes] = useState([])

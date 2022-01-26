@@ -1,32 +1,37 @@
 import {Image, Select, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, 
-        Box, Text, Button, Popover, PopoverTrigger, PopoverContent, 
-        PopoverHeader, PopoverArrow, PopoverCloseButton, PopoverBody, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
+  Box, Text, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import { setToken } from '../../components/TOKEN'
 import onetwo from './image/plusicon.gif'
 import qicon from './image/qicon.png'
-import { qz, myfd } from './qzz.js'
 import './scss/InFolder.scss'
+import inmyfolder from './image/inmyfolder.png'
+import edit from './image/edit.png'
+import star3 from './image/star3.png'
+import fileadd from './image/fileadd.png'
+
 
 const InFolder = () => {
   let { thisFolder } = useParams()
-  const userId = localStorage.getItem('userId')
+  // const [thisFolder, setThisFolder] = useState(useParams(thisFolder))
+  const {userId} = JSON.parse(localStorage.getItem("user"))
 
-  // 페이지가 처음 랜더링되면 퀴즈목록 요청을 보냄
+  // 선택해서 보여줄 과목과 학년
+  const [sub, setSub] = useState('전체')
+  const [grade, setGrade] = useState('all')
+
+  // 페이지가 처음 랜더링되면 퀴즈목록 요청을 보냄 -> 전체 퀴즈들은 지니고 있어야함
   const [qz, setQz] = useState([])
-  const [qzList, setQzList] = useState([])
   useEffect(() => {
     let url
-    if (thisFolder === 'all') {
-      url = 'http://localhost:8080/api/v1/quiz/findAll'
+    if (thisFolder === 'all' || thisFolder === 'imade') {
+      url = `http://localhost:8080/api/v1/quiz/findAll/${userId}`               // 전체 문제 or 내가만든 문제
     } else if (thisFolder === 'bookmark') {
-      url = `http://localhost:8080/api/v1/quiz/select/favor/${userId}`
-    } else if (thisFolder === 'imade') {
-      url = 'http://localhost:8080/api/v1/quiz/findAll'
+      url = `http://localhost:8080/api/v1/quiz/select/favor/${userId}`          // 즐겨찾기한 문제
     } else {
-      url = `http://localhost:8080/api/v1/quiz/find/folderQuiz/${thisFolder}`
+      url = `http://localhost:8080/api/v1/quiz/find/folderQuiz/${thisFolder}`   // 내 폴더안에 있는 문제
     }
     axios({
       url,
@@ -34,11 +39,16 @@ const InFolder = () => {
       headers: setToken()
     })
     .then(({data}) => {
-      setQz(data)
-      setQzList(data)
-      console.log(data)
+      if (thisFolder === 'imade') {
+        setQz(data.filter(quiz => quiz.userId === userId))
+      } else {
+        setQz(data.filter(quiz => quiz.openStatus || quiz.userId === userId))
+      }
+    // console.log('axios url:', url)
+      console.log('res.data:', data)
     })
     .catch(err => {
+      console.log(thisFolder + '에 요청보냈는데 오류났다')
       console.log(err)
     })
   }, [])
@@ -53,35 +63,62 @@ const InFolder = () => {
     })
     .then(({data}) => {
       setMyfd(data)
-      console.log(data)
     })
     .catch(err => {
+      console.log('내가 가진 폴더 리스트 받아와야하는데 오류났다')
       console.log(err)
     })
   }, [qz])
 
-  // 학년이나 과목이 바뀌면 바꿔 보여줘야 함
-  const [sub, setSub] = useState('전체')
-  const [grade, setGrade] = useState('all')
+  // 처음에 공개된것만 보여줘야함
+  // 보여줄 퀴즈 리스트
+  const [qzList, setQzList] = useState([])
   useEffect(() => {
-    if (grade === 'all') {
-      if (sub === '전체') {
-        setQzList(qz)
-      } else {
-        setQzList(qz.filter(quiz => quiz.subject === sub))
-      }
-    } else {
-      if (sub === '전체') {
-        setQzList(qz.filter(quiz => quiz.grade === Number(grade)))
-      } else {
-        setQzList(qz.filter(quiz => quiz.grade === Number(grade) && quiz.subject === sub))
-      }
-    }
+  setQzList(qz.filter(quiz => quiz.openStatus || quiz.userId === userId))
+  }, [myfd])
+
+
+  // 학년이나 과목이 바뀌면 바꿔 보여줘야 함
+  useEffect(() => {
+  if (grade === 'all') {
+  if (sub === '전체') {
+    setQzList(qz)
+  } else {
+    setQzList(qz.filter(quiz => quiz.subject === sub && (quiz => quiz.openStatus || quiz.userId === userId)))
+  }
+  } else {
+    if (sub === '전체') {
+    setQzList(qz.filter(quiz => quiz.quizGrade === Number(grade) && (quiz => quiz.openStatus || quiz.userId === userId)))
+  } else {
+    setQzList(qz.filter(quiz => quiz.quizGrade === Number(grade) && quiz.subject === sub && (quiz => quiz.openStatus || quiz.userId === userId)))
+  }
+  }
   }, [sub, grade])
+
+
+  const quizAddFolder = (folderId, quizId) => {
+    console.log("폴더아이디:", folderId, "퀴즈아이디:", quizId, "요청은 나중에 보낼게여...확인이 힘드네여...")
+    // axios({
+    //   url: 'http://localhost:8080/api/v1/quiz/update/folder_mapping',
+    //   method: 'POST',
+    //   headers: setToken(),
+    //   data: { folderId, quizId }
+    // })
+    // .then(res => {
+    //   console.log(res)
+    // })
+    // .catch(err => {
+    //   console.log('폴더이 퀴즈 담다가 오류났다')
+    //   console.log(err)
+    // })
+  }
 
 
   return (
     <div className='in-fd'>
+    <div className='in-fd-fileadd'></div>
+
+    <div>
       <div className='in-fd-nav'>
         <div className='in-fd-menu'>
           <Link className='in-fd-a' to="/quiz/folder/all"><span className='in-fd-sp'>전체보기</span></Link>
@@ -93,13 +130,12 @@ const InFolder = () => {
           <Link className='in-fd-a' to="/quiz/folder/imade"><span className='in-fd-sp'>내가 만든 문제</span></Link>
         </div>
         <Menu className='in-fd-menu'>
-          {/* 누르면 팝업이든 뭐든 띄워서 누르게하기 -> select하니까 모양이 망가짐 */}
           <MenuButton className='in-fd-menu'><span className='in-fd-sp'>내 폴더</span></MenuButton>
           <MenuList>
-            {myfd.map(({folderId, folderName}) => {
+            {myfd.map(({folderId, folderName}, idx) => {
               const url = `${folderId}`
               return (
-                <MenuItem key={folderId}><Link to={url}>{folderName}</Link></MenuItem>
+                <MenuItem key={idx}><Link to={url}>{folderName}</Link></MenuItem>
               )
             })}
           </MenuList>
@@ -112,39 +148,39 @@ const InFolder = () => {
 
       <div className='in-fd-sub'>
         <p className='in-fd-each-sub' onClick={() => setSub('전체')}><span className='line'>전체</span></p>
-        <p className='in-fd-each-sub' onClick={() => setSub('국어')}><span className='line'>국어</span></p>
-        <p className='in-fd-each-sub' onClick={() => setSub('영어')}><span className='line'>영어</span></p>
-        <p className='in-fd-each-sub' onClick={() => setSub('수학')}><span className='line'>수학</span></p>
-        <p className='in-fd-each-sub' onClick={() => setSub('사회')}><span className='line'>사회</span></p>
-        <p className='in-fd-each-sub' onClick={() => setSub('과학')}><span className='line'>과학</span></p>
+        <p className='in-fd-each-sub' onClick={() => setSub('Korean')}><span className='line'>국어</span></p>
+        <p className='in-fd-each-sub' onClick={() => setSub('English')}><span className='line'>영어</span></p>
+        <p className='in-fd-each-sub' onClick={() => setSub('Math')}><span className='line'>수학</span></p>
+        <p className='in-fd-each-sub' onClick={() => setSub('Society')}><span className='line'>사회</span></p>
+        <p className='in-fd-each-sub' onClick={() => setSub('Science')}><span className='line'>과학</span></p>
         <p className='in-fd-each-sub' onClick={() => setSub('기타')}><span className='line'>기타</span></p>
       </div>
 
       <div className='in-fd-grade'>
         <Select onChange={(e) => setGrade(e.target.value)}>
           <option value='all'>전체</option>
-          <option value='1'>1학년</option>
-          <option value='2'>2학년</option>
-          <option value='3'>3학년</option>
-          <option value='4'>4학년</option>
-          <option value='5'>5학년</option>
-          <option value='6'>6학년</option>
+          <option value={1}>1학년</option>
+          <option value={2}>2학년</option>
+          <option value={3}>3학년</option>
+          <option value={4}>4학년</option>
+          <option value={5}>5학년</option>
+          <option value={6}>6학년</option>
         </Select>
       </div>
 
       <div>
         <Accordion allowToggle>
           {qzList.map(
-            (quiz) => {
-            const url = `/quiz/${quiz.id}/update`
+            ({quizId, subject, quizAnswer, quizContents, quizTitle, options}, idx) => {
+            const qzUpdateUrl = `/quiz/${quizId}/update`
             return (
-              <AccordionItem key={quiz.id}>
+              <AccordionItem key={idx}>
                 <h2>
                   <AccordionButton>
                     <Box className='in-fd-quiz' flex='1'>
                       <Image src={qicon} boxSize='4%' alt='Q?' />
-                      <Text>{quiz.subject}</Text>
-                      <Text>{quiz.title}</Text>
+                      <Text>{subject}</Text>
+                      <Text>{quizTitle}</Text>
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
@@ -153,36 +189,32 @@ const InFolder = () => {
                   <div className='in-fd-quiz'>
                     <Image src={qicon} boxSize='4%' alt='A!' />
                     <Text>내용</Text>
-                    <Text className='in-fd-quiz-last'>{quiz.content}</Text>
+                    <Text className='in-fd-quiz-last'>{quizContents}</Text>
                   </div>
-                  {/* <div className='in-fd-quiz'>
+                  <div className='in-fd-quiz'>
                     <Box boxSize='4%'></Box>
                     <Text>보기</Text>
                     <div className='in-fd-quiz-last'>
-                      {quiz.choices.map((choice, index) => (
-                        <div key={index} className={(index+1) === quiz.answer ? 'in-fd-correct' : ''}>{index+1}) {choice}</div>
+                      {options.map((op, idx) => (
+                        <div key={idx} className={(idx+1) === quizAnswer ? 'in-fd-correct' : ''}>{idx+1}) {op}</div>
                       ))}
                     </div>
-                  </div> */}
-                  <div>
-                    <Popover placement='top-start'>
-                      <PopoverTrigger>
-                        <Button>폴더</Button>
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <PopoverHeader fontWeight='semibold'>담을 폴더를 선택하세요</PopoverHeader>
-                        <PopoverArrow />
-                        <PopoverCloseButton />
-                        <PopoverBody>
-                          <li>어려워</li>
-                          <li>쉬워</li>
-                          <li>국</li>
-                          <li>영</li>
-                          <li>수</li>
-                        </PopoverBody>
-                      </PopoverContent>
-                    </Popover>
-                    <Link to={url}><Button>수정</Button></Link>
+                  </div>
+                  <div className='in-fd-btns'>
+                    <Menu>
+                      <MenuButton><Image src={inmyfolder} boxSize="25px" /></MenuButton>
+                      <MenuList>
+                        {myfd.map((fd, idx) => (
+                          <MenuItem key={idx}>
+                            <span onClick={() => quizAddFolder(fd.folderId, quizId)}>
+                              {fd.folderName}
+                            </span>
+                          </MenuItem>
+                        ))}
+                      </MenuList>
+                    </Menu>
+                    <Link to={qzUpdateUrl}><Image className='in-fd-btn2' src={edit} boxSize="25px" /></Link>
+                    <Image src={star3} boxSize="25px" />
                   </div>
                 </AccordionPanel>
               </AccordionItem>      
@@ -191,6 +223,12 @@ const InFolder = () => {
         </Accordion>
       </div>
     </div>
+
+    <div className='in-fd-fileadd' title='퀴즈 생성'>
+      <div></div>
+      <Link to="/quiz/create"><Image src={fileadd} className='in-fd-add-quiz' /></Link>
+    </div>
+  </div>
   )
 }
 
