@@ -118,10 +118,15 @@
 
 .card-case {
   width: 80%;
-  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 90vh;
   margin: auto;
   border-radius: 10px;
   background-color: whitesmoke;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   .cards {
     margin-right: 10rem;
   }
