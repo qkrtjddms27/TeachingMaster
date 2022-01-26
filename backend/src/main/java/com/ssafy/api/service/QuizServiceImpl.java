@@ -154,37 +154,22 @@ public class QuizServiceImpl implements QuizService{
     @Override
     public List<QuizAllRes> selectsFolderQuiz(Long folderId) {
         Folder folder = folderRepository.findById(folderId).get();
-        System.out.println("folderIndex : "+folder.getFolderId());
-        List<FolderQuiz> folderQuizList = folderQuizRepository.findByFolder(folder);
-
-        List<QuizAllRes> quizList = new ArrayList<>();
-        for (FolderQuiz folderquiz : folderQuizList) {
-            QuizAllRes quizAllRes = new QuizAllRes();
-            Quiz quiz = folderquiz.getQuiz();
-
-            quizAllRes.setQuizId(quiz.getQuizId());
-            quizAllRes.setSubject(quiz.getSubject());
-            quizAllRes.setQuizPhoto(quiz.getQuizPhoto());
-            quizAllRes.setQuizTitle(quiz.getQuizTitle());
-            quizAllRes.setQuizContents(quiz.getQuizContents());
-            quizAllRes.setQuizAnswer(quiz.getQuizAnswer());
-            quizAllRes.setOpenStatus(quiz.getOpenStatus());
-            quizAllRes.setQuizTimeout(quiz.getQuizTimeout());
-            quizAllRes.setQuizGrade(quiz.getQuizGrade());
+        List<QuizAllRes> folderQuizList = quizRepositorySupport.findFolderQuiz(folderId, folder.getUser().getUserId());
+System.out.println(folder.getUser().getUserId());
+        for (QuizAllRes curRes : folderQuizList) {
 
             String options[] = new String[4];
-            options[0] = quiz.getOption1();
-            options[1] = quiz.getOption2();
-            options[2] = quiz.getOption3();
-            options[3] = quiz.getOption4();
+            options[0] = curRes.getOption1();
+            options[1] = curRes.getOption2();
+            options[2] = curRes.getOption3();
+            options[3] = curRes.getOption4();
 
-            quizAllRes.setFolderCheck(true);
-            quizAllRes.setBookMarkCheck(true);
+            curRes.setOptions(options);
 
-            quizList.add(quizAllRes);
+            curRes.setFolderCheck(true);
         }
 
-        return quizList;
+        return folderQuizList;
     }
 
 
