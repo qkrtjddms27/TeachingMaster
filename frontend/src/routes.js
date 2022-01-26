@@ -1,14 +1,13 @@
+// import Login from './features/user/Login'
+// import Home from './features/teacher/Home'
 import MainPage from './features/mainpage/MainPage';
 import Settings from './features/sets/Settings';
-import Login from './features/user/Login'
 import Signup from './features/user/Signup'
-import Home from './features/teacher/Home'
 import EveryStudent from './features/student/EveryStudent'
 import Folder from './features/quiz/EveryFolder'
 import Conference from './features/conference/Conference'
 import Myconference from './features/conference/Myfonference'
 import InFolder from './features/quiz/InFolder';
-import QuizDetail from './features/quiz/QuizDetail';
 import Updatequiz from './features/quiz/Updatequiz';
 import Createquiz from './features/quiz/Createquiz';
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -45,12 +44,6 @@ export default [
     path: "/quiz/create",
     component: Createquiz,
     name: "폴더생성페이지",
-    exact:true,
-  },
-  {
-    path: "/quiz/:id",
-    component: QuizDetail,
-    name: "문제상세페이지",
     exact:true,
   },
   {

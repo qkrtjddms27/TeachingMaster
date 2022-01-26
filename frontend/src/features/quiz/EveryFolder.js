@@ -9,6 +9,7 @@ import AddQuizPopover from './AddQuizPopover'
 import AOS from 'aos'
 import "aos/dist/aos.css"
 import { setToken } from '../../components/TOKEN'
+import './scss/Quiz.scss'
 const Folder = () => {
   const {userId} = JSON.parse(localStorage.getItem("user"))
 
@@ -78,9 +79,9 @@ const Folder = () => {
             const imgUrl = `https://cdn-icons-png.flaticon.com/512/1081/${imgUrls[idx]}.png`
             return (
               <Col className='col' sm = {3} key={idx}>
-                <div data-aos="fade-up"
+                <div data-aos="flip-up"
                   data-aos-easing="linear"
-                  data-aos-duration="1500" key={url}
+                  data-aos-duration="1000" key={url}
                 >
                   <Link to={url}><img className='folder-icon' src={imgUrl} alt='그림'/></Link>
                   <p className='title'>{fd.folderName}</p>
