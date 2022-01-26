@@ -1,0 +1,16 @@
+FROM openjdk:8-jdk-alpine
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+
+RUN chmod +x ./gradlew
+RUN ./gradlew bootJar
+
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+
+
+# build.gradle에서 프론트 관련 task를 모두 주석 처리 하거나 제거 해야됨.
