@@ -4,44 +4,61 @@ import { useHistory } from 'react-router-dom';
 import { Radio,RadioGroup,Stack,Textarea,Input,Button,Select } from '@chakra-ui/react';
 import './scss/createquiz.scss'
 import { useParams } from 'react-router-dom';
+import { QUIZ, setToken } from '../../components/TOKEN';
 
 const Updatequiz = () => {
-  let {quiz_id} = useParams()
+  let {id} = useParams()
   let history = useHistory()
-  const [quiz,setQuiz] = useState([])
-  const [userId,setUserId] = useState("anon")
-  const [title,setTitle] =useState(quiz.title)
+  const [quiz,setQuiz] = useState(QUIZ)
+  const [userId,setUserId] = useState(localStorage.getItem("userId"))
+  const [title,setTitle] =useState(quiz.quizTitle)
   const [subject,setSubject] = useState(quiz.subject)
-  const [timeout,setTimeout] = useState(quiz.timeout)
-  const [grade,setGrade] = useState(quiz.grade)
-  const [open,setOpen] =useState(quiz.open)
-  const [contents,setContents] = useState(quiz.contents)
-  const [answer,setAnswer] = useState(quiz.answer)
-  const [choice,setChoice] = useState(quiz.choice)
+  const [timeout,setTimeout] = useState(quiz.quizTimeout)
+  const [grade,setGrade] = useState(quiz.quizGrade)
+  const [open,setOpen] =useState(String(quiz.openStatus))
+  const [contents,setContents] = useState(quiz.quizContents)
+  const [answer,setAnswer] = useState(String(quiz.quizAnswer))
+  const [choice1,setChoice1] = useState(quiz.options[0])
+  const [choice2,setChoice2] = useState(quiz.options[1])
+  const [choice3,setChoice3] = useState(quiz.options[2])
+  const [choice4,setChoice4] = useState(quiz.options[3])
 
   useEffect (()=>{
-    // setUserId(localStorage.getItem("userId"))
+    console.log(id)
     axios({
-      url:`http://localhost:8080/api/v1/quiz/${quiz_id}`,
+      url:`http://localhost:8080/api/v1/quiz/find/Quiz/${id}`,
       method:"GET",
-      // headers: setToken()
+      headers: setToken()
     })
     .then(res=>{
-      setQuiz(res.data.quiz)
+      setQuiz(res.data)
+      setTitle(res.data.quizTitle)
+      setSubject(res.data.subject)
+      setTimeout(res.data.quizTimeout)
+      setGrade(res.data.quizGrade)
+      setOpen(String(res.data.openStatus))
+      setContents(res.data.quizContents)
+      setAnswer(String(res.data.quizAnswer))
+      setChoice1(res.data.options[0])
+      setChoice2(res.data.options[1])
+      setChoice3(res.data.options[2])
+      setChoice4(res.data.options[3])
     })
-    .catch(
-      setQuiz([])
-    )
+    .catch(err=>{
+      console.log('UPDATE 문제 불러오기')
+    })
   },[])
-
+  
   const DELETE = ()=>{
     axios({
-      url :`http://localhost:8080/api/v1/quiz/delete/${quiz_id}`,
+      url :`http://localhost:8080/api/v1/quiz/delete/${id}`,
       method:"DELETE",
-      // headers:setToken()
+      headers:setToken()
     }
     ).then(res=>{
       console.log(res)
+      alert('삭제되었습니다.')
+      setQuiz([])
       history.push('/')
     }).catch(err=>{
       console.log(err)
@@ -50,29 +67,33 @@ const Updatequiz = () => {
 
   const UPDATE = ()=>{
     const data ={
-      "answer": answer,
-      "contents": contents,
-      "grade": grade,
-      "status": open,
-      "subject": subject,
-      "timeout": timeout,
-      "title": title,
-      "id": quiz_id,
-      "userId": userId     
+      // folderId는 없앨것
+      "openStatus": Boolean(open),
+      "options": [choice1,choice2,choice3,choice4],
+      "quizAnswer": Number(answer),
+      "quizContents": contents,
+      "quizGrade": grade,
+      "quizId": Number(id),
+      "quizPhoto": "noPhoto",
+      "quizTimeout": Number(timeout),
+      "quizTitle": title,
+      "subject":subject,
+      "userId": userId
     }
     axios(
       {
-        url : `http://localhost:8080/api/v1/quiz/update/${quiz_id}`,
-        mathod: "PUT",
+        url : "http://localhost:8080/api/v1/quiz/update/quiz",
+        method: "PUT",
         data,
-        // header:setToken(),
+        headers : setToken()
       }
-    ).then(res=>
-      console.log(res),
-      history.push("/home")
-    ).catch(err=>
-      alert(err)
-    )
+    ).then(res=>{
+      setQuiz(data)
+      alert('수정완료')
+      // history.push('/quiz/')
+    }).catch(err=>{
+      alert('문제 UPDATE 실패')
+    })
   }
   return (
   <div>
@@ -87,7 +108,6 @@ const Updatequiz = () => {
       </div>
       <div className='sub_time_grade_open-box'>
         <div className='subject-box'>
-          {/* <p className='subject-text'>과목: </p> */}
           <Select value={subject} onChange={(e)=>setSubject(e.target.value)} className='subject-select'>
             <option value="korean">국어</option>
             <option value="english">영어</option>
@@ -98,7 +118,6 @@ const Updatequiz = () => {
           </Select>
         </div>
         <div className='time-box'>
-          {/* <p className='time-text'>제한시간: </p> */}
           <Select value={timeout} onChange={(e)=>setTimeout(e.target.value)} className='time-select'>
             <option value={15}>15초</option>
             <option value={30}>30초</option>
@@ -108,7 +127,6 @@ const Updatequiz = () => {
           </Select>
         </div>
         <div className='grade-box'>
-          {/* <p className='grade-text'>학년: </p> */}
           <Select value={grade} onChange={(e)=>setGrade(e.target.value)} className='grade-select'>
             <option value={1}>1학년</option>
             <option value={2}>2학년</option>
@@ -122,10 +140,10 @@ const Updatequiz = () => {
         <div className='open-box'>
           <RadioGroup onChange={setOpen} value={open} >
             <Stack spacing={5} direction='row'>
-              <Radio  colorScheme='green' value = "true">
+              <Radio  colorScheme='green' value ="true">
                 <p>공개</p>
               </Radio>
-              <Radio  colorScheme='red' value="false">
+              <Radio  colorScheme='red' value= "false">
                 <p>비공개</p>
               </Radio>
             </Stack>
@@ -143,19 +161,19 @@ const Updatequiz = () => {
         <RadioGroup onChange={setAnswer} value={answer} >
             <div className='choice'>
               <Radio size='lg' colorScheme='orange' value ="1"/>
-              <Input id={answer==="1"?"answer":""} value={choice[0]} onChange={(e)=>setChoice(choice[0]= e.target.value)} />
+              <Input id={answer=== "1" ? "answer":""} value={choice1} onChange={(e)=>setChoice1(e.target.value)} />
             </div>
             <div className='choice'>
               <Radio size='lg' colorScheme='orange' value ="2"/>
-              <Input id={answer==="2"?"answer":""} value={choice[1]} onChange={(e)=>setChoice(choice[1]= e.target.value)} />
+              <Input id={answer=== "2" ? "answer":""} value={choice2} onChange={(e)=>setChoice2(e.target.value)} />
             </div>
             <div className='choice'>
               <Radio size='lg' colorScheme='orange' value ="3"/>
-              <Input id={answer==="3"?"answer":""} value={choice[2]} onChange={(e)=>setChoice(choice[2]= e.target.value)} />
+              <Input id={answer=== "3" ? "answer":""} value={choice3} onChange={(e)=>setChoice3(e.target.value)} />
             </div>
             <div className='choice'>
               <Radio size='lg' colorScheme='orange' value ="4"/>
-              <Input id={answer==="4"?"answer":""} value={choice[3]} onChange={(e)=>setChoice(choice[3]= e.target.value)}/>
+              <Input id={answer=== "4" ? "answer":""} value={choice4} onChange={(e)=>setChoice4(e.target.value)}/>
             </div>
           </RadioGroup>
       </div>

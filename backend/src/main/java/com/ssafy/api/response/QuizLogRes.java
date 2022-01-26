@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@ApiModel("QuizResponse")
+@ApiModel("QuizLogResponse")
 public class QuizLogRes {
 
 	@ApiModelProperty(name="학번")

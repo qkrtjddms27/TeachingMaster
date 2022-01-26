@@ -40,9 +40,6 @@ public class QuizServiceImpl implements QuizService{
     @Autowired
     StudentRepository studentRepository;
 
-    @Autowired
-    FolderQuizRepositorySupport folderQuizRepositorySupport;
-
     @Override
     public Quiz createQuiz(QuizRegisterReq quizRegisterReq) {
         Quiz quiz = new Quiz();
@@ -68,10 +65,10 @@ public class QuizServiceImpl implements QuizService{
         Quiz quizRes = quizRepository.save(quiz);
 
         //퀴즈와 폴더 매핑 후 FolderQuiz에 저장
-        FolderQuiz folderQuiz = new FolderQuiz();
-        folderQuiz.setFolder(folderRepository.findById(quizRegisterReq.getFolderId()).get());
-        folderQuiz.setQuiz(quizRes);
-        folderQuizRepository.save(folderQuiz);
+//        FolderQuiz folderQuiz = new FolderQuiz();
+//        folderQuiz.setFolder(folderRepository.findById(quizRegisterReq.getFolderId()).get());
+//        folderQuiz.setQuiz(quizRes);
+//        folderQuizRepository.save(folderQuiz);
 
         return quizRes;
     }
@@ -155,37 +152,39 @@ public class QuizServiceImpl implements QuizService{
     }
 
     @Override
-    public List<Quiz> selectsFolderQuiz(Long folderId) {
+    public List<QuizAllRes> selectsFolderQuiz(Long folderId) {
         Folder folder = folderRepository.findById(folderId).get();
-        System.out.println("folderIndex : "+folder.getFolderId());
-        List<FolderQuiz> folderQuizList = folderQuizRepository.findByFolder(folder);
+        List<QuizAllRes> folderQuizList = quizRepositorySupport.findFolderQuiz(folderId, folder.getUser().getUserId());
+System.out.println(folder.getUser().getUserId());
+        for (QuizAllRes curRes : folderQuizList) {
 
-        List<Quiz> quizList = new ArrayList<>();
-        for (FolderQuiz folderquiz : folderQuizList) {
-            System.out.println("quizTitle : " + folderquiz.getQuiz().getQuizTitle());
-            quizList.add(folderquiz.getQuiz());
+            String options[] = new String[4];
+            options[0] = curRes.getOption1();
+            options[1] = curRes.getOption2();
+            options[2] = curRes.getOption3();
+            options[3] = curRes.getOption4();
+
+            curRes.setOptions(options);
+
+            curRes.setFolderCheck(true);
         }
 
-        return quizList;
+        return folderQuizList;
     }
 
 
     @Override
     public List<QuizAllRes> selectQuizAll(String userId) {
 
-//        List<Folder> folderList = folderRepository.findByUser(userRepository.findById(userId).get());
-//
-//        Map<Long, Boolean> myFolder = new HashMap<Long, Boolean>();
-//        for (Folder folder:folderList) {
-//            myFolder.put(folder.getFolderId(), true);
-//        }
-//
-//        List<Quiz> quizList = quizRepository.findAll();
-//        for (Quiz quiz:quizList) {
-//
-//        }
-        List<QuizAllRes> quizAllResList = folderQuizRepositorySupport.joinFolderQuiz(userId);
-
+        List<QuizAllRes> quizAllResList = quizRepositorySupport.findAllFolderFavorQuiz(userId);
+        for (QuizAllRes quiz:quizAllResList) {
+            String options[] = new String[4];
+            options[0] = quiz.getOption1();
+            options[1] = quiz.getOption2();
+            options[2] = quiz.getOption3();
+            options[3] = quiz.getOption4();
+            quiz.setOptions(options);
+        }
         System.out.println(quizAllResList.get(0).getQuizId() + ", "+ quizAllResList.get(0).getQuizTitle());
 
         return quizAllResList;
@@ -214,14 +213,20 @@ public class QuizServiceImpl implements QuizService{
     }
 
     @Override
-    public List<Quiz> selectFavor(String userId) {
-        List<Bookmark> bookmarkList = bookMarkRepository.findByUser(userRepository.findById(userId).get());
-        List<Quiz> quizList = new ArrayList<>();
-        for (Bookmark bookmark:bookmarkList) {
-            quizList.add(quizRepository.findById(bookmark.getQuiz().getQuizId()).get());
+    public List<QuizAllRes> selectFavor(String userId) {
+
+        List<QuizAllRes> quizAllResList = quizRepositorySupport.findFavorQuiz(userId);
+        for (QuizAllRes quiz:quizAllResList) {
+            String options[] = new String[4];
+            options[0] = quiz.getOption1();
+            options[1] = quiz.getOption2();
+            options[2] = quiz.getOption3();
+            options[3] = quiz.getOption4();
+            quiz.setOptions(options);
         }
 
-        return quizList;
+
+        return quizAllResList;
     }
 
     @Override
