@@ -16,14 +16,14 @@ public interface QuizService {
     void deleteQuiz(Long quizId);
 
     List<Folder> selectFolders(String userId);
-    List<Quiz> selectsFolderQuiz(Long folderId);
+    List<QuizAllRes> selectsFolderQuiz(Long folderId);
 
     List<QuizAllRes> selectQuizAll(String userId);
 
     Folder createFolder(FolderRegisterReq folderRegisterReq);
     Bookmark createFavor(FavorRegisterReq favorRegisterReq);
 
-    List<Quiz> selectFavor(String userId);
+    List<QuizAllRes> selectFavor(String userId);
 
     FolderQuiz insertQuiz(FolderQuizEnterReq folderQuizEnterReq);
 

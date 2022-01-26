@@ -92,12 +92,12 @@ public class QuizController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<List<QuizRes>> select_folderQuiz(
+    public ResponseEntity<List<QuizAllRes>> select_folderQuiz(
             @PathVariable("folder_id") Long folderId
     ) {
-        List<Quiz> quizList = quizService.selectsFolderQuiz(folderId);
+        List<QuizAllRes> quizList = quizService.selectsFolderQuiz(folderId);
 
-        return ResponseEntity.status(200).body(QuizRes.of(quizList));
+        return ResponseEntity.status(200).body(quizList);
     }
 
 
@@ -168,12 +168,12 @@ public class QuizController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<List<QuizRes>> select_favor(
+    public ResponseEntity<List<QuizAllRes>> select_favor(
             @PathVariable("user_id") String userId
     ) {
-        List<Quiz> quizList = quizService.selectFavor(userId);
+        List<QuizAllRes> quizList = quizService.selectFavor(userId);
 
-        return ResponseEntity.status(200).body(QuizRes.of(quizList));
+        return ResponseEntity.status(200).body(quizList);
     }
 
     @PostMapping("/update/folder_mapping")

@@ -1,12 +1,12 @@
 package com.ssafy.api.response;
 
-import com.ssafy.db.entity.Quiz;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -34,11 +34,28 @@ public class QuizAllRes {
 	@ApiModelProperty(name="선생님 id")
 	String userId;
 
-	@ApiModelProperty(name="보기")
+	@ApiModelProperty(name="보기 배열")
 	String options[];
+
+	@ApiModelProperty(name="즐겨찾기유무")
+	Boolean bookMarkCheck;
 
 	@ApiModelProperty(name="내폴더소속유무")
 	Boolean folderCheck;
+
+
+
+	@JsonIgnore
+	String option1;
+
+	@JsonIgnore
+	String option2;
+
+	@JsonIgnore
+	String option3;
+
+	@JsonIgnore
+	String option4;
 
 	public static List<QuizAllRes> of(List<QuizAllRes> quizList) {
 

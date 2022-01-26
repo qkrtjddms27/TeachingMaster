@@ -1,5 +1,6 @@
 package com.ssafy.api.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Setter
 @ApiModel("QuizRegisterRequest")
 public class QuizRegisterReq {
+    @JsonIgnore
     @ApiModelProperty(name="소속 폴더 번호")
     long folderId;
     @ApiModelProperty(name="문제 번호")

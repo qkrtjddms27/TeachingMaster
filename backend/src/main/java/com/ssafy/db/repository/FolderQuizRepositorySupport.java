@@ -1,6 +1,5 @@
 package com.ssafy.db.repository;
 
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -9,7 +8,6 @@ import com.ssafy.db.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -26,7 +24,7 @@ public class FolderQuizRepositorySupport {
         List<QuizAllRes> quizAllResList = jpaQueryFactory
                 .select(Projections.bean(QuizAllRes.class, qQuiz.quizId, qQuiz.subject, qQuiz.quizPhoto , qQuiz.quizTitle
                         ,qQuiz.quizContents, qQuiz.quizAnswer, qQuiz.openStatus, qQuiz.quizTimeout
-                        ,qQuiz.quizGrade, qQuiz.user, qQuiz.option1, qQuiz.option2, qQuiz.option3
+                        ,qQuiz.quizGrade, qQuiz.user.userId, qQuiz.option1, qQuiz.option2, qQuiz.option3
                         ,qQuiz.option4
                         ,new CaseBuilder().when(qFolderQuiz.folder.folderId
                                 .in(jpaQueryFactory.select(qFolder.folderId).from(qFolder)
@@ -35,6 +33,7 @@ public class FolderQuizRepositorySupport {
                 .from(qQuiz)
                 .leftJoin(qFolderQuiz).on(qQuiz.quizId.eq(qFolderQuiz.quiz.quizId))
                 .fetch();
+
 
 
         return quizAllResList;
