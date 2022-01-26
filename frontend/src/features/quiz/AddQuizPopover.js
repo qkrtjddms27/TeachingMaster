@@ -5,9 +5,14 @@ import { useState, useEffect } from 'react'
 import add from './image/add.png'
 import axios from 'axios'
 import { setToken } from '../../components/TOKEN';
+import AOS from 'aos'
+import "aos/dist/aos.css"
 
 
 const AddQuizPopover = ({myFolders, setMyFolders}) => {
+  useEffect(() => {
+    AOS.init()
+  })
   const [folderName, setFolderName ] = useState("")
   const addFolder = (e) => {
     e.preventDefault()
@@ -36,7 +41,7 @@ const AddQuizPopover = ({myFolders, setMyFolders}) => {
     <div>
       <Popover placement='top-start'>
           <PopoverTrigger>
-            <Image alt='더하기' className='plus-button' src={add} />
+            <Image data-aos="fade-up-left" data-aos-duration="1500" alt='더하기' className='plus-button' src={add} />
           </PopoverTrigger>
           <PopoverContent>
             <PopoverHeader fontWeight='semibold'>
