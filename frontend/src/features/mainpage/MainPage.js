@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Heading} from '@chakra-ui/react'
 import './scss/mainpage.scss'
 import Main1 from './Main1';
@@ -8,7 +8,7 @@ const MainPage = () => {
   return(
   <div>
     <Main1/>
-    {/* <Main2/> */}
+    <Main2/>
     <Main3/>
   </div>)
 };

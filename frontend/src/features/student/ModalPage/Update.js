@@ -12,14 +12,18 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
   const [parentsName,setParentsName] = useState(student.parentsName)
   const [relation,setRelation] = useState(student.relation)
   const [parentsPhone,setParentsPhone] = useState(student.parentsPhone)
+  const [imgBase64,setImagbase64]=useState(student.studentProfile) // 파일 base64
+  // const [imgFile,setImgFile] = useState([]) // 이미지파일
+
   const onSubmit = ()=>{
     console.log(student)
+    console.log(typeof(student.studentProfile))
     const data ={
       "roomGrade":student.room.roomGrade ,
       "roomNum":student.room.roomNum,
       "studentId": student.studentId,
       "studentName": student.studentName,
-      "studentProfile": student.studentProfile,
+      "studentProfile": imgBase64,
       "address": address,
       "parentsName": parentsName,
       "parentsPhone": parentsPhone,
@@ -37,6 +41,7 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
       change("main")
       const stuData = 
       {...student,
+        "studentProfile": imgBase64,
         "address": address,
         "parentsName": parentsName,
         "parentsPhone": parentsPhone,
@@ -52,12 +57,28 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
       console.log(err)
     })
   }
+  const handleChangeFile = event => {
+    let reader = new FileReader(); 
+    reader.onloadend = e => {
+      // 2. 읽기가 완료되면 아래코드가 실행
+      const base64 = reader.result; //reader.result는 이미지를 인코딩(base64 ->이미지를 text인코딩)한 결괏값이 나온다.
+      if (base64) {
+        setImagbase64(base64.toString())
+      }
+    };
+    if (event.target.files[0]) {
+      console.log(event)
+      reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다. 저장후 onloadend 트리거
+      // setImgFile(event.target.files[0])
+      console.log(imgBase64.length)
+    }
+  };
   return (
     <div className='modal-main'>
       <div className='left'>
         <div className='left_top' >
           {/* <img className='image' alt='학생사진' src={student.studentProfile} /> */}
-          <img className='image' alt='학생사진' src="https://blog.kakaocdn.net/dn/bAyJve/btqNr8wMiXi/rV0XKPT78iMnmkXlViEmk0/img.jpg" />
+          <img className='image' alt='학생사진' src={imgBase64} />
           <div>
             <div className='name'>{student.studentName}</div>
             <div className='stars'>이번주 ⭐&nbsp;{student.countingStar}</div>
@@ -66,11 +87,10 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
               
             </form>
               {/* <label className="input-file-button" for="input-file"> */}
-              <label className="input-file-button">
+              <label htmlFor="input-file" className="input-file-button" onChange={handleChangeFile}>
                 사진 업로드
               </label>
-              <Input type="file" id="input-file" style={{display:"none"}}/>
-              <Button type='submit'>저장</Button>
+              <Input type="file" onChange={handleChangeFile}  id="input-file" style={{display:"none"}}/>
           </div>
         </div>
         <div className='left_bot'>
