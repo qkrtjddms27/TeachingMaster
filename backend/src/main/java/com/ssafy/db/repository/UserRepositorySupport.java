@@ -33,4 +33,13 @@ public class UserRepositorySupport {
                 .from(qQuiz).where(qUser.userId.eq(userId)).fetch();
 
     }
+
+    //master true 여부로 관리자 찾기(한명이라는 가정)
+    public Optional<User> findUserByMaster() {
+        User user = jpaQueryFactory.select(qUser).from(qUser)
+                .where(qUser.master.eq(true)).fetchOne();
+        if(user == null) return Optional.empty();
+        return Optional.ofNullable(user);
+    }
+
 }

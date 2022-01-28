@@ -4,6 +4,7 @@ import com.ssafy.api.request.UserUpdateReq;
 import com.ssafy.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +51,7 @@ public class UserController {
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	@GetMapping("/me")
 	@ApiOperation(value = "회원 본인 정보 조회", notes = "로그인한 회원 본인의 정보를 응답한다.") 
     @ApiResponses({
@@ -69,7 +71,10 @@ public class UserController {
 
 		return ResponseEntity.status(200).body(UserRes.of(user));
 	}
+	//Role지정
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	//끝
 	@DeleteMapping("/delete/{userId}")
 	@ApiOperation(value = "회원 본인 정보 삭제", notes = "로그인한 회원 본인의 정보를 삭제한다.")
 	@ApiResponses({
@@ -84,6 +89,7 @@ public class UserController {
 	}
 
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	@PutMapping("/update")
 	@ApiOperation(value = "회원 본인 정보 수정", notes = "로그인한 회원 본인의 정보를 수정한다.")
 	@ApiResponses({
