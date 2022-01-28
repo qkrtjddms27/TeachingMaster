@@ -1,0 +1,195 @@
+.CARD {
+  // 빈 공간(사이즈 맞춰줘야해, 색도 뒤랑 맞추기)
+  width: 17rem;
+  height: 21rem;
+  // 배경이랑 맞추기
+  background-color: whitesmoke;
+  border: none;
+  margin-top: 5rem;
+  margin-left: 5rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.f-cardbox {
+  width: 17rem;
+  height: 21rem;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 3px 3px 7px;
+
+  .image {
+    margin: auto;
+    margin-top: 3.5rem;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 100%;
+  }
+  .card-title {
+    font-weight: 1000;
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+  }
+  .stars {
+    margin-left: 0.7rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    user-select: none;
+  }
+}
+.b-cardbox {
+  //카드뒷면
+  position: absolute;
+  width: 17rem;
+  height: 21rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  box-shadow: 3px 3px 7px;
+
+  .img-name-star {
+    display: flex;
+    .image {
+      margin: 2rem;
+      margin-bottom: 1rem;
+      width: 6rem;
+      height: 6rem;
+      border-radius: 100%;
+    }
+    .card-title {
+      font-weight: 1000;
+      font-size: 1.5rem;
+      margin-top: 2.7rem;
+    }
+    .stars {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+  }
+
+  .memo {
+    flex-direction: column;
+    margin: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    .stars {
+      margin-left: 1rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .memo-title {
+      font-size: 1rem;
+      margin-left: 6rem;
+      font-weight: 700;
+    }
+    .memo-content {
+      margin-left: 1rem;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.CARD > .f-cardbox {
+  // 카드 앞면 정의 (색)
+  transform: perspective(600px) rotateY(0deg);
+  background-color: rgb(245, 245, 245);
+  backface-visibility: hidden;
+  transition: transform 0.5s linear 0s;
+}
+.CARD > .b-cardbox {
+  // 카드 뒷면 정의 (색)
+  // background: linear-gradient(90deg, #e0eafc 0%, #a0b6d4 100%, #e0eafc 0%);
+  transform: perspective(600px) rotateY(180deg);
+  backface-visibility: hidden;
+  transition: transform 0.6s linear 0s;
+  background-color: whitesmoke;
+}
+.CARD:hover > .f-cardbox {
+  transform: perspective(600px) rotateY(-180deg);
+}
+.CARD:hover > .b-cardbox {
+  transform: perspective(600px) rotateY(0deg);
+}
+
+.card-case {
+  width: 80%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 90vh;
+  margin: auto;
+  border-radius: 10px;
+  background-color: whitesmoke;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .cards {
+    margin-right: 10rem;
+  }
+}
+.grade_room_box {
+  margin-top: 3rem;
+}
+.grade_select {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem 0;
+  color: #5b360d;
+  .grade-text {
+    margin-top: 3rem;
+    font-size: 1.5rem;
+  }
+  :hover {
+    cursor: pointer;
+  }
+  span {
+    text-decoration: none;
+    text-align: center;
+    width: 5rem;
+    display: inline-block;
+    position: relative;
+
+    &:hover {
+      color: #000000;
+      font-weight: bold;
+    }
+    &:after {
+      background: none repeat scroll 0 0 transparent;
+      bottom: 0;
+      content: "";
+      display: block;
+      height: 2px;
+      left: 50%;
+      position: absolute;
+      background: #ffb000;
+      transition: width 0.3s ease 0s, left 0.3s ease 0s;
+      width: 0;
+    }
+    &:hover::after {
+      width: 100%;
+      left: 0;
+    }
+  }
+}
+
+.room_select {
+  margin-top: 1.5rem;
+  display: inline-block;
+  margin-left: 5rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  width: 10%;
+}
+
+.myroom_select {
+  margin-top: 1.7rem;
+  margin-left: 5rem;
+}
+.myroom_select2 {
+  margin-left: 5rem;
+}

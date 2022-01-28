@@ -1,0 +1,51 @@
+.Main1 {
+  background-color: rgb(22, 21, 21);
+  height: 100vh;
+  .typing {
+    text-transform: capitalize;
+    white-space: nowrap;
+    color: transparent;
+    margin: 0;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    // 텍스트를 정 가운데에 고정시키려면 필수
+    &::before {
+      content: "we are teaching master...";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: #fffefe;
+      overflow: hidden;
+      border-right: 3px solid rgb(238, 237, 237);
+      // 커서역할을 하는것
+      animation: typing 8s steps(30) infinite;
+    }
+  }
+}
+@keyframes typing {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+.Main2 {
+  background-color: rgb(32, 32, 32);
+  background-image: url("https://images.pexels.com/photos/261909/pexels-photo-261909.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  height: 100vh;
+  .study {
+    margin-left: 10rem;
+    height: 50vh;
+  }
+}
+.Main3 {
+  background-color: rgb(214, 199, 208);
+}

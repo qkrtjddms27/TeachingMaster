@@ -1,30 +1,20 @@
 package com.ssafy.api.service;
 
 
-import com.ssafy.api.request.QuizOptionRegisterReq;
-import com.ssafy.api.request.QuizRegisterReq;
-import com.ssafy.db.entity.Folder;
-import com.ssafy.db.entity.Quiz;
-import com.ssafy.db.entity.QuizOption;
-import com.ssafy.db.entity.User;
-import com.ssafy.db.repository.QuizOptionRepository;
-import com.ssafy.db.repository.QuizOptionRepositorySupport;
-import com.ssafy.db.repository.QuizRepository;
-import com.ssafy.db.repository.QuizRepositorySupport;
+import com.ssafy.api.request.*;
+import com.ssafy.api.response.QuizAllRes;
+import com.ssafy.api.response.QuizLogRes;
+import com.ssafy.api.response.QuizRes;
+import com.ssafy.db.entity.*;
+import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service("QuizService")
 public class QuizServiceImpl implements QuizService{
-
-    @Autowired
-    QuizOptionRepository quizOptionRepository;
 
     @Autowired
     QuizRepository quizRepository;
@@ -33,104 +23,259 @@ public class QuizServiceImpl implements QuizService{
     QuizRepositorySupport quizRepositorySupport;
 
     @Autowired
-    QuizOptionRepositorySupport quizOptionRepositorySupport;
+    UserRepository userRepository;
+
+    @Autowired
+    FolderRepository folderRepository;
+
+    @Autowired
+    FolderQuizRepository folderQuizRepository;
+
+    @Autowired
+    BookMarkRepository bookMarkRepository;
+
+    @Autowired
+    QuizLogRepository quizLogRepository;
+
+    @Autowired
+    StudentRepository studentRepository;
 
     @Override
     public Quiz createQuiz(QuizRegisterReq quizRegisterReq) {
         Quiz quiz = new Quiz();
         quiz.setSubject(quizRegisterReq.getSubject());
-        quiz.setQuizPhoto(quizRegisterReq.getPhoto());
-        quiz.setQuizTitle(quizRegisterReq.getTitle());
-        quiz.setQuizContents(quizRegisterReq.getContents());
-        quiz.setQuizAnswer(quizRegisterReq.getAnswer());
-        quiz.setOpenStatus(quizRegisterReq.getStatus());
-        quiz.setQuizTimeout(quizRegisterReq.getTimeout());
-        quiz.setQuizGrade(quizRegisterReq.getGrade());
+        quiz.setQuizPhoto(quizRegisterReq.getQuizPhoto());
+        quiz.setQuizTitle(quizRegisterReq.getQuizTitle());
+        quiz.setQuizContents(quizRegisterReq.getQuizContents());
+        quiz.setQuizAnswer(quizRegisterReq.getQuizAnswer());
+        quiz.setOpenStatus(quizRegisterReq.getOpenStatus());
+        quiz.setQuizTimeout(quizRegisterReq.getQuizTimeout());
+        quiz.setQuizGrade(quizRegisterReq.getQuizGrade());
 
+        String[] options = quizRegisterReq.getOptions();
+        quiz.setOption1(options[0]);
+        quiz.setOption2(options[1]);
+        quiz.setOption3(options[2]);
+        quiz.setOption4(options[3]);
+
+        //퀴즈 본문 저장
         User user = new User();
         user.setUserId(quizRegisterReq.getUserId());
         quiz.setUser(user);
+        Quiz quizRes = quizRepository.save(quiz);
 
-        return quizRepository.save(quiz);
+        //퀴즈와 폴더 매핑 후 FolderQuiz에 저장
+//        FolderQuiz folderQuiz = new FolderQuiz();
+//        folderQuiz.setFolder(folderRepository.findById(quizRegisterReq.getFolderId()).get());
+//        folderQuiz.setQuiz(quizRes);
+//        folderQuizRepository.save(folderQuiz);
+
+        return quizRes;
     }
 
     @Override
-    public List<QuizOption> createOption(List<QuizOptionRegisterReq> options) {
-
-        List<QuizOption> quizList = new ArrayList<>();
-
-        for (QuizOptionRegisterReq option:options) {
-            QuizOption quizOption = new QuizOption();
-            quizOption.setOptionId(option.getOptionId());
-            quizOption.setOptionContent(option.getOptionContent());
-
-            Quiz quiz = new Quiz();
-            quiz.setQuizId(option.getQuizId());
-            quizOption.setQuiz(quiz);
-
-            quizList.add(quizOption);
-        }
-
-        return quizOptionRepository.saveAll(quizList);
-    }
-
-    @Override
-    public Quiz updateQuiz(QuizRegisterReq quizRegisterReq) {
+    public Quiz updateQuiz(QuizUpdateReq quizRegisterReq) {
         Quiz quiz = new Quiz();
-        quiz.setQuizId(quizRegisterReq.getId());
+        quiz.setQuizId(quizRegisterReq.getQuizId());
         quiz.setSubject(quizRegisterReq.getSubject());
-        quiz.setQuizPhoto(quizRegisterReq.getPhoto());
-        quiz.setQuizTitle(quizRegisterReq.getTitle());
-        quiz.setQuizContents(quizRegisterReq.getContents());
-        quiz.setQuizAnswer(quizRegisterReq.getAnswer());
-        quiz.setOpenStatus(quizRegisterReq.getStatus());
-        quiz.setQuizTimeout(quizRegisterReq.getTimeout());
-        quiz.setQuizGrade(quizRegisterReq.getGrade());
+        quiz.setQuizPhoto(quizRegisterReq.getQuizPhoto());
+        quiz.setQuizTitle(quizRegisterReq.getQuizTitle());
+        quiz.setQuizContents(quizRegisterReq.getQuizContents());
+        quiz.setQuizAnswer(quizRegisterReq.getQuizAnswer());
+        quiz.setOpenStatus(quizRegisterReq.getOpenStatus());
+        quiz.setQuizTimeout(quizRegisterReq.getQuizTimeout());
+        quiz.setQuizGrade(quizRegisterReq.getQuizGrade());
+        String[] options = quizRegisterReq.getOptions();
+        quiz.setOption1(options[0]);
+        quiz.setOption2(options[1]);
+        quiz.setOption3(options[2]);
+        quiz.setOption4(options[3]);
 
         User user = new User();
         user.setUserId(quizRegisterReq.getUserId());
         quiz.setUser(user);
 
-        return quizRepository.save(quiz);
+        Quiz quizRes = quizRepository.save(quiz);
+
+        return quizRes;
     }
 
     @Override
-    @Transactional
-    public List<QuizOption> updateOption(List<QuizOptionRegisterReq> options) {
-        //해당 문제의 기존 보기들 전부 삭제
-        Long quizId = options.get(0).getQuizId();
-        quizOptionRepositorySupport.deleteOptionsByQuiz(quizId);
+    public QuizRes selectQuiz(Long quizId) {
+        QuizRes quizRes = new QuizRes();
+        //quiz 본문 세팅
+        Quiz quiz = quizRepository.findById(quizId).get();
 
-//        List<QuizOption> list  = quizOptionRepository.findByQuiz(remove_quiz);
-//        for (QuizOption option : list) {
-//            quizOptionRepository.deleteById(option.getOptionId());
-//        }
-//        System.out.println(lists.toString());
+        quizRes.setQuizId(quizId);
+        quizRes.setSubject(quiz.getSubject());
+        quizRes.setQuizPhoto(quiz.getQuizPhoto());
+        quizRes.setQuizTitle(quiz.getQuizTitle());
+        quizRes.setQuizContents(quiz.getQuizContents());
+        quizRes.setQuizAnswer(quiz.getQuizAnswer());
+        quizRes.setOpenStatus(quiz.getOpenStatus());
+        quizRes.setQuizTimeout(quiz.getQuizTimeout());
+        quizRes.setQuizGrade(quiz.getQuizGrade());
+        quizRes.setQuizGrade(quiz.getQuizGrade());
+        quizRes.setUserId(quiz.getUser().getUserId());
+        String[] options = new String[4];
+        options[0] = quiz.getOption1();
+        options[1] = quiz.getOption2();
+        options[2] = quiz.getOption3();
+        options[3] = quiz.getOption4();
 
-        List<QuizOption> quizList = new ArrayList<>();
+        quizRes.setOptions(options);
 
-        //새롭게 보기들 추가
-        for (QuizOptionRegisterReq option:options) {
-            QuizOption quizOption = new QuizOption();
-            quizOption.setOptionIndex(option.getOptionIndex());
-            quizOption.setOptionId(option.getOptionId());
-            quizOption.setOptionContent(option.getOptionContent());
+        return quizRes;
+    }
 
-            Quiz quiz = new Quiz();
-            quiz.setQuizId(option.getQuizId());
-            quizOption.setQuiz(quiz);
+    @Override
+    public void deleteQuiz(Long quizId) {
 
-            quizList.add(quizOption);
+        Quiz quiz = quizRepository.findById(quizId).get();
+
+        //folder_quiz 삭제
+        List<FolderQuiz> folderQuizList = folderQuizRepository.findByQuiz(quiz);
+        for (FolderQuiz folderQuiz : folderQuizList) {
+            folderQuizRepository.delete(folderQuiz);
         }
 
-        return quizOptionRepository.saveAll(quizList);
+        quizRepository.delete(quiz);
     }
 
     @Override
-    @Transactional
-    public void deleteQuiz(Long quizId) {
-        quizOptionRepositorySupport.deleteOptionsByQuiz(quizId);
-        quizRepository.deleteById(quizId);
+    public List<Folder> selectFolders(String userId) {
+        User user = userRepository.findById(userId).get();
+        System.out.println("Service1 : " + user.getUserId());
+        List<Folder> list = folderRepository.findByUser(user);
+
+        return list;
+    }
+
+    @Override
+    public List<QuizAllRes> selectsFolderQuiz(Long folderId) {
+        Folder folder = folderRepository.findById(folderId).get();
+        List<QuizAllRes> folderQuizList = quizRepositorySupport.findFolderQuiz(folderId, folder.getUser().getUserId());
+System.out.println(folder.getUser().getUserId());
+        for (QuizAllRes curRes : folderQuizList) {
+
+            String options[] = new String[4];
+            options[0] = curRes.getOption1();
+            options[1] = curRes.getOption2();
+            options[2] = curRes.getOption3();
+            options[3] = curRes.getOption4();
+
+            curRes.setOptions(options);
+
+            curRes.setFolderCheck(true);
+        }
+
+        return folderQuizList;
+    }
+
+
+    @Override
+    public List<QuizAllRes> selectQuizAll(String userId) {
+
+        List<QuizAllRes> quizAllResList = quizRepositorySupport.findAllFolderFavorQuiz(userId);
+        for (QuizAllRes quiz:quizAllResList) {
+            String options[] = new String[4];
+            options[0] = quiz.getOption1();
+            options[1] = quiz.getOption2();
+            options[2] = quiz.getOption3();
+            options[3] = quiz.getOption4();
+            quiz.setOptions(options);
+        }
+        System.out.println(quizAllResList.get(0).getQuizId() + ", "+ quizAllResList.get(0).getQuizTitle());
+
+        return quizAllResList;
+    }
+
+    @Override
+    public Folder createFolder(FolderRegisterReq folderRegisterReq) {
+        Folder folder = new Folder();
+        folder.setUser(userRepository.findById(folderRegisterReq.getUserId()).get());
+        folder.setFolderName(folderRegisterReq.getFolderName());
+
+        Folder folderRes = folderRepository.save(folder);
+
+        return folderRes;
+    }
+
+    @Override
+    public Bookmark createFavor(FavorRegisterReq favorRegisterReq) {
+        Bookmark bookmark = new Bookmark();
+        bookmark.setQuiz(quizRepository.findById(favorRegisterReq.getQuizId()).get());
+        bookmark.setUser(userRepository.findById(favorRegisterReq.getUserId()).get());
+
+        Bookmark bookmarkRes = bookMarkRepository.save(bookmark);
+
+        return bookmarkRes;
+    }
+
+    @Override
+    public List<QuizAllRes> selectFavor(String userId) {
+
+        List<QuizAllRes> quizAllResList = quizRepositorySupport.findFavorQuiz(userId);
+        for (QuizAllRes quiz:quizAllResList) {
+            String options[] = new String[4];
+            options[0] = quiz.getOption1();
+            options[1] = quiz.getOption2();
+            options[2] = quiz.getOption3();
+            options[3] = quiz.getOption4();
+            quiz.setOptions(options);
+        }
+
+
+        return quizAllResList;
+    }
+
+    @Override
+    public FolderQuiz insertQuiz(FolderQuizEnterReq folderQuizEnterReq) {
+        FolderQuiz folderQuiz = new FolderQuiz();
+        folderQuiz.setQuiz(quizRepository.findById(folderQuizEnterReq.getQuizId()).get());
+        folderQuiz.setFolder(folderRepository.findById(folderQuizEnterReq.getFolderId()).get());
+
+        FolderQuiz folderQuizRes = folderQuizRepository.save(folderQuiz);
+
+        return folderQuizRes;
+    }
+
+    @Override
+    public List<QuizLogRes> selectQuizLog(String studentId) {
+        List<QuizLog> quizLogList = quizLogRepository.findByStudent(studentRepository.findByStudentId(studentId));
+
+        List<QuizLogRes> quizLogRes = new ArrayList<>();
+
+        for (QuizLog quizLog : quizLogList) {
+            QuizLogRes quizLogTemp = new QuizLogRes();
+            Quiz quiz = quizLog.getQuiz();
+
+            quizLogTemp.setStudentId(studentId);
+            quizLogTemp.setQuizId(quiz.getQuizId());
+            quizLogTemp.setQuizResult(quizLog.getQuizResult());
+            quizLogTemp.setQuizDate(quizLog.getQuizDate());
+            quizLogTemp.setSelectAnswer(quizLog.getSelectAnswer());
+            quizLogTemp.setSubject(quiz.getSubject());
+            quizLogTemp.setQuizPhoto(quiz.getQuizPhoto());
+            quizLogTemp.setQuizTitle(quiz.getQuizTitle());
+            quizLogTemp.setQuizContents(quiz.getQuizContents());
+            quizLogTemp.setQuizAnswer(quiz.getQuizAnswer());
+            quizLogTemp.setOpenStatus(quiz.getOpenStatus());
+            quizLogTemp.setQuizTimeout(quiz.getQuizTimeout());
+            quizLogTemp.setQuizGrade(quiz.getQuizGrade());
+
+            String[] options = new String[4];
+            options[0] = quiz.getOption1();
+            options[1] = quiz.getOption2();
+            options[2] = quiz.getOption3();
+            options[3] = quiz.getOption4();
+
+            quizLogTemp.setOptions(options);
+
+            quizLogRes.add(quizLogTemp);
+        }
+
+        return quizLogRes;
     }
 
 }

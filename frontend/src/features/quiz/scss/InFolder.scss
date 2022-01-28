@@ -1,0 +1,149 @@
+.in-fd {
+  background-color: white;
+  width: 65%;
+  margin: 2rem auto;
+  padding: 1rem 0 2rem 0;
+  min-width: 66rem;
+  border: 1px solid #472b0a;
+  border-radius: 2rem;
+  box-shadow: 2px 3px 5px 0px;
+  display: flex;
+  justify-content: space-around;
+}
+.in-fd-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #472b0a;
+  :hover {
+    background-color: cornsilk;
+    text-decoration: none;
+    color: black;
+  }
+  .in-fd-menu {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+  }
+}
+.in-fd-img {
+  margin: auto;
+}
+.in-fd-sub {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem 0;
+  color: #5B360D;
+  :hover {
+    cursor: pointer;
+  }
+  span {
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    &:hover {
+      color: #d8c5b3;
+      font-weight: bold;
+    }
+    &:after {
+      background: none repeat scroll 0 0 transparent;
+      bottom: 0;
+      content: '';
+      display: block;
+      height: 2px;
+      left: 50%;
+      position: absolute;
+      background: #ffb000;
+      transition: width 0.3s ease 0s, left 0.3s ease 0s;
+      width: 0;
+    }
+    &:hover::after {
+      width: 100%;
+      left: 0;
+    }
+  }
+}
+.in-fd-each-sub {
+  padding: 0.5rem 1.5rem;
+  height: 100%;
+  border-radius: 20px;
+}
+.in-fd-grade {
+  width: 10%;
+  margin: 1rem;
+}
+.in-fd-quiz {
+  margin-left: 1rem;
+  display: flex;
+  text-align: left;
+  p {
+    margin-left: 2rem;
+  }
+  .in-fd-quiz-last {
+    margin-left: 2rem;
+    width: 42rem;
+    .in-fd-correct {
+      background-color: rgb(207, 248, 152);
+      // background-color: yellowgreen;
+      // background-color: #a7f5f5;
+    }
+  }
+}
+
+// Accordion
+.accordion {
+  width: 60rem;
+}
+.in-fd-quiz-open {
+  background-color: whitesmoke;
+}
+.in-fd-btns {
+  display: flex;
+  justify-content: end;
+  .in-fd-btn2 {
+    margin: 0 2rem;
+  }
+  img:hover {
+    cursor: pointer;
+  }
+}
+.in-fd-fileadd {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 3rem;
+  .in-fd-add-quiz {
+    width: 2.5rem;
+    &:hover {
+      cursor: pointer;
+      width: 3rem;
+      transition: ease;
+    }
+  }
+}
+
+.in-fd-scroll {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 45rem;
+  margin-top: 1rem;
+  flex-direction: column;
+  &::-webkit-scrollbar {
+    visibility: hidden;
+    width: 7px;
+  }
+  &:hover {
+    &::-webkit-scrollbar {
+      visibility: visible;
+      width: 7px;
+    }
+    &::-webkit-scrollbar-thumb {
+      // background-color: #33cccc;
+      background-color: #a7f5f5;
+      border-radius: 10px;
+      background-clip: padding-box;
+      border: 1px solid transparent;
+    }
+  }
+}

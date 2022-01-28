@@ -2,9 +2,12 @@ package com.ssafy.db.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.ssafy.db.entity.QQuiz;
 import com.ssafy.db.entity.QUser;
+import com.ssafy.db.entity.Quiz;
 import com.ssafy.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,6 +20,7 @@ public class UserRepositorySupport {
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
     QUser qUser = QUser.user;
+    QQuiz qQuiz = QQuiz.quiz;
 
     public Optional<User> findUserByUserId(String userId) {
         User user = jpaQueryFactory.select(qUser).from(qUser)
@@ -24,4 +28,18 @@ public class UserRepositorySupport {
         if(user == null) return Optional.empty();
         return Optional.ofNullable(user);
     }
+    public List<Quiz> findQuizByUserId(String userId) {
+        return jpaQueryFactory.select(qQuiz)
+                .from(qQuiz).where(qUser.userId.eq(userId)).fetch();
+
+    }
+
+    //master true 여부로 관리자 찾기(한명이라는 가정)
+    public Optional<User> findUserByMaster() {
+        User user = jpaQueryFactory.select(qUser).from(qUser)
+                .where(qUser.master.eq(true)).fetchOne();
+        if(user == null) return Optional.empty();
+        return Optional.ofNullable(user);
+    }
+
 }

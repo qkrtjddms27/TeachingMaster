@@ -13,10 +13,11 @@ import javax.persistence.*;
 public class Folder {
     @Id
     @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long folderId;       //폴더ID
 
     @Column(length = 64)
-    private String subName;     //폴더이름
+    private String folderName;     //폴더이름
 
 
     //선생님 연결

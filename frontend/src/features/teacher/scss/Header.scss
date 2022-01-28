@@ -1,0 +1,37 @@
+.header-box {
+  display: flex;
+  align-items: center;
+  // text-align: center;
+  height: 4rem;
+  background-color: #c5a38156;
+  border-bottom: 3px solid #b4967856;
+  // background: linear-gradient(70deg, #a38566, #ac8459, #a5825c);
+}
+.header-left {
+  margin-left: 1rem;
+  flex: 1;
+}
+.header-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgb(85, 72, 36);
+  flex: 8;
+  text-align: center;
+  min-width: 265px;
+  &:hover {
+    color: #201307;
+    transition: 0.2s ease;
+  }
+}
+.header-right {
+  align-self: center;
+  cursor: pointer;
+  min-width: 144px;
+  a {
+    margin-right: 1rem;
+    font-weight: bold;
+    &:hover {
+      color: #6e4f30;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Text, Checkbox, Stack, Button } from '@chakra-ui/react';
-import './Signup.scss'
+import './scss/Signup.scss'
 import AlertDialogModal from '../../components/AlertModal';
 
 
@@ -25,7 +25,7 @@ const Step1 = ({ step, setStep }) => {
 
   return (
     <div>
-      <AlertDialogModal title="동의가 필요합니다" content="필수 이용약관에 동의하지 않으면 서비스 제한이 있습니다" isOpen={isOpen} setIsOpen={setIsOpen} />
+      <AlertDialogModal isCentered={true} title="동의가 필요합니다" content="필수 이용약관에 동의하지 않으면 서비스 제한이 있습니다" isOpen={isOpen} setIsOpen={setIsOpen} />
       <Stack className='step1-stack'>
         <Box className='step1-first'>
           <Text>홈페이지 이용약관</Text>
