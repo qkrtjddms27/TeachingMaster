@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
 const teacher = {teacher_profile:'https://blog.kakaocdn.net/dn/bAyJve/btqNr8wMiXi/rV0XKPT78iMnmkXlViEmk0/img.jpg'}
 function Sidebar({user,setUser}) {
   const { isOpen, onOpen, onClose } = useDisclosure()
- 
+
   return (
     <>
       <HamburgerIcon className='sidebar-button' boxSize={12} onClick={onOpen} />
