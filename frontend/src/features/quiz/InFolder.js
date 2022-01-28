@@ -17,7 +17,6 @@ import fileadd from './image/fileadd.png'
 
 const InFolder = () => {
   let now = useParams().thisFolder
-  // const [thisFolder, setThisFolder] = useState(null)
   const [thisFolder, setThisFolder] = useState(now)
   // useEffect(() => {
   //   setThisFolder(now)
@@ -52,7 +51,7 @@ const InFolder = () => {
       } else {
         setQz(data.filter(quiz => quiz.openStatus || quiz.userId === userId))
       }
-      // console.log('axios url:', url)
+      console.log('axios url:', url)
       // console.log('res.data:', data)
     })
     .catch(err => {
@@ -81,7 +80,7 @@ const InFolder = () => {
   useEffect(() => {     // myfd 저장하면 처음 qzList 초기화
     setQzList(qz)
   // setQzList(qz.filter(quiz => quiz.openStatus || quiz.userId === userId))
-  }, [myfd])
+  }, [qz])
 
 
   useEffect(() => {     // 학년이나 과목이 바뀌면 바꿔 보여줘야 함
@@ -161,21 +160,23 @@ const InFolder = () => {
       }
     })
     setQzList(newList)
-    // const data = quiz
-    // data.bookMarkCheck = !quiz.bookMarkCheck
-    // axios({
-    //   url: 'http://localhost:8080/api/v1/quiz/새로운 주소',
-    //   method: "PUT",
-    //   headers: setToken(),
-    //   data,
-    // })
-    // .then(res => {
-    //   console.log(res)
-    // })
-    // .catch(err => {
-    //   console.log('즐겨찾기 별 바꾸기 오류')
-    //   console.log(err)
-    // })
+    if (!q.bookMarkCheck) {
+      const data = { quizId: q.quizId, userId }
+      data.bookMarkCheck = !q.bookMarkCheck
+      axios({
+        url: 'http://localhost:8080/api/v1/quiz/create/favor',
+        method: "POST",
+        headers: setToken(),
+        data,
+      })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log('즐겨찾기 별 바꾸기 오류')
+        console.log(err)
+      })
+    }
   }
 
 
