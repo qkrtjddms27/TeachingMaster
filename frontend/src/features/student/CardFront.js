@@ -5,7 +5,7 @@ const CardFront = ({student}) => {
   return (
     <Box className='f-cardbox' >
       {/* <img className='image' alt='학생사진' src={student.studentProfile} /> */}
-      <img className='image' alt='학생사진' src="https://blog.kakaocdn.net/dn/bAyJve/btqNr8wMiXi/rV0XKPT78iMnmkXlViEmk0/img.jpg" />
+      <img className='image' alt='학생사진' src={student.studentProfile} />
         
       <div className='card-body'>
       <Card.Text className='stars'>

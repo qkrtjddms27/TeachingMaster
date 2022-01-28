@@ -5,7 +5,7 @@ const CardBack = ({onOpen,student}) => {
     <Box onClick={onOpen} className='b-cardbox'>
       <div className='img-name-star'>
         {/* <img className='image' alt='학생사진' src={student.studentProfile} /> */}
-        <img className='image' alt='학생사진' src="https://blog.kakaocdn.net/dn/bAyJve/btqNr8wMiXi/rV0XKPT78iMnmkXlViEmk0/img.jpg" />
+        <img className='image' alt='학생사진' src={student.studentProfile} />
         <div>
           <div className='card-title'>{student.studentName}</div>
           <div className='stars'>⭐&nbsp;{student.countingStar}</div>
