@@ -28,11 +28,10 @@ public class QuizLog {
     @JoinColumn(name = "quizId")
     private Quiz quiz;
 
-
-    private boolean quizResult; //정답유무
+    private Boolean quizResult; //정답유무
 
     @Temporal(TemporalType.DATE) //출제날짜
     private Date quizDate;
 
-    private int quizAnswer; //선택한 답
+    private int selectAnswer; //선택한 답
 }

@@ -1,28 +1,18 @@
+// import Login from './features/user/Login'
+// import Home from './features/teacher/Home'
 import MainPage from './features/mainpage/MainPage';
 import Settings from './features/sets/Settings';
-import Login from './features/user/Login'
 import Signup from './features/user/Signup'
-import Home from './features/teacher/Home'
 import EveryStudent from './features/student/EveryStudent'
 import Folder from './features/quiz/EveryFolder'
 import Conference from './features/conference/Conference'
 import Myconference from './features/conference/Myfonference'
 import InFolder from './features/quiz/InFolder';
-import QuizDetail from './features/quiz/QuizDetail';
-import QuizUpdate from './features/quiz/QuizUpdate';
+import Updatequiz from './features/quiz/Updatequiz';
+import Createquiz from './features/quiz/Createquiz';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
-  {
-    path: "/home",
-    component: Home,
-    name: "내홈페이지"
-  },
-  {
-    path: "/login",
-    component: Login,
-    name: "로그인페이지",
-    exact:true,
-  },
+
   {
     path: "/signup",
     component: Signup,
@@ -45,21 +35,20 @@ export default [
     exact:true,
   },
   {
-    path: "/quiz/folder/:id",
+    path: "/quiz/folder/:thisFolder",
     component: InFolder,
     name: "폴더상세페이지",
     exact:true,
-
   },
   {
-    path: "/quiz/:id",
-    component: QuizDetail,
-    name: "문제상세페이지",
+    path: "/quiz/create",
+    component: Createquiz,
+    name: "폴더생성페이지",
     exact:true,
   },
   {
     path: "/quiz/:id/update",
-    component: QuizUpdate,
+    component: Updatequiz,
     name: "문제수정페이지",
     exact:true,
   },
@@ -77,6 +66,6 @@ export default [
     path: "/",
     component:MainPage,
     name:'메인페이지'
-  }
+  },
   
 ]

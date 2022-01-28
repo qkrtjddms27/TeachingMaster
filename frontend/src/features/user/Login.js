@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
-import { Flex, Text, Input, Button, InputGroup, Stack, Box, InputLeftElement, FormControl, InputRightElement, Spacer, chakra, Image } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Flex, Text, Input, Button, InputGroup, Stack, Box, InputLeftElement, FormControl, InputRightElement, Spacer, chakra, Image, Heading, FormLabel } from "@chakra-ui/react";
+import { Link, useHistory } from "react-router-dom";
 import { FaUserAlt, FaLock } from "react-icons/fa"
-import './Login.scss'
-import tmlogo from './tmlogo.jpg'
+import './scss/Login.scss'
+import axios from "axios";
+import AlertDialogModal from "../../components/AlertModal";
+import { setToken } from "../../components/TOKEN";
 
 const CFaUserAlt = chakra(FaUserAlt)
 const CFaLock = chakra(FaLock)
 
-const Login = () => {
-  // password 보일까? 말까?
+const Login = ({is_login,setIs_Login,user,setUser}) => {
+  let history = useHistory()
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
   useEffect(() => {
@@ -22,22 +24,64 @@ const Login = () => {
   const onChangeId = (e) => setUserId(e.target.value)
   const onChangePassword = (e) => setUserPassword(e.target.value)
 
+  const [isOpen, setIsOpen] = useState(false)
+
   // 제출
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(userId, userPassword)
-    setUserId("")
-    setUserPassword("")
+    const data = {
+      "password": userPassword,
+      userId,
+    }
+    axios(
+      {
+        url: "http://localhost:8080/api/v1/auth/login",
+        method: "POST",
+        data,
+      }
+    )
+    .then(({data}) => {
+      setIs_Login(true)
+      localStorage.setItem('jwt', data.accessToken)
+      localStorage.setItem('userId', userId)
+      setIs_Login(true)
+      history.push('/home')
+      
+      axios({
+        url:"http://localhost:8080/api/v1/users/me",
+        method:"GET",
+        headers:setToken(),
+      })
+        .then(res=>{
+          localStorage.setItem('user',JSON.stringify(res.data)) 
+          setUser(res.data)
+          setIs_Login(true)
+        })
+          // 비밀번호 빼고 저장하기 object -> string으로 저장되게 하기 사용할때는 parse를 이용
+        .catch(err=>{
+          console.log(err)
+          console.log('App.js getme ERROR')
+        })})
+
+    .catch(err => {
+      console.log(err)
+      setIsOpen(true)
+      setUserId('')
+      setUserPassword('')
+      history.push('login')
+    })
   }
 
 
   return (
     <Flex className="login-flex">
+      <AlertDialogModal title="로그인에 실패했습니다" content="아이디와 비밀번호를 다시 입력해주세요" isOpen={isOpen} setIsOpen={setIsOpen} />
       <Spacer/>
       <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center" >
-          <form onSubmit={handleSubmit} className="justify-center">
-            <Stack spacing={4} boxShadow="xl" className="login-form">
-              <Image src={tmlogo}/>
+          <form onSubmit={handleSubmit} className="login-justify-center">
+            <Stack spacing={4} className="login-form">
+              <Heading>Login</Heading>
+              <Spacer/>
               <Text color="black" className="login-title">티칭마스터의 다양한 서비스를 누려보세요</Text>
               <Spacer/>
               <FormControl>
@@ -61,8 +105,8 @@ const Login = () => {
               <Button borderRadius={0} type="submit" variant="solid" width="full" textColor="#F8F8F8" className="login-button" bgColor="#B5A18C" colorScheme="#5B360D">
                 로그인
               </Button>
-              <Box color="#B5A18C" className="justify-center">
-                <Link to="/signup">회원가입</Link>
+              <Box color="#B5A18C" className="login-justify-center">
+                <Link className="login-link" to="/signup">회원가입</Link>
               </Box>
             </Stack>
           </form>

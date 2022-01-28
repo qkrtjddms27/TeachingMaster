@@ -8,6 +8,8 @@ import com.ssafy.db.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("StudentService")
 public class StudentServiceImpl implements StudentService {
 
@@ -16,6 +18,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     RoomService roomService;
+
+    @Override
+    public List<Student> searchAll() {
+        return studentRepository.findAll();
+    }
 
     @Override
     public Student createStudent(StudentRegisterPostReq studentRegisterInfo) {
@@ -80,4 +87,6 @@ public class StudentServiceImpl implements StudentService {
 
         return studentRepository.save(student);
     }
+
+
 }

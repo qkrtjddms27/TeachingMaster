@@ -7,6 +7,7 @@ import java.util.List;
 import com.ssafy.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -53,11 +54,21 @@ public class SsafyUserDetails implements UserDetails {
 	public boolean isEnabled() {
 		return this.enabled;
 	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.roles;
+		List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
+
+		if (this.getUser().getMaster()) {
+			auth.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		} else {
+			auth.add(new SimpleGrantedAuthority("ROLE_USER"));
+		}
+
+		return auth;
+		//return this.roles;
 	}
-	public void setAuthorities(List<GrantedAuthority> roles) {
-		this.roles = roles;
-	}
+//	public void setAuthorities(List<GrantedAuthority> roles) {
+//		this.roles = roles;
+//	}
 }

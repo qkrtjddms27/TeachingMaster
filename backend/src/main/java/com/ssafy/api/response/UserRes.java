@@ -40,10 +40,8 @@ public class UserRes{
 		res.setPassword(user.getPassword());
 		res.setUserHomeroom(user.getUserHomeroom());
 		res.setUserProfile(user.getUserProfile());
-
-		Room room = new Room();
-		res.setRoomGrade(room.getRoomGrade());
-		res.setRoomNum(room.getRoomNum());
+		res.setRoomGrade(user.getRoom().getRoomGrade());
+		res.setRoomNum(user.getRoom().getRoomNum());
 		return res;
 	}
 }
