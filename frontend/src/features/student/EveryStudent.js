@@ -15,7 +15,7 @@ const EveryStudent = () => {
     AOS.init()
     axios({
       url:"http://localhost:8080/api/student/studentAll",
-      method:"POST",
+      method:"GET",
       headers:setToken()
     })
     .then(res=>{
