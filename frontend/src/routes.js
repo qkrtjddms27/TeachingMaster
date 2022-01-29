@@ -5,11 +5,13 @@ import Settings from './features/sets/Settings';
 import Signup from './features/user/Signup'
 import EveryStudent from './features/student/EveryStudent'
 import Folder from './features/quiz/EveryFolder'
-import Conference from './features/ConferenceTeacher/Conference'
-import Myconference from './features/teacher/ConferenceLog'
+import IngClass from './features/teacher/IngClass'
+import ConferenceLog from './features/teacher/ConferenceLog'
 import InFolder from './features/quiz/InFolder';
 import Updatequiz from './features/quiz/Updatequiz';
 import Createquiz from './features/quiz/Createquiz';
+import ClassStudent from './features/ClassStudent/ClassStudent';
+import ClassTeacher from './features/ClassTeacher/ClassTeacher';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
 
@@ -53,19 +55,15 @@ export default [
     exact:true,
   },
   {
-    path: "/conference",
-    component: Conference,
-    name: "Conference"
+    path: "/conferenceLog",
+    component: ConferenceLog,
+    name: "내 회의 로그"
   },
   {
-    path: "/myconference",
-    component: Myconference,
-    name: "myconference"
+    path: "/ingclass",
+    component: IngClass,
+    name: "수업중인반"
   },
-  {
-    path: "/",
-    component:MainPage,
-    name:'메인페이지'
-  },
+  
   
 ]
