@@ -6,13 +6,14 @@ import Header from './features/teacher/Header';
 import './App.scss'
 import Home from './features/teacher/Home';
 import { useState,useEffect } from 'react';
-import axios from 'axios';
-import { setToken } from '../src/components/TOKEN'
 import Login from './features/user/Login';
 
 function App() {
   const [is_login,setIs_Login] =useState(false)
   const [user,setUser] = useState([])
+  useEffect(()=>{
+    setUser(JSON.parse(localStorage.getItem("user")))
+  },[])
 
   return (
     <div className='App'>
