@@ -24,7 +24,6 @@ const Home = ({user,setUser}) => {
     .then(res=>{
       setQuiz(res.data)
       setUser(JSON.parse(localStorage.getItem("user")))
-      console.log(user)
     })
     .catch(err=>{
       console.log("홈 문제받기 에러")

@@ -49,6 +49,7 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
       
       axios({
         url:"http://localhost:8080/api/v1/users/me",
+        // url : "http://i6e107.p.ssafy.io/api/v1/users/me",
         method:"GET",
         headers:setToken(),
       })
