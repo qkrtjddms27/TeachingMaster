@@ -5,8 +5,8 @@ import Settings from './features/sets/Settings';
 import Signup from './features/user/Signup'
 import EveryStudent from './features/student/EveryStudent'
 import Folder from './features/quiz/EveryFolder'
-import Conference from './features/ConferenceTeacher/Conference'
-import Myconference from './features/teacher/ConferenceLog'
+import Conference from './features/conference/Conference'
+import Myconference from './features/conference/Myfonference'
 import InFolder from './features/quiz/InFolder';
 import Updatequiz from './features/quiz/Updatequiz';
 import Createquiz from './features/quiz/Createquiz';

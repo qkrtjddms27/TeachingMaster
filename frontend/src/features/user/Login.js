@@ -44,7 +44,6 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
       setIs_Login(true)
       localStorage.setItem('jwt', data.accessToken)
       localStorage.setItem('userId', userId)
-      setIs_Login(true)
       history.push('/home')
       
       axios({

@@ -79,7 +79,6 @@ const InFolder = () => {
 
   useEffect(() => {     // myfd 저장하면 처음 qzList 초기화
     setQzList(qz)
-    console.log(qz)
   // setQzList(qz.filter(quiz => quiz.openStatus || quiz.userId === userId))
   }, [qz])
 
@@ -151,10 +150,16 @@ const InFolder = () => {
 
   const changeStar = (q) => {                   // 즐겨찾기 요청
     // console.log("별 바꿀 퀴즈 정보:", q)
-    setQzList( 
-      qzList.map(quiz=>quiz.quizId === q.quizId ?
-        {...quiz,bookMarkCheck:!quiz.bookMarkCheck}:quiz)
-    )
+    const newList = []
+    qzList.map(quiz => {
+      if (quiz.quizId !== q.quizId) {
+        newList.push(quiz)
+      } else {
+        quiz.bookMarkCheck = !quiz.bookMarkCheck
+        newList.push(quiz)
+      }
+    })
+    setQzList(newList)
     if (!q.bookMarkCheck) {
       const data = { quizId: q.quizId, userId }
       data.bookMarkCheck = !q.bookMarkCheck

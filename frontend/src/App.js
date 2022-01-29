@@ -10,10 +10,7 @@ import Login from './features/user/Login';
 
 function App() {
   const [is_login,setIs_Login] =useState(false)
-  const [user,setUser] = useState([])
-  useEffect(()=>{
-    setUser(JSON.parse(localStorage.getItem("user")))
-  },[])
+  const [user,setUser] = useState(JSON.parse(localStorage.getItem("user")))
 
   return (
     <div className='App'>

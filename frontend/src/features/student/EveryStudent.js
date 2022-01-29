@@ -6,32 +6,26 @@ import AOS from 'aos'
 import "aos/dist/aos.css"
 import axios from 'axios'
 import { setToken } from '../../components/TOKEN'
-import { Button, Heading, Select, Spinner } from '@chakra-ui/react'
+import { Button, Select } from '@chakra-ui/react'
 
 const EveryStudent = () => {
   const [students,setStudents] = useState([])
   const [everyStudent,setEveryStudent] =useState([])
-  const [loading,setLoading] = useState(false)
   useEffect(()=>{
     AOS.init()
-    const fetchData = async()=>{
-    setLoading(true)
-    const options = {
-      methods: "get",
-      url : "http://localhost:8080/api/student/studentAll",
-      headers: setToken()
-    }
-    try{
-      const response = await axios(options)
-      setStudents(response.data.students)
-      setEveryStudent(response.data.students)
-    }catch(e){
-      console.log(e)
-    }
-    setLoading(false)
-  }
-  fetchData()},[])
-    
+    axios({
+      url:"http://localhost:8080/api/student/studentAll",
+      method:"GET",
+      headers:setToken()
+    })
+    .then(res=>{
+      setStudents(res.data.students)
+      setEveryStudent(res.data.students)
+    })
+    .catch(res=>{
+      alert("정보를 찾을 수 없습니다.")
+    })
+  },[])
   const user = JSON.parse(localStorage.getItem('user'))
   const [grade, setGrade] = useState('all')
   const [room ,setRoom] = useState('all')
@@ -52,16 +46,7 @@ const EveryStudent = () => {
       }
     }
   }, [room, grade])
-  if (loading){
-    return ( 
-      <div className='card-case'>
-        <div className='Spinner'>
-          <Spinner speed='0.8s' thickness='10px' height="10rem" width="10rem" color='blue.500'/>
-        </div>    
-      </div>
-    )
-  }
-  
+
   return (
     <div className='card-case'>
       <div className='grade_room_box'>
@@ -104,7 +89,7 @@ const EveryStudent = () => {
         </Row>
       </div>
     </div>
-  )}
-
+  )
+}
 
 export default EveryStudent
