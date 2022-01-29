@@ -35,6 +35,7 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
     }
     axios(
       {
+        // url : "http://i6e107.p.ssafy.io/api/v1/auth/login",
         url: "http://localhost:8080/api/v1/auth/login",
         method: "POST",
         data,
@@ -44,6 +45,7 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
       setIs_Login(true)
       localStorage.setItem('jwt', data.accessToken)
       localStorage.setItem('userId', userId)
+      setIs_Login(true)
       history.push('/home')
       
       axios({

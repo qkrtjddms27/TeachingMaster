@@ -6,14 +6,13 @@ import { Link, useHistory } from 'react-router-dom'
 
 const Header = ({is_login,setIs_Login,user,setUser}) => {
   useEffect(()=>{
-    //로그인 되어있는지 확인
-    const isUser = localStorage.getItem("user")
+    const isUser = JSON.parse(localStorage.getItem("user"))
     if (isUser){setIs_Login(true)}
   },[user])
   const history = useHistory()
   const logout = ()=>{
     localStorage.clear()
-    setUser({userName:".."})
+    setUser("")
     setIs_Login(false)
     history.push('/')
   }
