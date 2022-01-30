@@ -1,12 +1,14 @@
+import { useEffect } from 'react';
 import {Route,Switch} from 'react-router-dom'
 import ClassStudent from './features/ClassStudent/ClassStudent';
 import ClassTeacher from './features/ClassTeacher/ClassTeacher';
-const OnAir = () => {
+const OnAir = ({setWho}) => {
+  
   return (
   <div>
     <Switch>
-      <Route path="/class/student" render={(props)=><ClassStudent />}/>
-      <Route path="/class/teacher" render={(props)=><ClassTeacher />}/>
+      <Route path="/class/student" exact render={(props)=><ClassStudent />}/>
+      <Route path="/class/teacher" exact render={(props)=><ClassTeacher setWho={setWho} />}/>
     </Switch>
   </div>
   )

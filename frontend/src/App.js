@@ -12,10 +12,9 @@ function App() {
   return (
     <div className='App'>
       <ChakraProvider>
-        {who ==="anon" && <Route path="/" render={(props)=><MainPage setWho={setWho}/>}/>}  
-        {who ==="teacher" &&<TeacherPage/>}
-        {who ==="student" &&<StudentPage/>}
-        
+        {who ==="anon" && <Route path="/" exact render={()=><MainPage setWho={setWho}/>}/>}  
+        {who ==="teacher" &&<TeacherPage setWho={setWho}/>}
+        {who ==="student" &&<StudentPage setWho={setWho}/>}  
       </ChakraProvider>
     </div>
   );
