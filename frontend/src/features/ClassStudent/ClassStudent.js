@@ -1,4 +1,4 @@
-import { Button,Box,Text,Input } from '@chakra-ui/react';
+import { Button,Box,Text,Input, useDisclosure } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import "./scss/ClassStudent.scss"
 import teacher_screen_img from './image/수업화면.png'
@@ -7,9 +7,11 @@ import micOn from './image/말할래요.png'
 import micOff from './image/쉿버튼.png'
 import CamOn from './image/카메라켜기.png'
 import CamOff from './image/카메라끄기.png'
+import Sticker from './ModalPage/Sticker';
 const ClassStudent = () => {
   const [Cam,setCam] = useState(true)
   const [Mic,setMic] = useState(true)
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const students = [
     {name:"아이1",img:"child_img"},
     {name:"아이1",img:"child_img"},
@@ -30,9 +32,9 @@ const ClassStudent = () => {
       <Box className='Conference_box'>
         <div className='left'>
           <div className='student_box'>
-            {students.map(student=>{
+            {students.map((student, idx)=>{
               return (
-              <div className='student_screen'>
+              <div className='student_screen' key={idx}>
                 <img src={child_img} alt='애'/>
               </div>
               )
@@ -42,7 +44,8 @@ const ClassStudent = () => {
             <img alt='선생님' src={teacher_screen_img}></img>
           </div>
           <div className='btn_box'>
-            <Button className='StarPage'>칭찬 스티커</Button>
+            <Button className='StarPage' onClick={onOpen}>칭찬 스티커</Button>
+            <Sticker isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
           </div>
         </div>
         <div className='right'>
