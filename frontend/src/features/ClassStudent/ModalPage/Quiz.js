@@ -12,7 +12,7 @@ const Quiz = ({ setModalForm, setOX }) => {
     "quizContents": "Nulla tempus.",
     "quizAnswer": 3,
     "openStatus": true,
-    "quizTimeout": 1,
+    "quizTimeout": 2,
     "quizGrade": 5,
     "userId": "ssafy3",
     "options": [
