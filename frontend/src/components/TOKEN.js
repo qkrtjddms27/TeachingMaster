@@ -26,4 +26,5 @@ export const QUIZ  =
     ]
   }
 
-export const surverUrl = 'http://localhost:8080/api/v1'
+export const serverUrl = 'http://i6e107.p.ssafy.io:8080/api'
+// export const serverUrl = 'http://localhost:8080/api'

@@ -5,7 +5,7 @@ import QuizBar from './QuizBar'
 import AOS from 'aos'
 import "aos/dist/aos.css"
 import axios from 'axios'
-import {setToken} from '../../components/TOKEN'
+import { setToken, serverUrl } from '../../components/TOKEN'
 
 // 유저정보에서 선생님 사진 받아오기
 const Home = ({user,setUser}) => {
@@ -17,7 +17,7 @@ const Home = ({user,setUser}) => {
   useEffect(()=>{
     const userId = localStorage.getItem("userId")
     axios({
-      url:`http://localhost:8080/api/v1/quiz/select/favor/${userId}`,
+      url:`${serverUrl}/v1/quiz/select/favor/${userId}`,
       method:"GET",
       headers:setToken(),
     })
