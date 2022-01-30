@@ -25,3 +25,5 @@ export const QUIZ  =
       "Cras pellentesque volutpat dui."
     ]
   }
+
+export const surverUrl = 'http://localhost:8080/api/v1'
