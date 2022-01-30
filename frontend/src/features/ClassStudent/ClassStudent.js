@@ -1,9 +1,15 @@
 import { Button,Box,Text,Input } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import "./scss/ClassStudent.scss"
 import teacher_screen_img from './image/수업화면.png'
 import child_img from './image/아이.png'
+import micOn from './image/말할래요.png'
+import micOff from './image/쉿버튼.png'
+import CamOn from './image/카메라켜기.png'
+import CamOff from './image/카메라끄기.png'
 const ClassStudent = () => {
+  const [Cam,setCam] = useState(true)
+  const [Mic,setMic] = useState(true)
   const students = [
     {name:"아이1",img:"child_img"},
     {name:"아이1",img:"child_img"},
@@ -49,6 +55,16 @@ const ClassStudent = () => {
               <Text>안녕</Text>
             </div>
               <Input className='input_box'/>
+          </div>
+          <div className='Button_box' >
+            {Cam?<img className='OnOffButton' src={CamOff} alt='버튼' onClick={()=>{setCam(false)}} />:
+                  <img className='OnOffButton' src={CamOn} alt='버튼' onClick={()=>{setCam(true)}} /> }
+            {Mic?<img className='OnOffButton' src={micOff} alt='버튼' onClick={()=>{setMic(false)}} />:
+                <img className='OnOffButton' src={micOn} alt='버튼' onClick={()=>{setMic(true)}} />}
+            
+            
+            
+            
           </div>
         </div>
       </Box>

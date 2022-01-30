@@ -100,6 +100,11 @@
         margin-top: 1rem;
       }
     }
+    .Button_box {
+      margin-left: 2vw;
+      margin-top: 2vh;
+      display: flex;
+    }
   }
   .btn_box {
     display: flex;
@@ -111,5 +116,15 @@
       color: white;
       justify-items: center;
     }
+  }
+}
+.OnOffButton {
+  margin-right: 3rem;
+  cursor: pointer;
+  height: 6rem;
+  // margin-left: 1rem;
+  &:hover {
+    transform: scale(1.1);
+    transition: 0.1s;
   }
 }
