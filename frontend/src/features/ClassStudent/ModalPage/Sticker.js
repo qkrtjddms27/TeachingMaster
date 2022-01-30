@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Image } from '@chakra-ui/react';
-import '../scss/Sticker.scss'
+import '../scss/StudentModal.scss'
 import dinosaur from '../image/퀴즈공룡.png'
 
 
@@ -28,7 +28,9 @@ const Sticker = ({ isOpen, onOpen, onClose }) => {
       >
         <ModalOverlay />
         <ModalContent bgColor='#B2CCC1' w='85rem' h='45rem' marginY='7rem' marginX='1rem' >
-          <ModalHeader className='dino-age'><span style={{"fontSize": "xx-large"}}>내 공룡은 {parseInt(me.student_score/20)}살!</span></ModalHeader>
+          <ModalHeader className='student-modal-header'>
+            <span style={{"fontSize": "xx-large"}}>내 공룡은 {parseInt(me.student_score/20)}살!</span>
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody className='sticker-body'>
             <div className='sticker-left'>
