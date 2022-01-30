@@ -69,9 +69,23 @@
         }
       }
     }
-    .btn_box {
-      margin-top: 2rem;
+    .left_btn_box {
+      display: flex;
+      justify-content: end;
+      margin-top: 1rem;
       margin-left: 4rem;
+      .warning {
+        @keyframes blink-effect {
+          50% {
+            opacity: 0;
+          }
+        }
+        margin-right: 2rem;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: rgb(212, 97, 97);
+        animation: blink-effect 2s step-end infinite;
+      }
       .StarPage {
         background-color: rgb(245, 128, 147);
         color: whitesmoke;
@@ -85,7 +99,7 @@
       margin-top: 1vh;
       margin-left: 1vw;
       border-radius: 20px;
-      background-color: rgb(236, 203, 208);
+      background-color: rgba(223, 182, 187, 0.39);
       .chatting_log {
         height: 60vh;
         width: 23vw;
@@ -106,7 +120,7 @@
       display: flex;
     }
   }
-  .btn_box {
+  .right_up_btn_box {
     display: flex;
     justify-content: end;
     .exitButton {
@@ -118,13 +132,18 @@
     }
   }
 }
-.OnOffButton {
-  margin-right: 3rem;
-  cursor: pointer;
-  height: 6rem;
-  // margin-left: 1rem;
-  &:hover {
-    transform: scale(1.1);
-    transition: 0.1s;
+.right_down_btn_box {
+  display: flex;
+  justify-content: space-around;
+  .OnOffButton {
+    margin-top: 1rem;
+    margin-left: 3rem;
+    cursor: pointer;
+    height: 6rem;
+    // margin-left: 1rem;
+    &:hover {
+      transform: scale(1.1);
+      transition: 0.1s;
+    }
   }
 }
