@@ -14,7 +14,6 @@ import { useEffect, useState } from 'react'
 const teacher = {teacher_profile:'https://blog.kakaocdn.net/dn/bAyJve/btqNr8wMiXi/rV0XKPT78iMnmkXlViEmk0/img.jpg'}
 function Sidebar({user,setUser}) {
   const { isOpen, onOpen, onClose } = useDisclosure()
-
   return (
     <>
       <HamburgerIcon className='sidebar-button' boxSize={12} onClick={onOpen} />
@@ -25,6 +24,7 @@ function Sidebar({user,setUser}) {
           <img className='teacher_image' alt='선생님사진'
               src={teacher.teacher_profile} />
             <div className='teacher_name'>{user.userName} 선생님</div>
+            {/* <div className='teacher_name'>선생님</div> */}
           </DrawerHeader>
           <DrawerBody className="DrawerBody">
             {/* <MoonIcon className='Icon'/> */}

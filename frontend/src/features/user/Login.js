@@ -5,7 +5,8 @@ import { FaUserAlt, FaLock } from "react-icons/fa"
 import './scss/Login.scss'
 import axios from "axios";
 import AlertDialogModal from "../../components/AlertModal";
-import { setToken } from "../../components/TOKEN";
+import { setToken,serverUrl } from "../../components/TOKEN";
+
 
 const CFaUserAlt = chakra(FaUserAlt)
 const CFaLock = chakra(FaLock)
@@ -35,29 +36,27 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
     }
     axios(
       {
-        // url : "http://i6e107.p.ssafy.io/api/v1/auth/login",
-        url: "http://localhost:8080/api/v1/auth/login",
+        url : `${serverUrl}/v1/auth/login`,
         method: "POST",
         data,
       }
     )
     .then(({data}) => {
+      console.log("로그인")
       setIs_Login(true)
       localStorage.setItem('jwt', data.accessToken)
       localStorage.setItem('userId', userId)
-      setIs_Login(true)
-      history.push('/home')
-      
       axios({
-        url:"http://localhost:8080/api/v1/users/me",
-        // url : "http://i6e107.p.ssafy.io/api/v1/users/me",
+        url:`${serverUrl}/v1/users/me`,
         method:"GET",
         headers:setToken(),
       })
         .then(res=>{
+          console.log('여기가')
           localStorage.setItem('user',JSON.stringify(res.data)) 
           setUser(res.data)
           setIs_Login(true)
+          history.push('/home')
         })
           // 비밀번호 빼고 저장하기 object -> string으로 저장되게 하기 사용할때는 parse를 이용
         .catch(err=>{
@@ -66,6 +65,7 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
         })})
 
     .catch(err => {
+      console.log("로그인실패")
       console.log(err)
       setIsOpen(true)
       setUserId('')
