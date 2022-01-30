@@ -13,7 +13,7 @@ import StudentModal from './ModalPage/StuendModal';
 
 const ClassTeacher = ({setWho}) => {
   useEffect(()=>{
-    setWho("student")
+    setWho("teacher")
   },[])
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [modalForm, setModalForm] = useState()

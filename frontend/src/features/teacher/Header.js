@@ -7,8 +7,8 @@ import { Link, useHistory } from 'react-router-dom'
 const Header = ({is_login,setIs_Login,user,setUser}) => {
   useEffect(()=>{
     const isUser = JSON.parse(localStorage.getItem("user"))
-    setUser(isUser)
     if (isUser){setIs_Login(true)}
+    setUser(JSON.parse(localStorage.getItem("user")))
   },[])
   const history = useHistory()
   const logout = ()=>{
