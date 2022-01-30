@@ -6,9 +6,10 @@ import AOS from 'aos'
 import "aos/dist/aos.css"
 import axios from 'axios'
 import { setToken, serverUrl } from '../../components/TOKEN'
-
+import { useHistory } from 'react-router-dom'
 // 유저정보에서 선생님 사진 받아오기
-const Home = ({user,setUser}) => {
+const Home = ({user,setUser,setOnAir}) => {
+  const history = useHistory()
   const [quiz,setQuiz] =useState([])
   useEffect(()=>{
     AOS.init()
@@ -56,7 +57,9 @@ const Home = ({user,setUser}) => {
             </div>
             {class_open?
             <div className='when-open'>
-              <Box className='class-enter' >교실 입장</Box>
+              <Box className='class-enter' onClick={()=>{setOnAir(true)
+                history.push('/class/teacher')
+              }} >교실 입장</Box>
               <Box className='class-close' onClick={openClass} >교실 닫기</Box>
             </div>:
             <div className='when-close'>

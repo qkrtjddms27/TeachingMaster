@@ -42,7 +42,6 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
       }
     )
     .then(({data}) => {
-      console.log("로그인")
       setIs_Login(true)
       localStorage.setItem('jwt', data.accessToken)
       localStorage.setItem('userId', userId)
@@ -52,7 +51,6 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
         headers:setToken(),
       })
         .then(res=>{
-          console.log('여기가')
           localStorage.setItem('user',JSON.stringify(res.data)) 
           setUser(res.data)
           setIs_Login(true)
