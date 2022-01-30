@@ -55,7 +55,7 @@ const ClassStudent = () => {
             <Button className='StarPage' onClick={() => modalOpen('announce')}>발표하세요</Button>
             <Button className='StarPage' onClick={() => modalOpen('quiz')}>quiz</Button>
             <Button className='StarPage' onClick={() => modalOpen('sticker')}>칭찬 스티커</Button>
-            <StudentModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} modalForm={modalForm} setModalForm={setModalForm} />
+            <StudentModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} modalForm={modalForm} setModalForm={setModalForm} setMic={setMic} />
           </div>
         </div>
         <div className='right'>
