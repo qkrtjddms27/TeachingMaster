@@ -6,10 +6,11 @@ import Home from './features/teacher/Home';
 import { useState,useEffect } from 'react';
 import Login from './features/user/Login';
 
-const TeacherPage = () => {
+const TeacherPage = ({setWho}) => {
   const [is_login,setIs_Login] =useState(false)
-  const [user,setUser] = useState([])
+  const [user,setUser] = useState({"userName":"하이","userProfile":"none"})
   useEffect(()=>{
+    setWho("teacher")
     setUser(JSON.parse(localStorage.getItem("user")))
   },[])
   return ( 
