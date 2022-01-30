@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Radio,RadioGroup,Stack,Textarea,Input,Button,Select } from '@chakra-ui/react';
 import './scss/createquiz.scss'
-import { setToken } from '../../components/TOKEN';
+import { setToken, serverUrl } from '../../components/TOKEN';
 const Createquiz = () => {
   
   let history = useHistory()
@@ -36,7 +36,7 @@ const Createquiz = () => {
     axios(
       { 
         // url : "i6e107.p.ssafy.io:8080/api/v1/quiz/create"
-        url : "http://localhost:8080/api/v1/quiz/create",
+        url : `${serverUrl}/v1/quiz/create`,
         method: "POST",
         data,
         headers : setToken()

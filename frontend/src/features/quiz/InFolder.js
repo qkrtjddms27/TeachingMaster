@@ -3,7 +3,7 @@ import {Image, Select, Accordion, AccordionItem, AccordionButton, AccordionIcon,
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
-import { setToken } from '../../components/TOKEN'
+import { setToken, serverUrl } from '../../components/TOKEN'
 import './scss/InFolder.scss'
 import onetwo from './image/plusicon.gif'
 import qicon from './image/qicon.png'
@@ -34,11 +34,11 @@ const InFolder = () => {
   useEffect(() => {     // url 바뀌면 실행
     let url
     if (thisFolder === 'all' || thisFolder === 'imade') {
-      url = `http://localhost:8080/api/v1/quiz/findAll/${userId}`               // 전체 문제 or 내가만든 문제
+      url = `${serverUrl}/v1/quiz/findAll/${userId}`               // 전체 문제 or 내가만든 문제
     } else if (thisFolder === 'bookmark') {
-      url = `http://localhost:8080/api/v1/quiz/select/favor/${userId}`          // 즐겨찾기한 문제
+      url = `${serverUrl}/v1/quiz/select/favor/${userId}`          // 즐겨찾기한 문제
     } else {
-      url = `http://localhost:8080/api/v1/quiz/find/folderQuiz/${thisFolder}`   // 내 폴더안에 있는 문제
+      url = `${serverUrl}/v1/quiz/find/folderQuiz/${thisFolder}`   // 내 폴더안에 있는 문제
     }
     axios({
       url,
@@ -63,7 +63,7 @@ const InFolder = () => {
 
   useEffect(() => {     // 처음 한번만 실행
     axios({
-      url: `http://localhost:8080/api/v1/quiz/folder/${userId}`,
+      url: `${serverUrl}/v1/quiz/folder/${userId}`,
       method: "GET",
       headers: setToken()
     })
@@ -104,7 +104,7 @@ const InFolder = () => {
   const quizAddFolder = (folderId, quizId) => {
     // console.log("폴더아이디:", folderId, "퀴즈아이디:", quizId, "요청은 나중에 보낼게여...확인이 힘드네여...")
     axios({
-      url: 'http://localhost:8080/api/v1/quiz/update/folder_mapping',
+      url: `${serverUrl}/v1/quiz/update/folder_mapping`,
       method: 'POST',
       headers: setToken(),
       data: { folderId, quizId }
@@ -135,7 +135,7 @@ const InFolder = () => {
   // 내 개인 폴더에서 지우고 싶을 때 -> 나중에 하기
   // const quizDelFolder = (folderId, quizId) => {
   //   axios({
-  //     url: 'http://localhost:8080/api/v1/quiz/어딘가의주소',
+  //     url: `${serverUrl}/v1/quiz/어딘가의주소`,
   //     method: '뭘까',
   //     headers: setToken(),
   //     data: { folderId, quizId }
@@ -159,7 +159,7 @@ const InFolder = () => {
       const data = { quizId: q.quizId, userId }
       data.bookMarkCheck = !q.bookMarkCheck
       axios({
-        url: 'http://localhost:8080/api/v1/quiz/create/favor',
+        url: `${serverUrl}/v1/quiz/create/favor`,
         method: "POST",
         headers: setToken(),
         data,
@@ -255,7 +255,7 @@ const InFolder = () => {
                   <AccordionPanel pb={4} className='in-fd-quiz-open'>
                     <div className='in-fd-quiz in-fd-acco-content'>
                       <Image src={aicon} boxSize='4%' alt='A!' />
-                      <Text>내용</Text>
+                      <Text className='in-fd-name'>내용</Text>
                       <Text className='in-fd-quiz-last'>{q.quizContents}</Text>
                     </div>
                     <div style={{"height":"0.5rem"}}></div>
@@ -269,7 +269,9 @@ const InFolder = () => {
                       </div>
                     </div>
                     <div className='in-fd-quiz-bottom'>
-                      <div></div>
+                      <div>
+                        <span>{q.quizTimeout}초</span>
+                      </div>
                       <div className='in-fd-btns'>
                         {!q.folderCheck && (
                           <Menu>

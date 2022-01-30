@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button,Input } from '@chakra-ui/react';
 import '../scss/modal.scss'
 import axios from 'axios';
-import { setToken } from '../../../components/TOKEN';
+import { setToken, serverUrl } from '../../../components/TOKEN';
 
 const ModalUpdate = ({change,student,onClose,setStudent}) => {
   const [file,setFile] = useState("")
@@ -32,7 +32,7 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
       "studentPhone": phone,
     }
     axios({
-      url:`http://localhost:8080/api/student`,
+      url:`${serverUrl}/student`,
       method:"PUT",
       headers:setToken(),
       data,
