@@ -5,10 +5,11 @@ import { ChakraProvider } from '@chakra-ui/react'
 import './App.scss'
 import TeacherPage from './TeacherPage';
 import StudentPage from './StudentPage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainPage from './features/mainpage/MainPage';
 function App() {
   const [who,setWho] = useState("anon")
+  
   return (
     <div className='App'>
       <ChakraProvider>

@@ -2,18 +2,25 @@ import { Button,Box,Text,Input, useDisclosure, useToast } from '@chakra-ui/react
 import React, { useEffect, useState } from 'react';
 import "./scss/ClassTeacher.scss"
 import teacher_screen_img from './image/수업화면.png'
-import { Col, Row,Dropdown,SplitButton } from 'react-bootstrap'
+import { Col, Row } from 'react-bootstrap'
 import micOn from './image/말할래요.png'
 import micOff from './image/쉿버튼.png'
 import CamOn from './image/카메라켜기.png'
 import CamOff from './image/카메라끄기.png'
 import StudentScreen from './StudentScreen';
+import StudentModal from './ModalPage/StuendModal';
 
 
 const ClassTeacher = ({setWho}) => {
   useEffect(()=>{
     setWho("student")
   },[])
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [modalForm, setModalForm] = useState()
+  const modalOpen = (kind) => {
+    setModalForm(kind)
+    onOpen()
+  }
   const toast = useToast()
   const [Cam,setCam] = useState(true)
   const [Mic,setMic] = useState(true)
@@ -53,7 +60,9 @@ const ClassTeacher = ({setWho}) => {
           </div>
           <div className='left_btn_box'>
             {Mic&& <div className='warning'>마이크ON</div>}
-            <Button colorScheme="pink">퀴즈</Button>
+            {/* <Button className='StarPage' onClick={() => modalOpen('announce')}>발표하세요</Button> */}
+            {/* <Button className='StarPage' onClick={() => modalOpen('quiz')}>quiz</Button> */}
+            {/* <Button className='StarPage' onClick={() => modalOpen('sticker')}>칭찬 스티커</Button> */}
             <Button colorScheme="cyan">하이라이팅 ON</Button>
             <Button colorScheme="facebook">쉬는 시간</Button>
           </div>
