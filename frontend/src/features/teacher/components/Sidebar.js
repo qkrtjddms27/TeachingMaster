@@ -1,4 +1,4 @@
-import './scss/Sidebar.scss'
+import '../scss/Sidebar.scss'
 import {HamburgerIcon} from '@chakra-ui/icons'
 import {
   Drawer,
@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react'
 import {useDisclosure} from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 
 const teacher = {teacher_profile:'https://blog.kakaocdn.net/dn/bAyJve/btqNr8wMiXi/rV0XKPT78iMnmkXlViEmk0/img.jpg'}
 function Sidebar({user,setUser}) {
@@ -21,13 +20,9 @@ function Sidebar({user,setUser}) {
         <DrawerOverlay />
         <DrawerContent >
           <DrawerHeader className='DrawerHeader' borderBottomWidth='1px'>
-          <img className='teacher_image' alt='선생님사진'
-              src={teacher.teacher_profile} />
-            <div className='teacher_name'>{user.userName} 선생님</div>
-            {/* <div className='teacher_name'>선생님</div> */}
+            <div className='teacher_name'></div>
           </DrawerHeader>
           <DrawerBody className="DrawerBody">
-            {/* <MoonIcon className='Icon'/> */}
             <Link onClick={onClose} to="/home">홈</Link>
             <Link onClick={onClose} to="/students">학생</Link>
             <Link onClick={onClose} to="/quiz/folder">퀴즈</Link>

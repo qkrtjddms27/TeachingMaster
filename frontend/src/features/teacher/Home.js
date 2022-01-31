@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { Box,  Heading} from '@chakra-ui/react'
 import './scss/Home.scss'
-import QuizBar from './QuizBar'
+import QuizBar from './components/QuizBar'
 import AOS from 'aos'
 import "aos/dist/aos.css"
 import axios from 'axios'
