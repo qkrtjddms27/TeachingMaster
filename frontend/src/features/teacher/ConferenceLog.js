@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Myfonference = () => {
+const ConferenceLog = () => {
   return (
     <div>
       내 수업 로그 보기
@@ -8,4 +8,4 @@ const Myfonference = () => {
   )
 }
 
-export default Myfonference
+export default ConferenceLog

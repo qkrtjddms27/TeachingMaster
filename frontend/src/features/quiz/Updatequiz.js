@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Radio,RadioGroup,Stack,Textarea,Input,Button,Select } from '@chakra-ui/react';
 import './scss/createquiz.scss'
 import { useParams } from 'react-router-dom';
-import { QUIZ, setToken } from '../../components/TOKEN';
+import { QUIZ, setToken, serverUrl } from '../../components/TOKEN';
 
 const Updatequiz = () => {
   let {id} = useParams()
@@ -26,7 +26,7 @@ const Updatequiz = () => {
   useEffect (()=>{
     console.log(id)
     axios({
-      url:`http://localhost:8080/api/v1/quiz/find/Quiz/${id}`,
+      url:`${serverUrl}/v1/quiz/find/Quiz/${id}`,
       method:"GET",
       headers: setToken()
     })
@@ -51,7 +51,7 @@ const Updatequiz = () => {
   
   const DELETE = ()=>{
     axios({
-      url :`http://localhost:8080/api/v1/quiz/delete/${id}`,
+      url :`${serverUrl}/v1/quiz/delete/${id}`,
       method:"DELETE",
       headers:setToken()
     }
@@ -82,7 +82,7 @@ const Updatequiz = () => {
     }
     axios(
       {
-        url : "http://localhost:8080/api/v1/quiz/update/quiz",
+        url : `${serverUrl}/v1/quiz/update/quiz`,
         method: "PUT",
         data,
         headers : setToken()

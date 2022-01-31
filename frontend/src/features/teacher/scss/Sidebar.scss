@@ -1,13 +1,8 @@
 .DrawerHeader {
-  background-color: #a38566;
+  background-color: #ddc6b0;
+  height: 6rem;
   text-align: center;
-  .teacher_image {
-    margin-left: 5rem;
-    margin-top: 1rem;
-    width: 7rem;
-    height: 7rem;
-    border-radius: 70%;
-  }
+  border-bottom: 1rem solid rgb(221, 166, 94);
 }
 .sidebar-button {
   margin-left: 1rem;
@@ -20,16 +15,12 @@
   }
 }
 .teacher_name {
-  margin-top: 1.7rem;
+  margin-top: 1.9rem;
   margin-bottom: 1.2rem;
-  color: rgb(255, 255, 255);
-  font-size: 2rem;
 }
 .DrawerBody {
   background-color: #f1eae9;
-  .Icon {
-    margin-right: 1rem;
-  }
+
   a {
     margin-top: 1.5rem;
     margin-left: 2rem;
@@ -41,7 +32,7 @@
   a:hover {
     transform: translateX(-10px);
     transition: 0.2s ease;
-    background-color: rgb(131, 127, 127);
+    background-color: rgb(219, 214, 214);
     color: black;
   }
 }
