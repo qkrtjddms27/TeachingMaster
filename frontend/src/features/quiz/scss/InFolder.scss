@@ -104,20 +104,17 @@
 .in-fd-quiz-open {
   background-color: whitesmoke;
 }
-.in-fd-quiz-bottom {
+.in-fd-btns {
   display: flex;
-  justify-content: space-between;
-  .in-fd-btns {
-    display: flex;
-    img {
-      margin-left: 1rem;
-      &:hover {
-        cursor: pointer;
-      }
+  justify-content: end;
+  img {
+    margin-left: 1rem;
+    &:hover {
+      cursor: pointer;
     }
-    .in-fd-btn2 {
-      margin-left: 1rem;
-    }
+  }
+  .in-fd-btn2 {
+    margin-left: 1rem;
   }
 }
 .in-fd-fileadd {
@@ -133,6 +130,10 @@
       transition: ease;
     }
   }
+}
+.in-fd-name {
+  width: 4rem;
+  text-align: center;
 }
 
 .in-fd-scroll {
