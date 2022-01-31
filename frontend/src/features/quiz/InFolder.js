@@ -246,7 +246,7 @@ const InFolder = () => {
                     <AccordionButton>
                       <Box className='in-fd-quiz' flex='1'>
                         <Image src={qicon} boxSize='4%' alt='Q?' />
-                        <Text>{q.subject}</Text>
+                        <Text className='in-fd-name'>{q.subject}</Text>
                         <Text>{q.quizTitle}</Text>
                       </Box>
                       <AccordionIcon />
@@ -261,41 +261,41 @@ const InFolder = () => {
                     <div style={{"height":"0.5rem"}}></div>
                     <div className='in-fd-quiz'>
                       <Box boxSize='4%'></Box>
-                      <Text>보기</Text>
+                      <Text className='in-fd-name'>보기</Text>
                       <div className='in-fd-quiz-last'>
                         {q.options.map((op, idx) => (
                           <div key={idx} className={(idx+1) === q.quizAnswer ? 'in-fd-correct' : ''}>{idx+1}) {op}</div>
                         ))}
                       </div>
+                    </div><br/>
+                    <div className='in-fd-quiz'>
+                      <Box boxSize='4%'></Box>
+                      <Text className='in-fd-name'>제한시간</Text>
+                      <Text>{q.quizTimeout}초</Text>
                     </div>
-                    <div className='in-fd-quiz-bottom'>
-                      <div>
-                        <span>{q.quizTimeout}초</span>
-                      </div>
-                      <div className='in-fd-btns'>
-                        {!q.folderCheck && (
-                          <Menu>
-                            <MenuButton title="폴더에 추가!"><Image src={inmyfolder} boxSize="25px" /></MenuButton>
-                            <MenuList>
-                              {myfd.map((fd, idx) => (
-                                <MenuItem key={idx}>
-                                  <span onClick={() => quizAddFolder(fd.folderId, q.quizId)}>
-                                    {fd.folderName}
-                                  </span>
-                                </MenuItem>
-                              ))}
-                            </MenuList>
-                          </Menu>
-                        )}
-                        {q.userId === userId && (
-                          <Link title="퀴즈 수정!" to={qzUpdateUrl}><Image className='in-fd-btn2' src={edit} boxSize="25px" /></Link>
-                        )}
-                        {q.bookMarkCheck ? (
-                          <Image title="즐겨찾기 제외!" src={star4} onClick={() => changeStar(q)} boxSize="25px" />
-                          ) : (
-                          <Image title="즐겨찾기 추가!!" src={star3} onClick={() => changeStar(q)} boxSize="25px" />
-                        )}
-                      </div>
+                    <div className='in-fd-btns'>
+                      {!q.folderCheck && (
+                        <Menu>
+                          <MenuButton title="폴더에 추가!"><Image src={inmyfolder} boxSize="25px" /></MenuButton>
+                          <MenuList>
+                            {myfd.map((fd, idx) => (
+                              <MenuItem key={idx}>
+                                <span onClick={() => quizAddFolder(fd.folderId, q.quizId)}>
+                                  {fd.folderName}
+                                </span>
+                              </MenuItem>
+                            ))}
+                          </MenuList>
+                        </Menu>
+                      )}
+                      {q.userId === userId && (
+                        <Link title="퀴즈 수정!" to={qzUpdateUrl}><Image className='in-fd-btn2' src={edit} boxSize="25px" /></Link>
+                      )}
+                      {q.bookMarkCheck ? (
+                        <Image title="즐겨찾기 제외!" src={star4} onClick={() => changeStar(q)} boxSize="25px" />
+                        ) : (
+                        <Image title="즐겨찾기 추가!!" src={star3} onClick={() => changeStar(q)} boxSize="25px" />
+                      )}
                     </div>
                   </AccordionPanel>
                 </AccordionItem>      
