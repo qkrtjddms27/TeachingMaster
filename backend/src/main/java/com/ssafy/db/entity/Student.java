@@ -22,7 +22,7 @@ public class Student {
     @Column(length = 20)
     private String studentPhone;
 
-    @Column(length = 100)
+    @Column(length = 40000)
     private String studentProfile;
 
     private int studentScore;

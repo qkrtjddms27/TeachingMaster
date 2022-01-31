@@ -8,7 +8,7 @@ import axios from 'axios'
 import AddQuizPopover from './AddQuizPopover'
 import AOS from 'aos'
 import "aos/dist/aos.css"
-import { setToken } from '../../components/TOKEN'
+import { setToken, serverUrl } from '../../components/TOKEN'
 import './scss/Quiz.scss'
 
 
@@ -24,7 +24,7 @@ const Folder = () => {
   const [myFolders, setMyFolders] = useState([])
   useEffect (() => {
     axios({
-      url:`http://localhost:8080/api/v1/quiz/folder/${userId}`,
+      url:`${serverUrl}/v1/quiz/folder/${userId}`,
       method:"GET",
       headers: setToken()
     })

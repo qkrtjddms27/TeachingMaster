@@ -1,0 +1,115 @@
+.student-modal-header {
+  display: flex;
+  justify-content: center;
+  font-size: xx-large;
+}
+@keyframes mySpinner {
+  from {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.07) rotate(5deg);
+  }
+  to {
+    transform: rotate(-5deg);
+  }
+}
+
+.sticker-body {
+  display: flex;
+  align-items: center;
+  .sticker-left {
+    .big-dino {
+      width: 120rem;
+      &:hover {
+        animation: mySpinner 1.5s;
+        animation-iteration-count: infinite;
+      }
+    }
+  }
+  .sticker-right {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.sticker-mini {
+  width: 6rem;
+  height: 6rem;
+  margin: 1rem;
+  padding: 0;
+  border-radius: 100%;
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .mini-dino {
+    width: 4.5rem;
+    height: 4.5rem;
+    @keyframes mySpinner2 {
+      from {
+        transform: scale(1.1) rotate(-10deg);
+      }
+      50% {
+        transform: scale(1.15) rotate(10deg);
+      }
+      to {
+        transform: scale(1.1) rotate(-10deg);
+      }
+    }
+    &:hover {
+      animation: mySpinner2 1.5s;
+      animation-iteration-count: infinite;
+    }
+  }
+}
+
+
+.quiz-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 3rem;
+  user-select: none;
+  .quiz-name {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 1.2rem;
+    background-color: whitesmoke;
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+  .quiz-content {
+    // background-color: papayawhip;
+    width: 100%;
+    height: 100%;
+    margin: 1rem 0;
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+.quiz-option {
+  padding: 2rem;
+  border-radius: 1.2rem;
+  background-color: whitesmoke;
+  width: 48%;
+  height: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: 2rem;
+  &#selected {
+    background-color: #a8bef5;
+    // &:hover {
+    //   background-color: #e2e8f8;
+    // }
+  }
+  &:hover {
+    background-color: #e2e8f8;
+    cursor: pointer;
+  }
+}
