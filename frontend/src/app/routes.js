@@ -1,17 +1,17 @@
 // import Login from './features/user/Login'
 // import Home from './features/teacher/Home'
-import MainPage from './features/mainpage/MainPage';
-import Settings from './features/sets/Settings';
-import Signup from './features/user/Signup'
-import EveryStudent from './features/student/EveryStudent'
-import Folder from './features/quiz/EveryFolder'
-import IngClass from './features/teacher/IngClass'
-import ConferenceLog from './features/teacher/ConferenceLog'
-import InFolder from './features/quiz/InFolder';
-import Updatequiz from './features/quiz/Updatequiz';
-import Createquiz from './features/quiz/Createquiz';
-import ClassStudent from './features/ClassStudent/ClassStudent';
-import ClassTeacher from './features/ClassTeacher/ClassTeacher';
+import MainPage from '../features/mainpage/MainPage';
+import Settings from '../features/teacher/Settings';
+import Signup from '../features/user/Signup'
+import EveryStudent from '../features/student/EveryStudent'
+import Folder from '../features/quiz/EveryFolder'
+import IngClass from '../features/teacher/IngClass'
+import ConferenceLog from '../features/teacher/ConferenceLog'
+import InFolder from '../features/quiz/InFolder';
+import Updatequiz from '../features/quiz/Updatequiz';
+import Createquiz from '../features/quiz/Createquiz';
+import ClassStudent from '../features/ClassStudent/ClassStudent';
+import ClassTeacher from '../features/ClassTeacher/ClassTeacher';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
 
@@ -64,6 +64,4 @@ export default [
     component: IngClass,
     name: "수업중인반"
   },
-  
-  
 ]

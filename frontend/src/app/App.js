@@ -4,18 +4,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import './App.scss'
 import TeacherPage from './TeacherPage';
-import StudentPage from './StudentPage';
 import { useEffect, useState } from 'react';
-import MainPage from './features/mainpage/MainPage';
+import MainPage from '../features/mainpage/MainPage';
+import ClassStudent from '../features/ClassStudent/ClassStudent';
+
+
 function App() {
-  const [who,setWho] = useState("anon")
-  
+  const [who,setWho] = useState(localStorage.getItem("user")&&"teacher") 
   return (
     <div className='App'>
       <ChakraProvider>
-        {who ==="anon" && <Route path="/" exact render={()=><MainPage setWho={setWho}/>}/>}  
+        <Switch>
+          <Route path="/" exact render={()=><MainPage setWho={setWho}/>}/>
+          <Route path="/class/student" exact render={(props)=><ClassStudent />}/>
+        </Switch>
         {who ==="teacher" &&<TeacherPage setWho={setWho}/>}
-        {who ==="student" &&<StudentPage setWho={setWho}/>}  
       </ChakraProvider>
     </div>
   );
