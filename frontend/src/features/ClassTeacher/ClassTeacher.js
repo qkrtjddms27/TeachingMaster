@@ -3,18 +3,20 @@ import React, { useEffect, useState } from 'react';
 import "./scss/ClassTeacher.scss"
 import teacher_screen_img from './image/수업화면.png'
 import StudentScreen from './StudentScreen';
-// import TeacherModal from './ModalPage/TeacherModal';
-import { BsMicMute, BsFillMicFill, BsCameraVideoOff, BsFillCameraVideoFill } from "react-icons/bs"
+import TeacherModal from './ModalPage/TeacherModal';
+import { BsMicMute, BsFillMicFill, BsCameraVideoOff, BsFillCameraVideoFill, BsFillStarFill } from "react-icons/bs"
 import { MdExtension, MdOutlineExtensionOff, MdQuiz } from "react-icons/md"
 import { GiCoffeeCup } from "react-icons/gi"
 import { FaSchool } from "react-icons/fa"
+import { useHistory } from 'react-router-dom';
 
 
-const ClassTeacher = ({setWho}) => {
+const ClassTeacher = ({setOnAir}) => {
+  let history = useHistory()
   useEffect(()=>{
-    setWho("teacher")
+    setOnAir(true)
   },[])
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose, onToggle } = useDisclosure()
   const [modalForm, setModalForm] = useState()
   const modalOpen = (kind) => {
     setModalForm(kind)
@@ -66,16 +68,23 @@ const ClassTeacher = ({setWho}) => {
             <Input className='input_box'/>
           </div>
         </div>
-
-
         <div className='bottom'>
           <div className='left_btn_box'>
-            <Button className='exitButton'>수업 나가기</Button>
+            <Button className='exitButton' 
+              onClick={() => {
+                history.push('/home')
+                setOnAir(false)
+              }}
+            >수업 나가기</Button>
           </div>
           <div className='right_btn_box'>
-            <button className='OnOffButton' title='퀴즈 출제'
-              // onClick={modalOpen('quiz')}
+            <button className='OnOffButton' title='OX 퀴즈'
+              onClick={() => modalOpen('ox')}
             ><Icon as={MdQuiz} w={8} h={8} /></button>
+            <button className='OnOffButton' title='즐겨찾기 퀴즈'
+              onClick={() => modalOpen('bookmark')}
+            ><Icon as={BsFillStarFill} w={8} h={8} /></button>
+            <TeacherModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} modalForm={modalForm} setModalForm={setModalForm} />
             {Cam ? (
               <button className="OnOffButton" title='Video Off'
                 onClick={() => {
