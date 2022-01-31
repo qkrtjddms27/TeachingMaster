@@ -25,6 +25,14 @@
       animation: typing 8s steps(30) infinite;
     }
   }
+  .btn_box {
+    display: flex;
+    justify-content: center;
+    a {
+      margin: 2rem;
+      margin-top: 30rem;
+    }
+  }
 }
 @keyframes typing {
   0% {

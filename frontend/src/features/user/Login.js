@@ -11,12 +11,14 @@ import { setToken,serverUrl } from "../../components/TOKEN";
 const CFaUserAlt = chakra(FaUserAlt)
 const CFaLock = chakra(FaLock)
 
-const Login = ({is_login,setIs_Login,user,setUser}) => {
+const Login = ({isLogin,setisLogin,user,setUser}) => {
   let history = useHistory()
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
   useEffect(() => {
+    console.log("확인")
     setShowPassword(false)
+    if(isLogin){history.push('/home')}
   }, [])
 
   // input태그에 들어오는 user 정보로 업데이트
@@ -42,7 +44,7 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
       }
     )
     .then(({data}) => {
-      setIs_Login(true)
+      setisLogin(true)
       localStorage.setItem('jwt', data.accessToken)
       localStorage.setItem('userId', userId)
       axios({
@@ -53,7 +55,7 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
         .then(res=>{
           localStorage.setItem('user',JSON.stringify(res.data)) 
           setUser(res.data)
-          setIs_Login(true)
+          setisLogin(true)
           history.push('/home')
         })
           // 비밀번호 빼고 저장하기 object -> string으로 저장되게 하기 사용할때는 parse를 이용
