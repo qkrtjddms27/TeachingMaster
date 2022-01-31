@@ -4,7 +4,7 @@ import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverArrow,
 import { useState, useEffect } from 'react'
 import add from './image/add.png'
 import axios from 'axios'
-import { setToken } from '../../components/TOKEN';
+import { setToken, serverUrl } from '../../components/TOKEN';
 import AOS from 'aos'
 import "aos/dist/aos.css"
 
@@ -19,7 +19,7 @@ const AddQuizPopover = ({myFolders, setMyFolders}) => {
     const {userId} = JSON.parse(localStorage.getItem("user"))
     const data = { userId, folderName }
     axios({
-      url: 'http://localhost:8080/api/v1/quiz/create/folder',
+      url: `${serverUrl}/v1/quiz/create/folder`,
       method: "POST",
       headers: setToken(),
       data,

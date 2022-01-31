@@ -25,6 +25,14 @@
       animation: typing 8s steps(30) infinite;
     }
   }
+  .btn_box {
+    display: flex;
+    justify-content: center;
+    a {
+      margin: 2rem;
+      margin-top: 30rem;
+    }
+  }
 }
 @keyframes typing {
   0% {
@@ -38,10 +46,6 @@
   }
 }
 .Main2 {
-  background-image: url("../grass.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100vh;
   .study {
     margin-left: 10rem;
     height: 50vh;

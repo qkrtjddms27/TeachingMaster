@@ -1,14 +1,15 @@
 import React,{useState,useEffect} from 'react'
 import { Box,  Heading} from '@chakra-ui/react'
 import './scss/Home.scss'
-import QuizBar from './QuizBar'
+import QuizBar from './components/QuizBar'
 import AOS from 'aos'
 import "aos/dist/aos.css"
 import axios from 'axios'
-import {setToken} from '../../components/TOKEN'
-
+import { setToken, serverUrl } from '../../components/TOKEN'
+import { useHistory } from 'react-router-dom'
 // 유저정보에서 선생님 사진 받아오기
-const Home = ({user,setUser}) => {
+const Home = ({user,setUser,setOnAir}) => {
+  const history = useHistory()
   const [quiz,setQuiz] =useState([])
   useEffect(()=>{
     AOS.init()
@@ -17,7 +18,7 @@ const Home = ({user,setUser}) => {
   useEffect(()=>{
     const userId = localStorage.getItem("userId")
     axios({
-      url:`http://localhost:8080/api/v1/quiz/select/favor/${userId}`,
+      url:`${serverUrl}/v1/quiz/select/favor/${userId}`,
       method:"GET",
       headers:setToken(),
     })
@@ -56,7 +57,9 @@ const Home = ({user,setUser}) => {
             </div>
             {class_open?
             <div className='when-open'>
-              <Box className='class-enter' >교실 입장</Box>
+              <Box className='class-enter' onClick={()=>{setOnAir(true)
+                history.push('/class/teacher')
+              }} >교실 입장</Box>
               <Box className='class-close' onClick={openClass} >교실 닫기</Box>
             </div>:
             <div className='when-close'>

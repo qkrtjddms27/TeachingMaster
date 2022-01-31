@@ -5,7 +5,7 @@ import { Col, Row } from 'react-bootstrap'
 import AOS from 'aos'
 import "aos/dist/aos.css"
 import axios from 'axios'
-import { setToken } from '../../components/TOKEN'
+import { setToken, serverUrl } from '../../components/TOKEN'
 import { Button, Heading, Select, Spinner } from '@chakra-ui/react'
 
 const EveryStudent = () => {
@@ -18,7 +18,7 @@ const EveryStudent = () => {
     setLoading(true)
     const options = {
       methods: "get",
-      url : "http://localhost:8080/api/student/studentAll",
+      url : `${serverUrl}/student/studentAll`,
       headers: setToken()
     }
     try{

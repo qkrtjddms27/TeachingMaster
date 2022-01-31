@@ -5,10 +5,10 @@ import Main1 from './Main1';
 import Main2 from './Main2';
 import Main3 from './Main3';
 import Concert from '../teacher/Concert';
-const MainPage = () => {
+const MainPage = ({setWho}) => {
   return(
   <div>
-    <Main1/>
+    <Main1 setWho={setWho}/>
     <Main2/>
     <Main3/>
     <Concert/>
