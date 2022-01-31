@@ -5,7 +5,6 @@ import axios from 'axios';
 import { setToken, serverUrl } from '../../../components/TOKEN';
 
 const ModalUpdate = ({change,student,onClose,setStudent}) => {
-  const [file,setFile] = useState("")
   const [Email,setEmail] = useState(student.studentEmail)
   const [phone,setPhone] = useState(student.studentPhone)
   const [address,setAddress] = useState(student.address)
@@ -13,11 +12,8 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
   const [relation,setRelation] = useState(student.relation)
   const [parentsPhone,setParentsPhone] = useState(student.parentsPhone)
   const [imgBase64,setImagbase64]=useState(student.studentProfile) // 파일 base64
-  // const [imgFile,setImgFile] = useState([]) // 이미지파일
 
   const onSubmit = ()=>{
-    console.log(student)
-    console.log(typeof(student.studentProfile))
     const data ={
       "roomGrade":student.room.roomGrade ,
       "roomNum":student.room.roomNum,
@@ -64,10 +60,10 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
       const base64 = reader.result; //reader.result는 이미지를 인코딩(base64 ->이미지를 text인코딩)한 결괏값이 나온다.
       if (base64) {
         setImagbase64(base64.toString())
+        console.log(imgBase64)
       }
     };
     if (event.target.files[0]) {
-      console.log(event)
       reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다. 저장후 onloadend 트리거
       // setImgFile(event.target.files[0])
       console.log(imgBase64.length)
@@ -77,16 +73,11 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
     <div className='modal-main'>
       <div className='left'>
         <div className='left_top' >
-          {/* <img className='image' alt='학생사진' src={student.studentProfile} /> */}
           <img className='image' alt='학생사진' src={imgBase64} />
           <div>
             <div className='name'>{student.studentName}</div>
             <div className='stars'>이번주 ⭐&nbsp;{student.countingStar}</div>
             <div className='stars'>누적&emsp;&nbsp;⭐&nbsp;{student.studentScore}</div>
-            <form>
-              
-            </form>
-              {/* <label className="input-file-button" for="input-file"> */}
               <label htmlFor="input-file" className="input-file-button" onChange={handleChangeFile}>
                 사진 업로드
               </label>

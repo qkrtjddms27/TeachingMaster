@@ -21,11 +21,6 @@ export default [
     name: "회원가입페이지"
   },
   {
-    path: "/settings",
-    component: Settings,
-    name: "세팅"
-  },
-  {
     path: "/students",
     component: EveryStudent,
     name: "학생목록페이지"

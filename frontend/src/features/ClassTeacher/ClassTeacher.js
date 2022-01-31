@@ -10,9 +10,9 @@ import { GiCoffeeCup } from "react-icons/gi"
 import { FaSchool } from "react-icons/fa"
 
 
-const ClassTeacher = ({setWho}) => {
+const ClassTeacher = ({setOnAir}) => {
   useEffect(()=>{
-    setWho("teacher")
+    setOnAir(true)
   },[])
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [modalForm, setModalForm] = useState()

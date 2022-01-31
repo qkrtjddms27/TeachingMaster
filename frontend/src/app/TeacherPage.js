@@ -6,6 +6,7 @@ import Home from '../features/teacher/Home';
 import { useState,useEffect } from 'react';
 import Login from '../features/user/Login';
 import ClassTeacher from '../features/ClassTeacher/ClassTeacher';
+import Settings from '../features/teacher/Settings';
 
 const TeacherPage = () => {
   const [isLogin,setisLogin] =useState(localStorage.getItem("user")===null ? false: true )
@@ -21,6 +22,7 @@ const TeacherPage = () => {
           <Route path="/login" render={(props)=><Login setisLogin={setisLogin} isLogin={isLogin} user={user} setUser={setUser}/>}/>
           <Route path="/home" render={(props)=><Home user={user} setOnAir={setOnAir} setUser={setUser} />}/>
           <Route path="/class/teacher" exact render={(props)=><ClassTeacher setOnAir={setOnAir} />}/>
+          <Route path="/settings" exact render={(props)=><Settings setUser={setUser} user={user} />}/>
           {routes.map(route=>{
             return (
               <Route key={route.path} path={route.path} exact component = {route.component}/>
