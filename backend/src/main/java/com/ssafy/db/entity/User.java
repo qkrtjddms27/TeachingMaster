@@ -28,7 +28,8 @@ public class User {
     @Column(length = 20 ,nullable = false)
     private String userName;
 
-    @Column(length = 100 ,nullable = false)
+    @Lob
+    @Column(columnDefinition = "BLOB")
     private String userProfile;
 
     @Column(length = 100 ,nullable = false)
