@@ -20,8 +20,6 @@ public class UserRes{
 	Boolean master;
 	@ApiModelProperty(name="User Name")
 	String userName;
-	@ApiModelProperty(name="Password")
-	String password;
 	@ApiModelProperty(name="User Homeroom")
 	Boolean userHomeroom;
 	@ApiModelProperty(name="User profile")
@@ -37,7 +35,6 @@ public class UserRes{
 		res.setUserId(user.getUserId());
 		res.setMaster(user.getMaster());
 		res.setUserName(user.getUserName());
-		res.setPassword(user.getPassword());
 		res.setUserHomeroom(user.getUserHomeroom());
 		res.setUserProfile(user.getUserProfile());
 		res.setRoomGrade(user.getRoom().getRoomGrade());

@@ -25,7 +25,7 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-    @PostMapping("/studentAll")
+    @GetMapping("/studentAll")
     @ApiOperation(value = "모든 학생 조회", notes = "모든 학생들 정보 조회")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
