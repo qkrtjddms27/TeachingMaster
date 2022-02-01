@@ -27,8 +27,8 @@ public class StudentController {
     StudentService studentService;
 
 
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @GetMapping("/studentAll")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PostMapping("/studentAll")
     @ApiOperation(value = "모든 학생 조회", notes = "모든 학생들 정보 조회")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
