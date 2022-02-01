@@ -1,0 +1,109 @@
+.ClassTeacher {
+  background-image: url("../image/grass.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .Conference_box {
+    height: 93vh;
+    width: 90vw;
+    background-color: rgba(245, 245, 245, 0.712);
+    margin: auto;
+    border-radius: 20px;
+    .top {
+      display: flex;
+      .student_box {
+        height: 81vh;
+        width: 70vw;
+        margin: 1.5vh 0 0 1.5vw;
+        border-radius: 10px;
+        display: flex;
+        flex-flow: wrap;
+        justify-content: space-evenly;
+        background-color: rgba(255, 255, 255, 0.616);
+        overflow-x: hidden;
+        overflow-y: scroll;
+        &::-webkit-scrollbar {
+          visibility: hidden;
+          width: 1px;
+        }
+        &:hover {
+          &::-webkit-scrollbar {
+            visibility: visible;
+            width: 1px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background-color: #6bcaa6;
+            border-radius: 7px;
+            background-clip: padding-box;
+            border: 1px solid transparent;
+          }
+        }
+        .student_screen {
+          cursor: pointer;
+          // 16:9 비율 맞추기
+          height: 16vh;
+          width: 26vh;
+          margin-left: 1rem;
+          margin-right: 1rem;
+          img {
+            width: 100%;
+            height: 100%;
+            margin-top: 1rem;
+            border-radius: 10px;
+          }
+        }
+      }
+      .chatting_box {
+        height: 81vh;
+        width: 20vw;
+        margin: 1.5vh 1.5vw 0 1.5vw;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: rgba(223, 182, 187, 0.39);
+        .chatting_log {
+          height: 70vh;
+          width: 18vw;
+          margin: 2vh 1vw 2vh 1vw;
+          border-radius: 10px;
+          background-color: rgb(246, 233, 233);
+        }
+        .input_box {
+          height: 6vh;
+          width: 18vw;
+          margin: 0 1vw 2vh 1vw;
+          border-radius: 10px;
+          background-color: whitesmoke;
+        }
+      }
+    }
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      margin: 3vh 1.7vw;
+      .left_btn_box {
+        display: flex;
+        .exitButton {
+          margin-right: 3vh;
+          width: 7rem;
+          background-color: #f53d3d;
+          color: white;
+        }
+      }
+      .right_btn_box {
+        display: flex;
+        .OnOffButton {
+          margin-left: 2rem;
+          cursor: pointer;
+          &:hover {
+            transform: scale(1.1);
+            transition: 0.1s;
+          }
+        }
+      }
+    }
+  }
+}

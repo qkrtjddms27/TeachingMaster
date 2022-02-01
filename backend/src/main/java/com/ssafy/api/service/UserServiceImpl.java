@@ -106,13 +106,18 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void deleteUserByUserId(String userId) {
 		//유저 정보 삭제(userId로)
-		User user = userRepositorySupport.findUserByUserId("master").get();
+		//master가 true인 유저 검색
+		User user = userRepositorySupport.findUserByMaster().get();
+		//User user = userRepositorySupport.findUserByUserId("master").get();
+
+		//유저아이디로 연관된 퀴즈 찾기
 		List<Quiz> quizList = userRepositorySupport.findQuizByUserId(userId);
 
+		//찾은 퀴즈들 User 변경
 		for (Quiz q:quizList) {
 			q.setUser(user);
 		}
-
+		//User 삭제
 		userRepository.delete(userRepositorySupport.findUserByUserId(userId).get());
 
 	}

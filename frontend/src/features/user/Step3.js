@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import AlertDialogModal from '../../components/AlertModal';
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
+import { serverUrl } from '../../components/TOKEN';
 
 // 이름, 아이디, 비번, 비번확인 페이지
 const Step3 = ({ step, setStep, userName, setUserName, userId, setUserId, userPassword, setUserPassword, isClassTeacher, grade, group }) => {
@@ -65,7 +66,7 @@ const Step3 = ({ step, setStep, userName, setUserName, userId, setUserId, userPa
       }
       axios(
         {
-          url: "http://localhost:8080/api/v1/users",
+          url: `${serverUrl}/v1/users`,
           method: "POST",
           data,
         }

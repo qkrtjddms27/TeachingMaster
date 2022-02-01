@@ -9,6 +9,7 @@ import com.ssafy.db.entity.Room;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @Api(value = "반 API", tags = {"Room"})
@@ -38,6 +39,7 @@ public class RoomController {
                 : ResponseEntity.status(200).body(BaseResponseBody.of(200, "이미 존재하는 학급입니다."));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/{room_grade}/{room_num}")
     @ApiOperation(value = "반 삭제", notes = "반 정보를 통해 삭제한다.")
     @ApiResponses({

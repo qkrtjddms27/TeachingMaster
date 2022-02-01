@@ -8,7 +8,7 @@ const ModalMain = ({change,student,onClose}) => {
       <div className='left'>
         <div className='left_top' >
           {/* <img className='image' alt='학생사진' src={student.studentProfile} /> */}
-          <img className='image' alt='학생사진' src="https://blog.kakaocdn.net/dn/bAyJve/btqNr8wMiXi/rV0XKPT78iMnmkXlViEmk0/img.jpg" />
+          <img className='image' alt='학생사진' src={student.studentProfile} />
           <div>
             <div className='name'>{student.studentName}</div>
             <div className='stars'>이번주 ⭐&nbsp;{student.countingStar}</div>

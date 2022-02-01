@@ -1,8 +1,8 @@
 import { useDisclosure } from '@chakra-ui/react'
 import React,{useState} from 'react'
 import { Card } from 'react-bootstrap'
-import CardBack from './CardBack'
-import CardFront from './CardFront'
+import CardBack from './components/CardBack'
+import CardFront from './components/CardFront'
 import ModalPage from './ModalPage/ModalPage'
 
 const StudentCard = ({Astudent}) => {

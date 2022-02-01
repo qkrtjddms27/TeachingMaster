@@ -10,6 +10,7 @@ import com.ssafy.db.entity.Student;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
+
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/studentAll")
     @ApiOperation(value = "모든 학생 조회", notes = "모든 학생들 정보 조회")
     @ApiResponses({
@@ -37,6 +40,7 @@ public class StudentController {
         return ResponseEntity.status(200).body(StudentListRes.of(students,200,"Success"));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{student_id}")
     @ApiOperation(value = "학생 조회", notes = "아이디를 통해 회원가입 한다.")
     @ApiResponses({
@@ -52,6 +56,7 @@ public class StudentController {
                 : ResponseEntity.status(200).body(BaseResponseBody.of(200, "존재하지 않는 학생 코드입니다."));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping()
     @ApiOperation(value = "학생 등록", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.")
     @ApiResponses({
@@ -69,6 +74,8 @@ public class StudentController {
                 : ResponseEntity.status(200).body(BaseResponseBody.of(200, "이미 존재하는 학생코드 입니다."));
     }
 
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/{student_id}")
     @ApiOperation(value = "학생 삭제", notes = "학생 코드를 통해 삭제한다.")
     @ApiResponses({
@@ -81,6 +88,8 @@ public class StudentController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PutMapping()
     @ApiOperation(value = "학생 수정", notes = "학생 수정을 통해 삭제한다.")
     @ApiResponses({
