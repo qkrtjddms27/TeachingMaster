@@ -28,4 +28,8 @@ public interface QuizService {
     FolderQuiz insertQuiz(FolderQuizEnterReq folderQuizEnterReq);
 
     List<QuizLogRes> selectQuizLog(String studentId);
+
+    void deleteFolderQuiz(Long folderId, Long quizId);
+    void deleteBookmark(String userId, Long quizId);
+    void deleteFolder(Long folderId);
 }

@@ -10,6 +10,7 @@ import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -276,6 +277,34 @@ System.out.println(folder.getUser().getUserId());
         }
 
         return quizLogRes;
+    }
+
+    @Override
+    public void deleteFolderQuiz(Long folderId, Long quizId) {
+        Folder folder = folderRepository.findById(folderId).get();
+        Quiz quiz = quizRepository.findById(quizId).get();
+        FolderQuiz folderQuiz = folderQuizRepository.findByFolderAndQuiz(folder, quiz);
+
+        folderQuizRepository.delete(folderQuiz);
+    }
+
+    @Override
+    public void deleteBookmark(String userId, Long quizId) {
+        User user = userRepository.findById(userId).get();
+        Quiz quiz = quizRepository.findById(quizId).get();
+        Bookmark bookmark = bookMarkRepository.findByUserAndQuiz(user, quiz);
+
+        bookMarkRepository.delete(bookmark);
+    }
+
+    @Override
+    public void deleteFolder(Long folderId) {
+        Folder folder = folderRepository.findById(folderId).get();
+        List<FolderQuiz> folderQuizList = folderQuizRepository.findByFolder(folder);
+        for (FolderQuiz folderquiz: folderQuizList) {
+            folderQuizRepository.delete(folderquiz);
+        }
+        folderRepository.delete(folder);
     }
 
 }
