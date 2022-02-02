@@ -51,7 +51,7 @@ const Home = ({user,setUser,setOnAir}) => {
             <div className='teacher'>
               <div className='image-box'>
                 <img className='image' alt='선생님사진'
-                src="https://blog.kakaocdn.net/dn/bAyJve/btqNr8wMiXi/rV0XKPT78iMnmkXlViEmk0/img.jpg" />
+                src={user.userProfile} />
               </div>
               <Heading className='name' >{user.userName} 선생님</Heading> 
             </div>
