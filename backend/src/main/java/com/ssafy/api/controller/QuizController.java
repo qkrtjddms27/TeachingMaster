@@ -222,7 +222,7 @@ public class QuizController {
         return ResponseEntity.status(200).body(quizLogResList);
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/delete/folder_quiz/{folder_id}/{quiz_id}")
     @ApiOperation(value = "폴더에서 퀴즈제거", notes = "폴더에서 퀴즈제거")
     @ApiResponses({
@@ -239,7 +239,7 @@ public class QuizController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/delete/bookmark/{user_id}/{quiz_id}")
     @ApiOperation(value = "즐겨찾기 제거", notes = "즐겨찾기 제거")
     @ApiResponses({
@@ -256,7 +256,7 @@ public class QuizController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/delete/folder/{folder_id}")
     @ApiOperation(value = "폴더 삭제", notes = "폴더 삭제")
     @ApiResponses({
