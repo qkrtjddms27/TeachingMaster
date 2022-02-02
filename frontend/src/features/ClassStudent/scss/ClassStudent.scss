@@ -1,10 +1,15 @@
 .ClassStudent {
-  background-image: url("../image/grass.jpg");
+  background-image: linear-gradient(
+      rgba(173, 173, 173, 0.5),
+      rgba(173, 173, 173, 0.5)
+    ),
+    url("../image/grass.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
   display: flex;
   flex-direction: column;
+
   .Conference_box {
     height: 93vh;
     width: 90vw;
@@ -12,7 +17,8 @@
     display: flex;
     margin: auto;
     margin-top: 3vh;
-    border-radius: 5vh;
+    border-radius: 10px;
+    box-shadow: 3px 3px 7px;
     .left {
       width: 63vw;
       .student_box {
@@ -48,11 +54,13 @@
           margin-left: 1rem;
           margin-right: 1rem;
           width: 20vh;
+
           img {
             width: 100%;
             height: 100%;
             margin-top: 1rem;
-            border-radius: 10%;
+            border-radius: 10px;
+            box-shadow: 3px 3px 7px;
           }
         }
       }
@@ -65,7 +73,7 @@
         img {
           width: 100%;
           height: 100%;
-          border-radius: 30px;
+          border-radius: 10px;
         }
       }
     }
@@ -98,14 +106,38 @@
       width: 25vw;
       margin-top: 1vh;
       margin-left: 1vw;
-      border-radius: 20px;
-      background-color: rgba(223, 182, 187, 0.39);
+      border-radius: 10px;
+      background-color: rgba(98, 207, 78, 0.582);
       .chatting_log {
         height: 60vh;
         width: 23vw;
         margin: auto;
-        border-radius: 20px;
+        margin-top: 0.3rem;
+        border-radius: 5px;
         background-color: rgb(246, 233, 233);
+        .text {
+          margin-left: 1rem;
+          .chat_line {
+            font-size: 1.25rem;
+            margin-top: 0.3rem;
+            width: 95%;
+            .chat_name {
+              font-weight: 700;
+              font-size: 1.1rem;
+              text-align: center;
+              background-color: rgb(142, 231, 219);
+              padding: 0.1rem 0.4rem 0.1rem 0.4rem;
+              border-radius: 15px;
+            }
+            .chat_content {
+              display: inline;
+              width: 100%;
+              margin-left: 0.5rem;
+              background-color: rgb(253, 208, 216);
+              border-radius: 5px;
+            }
+          }
+        }
       }
       .input_box {
         background-color: whitesmoke;
@@ -124,6 +156,7 @@
     display: flex;
     justify-content: end;
     .exitButton {
+      margin-top: 0.5rem;
       margin-right: 3vh;
       width: 7rem;
       background-color: #f53d3d;
