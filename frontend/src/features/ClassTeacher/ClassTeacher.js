@@ -62,10 +62,20 @@ const ClassTeacher = ({setOnAir}) => {
             </div>
           </div>
           <div className='chatting_box'>
+            <div style={{height:"1rem"}}/>
             <div className='chatting_log'>
-              <Text>안녕</Text>
+              <div style={{height:"1rem"}} />
+              <div className='text'>
+                <div className='chat_line'>
+                  <span className='chat_name'>현홍</span>
+                  <div className='chat_content'>안녕안녕안녕안녕안녕안녕안안녕안안녕안안녕안녕</div><br/>
+                </div>
+                <div className='chat_line'>
+                  <span className='chat_name'>혜진</span><span className='chat_content'> 안녕</span><br/>
+                </div>
             </div>
-            <Input className='input_box'/>
+            </div>
+              <Input className='input_box'/>
           </div>
         </div>
         <div className='bottom'>

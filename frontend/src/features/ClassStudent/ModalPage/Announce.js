@@ -7,13 +7,13 @@ const Announce = ({ isOpen, onOpen, onClose,setMic }) => {
       <ModalCloseButton />
       <ModalBody >
         <div className='announce_body'>
-          <p>발표 차례에요</p>
-          <p>마이크를 켜주세요</p>
+          <p>발표 차례에요 😀</p>
+          <p>🎙마이크를 켜주세요</p>
           <div className='announce_btn' onClick={()=>
             {setMic(true)
             onClose()
             }
-            }>발표하기</div>
+            }>마이크 켜기</div>
         </div>
       </ModalBody>
     </ModalContent>
