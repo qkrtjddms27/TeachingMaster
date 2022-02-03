@@ -7,7 +7,7 @@ import TeacherPage from './TeacherPage';
 import { useEffect, useState } from 'react';
 import MainPage from '../features/mainpage/MainPage';
 import ClassStudent from '../features/ClassStudent/ClassStudent';
-import Classroom from '../features/tt/Classroom'
+import Classroom from '../features/ClassTeacher/Classroom'
 
 
 function App() {

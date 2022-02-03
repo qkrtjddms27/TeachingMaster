@@ -9,13 +9,21 @@ import { MdExtension, MdOutlineExtensionOff, MdQuiz } from "react-icons/md"
 import { GiCoffeeCup } from "react-icons/gi"
 import { FaSchool } from "react-icons/fa"
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import { OpenVidu } from 'openvidu-browser';
+import UserVideoComponent from '../openVidu/UserVideoComponent';
 
+const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
+const OPENVIDU_SERVER_SECRET = 'ssafy';
 
 const ClassTeacher = ({setOnAir}) => {
   let history = useHistory()
   useEffect(()=>{
     setOnAir(true)
+    window.addEventListener('beforeunload', onbeforeunload)
+    return () => window.removeEventListener('beforeunload', onbeforeunload)
   },[])
+
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure()
   const [modalForm, setModalForm] = useState()
   const modalOpen = (kind) => {
@@ -23,8 +31,8 @@ const ClassTeacher = ({setOnAir}) => {
     onOpen()
   }
   const toast = useToast()
-  const [Cam, setCam] = useState(true)
-  const [Mic, setMic] = useState(true)
+  const [videostate, setVideostate] = useState(true)
+  const [audiostate, setAudiostate] = useState(true)
   const [highlighting, setHighlighting] = useState(false)
   const [breaktime, setBreaktime] = useState(false)
   const students = [
@@ -33,17 +41,161 @@ const ClassTeacher = ({setOnAir}) => {
     {name:"아이1",img:"child_img"},
     {name:"아이1",img:"child_img"},
     {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},    
   ]
+  
+  const [mySessionId, setMySessionId] = useState('TM')
+  const [myUserName, setMyUserName] = useState('')
+  const [session, setSession] = useState(undefined)
+  const [mainStreamManager, setMainStreamManager] = useState(undefined)
+  const [publisher, setPublisher] = useState(undefined)
+  const [subscribers, setSubscribers] = useState([])
+  // let OV = null
+
+  const onbeforeunload = (e) => {
+    leaveSession()
+  }
+
+  const handleMainVideoStream = (stream) => {
+    if (mainStreamManager !== stream) {
+      setMainStreamManager(stream);
+    }
+  }
+
+  const deleteSubscriber = (streamManager) => {
+    let index = subscribers.indexOf(streamManager, 0);
+    if (index > -1) {
+      subscribers.splice(index, 1);
+      setSubscribers(subscribers)
+    }
+  }
+
+  const leaveSession = () => {
+
+    const mySession = session;
+    if (mySession) {
+        mySession.disconnect();
+    }
+    // Empty all properties...
+    this.OV = null;
+    setSession(undefined)
+    setSubscribers([])
+    setMySessionId('')
+    setMyUserName('')
+    setMainStreamManager(undefined)
+    setPublisher(undefined)
+  }
+
+  const joinSession = () => {
+    this.OV = new OpenVidu();
+    setSession(this.OV.initSession())
+    const joinFunction = () => {
+      let mySession = session;
+
+      mySession.on('streamCreated', (event) => {
+        let subscriber = mySession.subscribe(event.stream, undefined);
+        setSubscribers(subscribers.concat(subscriber))
+        // setSubscribers([...subscribers, subscriber])
+      });
+
+      mySession.on('streamDestroyed', (event) => {
+        deleteSubscriber(event.stream.streamManager);
+      });
+
+      mySession.on('exception', (exception) => {
+        console.warn(exception);
+      });
+
+      getToken().then((token) => {
+        mySession
+          .connect(
+            token,
+            { clientData: myUserName },
+          )
+          .then(() => {
+            let publisher = this.OV.initPublisher(undefined, {
+                audioSource: undefined, // The source of audio. If undefined default microphone
+                videoSource: undefined, // The source of video. If undefined default webcam
+                publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+                publishVideo: true, // Whether you want to start publishing with your video enabled or not
+                resolution: '640x480', // The resolution of your video
+                frameRate: 30, // The frame rate of your video
+                insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
+                mirror: false, // Whether to mirror your local video or not
+            });
+            mySession.publish(publisher);
+            setMainStreamManager(publisher)
+            setPublisher(publisher)
+          })
+          .catch((error) => {
+              console.log('There was an error connecting to the session:', error.code, error.message);
+          });
+      });
+    }
+    joinFunction()
+  }
+
+  const getToken = () => {
+    return createSession(mySessionId).then((sessionId) => createToken(sessionId));
+  }
+
+  const createSession = (sessionId) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({ customSessionId: sessionId });
+        axios
+            .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
+                headers: {
+                    Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then((response) => {
+                console.log('CREATE SESION', response);
+                resolve(response.data.id);
+            })
+            .catch((response) => {
+                var error = Object.assign({}, response);
+                if (error?.response?.status === 409) {
+                    resolve(sessionId);
+                } else {
+                    console.log(error);
+                    console.warn(
+                        'No connection to OpenVidu Server. This may be a certificate error at ' +
+                        OPENVIDU_SERVER_URL,
+                    );
+                    if (
+                        window.confirm(
+                            'No connection to OpenVidu Server. This may be a certificate error at "' +
+                            OPENVIDU_SERVER_URL +
+                            '"\n\nClick OK to navigate and accept it. ' +
+                            'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+                            OPENVIDU_SERVER_URL +
+                            '"',
+                        )
+                    ) {
+                        window.location.assign(OPENVIDU_SERVER_URL + '/accept-certificate');
+                    }
+                }
+            });
+    });
+  }
+
+  const createToken = (sessionId) => {
+    return new Promise((resolve, reject) => {
+        let data = {};
+        axios
+            .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection", data, {
+                headers: {
+                    Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then((response) => {
+                console.log('TOKEN', response);
+                resolve(response.data.token);
+            })
+            .catch((error) => reject(error));
+    });
+  }
 
   return (
     <div className='ClassTeacher'>
@@ -78,6 +230,12 @@ const ClassTeacher = ({setOnAir}) => {
               <Input className='input_box'/>
           </div>
         </div>
+
+
+
+
+
+
         <div className='bottom'>
           <div className='left_btn_box'>
             <Button className='exitButton' 
@@ -94,11 +252,11 @@ const ClassTeacher = ({setOnAir}) => {
             <button className='OnOffButton' title='즐겨찾기 퀴즈'
               onClick={() => modalOpen('bookmark')}
             ><Icon as={BsFillStarFill} w={8} h={8} /></button>
-            <TeacherModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} modalForm={modalForm} setModalForm={setModalForm} />
-            {Cam ? (
+            <TeacherModal isOpen={isOpen} onClose={onClose} modalForm={modalForm} setModalForm={setModalForm} />
+            {videostate ? (
               <button className="OnOffButton" title='Video Off'
                 onClick={() => {
-                  setCam(false)
+                  setVideostate(false)
                   toast({
                     position: 'bottom-left',
                     render: () => (<Box color="white" p={3} bg="red.500">카메라를 껐습니다</Box>)
@@ -110,7 +268,7 @@ const ClassTeacher = ({setOnAir}) => {
               ) : (
               <button className="OnOffButton" title='Video On'
                 onClick={() => {
-                  setCam(true)
+                  setVideostate(true)
                   toast({
                     position: 'bottom-left',
                     render: () => (<Box color="white" p={3} bg="blue.500">카메라를 켰습니다</Box>)
@@ -120,10 +278,10 @@ const ClassTeacher = ({setOnAir}) => {
                 <Icon as={BsCameraVideoOff} w={8} h={8} />
               </button>
             )}  
-            {Mic ? (
+            {audiostate ? (
               <button className="OnOffButton" title='Mic Off'
                 onClick={() => {
-                  setMic(false)
+                  setAudiostate(false)
                   toast({
                     position: 'bottom-left',
                     render: () => (<Box color="white" p={3} bg="orange.500">마이크를 껐습니다</Box>)
@@ -135,7 +293,7 @@ const ClassTeacher = ({setOnAir}) => {
               ) : (
               <button className="OnOffButton" title='Mic On'
                 onClick={() => {
-                  setMic(true)
+                  setAudiostate(true)
                   toast({
                     position: 'bottom-left',
                     render: () => (<Box color="white" p={3} bg="blue.200">마이크를 켰습니다</Box>)
