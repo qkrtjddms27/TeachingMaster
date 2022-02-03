@@ -7,6 +7,7 @@ import TeacherPage from './TeacherPage';
 import { useEffect, useState } from 'react';
 import MainPage from '../features/mainpage/MainPage';
 import ClassStudent from '../features/ClassStudent/ClassStudent';
+import Classroom from '../features/tt/Classroom'
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     <div className='App'>
       <ChakraProvider>
         <Switch>
+          <Route path="/appa" exact render={()=><Classroom setWho={setWho}/>}/>
           <Route path="/" exact render={()=><MainPage setWho={setWho}/>}/>
           <Route path="/class/student" exact render={(props)=><ClassStudent />}/>
         </Switch>
