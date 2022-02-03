@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
 
 		user.setUserId(userUpdateInfo.getUserId());
 		user.setUserName(userUpdateInfo.getUserName());
-		user.setPassword(passwordEncoder.encode(userUpdateInfo.getPassword()));
+//		user.setPassword(passwordEncoder.encode(userUpdateInfo.getPassword()));
 		user.setUserHomeroom(userUpdateInfo.getUserHomeroom());
 		user.setUserProfile(userUpdateInfo.getUserProfile());
 		user.setMaster(userUpdateInfo.getMaster());
