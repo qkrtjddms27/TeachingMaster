@@ -20,6 +20,7 @@ const ClassTeacher = ({setOnAir}) => {
   let history = useHistory()
   useEffect(()=>{
     setOnAir(true)
+    setSession(undefined)
     window.addEventListener('beforeunload', onbeforeunload)
     return () => window.removeEventListener('beforeunload', onbeforeunload)
   },[])
@@ -34,22 +35,14 @@ const ClassTeacher = ({setOnAir}) => {
   const [videostate, setVideostate] = useState(true)
   const [audiostate, setAudiostate] = useState(true)
   const [highlighting, setHighlighting] = useState(false)
-  const [breaktime, setBreaktime] = useState(false)
-  const students = [
-    {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},
-    {name:"아이1",img:"child_img"},
-  ]
-  
+  const [breaktime, setBreaktime] = useState(false) 
   const [mySessionId, setMySessionId] = useState('TM')
   const [myUserName, setMyUserName] = useState('')
-  const [session, setSession] = useState(undefined)
+  const [session, setSession] = useState([])
   const [mainStreamManager, setMainStreamManager] = useState(undefined)
   const [publisher, setPublisher] = useState(undefined)
   const [subscribers, setSubscribers] = useState([])
-  // let OV = null
+  let OV = null
 
   const onbeforeunload = (e) => {
     leaveSession()
@@ -76,7 +69,7 @@ const ClassTeacher = ({setOnAir}) => {
         mySession.disconnect();
     }
     // Empty all properties...
-    this.OV = null;
+    OV = null;
     setSession(undefined)
     setSubscribers([])
     setMySessionId('')
@@ -85,16 +78,16 @@ const ClassTeacher = ({setOnAir}) => {
     setPublisher(undefined)
   }
 
-  const joinSession = () => {
-    this.OV = new OpenVidu();
-    setSession(this.OV.initSession())
+  const joinSession = (e) => {
+    e.preventDefault();
+    OV = new OpenVidu();
+    setSession(OV.initSession())
     const joinFunction = () => {
       let mySession = session;
 
-      mySession.on('streamCreated', (event) => {
+      session.on('streamCreated', (event) => {
         let subscriber = mySession.subscribe(event.stream, undefined);
         setSubscribers(subscribers.concat(subscriber))
-        // setSubscribers([...subscribers, subscriber])
       });
 
       mySession.on('streamDestroyed', (event) => {
@@ -112,7 +105,7 @@ const ClassTeacher = ({setOnAir}) => {
             { clientData: myUserName },
           )
           .then(() => {
-            let publisher = this.OV.initPublisher(undefined, {
+            let publisher = OV.initPublisher(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
                 publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
@@ -199,19 +192,57 @@ const ClassTeacher = ({setOnAir}) => {
 
   return (
     <div className='ClassTeacher'>
+      {session === undefined && (
+        <div id="join">
+            <div id="join-dialog" className="jumbotron vertical-center">
+                <h1> Join a video session </h1>
+                <form className="form-group" onSubmit={joinSession}>
+                    <p>
+                        <label>Participant: </label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            id="userName"
+                            value={myUserName}
+                            onChange={(e)=>{setMyUserName(e.target.value)}}
+                            required
+                        />
+                    </p>
+                    <p>
+                        <label> Session: </label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            id="sessionId"
+                            value={mySessionId}
+                            onChange={(e)=>{setMySessionId(e.target.value)}}
+                            required
+                        />
+                    </p>
+                    <p className="text-center">
+                      <input className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
+                    </p>
+                </form>
+            </div>
+        </div>
+    )}
+    {session !== undefined && (
       <Box className='Conference_box'>
         <div className='top'>
           <div className='student_box'>
-            {students.map((student,idx) => {
-              return (
-                <div key={idx}>
-                  <StudentScreen student={student}/>
+            {publisher !== undefined && (
+                <div>
+                  <StudentScreen 
+                    streamManager={publisher} />
                 </div>
-              )}
-            )}  
-            <div className='student_screen'>
-              <img alt='선생님' src={teacher_screen_img}/>
-            </div>
+            )}
+            {subscribers.map((sub, i) => (
+                <div key={i}>
+                  <StudentScreen 
+                    streamManager={sub} />
+                </div>
+            ))}
+
           </div>
           <div className='chatting_box'>
             <div style={{height:"1rem"}}/>
@@ -240,6 +271,7 @@ const ClassTeacher = ({setOnAir}) => {
           <div className='left_btn_box'>
             <Button className='exitButton' 
               onClick={() => {
+                leaveSession()
                 history.push('/home')
                 setOnAir(false)
               }}
@@ -355,7 +387,7 @@ const ClassTeacher = ({setOnAir}) => {
             )}
           </div>
         </div>
-      </Box>
+      </Box>)}
     </div>
   );
 };
