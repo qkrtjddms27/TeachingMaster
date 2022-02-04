@@ -1,9 +1,19 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
-import React, { Component } from 'react';
-import './Classroom.css';
-import UserVideoComponent from './UserVideoComponent';
-
+import React, { Component, useEffect, useState } from 'react';
+import UserVideoComponent from '../openVidu/UserVideoComponent';
+import { Button, Box, Text,Input, useDisclosure, useToast, Icon } from '@chakra-ui/react';
+import "./scss/ClassTeacher.scss"
+import teacher_screen_img from './image/수업화면.png'
+import StudentScreen from './StudentScreen';
+import TeacherModal from './components/TeacherModal';
+import { BsMicMute, BsFillMicFill, BsCameraVideoOff, BsFillCameraVideoFill, BsFillStarFill } from "react-icons/bs"
+import { MdExtension, MdOutlineExtensionOff, MdQuiz } from "react-icons/md"
+import { GiCoffeeCup } from "react-icons/gi"
+import { FaSchool } from "react-icons/fa"
+import { withRouter } from 'react-router-dom';
+ 
 // const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
@@ -11,6 +21,7 @@ const OPENVIDU_SERVER_SECRET = 'ssafy';
 
 class Classroom extends Component {
     constructor(props) {
+        // props.setOnAir
         super(props);
 
         this.state = {
@@ -20,6 +31,11 @@ class Classroom extends Component {
             mainStreamManager: undefined,
             publisher: undefined,
             subscribers: [],
+            modalForm: null,
+            videostate: true,
+            audiostate: false,
+            highlighting: false,
+            breaktime: false,
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -28,7 +44,11 @@ class Classroom extends Component {
         this.handleChangeUserName = this.handleChangeUserName.bind(this);
         this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
         this.onbeforeunload = this.onbeforeunload.bind(this);
+        this.modalOpen = this.modalOpen.bind(this)
+        this.handleHistory = this.handleHistory.bind(this)
     }
+
+    
 
     componentDidMount() {
         window.addEventListener('beforeunload', this.onbeforeunload);
@@ -141,7 +161,7 @@ class Classroom extends Component {
                                 resolution: '640x480', // The resolution of your video
                                 frameRate: 30, // The frame rate of your video
                                 insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
-                                mirror: false, // Whether to mirror your local video or not
+                                mirror: true, // Whether to mirror your local video or not
                             });
 
                             // --- 6) Publish your stream ---
@@ -184,13 +204,27 @@ class Classroom extends Component {
         });
     }
 
+    modalOpen(kind) {
+        this.state.modalForm(kind)
+        // onOpen()
+    }
+
+    handleHistory(path) {
+        this.props.history.push(path)
+    }
+
     render() {
+
         const mySessionId = this.state.mySessionId;
         const myUserName = this.state.myUserName;
 
+        // const { isOpen, onOpen, onClose, onToggle } = useDisclosure()
+        // const toast = useToast()
+
         return (
             <div className="container">
-                {this.state.session === undefined ? (
+                {/* 입장 */}
+                {this.state.session === undefined && (
                     <div id="join">
                         <div id="img-div">
                             <img src="resources/images/openvidu_grey_bg_transp_cropped.png" alt="OpenVidu logo" />
@@ -224,11 +258,15 @@ class Classroom extends Component {
                                     <input className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
                                 </p>
                             </form>
+                            <button onClick={() => this.handleHistory('/login')}>test</button>
                         </div>
                     </div>
-                ) : null}
+                )}
 
-                {this.state.session !== undefined ? (
+
+
+
+                {this.state.session !== undefined && (
                     <div id="session">
                         <div id="session-header">
                             <h1 id="session-title">{mySessionId}</h1>
@@ -237,22 +275,26 @@ class Classroom extends Component {
                                 type="button"
                                 id="buttonLeaveSession"
                                 onClick={this.leaveSession}
-                                value="Leave session"
+                                value="Leave session????????????????"
                             />
                         </div>
 
-                        {this.state.mainStreamManager !== undefined ? (
+
+
+                        {/* {this.state.mainStreamManager !== undefined && (
                             <div id="main-video" className="col-md-6">
                                 <UserVideoComponent streamManager={this.state.mainStreamManager} />
                             </div>
-                        ) : null}
+                        )} */}
+
+
                         <div id="video-container" className="col-md-6">
-                            {this.state.publisher !== undefined ? (
+                            {this.state.publisher !== undefined && (
                                 <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
                                     <UserVideoComponent
                                         streamManager={this.state.publisher} />
                                 </div>
-                            ) : null}
+                            )}
                             {this.state.subscribers.map((sub, i) => (
                                 <div key={i} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
                                     <UserVideoComponent streamManager={sub} />
@@ -260,7 +302,10 @@ class Classroom extends Component {
                             ))}
                         </div>
                     </div>
-                ) : null}
+                )}
+
+
+
             </div>
         );
     }
@@ -341,4 +386,4 @@ class Classroom extends Component {
     }
 }
 
-export default Classroom;
+export default withRouter(Classroom);
