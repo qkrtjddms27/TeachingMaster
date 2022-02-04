@@ -8,9 +8,9 @@ class Message extends Component {
     const { text, userName } = this.props;
 
     return (
-      <div>
-        <div>{userName}</div>
-        <p>{text}</p>
+      <div className='chat_line'>
+        <span className='chat_name'>{userName}</span><br/>
+        <span className='chat_content'>{text}</span>
       </div>
     );
   }

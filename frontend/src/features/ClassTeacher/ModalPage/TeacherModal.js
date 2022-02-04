@@ -1,11 +1,22 @@
-import { Modal, ModalOverlay } from '@chakra-ui/react';
+import { Modal, ModalOverlay, Icon, useDisclosure } from '@chakra-ui/react';
+import { useState } from 'react';
 import '../scss/TeacherModal.scss'
 import BookmarkQuiz from './BookmarkQuiz';
 import OxQuiz from './OxQuiz';
 
-const TeacherModal = ({ modalForm, setModalForm, isOpen, onOpen, onClose }) => {
+const TeacherModal = ({ kind, iconAs, title }) => {
+  const { isOpen, onOpen, onClose, onToggle } = useDisclosure()
+  const [modalForm, setModalForm] = useState(null)
+  const modalOpen = (kind) => {
+    setModalForm(kind)
+    onOpen()
+  }
+
   return (
     <>
+      <button className='OnOffButton' title={title}
+        onClick={() => modalOpen(kind)}
+      ><Icon as={iconAs} w={8} h={8} /></button>
       <Modal
         size="full"
         isCentered
@@ -16,8 +27,6 @@ const TeacherModal = ({ modalForm, setModalForm, isOpen, onOpen, onClose }) => {
         <ModalOverlay />
         {modalForm === 'bookmark' && <BookmarkQuiz setModalForm={setModalForm}/>}
         {modalForm === 'ox' && <OxQuiz />}
-        {/* {modalForm === 'OX' && <OX onClose={onClose} ox={ox}/>} */}
-        {/* {modalForm === 'announce' && <Announce onClose={onClose} />} */}
       </Modal>
     </>
   );

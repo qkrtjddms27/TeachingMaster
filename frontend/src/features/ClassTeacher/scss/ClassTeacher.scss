@@ -66,28 +66,27 @@
         height: 81vh;
         width: 25vw;
         margin: 1.5vh 1vw 1vh 1vw;
+        padding: 1rem;
         border-radius: 10px;
         background-color: rgba(98, 207, 78, 0.582);
+        display: flex;
+        flex-direction: column;
+        flex-flow: wrap;
         .chatting_log {
-          height: 60vh;
+          height: 70vh;
           width: 23vw;
-          margin: auto;
-          margin-top: 0.3rem;
           border-radius: 5px;
+          padding-bottom: 1rem;
           background-color: rgb(246, 233, 233);
           .text {
             margin-left: 1rem;
             .chat_line {
-              font-size: 1.25rem;
               margin-top: 0.3rem;
               width: 95%;
               .chat_name {
-                font-weight: 700;
-                font-size: 1.1rem;
+                font-weight: 600;
                 text-align: center;
-                background-color: rgb(142, 231, 219);
-                padding: 0.1rem 0.4rem 0.1rem 0.4rem;
-                border-radius: 15px;
+                padding: 0.1rem 0.4rem;
               }
               .chat_content {
                 display: inline;
@@ -95,14 +94,16 @@
                 margin-left: 0.5rem;
                 background-color: rgb(253, 208, 216);
                 border-radius: 5px;
+                padding: 0.1rem 0.3rem;
               }
             }
           }
         }
         .input_box {
           background-color: whitesmoke;
+          height: 5vh;
           width: 23vw;
-          margin: 1rem 1.2rem 0rem 1rem;
+          margin-top: 1rem;
         }
       }
     }
@@ -130,6 +131,27 @@
           }
         }
       }
+    }
+  }
+}
+#chatting_scroll {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  flex-direction: column;
+  &::-webkit-scrollbar {
+    visibility: hidden;
+    width: 7px;
+  }
+  &:hover {
+    &::-webkit-scrollbar {
+      visibility: visible;
+      width: 7px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #698E34;
+      border-radius: 10px;
+      background-clip: padding-box;
+      border: 1px solid transparent;
     }
   }
 }

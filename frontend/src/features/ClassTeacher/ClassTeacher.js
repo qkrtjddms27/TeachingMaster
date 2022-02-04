@@ -2,9 +2,8 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import React, { Component,createRef } from 'react';
-import { Button, Box, Text,Input, useDisclosure, useToast, Icon } from '@chakra-ui/react';
+import { Button, Box, Input } from '@chakra-ui/react';
 import "./scss/ClassTeacher.scss"
-import StudentScreen from './StudentScreen';
 import TeacherModal from './ModalPage/TeacherModal';
 import { BsMicMute, BsFillMicFill, BsCameraVideoOff, BsFillCameraVideoFill, BsFillStarFill } from "react-icons/bs"
 import { MdExtension, MdOutlineExtensionOff, MdQuiz } from "react-icons/md"
@@ -19,7 +18,7 @@ import Messages from './components/Messages';
 // const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
-
+const user = JSON.parse(localStorage.getItem('user'))
 
 class Classroom extends Component {
   constructor(props) {
@@ -27,8 +26,8 @@ class Classroom extends Component {
 
     this.state = {
       // OV
-      mySessionId: 'test',
-      myUserName: 'Participant' + Math.floor(Math.random() * 100),
+      mySessionId: 'ssafy' + (parseInt(user.roomGrade)*100 + parseInt(user.roomNum)),
+      myUserName: user.userName,
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
@@ -36,8 +35,6 @@ class Classroom extends Component {
       // TM
       messages: [],
       message: '',
-      modalForm: null,
-      isModalOpen: false,
       videostate: false,
       audiostate: false,
       highlighting: false,
@@ -58,9 +55,6 @@ class Classroom extends Component {
     this.sendmessageByEnter = this.sendmessageByEnter.bind(this);
     // TM
     this.handleHistory = this.handleHistory.bind(this)
-    this.changeModalForm = this.changeModalForm.bind(this)
-    this.modalOpen = this.modalOpen.bind(this)
-    this.modalClose = this.modalClose.bind(this)
     this.changeVideostate = this.changeVideostate.bind(this)
     this.changeAudiostate = this.changeAudiostate.bind(this)
     this.changeHighlightingstate = this.changeHighlightingstate.bind(this)
@@ -69,25 +63,6 @@ class Classroom extends Component {
 
 
   // TM
-  changeModalForm(kind) {
-    this.setState({
-      modalForm: kind
-    })
-  }
-
-  modalOpen(kind) {
-    this.changeModalForm(kind)
-    this.setState({
-      isModalOpen: true
-    })
-  }
-
-  modalClose() {
-    this.setState({
-      isModalOpen: false
-    })
-  }
-
   changeVideostate() {
     this.state.publisher.publishVideo(!this.state.videostate);
     this.setState({
@@ -127,6 +102,7 @@ class Classroom extends Component {
   } 
   componentDidMount() {
     window.addEventListener('beforeunload', this.onbeforeunload);
+    this.leaveSession()
   }
 
   componentWillUnmount() {
@@ -290,7 +266,7 @@ class Classroom extends Component {
               let publisher = this.OV.initPublisher(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
-                publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+                publishAudio: false, // Whether you want to start publishing with your audio unmuted or not
                 publishVideo: true, // Whether you want to start publishing with your video enabled or not
                 resolution: '640x480', // The resolution of your video
                 frameRate: 30, // The frame rate of your video
@@ -325,8 +301,8 @@ class Classroom extends Component {
     this.setState({
       session: undefined,
       subscribers: [],
-      mySessionId: 'test',
-      myUserName: 'Participant' + Math.floor(Math.random() * 100),
+      mySessionId: 'ssafy' + (parseInt(user.roomGrade)*100 + parseInt(user.roomNum)),
+      myUserName: user.userName,
       mainStreamManager: undefined,
       publisher: undefined
     });
@@ -339,158 +315,121 @@ class Classroom extends Component {
 
     return (
       <div className="ClassTeacher">
-          {/* 입장 */}
-          {this.state.session === undefined && (
-              <div id="join">
-                  <div id="join-dialog" className="jumbotron vertical-center">
-                      <form className="form-group" onSubmit={this.joinSession}>
-                          <p>
-                              <label>Participant: </label>
-                              <input
-                                  className="form-control"
-                                  type="text"
-                                  id="userName"
-                                  value={myUserName}
-                                  onChange={this.handleChangeUserName}
-                                  required
-                              />
-                          </p>
-                          <p>
-                              <label> Session: </label>
-                              <input
-                                  className="form-control"
-                                  type="text"
-                                  id="sessionId"
-                                  value={mySessionId}
-                                  onChange={this.handleChangeSessionId}
-                                  required
-                              />
-                          </p>
-                          <p className="text-center">
-                              <input className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
-                          </p>
-                      </form>
+        {/* 세션에 참가하기 전 */}
+        {this.state.session === undefined && (
+          <div id="join">
+              <form className="form-group" onSubmit={this.joinSession}>
+                <p>
+                  <label>Participant: </label>
+                  <input
+                    className="form-control"
+                    type="text"
+                    id="userName"
+                    value={myUserName}
+                    onChange={this.handleChangeUserName}
+                    required
+                  />
+                </p>
+                <p>
+                  <label> Session: </label>
+                  <input
+                    className="form-control"
+                    type="text"
+                    id="sessionId"
+                    value={mySessionId}
+                    onChange={this.handleChangeSessionId}
+                    required
+                  />
+                </p>
+                <p className="text-center">
+                  <input className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
+                </p>
+              </form>
+          </div>
+        )}
+
+        {/* 세션에 참가한 후 */}
+        {this.state.session !== undefined && (
+          <Box className='Conference_box'>
+            {/* 상단 */}
+            <div className='top'>
+              {/* 영상 받아오는 상자 */}
+              <div className='student_box'>
+                {this.state.publisher !== undefined && (
+                  <div>
+                    <UserVideoComponent streamManager={this.state.publisher} />
+                    {/* <StudentScreen streamManager={this.state.publisher} /> */}
                   </div>
+                )}
+                {this.state.subscribers.map((sub, i) => (
+                  <div key={i}>
+                    <UserVideoComponent streamManager={sub} /> 
+                    {/* <StudentScreen streamManager={sub} /> */}
+                  </div>
+                ))}
               </div>
-          )}
-
-
-
-{this.state.session !== undefined && (
-<Box className='Conference_box'>
-  <div className='top'>
-    <div className='student_box'>
-      {this.state.publisher !== undefined && (
-          <div>
-            {/* <StudentScreen 
-              streamManager={this.state.publisher} /> */}
-            <UserVideoComponent streamManager={this.state.publisher} />
-          </div>
-      )}
-      {this.state.subscribers.map((sub, i) => (
-        <div key={i}>
-            <UserVideoComponent streamManager={sub} /> 
-            {/* <StudentScreen streamManager={sub} /> */}
-          </div>
-      ))}
-
-    </div>
-    <div className='chatting_box'>
-      
-      <div style={{height:"1rem"}}/>
-      <div className="chat chatbox__support chatbox--active">
-        <div className="chat chatbox__header" />
-        <div className="chatbox__messages" ref="chatoutput">
-          {/* {this.displayElements} */}
-          <Messages messages={this.state.messages} />
-          <div />
-        </div>
-        <div className="chat chatbox__footer">
-          <input
-            id="chat_message"
-            type="text"
-            placeholder="Write a message..."
-            onChange={this.handleChatMessageChange}
-            onKeyPress={this.sendmessageByEnter}
-            value={this.state.message}
-          />
-          <p
-            className="chat chatbox__send--footer"
-            onClick={this.sendmessageByClick}
-          >
-            Send
-          </p>
-        </div>
-      {/* <div className='chatting_log'>
-        <div style={{height:"1rem"}} />
-        <div className='text'>
-          <div className='chat_line'>
-            <span className='chat_name'>현홍</span>
-            <div className='chat_content'>안녕안녕안녕안녕안녕안녕안안녕안안녕안안녕안녕</div><br/>
-          </div>
-          <div className='chat_line'>
-            <span className='chat_name'>혜진</span><span className='chat_content'> 안녕</span><br/>
-          </div>
-      </div>
-      </div> */}
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-  <div className='bottom'>
-    <div className='left_btn_box'>
-      <Button className='exitButton' onClick={() => {this.leaveSession()}}>
-          수업 나가기
-      </Button>
-    </div>
-    <div className='right_btn_box'>
-      <button className='OnOffButton' title='OX 퀴즈'
-        onClick={() => this.modalOpen('ox')}
-      ><Icon as={MdQuiz} w={8} h={8} /></button>
-      <button className='OnOffButton' title='즐겨찾기 퀴즈'
-        onClick={() => this.modalOpen('bookmark')}
-      ><Icon as={BsFillStarFill} w={8} h={8} /></button>
-      <TeacherModal isOpen={this.isModalOpen} onClose={this.modalClose} modalForm={this.state.modalForm} setModalForm={this.changeModalForm} />
-      {this.state.videostate ? (
-        <Toast setState={this.changeVideostate} iconAs={BsFillCameraVideoFill} title={'Video Off'}
-          change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.500'} />
-        ) : (
-          <Toast setState={this.changeVideostate} iconAs={BsCameraVideoOff} title={'Video On'}
-          change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.500'} />
-      )}  
-      {this.state.audiostate ? (
-        <Toast setState={this.changeAudiostate} iconAs={BsFillMicFill} title={'Mic Off'} 
-          message={'마이크를 껐습니다'} color={'white'} bg={'orange.500'} />
-        ) : (
-        <Toast setState={this.changeAudiostate} iconAs={BsMicMute} title={'Mic On'}
-          message={'마이크를 켰습니다'} color={'white'} bg={'blue.200'} />
-      )}
-
-
-      {this.state.highlighting ? (
-          <Toast setState={this.changeHighlightingstate} iconAs={MdExtension} title={'하이라이팅 끄기'}
-          change={false} message={'하이라이팅을 껐습니다'} color={'black'} bg={'red.100'} />
-          ) : (
-          <Toast setState={this.changeHighlightingstate} iconAs={MdOutlineExtensionOff} title={'하이라이팅 켜기'}
-          change={true} message={'하이라이팅을 켰습니다'} color={'black'} bg={'blue.100'} />
-      )}
-
-
-      {this.state.breaktime ? (
-          <Toast setState={this.changeBreaktimestate} iconAs={GiCoffeeCup} title={'수업 시작하기'}
-          change={false} message={'쉬는시간이 끝났습니다'} color={'black'} bg={'orange.100'} />
-          ) : (
-          <Toast setState={this.changeBreaktimestate} iconAs={FaSchool} title={'쉬는시간 갖기'}
-          change={true} message={'쉬는시간 입니다'} color={'black'} bg={'green.100'} />
-      )}
-  </div>
-  </div>
-</Box>)}
+              {/* 채팅 상자 */}
+              <div className='chatting_box'>
+                  <div className="chatting_log" ref="chatoutput" id='chatting_scroll'>
+                    <Messages messages={this.state.messages} />
+                  </div>
+                  <Input
+                    className='input_box'
+                    id="chat_message"
+                    type="text"
+                    placeholder="Write a message..."
+                    onChange={this.handleChatMessageChange}
+                    onKeyPress={this.sendmessageByEnter}
+                    value={this.state.message}
+                  />
+              </div>
+            </div>
+            {/* 하단 */}
+            <div className='bottom'>
+              <div className='left_btn_box'>
+                <Button className='exitButton' onClick={() => {
+                  this.leaveSession()
+                  this.handleHistory('/home')
+                  }}
+                >
+                  수업 나가기
+                </Button>
+              </div>
+              <div className='right_btn_box'>
+                <TeacherModal kind='ox' iconAs={MdQuiz} title='즐겨찾기 퀴즈' />
+                <TeacherModal kind='bookmark' iconAs={BsFillStarFill} title='OX 퀴즈' />
+                {this.state.videostate ? (
+                  <Toast setState={this.changeVideostate} iconAs={BsFillCameraVideoFill} title='Video Off'
+                    change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.500'} />
+                  ) : (
+                  <Toast setState={this.changeVideostate} iconAs={BsCameraVideoOff} title='Video On'
+                    change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.500'} />
+                )}  
+                {this.state.audiostate ? (
+                  <Toast setState={this.changeAudiostate} iconAs={BsFillMicFill} title='Mic Off'
+                    message={'마이크를 껐습니다'} color={'white'} bg={'orange.500'} />
+                  ) : (
+                  <Toast setState={this.changeAudiostate} iconAs={BsMicMute} title='Mic On'
+                    message={'마이크를 켰습니다'} color={'white'} bg={'blue.200'} />
+                )}
+                {this.state.highlighting ? (
+                  <Toast setState={this.changeHighlightingstate} iconAs={MdExtension} title='하이라이팅 끄기'
+                    change={false} message={'하이라이팅을 껐습니다'} color={'black'} bg={'red.100'} />
+                    ) : (
+                  <Toast setState={this.changeHighlightingstate} iconAs={MdOutlineExtensionOff} title='하이라이팅 켜기'
+                    change={true} message={'하이라이팅을 켰습니다'} color={'black'} bg={'blue.100'} />
+                )}
+                {this.state.breaktime ? (
+                  <Toast setState={this.changeBreaktimestate} iconAs={GiCoffeeCup} title='수업 시작하기'
+                    change={false} message={'쉬는시간이 끝났습니다'} color={'black'} bg={'orange.100'} />
+                    ) : (
+                  <Toast setState={this.changeBreaktimestate} iconAs={FaSchool} title='쉬는시간 갖기'
+                    change={true} message={'쉬는시간 입니다'} color={'black'} bg={'green.100'} />
+                )}
+              </div>
+            </div>
+          </Box>
+        )}
       </div>
     );
   }
