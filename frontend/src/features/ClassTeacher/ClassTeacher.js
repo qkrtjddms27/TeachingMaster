@@ -12,6 +12,8 @@ import { GiCoffeeCup } from "react-icons/gi"
 import { FaSchool } from "react-icons/fa"
 import { withRouter } from 'react-router-dom';
 import Toast from './Toast';
+import UserVideoComponent from '../openVidu/UserVideoComponent';
+
 
 // const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
@@ -33,7 +35,7 @@ class Classroom extends Component {
             // TM
             modalForm: null,
             isModalOpen: false,
-            videostate: true,
+            videostate: false,
             audiostate: false,
             highlighting: false,
             breaktime: false,
@@ -59,16 +61,22 @@ class Classroom extends Component {
 
     // TM
     changeModalForm(kind) {
-        this.state.modalForm = kind
+      this.setState({
+        modalForm: kind
+      })
     }
 
     modalOpen(kind) {
-        this.changeModalForm(kind)
-        this.state.isModalOpen = true
+      this.changeModalForm(kind)
+      this.setState({
+        isModalOpen: true
+      })
     }
 
     modalClose() {
-        this.state.isModalOpen = false
+      this.setState({
+        isModalOpen: false
+      })
     }
 
     changeVideostate() {
@@ -152,7 +160,7 @@ class Classroom extends Component {
                 session: this.OV.initSession(),
             },
             () => {
-                console.log('*****OV.init: ', this.OV.initSession())
+                // console.log('*****OV.init: ', this.OV.initSession())
                 console.log('*****state.session: ', this.state.session)
                 var mySession = this.state.session;
                 // --- 3) Specify the actions when events take place in the session ---
@@ -296,14 +304,15 @@ class Classroom extends Component {
           <div className='student_box'>
             {this.state.publisher !== undefined && (
                 <div>
-                  <StudentScreen 
-                    streamManager={this.state.publisher} />
+                  {/* <StudentScreen 
+                    streamManager={this.state.publisher} /> */}
+                  <UserVideoComponent streamManager={this.state.publisher} />
                 </div>
             )}
             {this.state.subscribers.map((sub, i) => (
-                <div key={i}>
-                  <StudentScreen 
-                    streamManager={sub} />
+              <div key={i}>
+                  <UserVideoComponent streamManager={sub} />
+                  {/* <StudentScreen streamManager={sub} /> */}
                 </div>
             ))}
 
