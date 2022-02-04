@@ -7,7 +7,8 @@ import TeacherPage from './TeacherPage';
 import { useEffect, useState } from 'react';
 import MainPage from '../features/mainpage/MainPage';
 import ClassStudent from '../features/ClassStudent/ClassStudent';
-import Classroom from '../features/tt/Classroom'
+import Classroom from '../features/ClassTeacher/Classroom'
+import StudentLogin from '../features/ClassStudent/StudentLogin';
 
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
         <Switch>
           <Route path="/appa" exact render={()=><Classroom setWho={setWho}/>}/>
           <Route path="/" exact render={()=><MainPage setWho={setWho}/>}/>
-          <Route path="/class/student" exact render={(props)=><ClassStudent />}/>
+          <Route path="/class/student" exact render={(props)=><StudentLogin />}/>
+          {/* <Route path="/class/student" exact render={(props)=><ClassStudent />}/> */}
         </Switch>
         {who ==="teacher" &&<TeacherPage setWho={setWho}/>}
       </ChakraProvider>

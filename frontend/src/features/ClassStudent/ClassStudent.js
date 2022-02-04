@@ -1,4 +1,4 @@
-import { Button,Box,Text,Input, useDisclosure, useToast } from '@chakra-ui/react';
+import { Button, Box, Input, useDisclosure, useToast } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import "./scss/ClassStudent.scss"
 import teacher_screen_img from './image/수업화면.png'
@@ -7,7 +7,7 @@ import micOn from './image/말할래요.png'
 import micOff from './image/쉿버튼.png'
 import CamOn from './image/카메라켜기.png'
 import CamOff from './image/카메라끄기.png'
-import StudentModal from './ModalPage/StuendModal';
+import StudentModal from './components/StuendModal';
 
 const ClassStudent = () => {
   const toast = useToast()
@@ -76,7 +76,7 @@ const ClassStudent = () => {
                 </div>
             </div>
             </div>
-              <Input className='input_box'/>
+            <Input className='input_box'/>
           </div>
           <div className='right_down_btn_box' >
             {Cam?<img className='OnOffButton' src={CamOff} alt='버튼' onClick={()=>{setCam(false)
