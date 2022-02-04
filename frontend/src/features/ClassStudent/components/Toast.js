@@ -1,5 +1,5 @@
 import React from 'react';
-import { useToast, Box, Icon } from '@chakra-ui/react';
+import { useToast, Box, Icon,Image } from '@chakra-ui/react';
 
 const Toast = ({ setState, iconAs, message, color, bg, title }) => {
   const toast = useToast()
@@ -13,7 +13,7 @@ const Toast = ({ setState, iconAs, message, color, bg, title }) => {
       })
     }}
   >
-    <Icon as={iconAs} w={8} h={8} />
+    <Image className='OnOffButton' src={iconAs} />
   </button>
   );
 };
