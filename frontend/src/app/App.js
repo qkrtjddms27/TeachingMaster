@@ -6,7 +6,7 @@ import './App.scss'
 import TeacherPage from './TeacherPage';
 import { useEffect, useState } from 'react';
 import MainPage from '../features/mainpage/MainPage';
-import ClassStudent from '../features/ClassStudent/ClassStudent';
+import StudentRoom from '../features/ClassStudent/StudentRoom';
 import Classroom from '../features/ClassTeacher/Classroom'
 import StudentLogin from '../features/ClassStudent/StudentLogin';
 
