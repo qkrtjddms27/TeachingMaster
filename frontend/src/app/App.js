@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import MainPage from '../features/mainpage/MainPage';
 import ClassStudent from '../features/ClassStudent/ClassStudent';
 import Classroom from '../features/ClassTeacher/Classroom'
-
+import StudentRoom from '../features/ClassStudent/StudentRoom';
 
 function App() {
   const [who,setWho] = useState(localStorage.getItem("user")&&"teacher") 
@@ -16,7 +16,7 @@ function App() {
     <div className='App'>
       <ChakraProvider>
         <Switch>
-          <Route path="/appa" exact render={()=><Classroom setWho={setWho}/>}/>
+          <Route path="/appa" exact render={()=><StudentRoom />}/>
           <Route path="/" exact render={()=><MainPage setWho={setWho}/>}/>
           <Route path="/class/student" exact render={(props)=><ClassStudent />}/>
         </Switch>
