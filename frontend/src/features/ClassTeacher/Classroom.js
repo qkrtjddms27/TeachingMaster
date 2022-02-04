@@ -2,13 +2,12 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import React, { Component, useEffect, useState } from 'react';
-import './Classroom.css';
 import UserVideoComponent from '../openVidu/UserVideoComponent';
 import { Button, Box, Text,Input, useDisclosure, useToast, Icon } from '@chakra-ui/react';
 import "./scss/ClassTeacher.scss"
 import teacher_screen_img from './image/수업화면.png'
 import StudentScreen from './StudentScreen';
-import TeacherModal from './ModalPage/TeacherModal';
+import TeacherModal from './components/TeacherModal';
 import { BsMicMute, BsFillMicFill, BsCameraVideoOff, BsFillCameraVideoFill, BsFillStarFill } from "react-icons/bs"
 import { MdExtension, MdOutlineExtensionOff, MdQuiz } from "react-icons/md"
 import { GiCoffeeCup } from "react-icons/gi"
@@ -162,7 +161,7 @@ class Classroom extends Component {
                                 resolution: '640x480', // The resolution of your video
                                 frameRate: 30, // The frame rate of your video
                                 insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
-                                mirror: false, // Whether to mirror your local video or not
+                                mirror: true, // Whether to mirror your local video or not
                             });
 
                             // --- 6) Publish your stream ---
