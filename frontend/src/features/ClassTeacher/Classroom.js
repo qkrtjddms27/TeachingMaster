@@ -13,7 +13,7 @@ import { MdExtension, MdOutlineExtensionOff, MdQuiz } from "react-icons/md"
 import { GiCoffeeCup } from "react-icons/gi"
 import { FaSchool } from "react-icons/fa"
 import { withRouter } from 'react-router-dom';
- 
+
 // const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';

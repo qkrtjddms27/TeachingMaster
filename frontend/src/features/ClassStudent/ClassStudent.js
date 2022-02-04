@@ -7,7 +7,7 @@ import micOn from './image/말할래요.png'
 import micOff from './image/쉿버튼.png'
 import CamOn from './image/카메라켜기.png'
 import CamOff from './image/카메라끄기.png'
-import StudentModal from './components/StuendModal';
+import StudentModal from './components/StudentModal';
 
 const ClassStudent = () => {
   const toast = useToast()

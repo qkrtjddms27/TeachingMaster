@@ -8,7 +8,6 @@
   background-size: cover;
   height: 100vh;
   display: flex;
-  flex-direction: column;
 
   .Conference_box {
     height: 93vh;
@@ -47,29 +46,13 @@
             border: 1px solid transparent;
           }
         }
-        .student_screen {
-          // 16:9 비율 맞추기
-          flex: 0 0 auto;
-          height: 13vh;
-          margin-left: 1rem;
-          margin-right: 1rem;
-          width: 20vh;
-
-          img {
-            width: 100%;
-            height: 100%;
-            margin-top: 1rem;
-            border-radius: 10px;
-            box-shadow: 3px 3px 7px;
-          }
-        }
       }
       .teacher_box {
         height: 61vh;
         margin-top: 2vh;
         margin-left: 2vw;
         border-radius: 3vh;
-        background-color: rgba(202, 202, 202, 0.692);
+        background-color: rgba(202, 202, 202, 0);
         img {
           width: 100%;
           height: 100%;
@@ -102,32 +85,30 @@
   }
   .right {
     .chatting_box {
-      height: 70vh;
+      height: 81vh;
       width: 25vw;
-      margin-top: 1vh;
-      margin-left: 1vw;
+      margin: 1.5vh 1vw 1vh 1vw;
+      padding: 1rem;
       border-radius: 10px;
       background-color: rgba(98, 207, 78, 0.582);
+      display: flex;
+      flex-direction: column;
+      flex-flow: wrap;
       .chatting_log {
-        height: 60vh;
+        height: 70vh;
         width: 23vw;
-        margin: auto;
-        margin-top: 0.3rem;
         border-radius: 5px;
+        padding-bottom: 1rem;
         background-color: rgb(246, 233, 233);
         .text {
           margin-left: 1rem;
           .chat_line {
-            font-size: 1.25rem;
             margin-top: 0.3rem;
             width: 95%;
             .chat_name {
-              font-weight: 700;
-              font-size: 1.1rem;
+              font-weight: 600;
               text-align: center;
-              background-color: rgb(142, 231, 219);
-              padding: 0.1rem 0.4rem 0.1rem 0.4rem;
-              border-radius: 15px;
+              padding: 0.1rem 0.4rem;
             }
             .chat_content {
               display: inline;
@@ -135,14 +116,15 @@
               margin-left: 0.5rem;
               background-color: rgb(253, 208, 216);
               border-radius: 5px;
+              padding: 0.1rem 0.3rem;
             }
           }
         }
       }
       .input_box {
         background-color: whitesmoke;
+        height: 5vh;
         width: 23vw;
-        margin-left: 1.2rem;
         margin-top: 1rem;
       }
     }
@@ -152,31 +134,30 @@
       display: flex;
     }
   }
-  .right_up_btn_box {
+}
+.bottom {
+  .left_btn_box {
     display: flex;
-    justify-content: end;
     .exitButton {
-      margin-top: 0.5rem;
       margin-right: 3vh;
       width: 7rem;
       background-color: #f53d3d;
       color: white;
-      justify-items: center;
     }
   }
-}
-.right_down_btn_box {
-  display: flex;
-  justify-content: space-around;
-  .OnOffButton {
-    margin-top: 1rem;
-    margin-left: 3rem;
-    cursor: pointer;
-    height: 6rem;
-    // margin-left: 1rem;
-    &:hover {
-      transform: scale(1.1);
-      transition: 0.1s;
+  .right_down_btn_box {
+    display: flex;
+    justify-content: space-around;
+    .OnOffButton {
+      margin-top: 1rem;
+      margin-left: 3rem;
+      cursor: pointer;
+      height: 6rem;
+      // margin-left: 1rem;
+      &:hover {
+        transform: scale(1.1);
+        transition: 0.1s;
+      }
     }
   }
 }

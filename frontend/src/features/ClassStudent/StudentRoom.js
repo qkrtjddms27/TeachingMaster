@@ -3,16 +3,20 @@ import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import React, { Component,createRef } from 'react';
 import { Button, Box, Input } from '@chakra-ui/react';
-import "./scss/ClassTeacher.scss"
-import TeacherModal from './components/TeacherModal';
+import "./scss/ClassStudent.scss"
 import { BsMicMute, BsFillMicFill, BsCameraVideoOff, BsFillCameraVideoFill, BsFillStarFill } from "react-icons/bs"
 import { MdExtension, MdOutlineExtensionOff, MdQuiz } from "react-icons/md"
 import { GiCoffeeCup } from "react-icons/gi"
 import { FaSchool } from "react-icons/fa"
 import { withRouter } from 'react-router-dom';
 import Toast from './components/Toast';
-import UserVideoComponent from '../openVidu/UserVideoComponent';
+import UserVideoComponent from './openVidu/UserVideoComponent';
 import Messages from './components/Messages';
+import StudentModal from './components/StudentModal';
+import micOn from './image/말할래요.png'
+import micOff from './image/쉿버튼.png'
+import CamOn from './image/카메라켜기.png'
+import CamOff from './image/카메라끄기.png'
 
 
 // const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
@@ -20,7 +24,7 @@ const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
 const user = JSON.parse(localStorage.getItem('user'))
 
-class Classroom extends Component {
+class StudentRoom extends Component {
   constructor(props) {
     super(props);
 
@@ -314,7 +318,7 @@ class Classroom extends Component {
     const myUserName = this.state.myUserName;
 
     return (
-      <div className="ClassTeacher">
+      <div className="ClassStudent">
         {/* 세션에 참가하기 전 */}
         {this.state.session === undefined && (
           <div id="join">
@@ -352,99 +356,80 @@ class Classroom extends Component {
         {this.state.session !== undefined && (
           <Box className='Conference_box'>
             {/* 상단 */}
-            <div className='top'>
-              {/* 영상 받아오는 상자 */}
-              <div className='student_box'>
-                {this.state.publisher !== undefined && (
-                  <div>
-                    <UserVideoComponent streamManager={this.state.publisher} />
-                    {/* <StudentScreen streamManager={this.state.publisher} /> */}
-                  </div>
-                )}
-                {this.state.subscribers.map((sub, i) => (
-                  <div key={i}>
-                    <UserVideoComponent streamManager={sub} /> 
-                    {/* <StudentScreen streamManager={sub} /> */}
-                  </div>
-                ))}
-              </div>
-              {/* 채팅 상자 */}
-              <div className='chatting_box'>
-                  <div className="chatting_log" ref="chatoutput" id='chatting_scroll'>
-                    <Messages messages={this.state.messages} />
-                  </div>
-                  <Input
-                    className='input_box'
-                    id="chat_message"
-                    type="text"
-                    placeholder="Write a message..."
-                    onChange={this.handleChatMessageChange}
-                    onKeyPress={this.sendmessageByEnter}
-                    value={this.state.message}
-                  />
-              </div>
-            </div>
-            {/* 하단 */}
-            <div className='bottom'>
-              <div className='left_btn_box'>
-                <Button className='exitButton' onClick={() => {
-                  this.leaveSession()
-                  this.handleHistory('/home')
-                  }}
-                >
-                  수업 나가기
-                </Button>
-              </div>
-              <div className='right_btn_box'>
-                <TeacherModal kind='ox' iconAs={MdQuiz} title='즐겨찾기 퀴즈' />
-                <TeacherModal kind='bookmark' iconAs={BsFillStarFill} title='OX 퀴즈' />
-                {this.state.videostate ? (
-                  <Toast setState={this.changeVideostate} iconAs={BsFillCameraVideoFill} title='Video Off'
-                    change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.500'} />
-                  ) : (
-                  <Toast setState={this.changeVideostate} iconAs={BsCameraVideoOff} title='Video On'
-                    change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.500'} />
-                )}  
-                {this.state.audiostate ? (
-                  <Toast setState={this.changeAudiostate} iconAs={BsFillMicFill} title='Mic Off'
-                    message={'마이크를 껐습니다'} color={'white'} bg={'orange.500'} />
-                  ) : (
-                  <Toast setState={this.changeAudiostate} iconAs={BsMicMute} title='Mic On'
-                    message={'마이크를 켰습니다'} color={'white'} bg={'blue.200'} />
-                )}
-                {this.state.highlighting ? (
-                  <Toast setState={this.changeHighlightingstate} iconAs={MdExtension} title='하이라이팅 끄기'
-                    change={false} message={'하이라이팅을 껐습니다'} color={'black'} bg={'red.100'} />
+              <div className='left'>
+                {/* 영상 받아오는 상자 */}
+                <div className='student_box'>
+                  {this.state.subscribers.map((sub, i) => (
+                    <div key={i}>
+                      <UserVideoComponent who="student" streamManager={sub} /> 
+                      {/* <StudentScreen streamManager={sub} /> */}
+                    </div>
+                  ))}
+                </div>
+                <div className='teacher_box'>
+                  {this.state.publisher !== undefined && (
+                    <div>
+                      <UserVideoComponent who="teacher" streamManager={this.state.publisher} />
+                    </div>
+                  )}
+                </div>
+                <div className='left_btn_box'>
+                  <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={MdQuiz} title='발표하자' />
+                  <StudentModal kind='quiz' iconAs={BsFillStarFill} title='퀴즈' />
+                  <StudentModal kind='sticker' iconAs={BsFillStarFill} title='스티커' />
+                  {this.state.videostate ? (
+                    <Toast setState={this.changeVideostate} iconAs={CamOff} title='Video Off'
+                      change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.500'} />
                     ) : (
-                  <Toast setState={this.changeHighlightingstate} iconAs={MdOutlineExtensionOff} title='하이라이팅 켜기'
-                    change={true} message={'하이라이팅을 켰습니다'} color={'black'} bg={'blue.100'} />
-                )}
-                {this.state.breaktime ? (
-                  <Toast setState={this.changeBreaktimestate} iconAs={GiCoffeeCup} title='수업 시작하기'
-                    change={false} message={'쉬는시간이 끝났습니다'} color={'black'} bg={'orange.100'} />
+                    <Toast setState={this.changeVideostate} iconAs={CamOn} title='Video On'
+                      change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.500'} />
+                  )}  
+                  {this.state.audiostate ? (
+                    <Toast setState={this.changeAudiostate} iconAs={micOff} title='Mic Off'
+                      message={'마이크를 껐습니다'} color={'white'} bg={'orange.500'} />
                     ) : (
-                  <Toast setState={this.changeBreaktimestate} iconAs={FaSchool} title='쉬는시간 갖기'
-                    change={true} message={'쉬는시간 입니다'} color={'black'} bg={'green.100'} />
-                )}
+                    <Toast setState={this.changeAudiostate} iconAs={micOn} title='Mic On'
+                      message={'마이크를 켰습니다'} color={'white'} bg={'blue.200'} />
+                  )}
+                  {this.state.audiostate ? <div className='warning'>마이크가 켜져있어요</div>:<div  className='warning' />}
+                </div>
+                {/* 채팅 상자 */}
               </div>
-            </div>
+                <div className='right'>
+                  <div className='chatting_box'>
+                      <div className="chatting_log" ref="chatoutput" id='chatting_scroll'>
+                        <Messages messages={this.state.messages} />
+                      </div>
+                      <Input
+                        className='input_box'
+                        id="chat_message"
+                        type="text"
+                        placeholder="채팅"
+                        onChange={this.handleChatMessageChange}
+                        onKeyPress={this.sendmessageByEnter}
+                        value={this.state.message}
+                      />
+                  </div>
+                </div>
+              {/* 하단 */}
+              <div className='bottom'>
+                <div className='right_btn_box'>
+                  <Button className='exitButton' onClick={() => {
+                    this.leaveSession()
+                    this.handleHistory('/home')
+                    }}
+                  >
+                    수업 나가기
+                  </Button>
+                </div>
+
+                
+              </div>
           </Box>
         )}
       </div>
     );
   }
-
-  /**
-   * --------------------------
-   * SERVER-SIDE RESPONSIBILITY
-   * --------------------------
-   * These methods retrieve the mandatory user token from OpenVidu Server.
-   * This behavior MUST BE IN YOUR SERVER-SIDE IN PRODUCTION (by using
-   * the API REST, openvidu-java-client or openvidu-node-client):
-   *   1) Initialize a Session in OpenVidu Server	(POST /openvidu/api/sessions)
-   *   2) Create a Connection in OpenVidu Server (POST /openvidu/api/sessions/<SESSION_ID>/connection)
-   *   3) The Connection.token must be consumed in Session.connect() method
-   */
 
   getToken() {
     return this.createSession(this.state.mySessionId).then((sessionId) => this.createToken(sessionId));
@@ -512,4 +497,4 @@ class Classroom extends Component {
   }
 }
 
-export default withRouter(Classroom);
+export default withRouter(StudentRoom);
