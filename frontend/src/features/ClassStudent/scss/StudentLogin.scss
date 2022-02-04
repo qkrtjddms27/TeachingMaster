@@ -1,0 +1,80 @@
+@keyframes pengSpinner {
+  from {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.07) rotate(5deg);
+  }
+  to {
+    transform: rotate(-5deg);
+  }
+}
+
+.student_login {
+  background-image: linear-gradient(
+      rgba(173, 173, 173, 0),
+      rgb(173, 173, 173, 0.3)
+    ),
+    url('../image/sky4.gif');
+  // background-repeat: no-repeat;
+  background-repeat: repeat;
+  // background-size: cover;
+  background-size: 60%;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-flow: wrap;
+  .box {
+    height: 80vh;
+    width: 80vw;
+    background-color: rgba(245, 245, 245, 0.712);
+    margin: auto;
+    border-radius: 2.5rem;
+    box-shadow: 3px 3px 7px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    .left{
+      width: 34vw;
+      // margin: auto 0;
+      .penguin {
+        animation: pengSpinner 1.5s;
+        animation-iteration-count: infinite;
+      }
+    }
+    .right{
+      width: 34vw;
+      height: 30vh;
+      margin-right: 3rem;
+      background-color: #9EE2FD;
+      border-radius: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      // flex-flow: wrap;
+      justify-content: space-evenly;
+      .id {
+        margin: 0 2rem;
+        input {
+        background-color: whitesmoke;
+        }
+      }
+      .grade_room {
+        margin: 0 2rem;
+        display: flex;
+        flex-flow: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        select {
+          background-color: whitesmoke;
+          width: 10vw;
+        }
+      }
+    }
+  }
+}
+#student_grade {
+  margin: 0;
+}
+#student_group {
+  margin: 0;
+}
