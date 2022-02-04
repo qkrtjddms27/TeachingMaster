@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
-import React, { Component } from 'react';
+import React, { Component,createRef } from 'react';
 import { Button, Box, Text,Input, useDisclosure, useToast, Icon } from '@chakra-ui/react';
 import "./scss/ClassTeacher.scss"
 import StudentScreen from './StudentScreen';
@@ -13,6 +13,7 @@ import { FaSchool } from "react-icons/fa"
 import { withRouter } from 'react-router-dom';
 import Toast from './Toast';
 import UserVideoComponent from '../openVidu/UserVideoComponent';
+import Messages from './components/Messages';
 
 
 // const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
@@ -33,6 +34,9 @@ class Classroom extends Component {
             publisher: undefined,
             subscribers: [],
             // TM
+            messages: [],
+            chaton: false,
+            message: '',
             modalForm: null,
             isModalOpen: false,
             videostate: false,
@@ -48,6 +52,12 @@ class Classroom extends Component {
         this.handleChangeUserName = this.handleChangeUserName.bind(this);
         this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
         this.onbeforeunload = this.onbeforeunload.bind(this);
+        // 채팅
+        this.chattoggle = this.chattoggle.bind(this);
+        this.handleChatMessageChange = this.handleChatMessageChange.bind(this);
+        this.messageContainer = createRef(null);
+        this.sendmessageByClick = this.sendmessageByClick.bind(this);
+        this.sendmessageByEnter = this.sendmessageByEnter.bind(this);
         // TM
         this.handleHistory = this.handleHistory.bind(this)
         this.changeModalForm = this.changeModalForm.bind(this)
@@ -80,12 +90,14 @@ class Classroom extends Component {
     }
 
     changeVideostate() {
+        this.state.publisher.publishVideo(!this.state.videostate);
         this.setState({
             videostate: !this.state.videostate
         })
     }
 
     changeAudiostate() {
+        this.state.publisher.publishAudio(!this.state.audiostate);
         this.setState({
             audiostate: !this.state.audiostate
         })
@@ -105,6 +117,11 @@ class Classroom extends Component {
 
 
     // OV
+    componentDidUpdate(previousProps, previousState) {
+        if (this.refs.chatoutput != null) {
+        this.refs.chatoutput.scrollTop = this.refs.chatoutput.scrollHeight;
+        }
+    } 
     componentDidMount() {
         window.addEventListener('beforeunload', this.onbeforeunload);
     }
@@ -121,6 +138,59 @@ class Classroom extends Component {
         this.setState({
             mySessionId: e.target.value,
         });
+    }
+    handleChatMessageChange(e) {
+      this.setState({
+        message: e.target.value,
+      });
+    }
+    sendmessageByClick() {
+      this.setState({
+        messages: [
+          ...this.state.messages,
+          {
+            userName: this.state.myUserName,
+            text: this.state.message,
+            chatClass: 'messages__item--operator',
+          },
+        ],
+      });
+      const mySession = this.state.session;
+  
+      mySession.signal({
+        data: `${this.state.myUserName},${this.state.message}`,
+        to: [],
+        type: 'chat',
+      });
+  
+      this.setState({
+        message: '',
+      });
+    }
+    sendmessageByEnter(e) {
+      if (e.key === 'Enter') {
+        this.setState({
+          messages: [
+            ...this.state.messages,
+            {
+              userName: this.state.myUserName,
+              text: this.state.message,
+              chatClass: 'messages__item--operator',
+            },
+          ],
+        });
+        const mySession = this.state.session;
+  
+        mySession.signal({
+          data: `${this.state.myUserName},${this.state.message}`,
+          to: [],
+          type: 'chat',
+        });
+  
+        this.setState({
+          message: '',
+        });
+      }
     }
 
     handleChangeUserName(e) {
@@ -186,16 +256,27 @@ class Classroom extends Component {
                 mySession.on('exception', (exception) => {
                     console.warn(exception);
                 });
-                // --- 4) Connect to the session with a valid user token ---
-                // 'getToken' method is simulating what your server-side should do.
-                // 'token' parameter should be retrieved and returned by your own backend
+                mySession.on('signal:chat', (event) => {
+                  let chatdata = event.data.split(',');
+                  if (chatdata[0] !== this.state.myUserName) {
+                    this.setState({
+                      messages: [
+                        ...this.state.messages,
+                        {
+                          userName: chatdata[0],
+                          text: chatdata[1],
+                          chatClass: 'messages__item--visitor',
+                        },
+                      ],
+                    });
+                  }
+                });
+                
                 this.getToken().then((token) => {
-                    // First param is the token got from OpenVidu Server. Second param can be retrieved by every user on event
-                    // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
                     mySession
                         .connect(
                             token,
-                            { clientData: this.state.myUserName },
+                            { clientData: this.state.myUserName, master:"teacher"},
                         )
                         .then(() => {
                             // --- 5) Get your own camera stream ---
@@ -209,7 +290,7 @@ class Classroom extends Component {
                                 resolution: '640x480', // The resolution of your video
                                 frameRate: 30, // The frame rate of your video
                                 insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
-                                mirror: false, // Whether to mirror your local video or not
+                                mirror: true, // Whether to mirror your local video or not
                             });
                             // --- 6) Publish your stream ---
                             mySession.publish(publisher);
@@ -245,14 +326,16 @@ class Classroom extends Component {
         });
     }
 
-
+    
+    chattoggle() {
+      this.setState({ chaton: !this.state.chaton });
+    }
 
     handleHistory(path) {
         this.props.history.push(path)
     }
 
     render() {
-
         const mySessionId = this.state.mySessionId;
         const myUserName = this.state.myUserName;
 
@@ -311,15 +394,39 @@ class Classroom extends Component {
             )}
             {this.state.subscribers.map((sub, i) => (
               <div key={i}>
-                  <UserVideoComponent streamManager={sub} />
+                  <UserVideoComponent streamManager={sub} /> 
                   {/* <StudentScreen streamManager={sub} /> */}
                 </div>
             ))}
 
           </div>
           <div className='chatting_box'>
+            
             <div style={{height:"1rem"}}/>
-            <div className='chatting_log'>
+            <div className="chat chatbox__support chatbox--active">
+              <div className="chat chatbox__header" />
+              <div className="chatbox__messages" ref="chatoutput">
+                {/* {this.displayElements} */}
+                <Messages messages={this.state.messages} />
+                <div />
+              </div>
+              <div className="chat chatbox__footer">
+                <input
+                  id="chat_message"
+                  type="text"
+                  placeholder="Write a message..."
+                  onChange={this.handleChatMessageChange}
+                  onKeyPress={this.sendmessageByEnter}
+                  value={this.state.message}
+                />
+                <p
+                  className="chat chatbox__send--footer"
+                  onClick={this.sendmessageByClick}
+                >
+                  Send
+                </p>
+              </div>
+            {/* <div className='chatting_log'>
               <div style={{height:"1rem"}} />
               <div className='text'>
                 <div className='chat_line'>
@@ -330,10 +437,10 @@ class Classroom extends Component {
                   <span className='chat_name'>혜진</span><span className='chat_content'> 안녕</span><br/>
                 </div>
             </div>
-            </div>
-              <Input className='input_box'/>
+            </div> */}
           </div>
         </div>
+      </div>
 
 
 
@@ -362,11 +469,11 @@ class Classroom extends Component {
                 change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.500'} />
             )}  
             {this.state.audiostate ? (
-              <Toast setState={this.changeAudiostate} iconAs={BsFillMicFill} title={'Mic Off'}
-              change={false} message={'마이크를 껐습니다'} color={'white'} bg={'orange.500'} />
+              <Toast setState={this.changeAudiostate} iconAs={BsFillMicFill} title={'Mic Off'} 
+               message={'마이크를 껐습니다'} color={'white'} bg={'orange.500'} />
               ) : (
               <Toast setState={this.changeAudiostate} iconAs={BsMicMute} title={'Mic On'}
-              change={true} message={'마이크를 켰습니다'} color={'white'} bg={'blue.200'} />
+               message={'마이크를 켰습니다'} color={'white'} bg={'blue.200'} />
             )}
 
 
