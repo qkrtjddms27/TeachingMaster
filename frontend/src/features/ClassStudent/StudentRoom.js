@@ -353,6 +353,7 @@ class StudentRoom extends Component {
                     value={myUserName}
                     onChange={this.handleChangeUserName}
                     required
+                    disabled
                   />
                 </div>
                 <br/>
@@ -365,6 +366,8 @@ class StudentRoom extends Component {
                     value={mySessionId}
                     onChange={this.handleChangeSessionId}
                     required
+                    disabled
+
                   />
                 </div>
                 <div className="btn_box">           
@@ -435,7 +438,7 @@ class StudentRoom extends Component {
                 <div className='right'>
                   <Button className='exitButton' onClick={() => {
                     this.leaveSession()
-                    this.handleHistory('/home')
+                    this.handleHistory('/')
                     }}
                   >수업 떠나기</Button>
                 {/* 채팅 상자 */}

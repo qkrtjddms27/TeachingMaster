@@ -3,12 +3,52 @@
       rgba(173, 173, 173, 0.5),
       rgba(173, 173, 173, 0.5)
     ),
-    url("../image/grass.jpg");
+    // url("../image/.jpg");
+    url("../image/식물배경.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  .login_box {
+    background-color: rgba(248, 244, 236, 0.712);
+    width: 40%;
+    height: 70%;
+    margin: auto;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+
+    .form-group {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      margin-top: 6rem;
+      .teacher_img {
+        height: 15rem;
+        width: 15rem;
+        margin-bottom: 2rem;
+        border-radius: 100%;
+      }
+      .label-control {
+        font-size: 2rem;
+      }
+      .form-control {
+        color: rgb(27, 27, 144);
+        font-weight: 700;
+        display: inline-block;
+        border: none;
+        width: 10rem;
+        background-color: rgba(255, 255, 255, 0);
+        font-size: 2rem;
+      }
+      .submit_button {
+        margin-top: 2rem;
+      }
+    }
+  }
+
   .Conference_box {
     box-shadow: 3px 3px 7p;
     height: 93vh;
@@ -148,7 +188,7 @@
       width: 7px;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: #698E34;
+      background-color: #698e34;
       border-radius: 10px;
       background-clip: padding-box;
       border: 1px solid transparent;

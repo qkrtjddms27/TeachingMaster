@@ -5,10 +5,10 @@ import './App.scss'
 import Home from '../features/teacher/Home';
 import { useState,useEffect } from 'react';
 import Login from '../features/user/Login';
-import ClassTeacher from '../features/ClassTeacher/ClassTeacher';
+import ClassTeacher from '../features/ClassTeacher/TeacherRoom';
 import Settings from '../features/teacher/Settings';
 
-const TeacherPage = () => {
+const TeacherApp = () => {
   const [isLogin,setisLogin] =useState(localStorage.getItem("user")===null ? false: true )
   const [user,setUser] = useState({"userName":"하이","userProfile":"none"})
   const [onAir,setOnAir] = useState(false)
@@ -31,4 +31,4 @@ const TeacherPage = () => {
   )
 };
 
-export default TeacherPage;
+export default TeacherApp;
