@@ -3,8 +3,10 @@ import './scss/StudentLogin.scss'
 import penguin from './image/펭귄.png'
 import { roomData } from '../../components/TOKEN';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const StudentLogin = () => {
+  const history = useHistory()
   const [studentId, setStudentId] = useState('')
   const [grade, setGrade] = useState('')
   const [group, setGroup] = useState('')
@@ -13,6 +15,9 @@ const StudentLogin = () => {
   const enterStudentClass = () => {
     console.log('studentId:', studentId)
     console.log('학년:', grade, '반: ', group)
+    // axios 요청으로 studentId(학번)를 보내 학생정보 받아오기
+    // .then 그 정보를 student 데이터로 local에 저장? 
+    history.push('/appa')
   }
 
   return (
@@ -23,7 +28,7 @@ const StudentLogin = () => {
         </div>
         <div className='right'>
           <div className='id'>
-            <FormLabel htmlFor='student_id'>아이디</FormLabel>
+            <FormLabel htmlFor='student_id'>학번</FormLabel>
             <Input id='student_id' value={studentId} onChange={(e) => {setStudentId(e.target.value)}} />
           </div>
           <div className='grade_room'>

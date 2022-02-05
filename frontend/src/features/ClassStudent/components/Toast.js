@@ -13,7 +13,7 @@ const Toast = ({ setState, iconAs, message, color, bg, title }) => {
       })
     }}
   >
-    <Image className='OnOffButton' src={iconAs} />
+    <Image boxSize='100%' className='OnOffButtonimg' src={iconAs} />
   </button>
   );
 };
