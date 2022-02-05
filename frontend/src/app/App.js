@@ -3,13 +3,12 @@ import {Route,Switch} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import './App.scss'
-import TeacherPage from './TeacherPage';
+import TeacherApp from './TeacherApp';
 import { useEffect, useState } from 'react';
 import MainPage from '../features/mainpage/MainPage';
 import StudentRoom from '../features/ClassStudent/StudentRoom';
-import Classroom from '../features/ClassTeacher/Classroom'
 import StudentLogin from '../features/ClassStudent/StudentLogin';
-import ClassTeacher from '../features/ClassTeacher/ClassTeacher';
+import ClassTeacher from '../features/ClassTeacher/TeacherRoom';
 
 
 function App() {
@@ -25,7 +24,7 @@ function App() {
 
           {/* <Route path="/class/student" exact render={(props)=><ClassStudent />}/> */}
         </Switch>
-        {who ==="teacher" &&<TeacherPage setWho={setWho}/>}
+        {who ==="teacher" &&<TeacherApp setWho={setWho}/>}
       </ChakraProvider>
     </div>
   );

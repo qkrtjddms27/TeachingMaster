@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import child_img from './image/아이.png'
 import {Box,Popover,PopoverTrigger,PopoverContent,PopoverBody,PopoverArrow,
   PopoverCloseButton,Heading,Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,
 } from '@chakra-ui/react'

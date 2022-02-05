@@ -21,10 +21,9 @@
   .sticker-left {
     .big-dino {
       width: 120rem;
-      &:hover {
-        animation: mySpinner 1.5s;
-        animation-iteration-count: infinite;
-      }
+
+      animation: mySpinner 3s;
+      animation-iteration-count: infinite;
     }
   }
   .sticker-right {
@@ -47,24 +46,26 @@
   .mini-dino {
     width: 4.5rem;
     height: 4.5rem;
+    animation: mySpinner2 2s;
+    animation-iteration-count: infinite;
     @keyframes mySpinner2 {
       from {
-        transform: scale(1.1) rotate(-10deg);
+        transform: rotate(-5deg);
       }
       50% {
-        transform: scale(1.15) rotate(10deg);
+        transform: rotate(5deg);
       }
       to {
-        transform: scale(1.1) rotate(-10deg);
+        transform: rotate(-5deg);
       }
     }
+
     &:hover {
-      animation: mySpinner2 1.5s;
-      animation-iteration-count: infinite;
+      animation: none;
+      transform: scale(1.2);
     }
   }
 }
-
 
 .quiz-body {
   display: flex;

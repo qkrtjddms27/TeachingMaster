@@ -11,8 +11,9 @@ import { GiCoffeeCup } from "react-icons/gi"
 import { FaSchool } from "react-icons/fa"
 import { withRouter } from 'react-router-dom';
 import Toast from './components/Toast';
-import UserVideoComponent from '../openVidu/UserVideoComponent';
+import UserVideoComponent from './openVidu/UserVideoComponent';
 import Messages from './components/Messages';
+import StudentScreen from './components/StudentScreen'
 
 
 // const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
@@ -34,7 +35,7 @@ class Classroom extends Component {
       // TM
       messages: [],
       message: '',
-      videostate: false,
+      videostate: true,
       audiostate: false,
       highlighting: false,
       breaktime: false,
@@ -316,10 +317,11 @@ class Classroom extends Component {
       <div className="ClassTeacher">
         {/* 세션에 참가하기 전 */}
         {this.state.session === undefined && (
-          <div id="<join>">
+          <div className="login_box"> 
               <form className="form-group" onSubmit={this.joinSession}>
-                <p>
-                  <label>Participant: </label>
+                <img className="teacher_img" src={user.userProfile} alt="선생님사진"/>
+              <div>
+              <span className="label-control">선생님 : </span>
                   <input
                     className="form-control"
                     type="text"
@@ -327,10 +329,12 @@ class Classroom extends Component {
                     value={myUserName}
                     onChange={this.handleChangeUserName}
                     required
-                  />
-                </p>
-                <p>
-                  <label> Session: </label>
+                    disabled
+                  /> 
+                </div>
+                <br/>
+                <div>
+                  <span className="label-control"> 교실번호 : </span>
                   <input
                     className="form-control"
                     type="text"
@@ -338,11 +342,12 @@ class Classroom extends Component {
                     value={mySessionId}
                     onChange={this.handleChangeSessionId}
                     required
+                    disabled
                   />
-                </p>
-                <p className="text-center">
-                  <input className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
-                </p>
+                </div>
+                <div className="btn_box">           
+                    <Button size="lg" colorScheme='linkedin' className="submit_button" type="submit" >입장하기</Button>
+                </div>
               </form>
           </div>
         )}
@@ -356,14 +361,14 @@ class Classroom extends Component {
               <div className='student_box'>
                 {this.state.publisher !== undefined && (
                   <div>
-                    <UserVideoComponent streamManager={this.state.publisher} />
-                    {/* <StudentScreen streamManager={this.state.publisher} /> */}
+                    {/* <UserVideoComponent streamManager={this.state.publisher} /> */}
+                    <StudentScreen streamManager={this.state.publisher} />
                   </div>
                 )}
                 {this.state.subscribers.map((sub, i) => (
                   <div key={i}>
-                    <UserVideoComponent streamManager={sub} /> 
-                    {/* <StudentScreen streamManager={sub} /> */}
+                    {/* <UserVideoComponent streamManager={sub} />  */}
+                    <StudentScreen streamManager={sub} />
                   </div>
                 ))}
               </div>
