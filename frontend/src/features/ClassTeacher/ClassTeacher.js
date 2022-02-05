@@ -23,7 +23,6 @@ const user = JSON.parse(localStorage.getItem('user'))
 class Classroom extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       // OV
       mySessionId: 'ssafy' + (parseInt(user.roomGrade)*100 + parseInt(user.roomNum)),
@@ -317,7 +316,7 @@ class Classroom extends Component {
       <div className="ClassTeacher">
         {/* 세션에 참가하기 전 */}
         {this.state.session === undefined && (
-          <div id="join">
+          <div id="<join>">
               <form className="form-group" onSubmit={this.joinSession}>
                 <p>
                   <label>Participant: </label>
