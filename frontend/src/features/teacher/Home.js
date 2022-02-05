@@ -35,9 +35,7 @@ const Home = ({user,setUser,setOnAir}) => {
   
   const [classTitle,setClassTitle] = useState("🎈 행복이 가득한")
   const [class_open,setClass_open] =useState(true)
-  const openClass = ()=>{
-    setClass_open(!class_open)
-  }
+
   return (
     <div>
       <div className='class-box'>
@@ -48,23 +46,24 @@ const Home = ({user,setUser,setOnAir}) => {
             {/* 선생님 페이지 */}
             <Heading className='classTitle'>{classTitle}</Heading>
             <Heading className='grade-class'>{user.roomGrade}학년 {user.roomNum}반</Heading>
-            <div className='teacher'>
+            <div className='teacherpage'>
               <div className='image-box'>
                 <img className='image' alt='선생님사진'
                 src={user.userProfile} />
               </div>
-              <Heading className='name' >{user.userName} 선생님</Heading> 
+                <Heading className='name' >{user.userName} 선생님</Heading> 
+                {class_open?
+              <div className='when-open'>
+                <Box className='class-enter' onClick={()=>{setOnAir(true)
+                  history.push('/class/teacher')
+                }} >교실 입장</Box>
+                <Box className='class-close' onClick={()=>setClass_open(!class_open)} >교실 닫기</Box>
+              </div>:
+              <div className='when-close'>
+                <Box className='class-open' onClick={()=>setClass_open(!class_open)}>교실 열기</Box>
+              </div>}
             </div>
-            {class_open?
-            <div className='when-open'>
-              <Box className='class-enter' onClick={()=>{setOnAir(true)
-                history.push('/class/teacher')
-              }} >교실 입장</Box>
-              <Box className='class-close' onClick={openClass} >교실 닫기</Box>
-            </div>:
-            <div className='when-close'>
-              <Box className='class-open' onClick={openClass}>교실 열기</Box>
-            </div>}
+            
           </Box>
         <div data-aos="fade-up"
             data-aos-duration="1000"

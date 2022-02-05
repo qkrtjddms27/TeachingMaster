@@ -2,12 +2,8 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import React, { Component,createRef } from 'react';
-import { Button, Box, Input } from '@chakra-ui/react';
+import { Button, Box, Input,Image } from '@chakra-ui/react';
 import "./scss/ClassStudent.scss"
-import { BsMicMute, BsFillMicFill, BsCameraVideoOff, BsFillCameraVideoFill, BsFillStarFill } from "react-icons/bs"
-import { MdExtension, MdOutlineExtensionOff, MdQuiz } from "react-icons/md"
-import { GiCoffeeCup } from "react-icons/gi"
-import { FaSchool } from "react-icons/fa"
 import { withRouter } from 'react-router-dom';
 import Toast from './components/Toast';
 import UserVideoComponent from './openVidu/UserVideoComponent';
@@ -17,21 +13,38 @@ import micOn from './image/말할래요.png'
 import micOff from './image/쉿버튼.png'
 import CamOn from './image/카메라켜기.png'
 import CamOff from './image/카메라끄기.png'
+import quizDino from './image/퀴즈공룡.png'
+import OO from './image/O.png'
+import penguin from './image/펭귄.png'
 
+import XX from './image/X.png'
 
 // const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
-const user = JSON.parse(localStorage.getItem('user'))
+// const student = JSON.parse(localStorage.getItem('student'))
+const student = {
+  "address": "부산광역시 북구 구포3동 9987-42번지",
+  "parentsName": "진진자라",
+  "parentsPhone": "01066512222",
+  "relation": "부",
+  "roomGrade": 1,
+  "roomNum": 5,
+  "studentEmail": "pseseseps@naver.com",
+  "studentId": "A12312B",
+  "studentName": "진현은",
+  "studentPhone": "01066511111",
+  "studentProfile": "asdkgn123kasdnkgn2knagikegadg"
+}
 
 class StudentRoom extends Component {
   constructor(props) {
     super(props);
-
+  
     this.state = {
       // OV
-      mySessionId: 'ssafy' + (parseInt(user.roomGrade)*100 + parseInt(user.roomNum)),
-      myUserName: user.userName,
+      mySessionId: 'ssafy' + (parseInt(student.roomGrade)*100 + parseInt(student.roomNum)),
+      myUserName: student.studentName,
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
@@ -39,7 +52,7 @@ class StudentRoom extends Component {
       // TM
       messages: [],
       message: '',
-      videostate: false,
+      videostate: true,
       audiostate: false,
       highlighting: false,
       breaktime: false,
@@ -207,7 +220,7 @@ class StudentRoom extends Component {
   joinSession() {
     // --- 1) Get an OpenVidu object ---
     this.OV = new OpenVidu();
-
+    console.log("join!")
     // --- 2) Init a session ---
     this.setState(
       {
@@ -305,8 +318,8 @@ class StudentRoom extends Component {
     this.setState({
       session: undefined,
       subscribers: [],
-      mySessionId: 'ssafy' + (parseInt(user.roomGrade)*100 + parseInt(user.roomNum)),
-      myUserName: user.userName,
+      mySessionId: 'ssafy' + (parseInt(student.roomGrade)*100 + parseInt(student.roomNum)),
+      myUserName: student.studentName,
       mainStreamManager: undefined,
       publisher: undefined
     });
@@ -321,10 +334,18 @@ class StudentRoom extends Component {
       <div className="ClassStudent">
         {/* 세션에 참가하기 전 */}
         {this.state.session === undefined && (
-          <div id="join">
-              <form className="form-group" onSubmit={this.joinSession}>
-                <p>
-                  <label>Participant: </label>
+          <div className="join">
+          <div className='student_login'>
+          <div className='box'>
+            <div className='left'>
+              <Image className='penguin' src={penguin} />
+            </div>
+            <div className='right'> 
+              <div className='grade_room'>
+                
+                <form className="form-group" onSubmit={this.joinSession}>
+                <div>
+                  <label className="label-control">이름 </label>
                   <input
                     className="form-control"
                     type="text"
@@ -333,9 +354,10 @@ class StudentRoom extends Component {
                     onChange={this.handleChangeUserName}
                     required
                   />
-                </p>
-                <p>
-                  <label> Session: </label>
+                </div>
+                <br/>
+                <div>
+                  <label className="label-control"> 교실번호 </label>
                   <input
                     className="form-control"
                     type="text"
@@ -344,58 +366,79 @@ class StudentRoom extends Component {
                     onChange={this.handleChangeSessionId}
                     required
                   />
-                </p>
-                <p className="text-center">
-                  <input className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
-                </p>
+                </div>
+                <div className="btn_box">           
+                    <Button colorScheme='linkedin' className="submit_button" type="submit" >들어가기</Button>
+                </div>
               </form>
+                
+                
+              </div>
+            </div>
           </div>
+        </div>  
+        </div>
+          
+              
+         
         )}
 
         {/* 세션에 참가한 후 */}
         {this.state.session !== undefined && (
           <Box className='Conference_box'>
-            {/* 상단 */}
               <div className='left'>
-                {/* 영상 받아오는 상자 */}
-                <div className='student_box'>
-                  {this.state.subscribers.map((sub, i) => (
-                    <div key={i}>
-                      <UserVideoComponent who="student" streamManager={sub} /> 
-                      {/* <StudentScreen streamManager={sub} /> */}
+                {/* 상단 학생 페이지  */}
+                  <div className='student_box'>
+                    {this.state.subscribers.map((sub, i) => (
+                      <div key={i}>
+                        <UserVideoComponent who="student" streamManager={sub} /> 
+                        {/* <StudentScreen streamManager={sub} /> */}
+                      </div>
+                    ))}
+                  </div>
+                  <div className='teacher_button_box'>
+                    {/* 선생님 화면 */}
+                    <div className='teacher_box'>
+                      {this.state.publisher !== undefined && (
+                        <div>
+                          <UserVideoComponent who="teacher" streamManager={this.state.publisher} />
+                        </div>
+                      )}
                     </div>
-                  ))}
-                </div>
-                <div className='teacher_box'>
-                  {this.state.publisher !== undefined && (
-                    <div>
-                      <UserVideoComponent who="teacher" streamManager={this.state.publisher} />
+                    
+                    {/* 버튼들 */}
+                    <div className='center_button_box'>
+                    
+                    <StudentModal kind='sticker' iconAs={quizDino} title='스티커' />
+                    <div className='state_button' >
+                      {this.state.videostate ? (
+                        <Toast setState={this.changeVideostate} iconAs={CamOff} title='Video Off'
+                          change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.500'} />
+                        ) : (
+                        <Toast setState={this.changeVideostate} iconAs={CamOn} title='Video On'
+                          change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.500'} />
+                      )}  
                     </div>
-                  )}
+                    <div className='state_button'>
+                      {this.state.audiostate ? (
+                        <Toast setState={this.changeAudiostate} iconAs={micOff} title='Mic Off'
+                          message={'마이크를 껐습니다'} color={'white'} bg={'orange.500'} />
+                        ) : (
+                        <Toast setState={this.changeAudiostate} iconAs={micOn} title='Mic On'
+                          message={'마이크를 켰습니다'} color={'white'} bg={'blue.200'} />
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <div className='left_btn_box'>
-                  <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={MdQuiz} title='발표하자' />
-                  <StudentModal kind='quiz' iconAs={BsFillStarFill} title='퀴즈' />
-                  <StudentModal kind='sticker' iconAs={BsFillStarFill} title='스티커' />
-                  {this.state.videostate ? (
-                    <Toast setState={this.changeVideostate} iconAs={CamOff} title='Video Off'
-                      change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.500'} />
-                    ) : (
-                    <Toast setState={this.changeVideostate} iconAs={CamOn} title='Video On'
-                      change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.500'} />
-                  )}  
-                  {this.state.audiostate ? (
-                    <Toast setState={this.changeAudiostate} iconAs={micOff} title='Mic Off'
-                      message={'마이크를 껐습니다'} color={'white'} bg={'orange.500'} />
-                    ) : (
-                    <Toast setState={this.changeAudiostate} iconAs={micOn} title='Mic On'
-                      message={'마이크를 켰습니다'} color={'white'} bg={'blue.200'} />
-                  )}
-                  {this.state.audiostate ? <div className='warning'>마이크가 켜져있어요</div>:<div  className='warning' />}
-                </div>
-                {/* 채팅 상자 */}
+
               </div>
                 <div className='right'>
+                  <Button className='exitButton' onClick={() => {
+                    this.leaveSession()
+                    this.handleHistory('/home')
+                    }}
+                  >수업 떠나기</Button>
+                {/* 채팅 상자 */}
                   <div className='chatting_box'>
                       <div className="chatting_log" ref="chatoutput" id='chatting_scroll'>
                         <Messages messages={this.state.messages} />
@@ -410,21 +453,10 @@ class StudentRoom extends Component {
                         value={this.state.message}
                       />
                   </div>
+                  {this.state.audiostate ? <div className='warning'>마이크가 켜져있어요</div>:<div  className='warning' />}
+                <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={OO} title='발표하자' />
+                <StudentModal kind='quiz' iconAs={XX} title='퀴즈' />
                 </div>
-              {/* 하단 */}
-              <div className='bottom'>
-                <div className='right_btn_box'>
-                  <Button className='exitButton' onClick={() => {
-                    this.leaveSession()
-                    this.handleHistory('/home')
-                    }}
-                  >
-                    수업 나가기
-                  </Button>
-                </div>
-
-                
-              </div>
           </Box>
         )}
       </div>

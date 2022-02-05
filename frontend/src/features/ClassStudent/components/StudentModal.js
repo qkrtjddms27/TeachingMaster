@@ -1,4 +1,4 @@
-import { Modal, ModalOverlay, Icon, useDisclosure } from '@chakra-ui/react';
+import { Modal, ModalOverlay, Image, useDisclosure } from '@chakra-ui/react';
 import '../scss/StudentModal.scss'
 import { useState } from 'react';
 import Sticker from './Sticker'
@@ -16,9 +16,9 @@ const StudentModal = ({kind, iconAs, title,setState }) => {
   const [ox,setOX ] = useState(false)
   return (
     <>
-      <button className='OnOffButton' title={title}
+      <button className='state_button' title={title}
         onClick={() => modalOpen(kind)}
-      ><Icon as={iconAs} w={8} h={8} /></button>
+      ><Image src={iconAs} height="100" /></button>
       <Modal
         size="full"
         isCentered

@@ -9,6 +9,7 @@ import MainPage from '../features/mainpage/MainPage';
 import StudentRoom from '../features/ClassStudent/StudentRoom';
 import Classroom from '../features/ClassTeacher/Classroom'
 import StudentLogin from '../features/ClassStudent/StudentLogin';
+import ClassTeacher from '../features/ClassTeacher/ClassTeacher';
 
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
           <Route path="/appa" exact render={()=><StudentRoom />}/>
           <Route path="/" exact render={()=><MainPage setWho={setWho}/>}/>
           <Route path="/class/student" exact render={(props)=><StudentLogin />}/>
+          <Route path="/class/teacher" exact render={(props)=><ClassTeacher/>}/>
+
           {/* <Route path="/class/student" exact render={(props)=><ClassStudent />}/> */}
         </Switch>
         {who ==="teacher" &&<TeacherPage setWho={setWho}/>}
