@@ -10,8 +10,7 @@ import ConferenceLog from '../features/teacher/ConferenceLog'
 import InFolder from '../features/quiz/InFolder';
 import Updatequiz from '../features/quiz/Updatequiz';
 import Createquiz from '../features/quiz/Createquiz';
-import ClassStudent from '../features/ClassStudent/ClassStudent';
-import ClassTeacher from '../features/ClassTeacher/ClassTeacher';
+import ClassTeacher from '../features/ClassTeacher/TeacherRoom';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
 
