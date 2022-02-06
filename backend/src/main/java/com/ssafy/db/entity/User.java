@@ -28,8 +28,7 @@ public class User {
     @Column(length = 20 ,nullable = false)
     private String userName;
 
-    @Lob
-    @Column(columnDefinition = "BLOB")
+    @Column(columnDefinition = "LONGTEXT")
     private String userProfile;
 
     @Column(length = 100 ,nullable = false)

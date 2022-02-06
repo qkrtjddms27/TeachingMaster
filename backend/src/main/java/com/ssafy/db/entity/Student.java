@@ -1,6 +1,8 @@
 package com.ssafy.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Student {
 
 //  기본키 설정 및 연관 관계 설정 시작
@@ -48,5 +51,21 @@ public class Student {
     @JoinColumn(name = "roomId")
     private Room room;
 
+    @Builder
+    public Student(String studentId, String studentName, String studentPhone, String studentProfile, int studentScore, String address,
+                   String studentEmail, int countingStar, String parentsName, String relation, String parentsPhone, Room room) {
+        this.studentId = studentId;
+        this.studentEmail = studentEmail;
+        this.studentName = studentName;
+        this.studentPhone = studentPhone;
+        this.studentProfile = studentProfile;
+        this.studentScore = studentScore;
+        this.address = address;
+        this.countingStar = countingStar;
+        this.parentsName = parentsName;
+        this.parentsPhone = parentsPhone;
+        this.relation = relation;
+        this.room = room;
+    }
 
 }
