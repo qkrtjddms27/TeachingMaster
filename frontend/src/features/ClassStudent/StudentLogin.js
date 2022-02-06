@@ -17,7 +17,7 @@ const StudentLogin = () => {
     console.log('학년:', grade, '반: ', group)
     // axios 요청으로 studentId(학번)를 보내 학생정보 받아오기
     // .then 그 정보를 student 데이터로 local에 저장? 
-    history.push('/appa')
+    history.push('/class/student')
   }
 
   return (
