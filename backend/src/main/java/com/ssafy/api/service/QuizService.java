@@ -32,4 +32,6 @@ public interface QuizService {
     void deleteFolderQuiz(Long folderId, Long quizId);
     void deleteBookmark(String userId, Long quizId);
     void deleteFolder(Long folderId);
+
+    QuizLog createQuizLog(QuizLogReq quizLogReq);
 }

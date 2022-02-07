@@ -243,40 +243,20 @@ System.out.println(folder.getUser().getUserId());
 
     @Override
     public List<QuizLogRes> selectQuizLog(String studentId) {
-        List<QuizLog> quizLogList = quizLogRepository.findByStudent(studentRepository.findByStudentId(studentId));
+        List<QuizLogRes> quizLogResList = quizRepositorySupport.findQuizLog(studentId);
 
-        List<QuizLogRes> quizLogRes = new ArrayList<>();
-
-        for (QuizLog quizLog : quizLogList) {
-            QuizLogRes quizLogTemp = new QuizLogRes();
-            Quiz quiz = quizLog.getQuiz();
-
-            quizLogTemp.setStudentId(studentId);
-            quizLogTemp.setQuizId(quiz.getQuizId());
-            quizLogTemp.setQuizResult(quizLog.getQuizResult());
-            quizLogTemp.setQuizDate(quizLog.getQuizDate());
-            quizLogTemp.setSelectAnswer(quizLog.getSelectAnswer());
-            quizLogTemp.setSubject(quiz.getSubject());
-            quizLogTemp.setQuizPhoto(quiz.getQuizPhoto());
-            quizLogTemp.setQuizTitle(quiz.getQuizTitle());
-            quizLogTemp.setQuizContents(quiz.getQuizContents());
-            quizLogTemp.setQuizAnswer(quiz.getQuizAnswer());
-            quizLogTemp.setOpenStatus(quiz.getOpenStatus());
-            quizLogTemp.setQuizTimeout(quiz.getQuizTimeout());
-            quizLogTemp.setQuizGrade(quiz.getQuizGrade());
+        for (QuizLogRes quizLogRes : quizLogResList) {
 
             String[] options = new String[4];
-            options[0] = quiz.getOption1();
-            options[1] = quiz.getOption2();
-            options[2] = quiz.getOption3();
-            options[3] = quiz.getOption4();
+            options[0] = quizLogRes.getOption1();
+            options[1] = quizLogRes.getOption2();
+            options[2] = quizLogRes.getOption3();
+            options[3] = quizLogRes.getOption4();
 
-            quizLogTemp.setOptions(options);
-
-            quizLogRes.add(quizLogTemp);
+            quizLogRes.setOptions(options);
         }
 
-        return quizLogRes;
+        return quizLogResList;
     }
 
     @Override
@@ -305,6 +285,21 @@ System.out.println(folder.getUser().getUserId());
             folderQuizRepository.delete(folderquiz);
         }
         folderRepository.delete(folder);
+    }
+
+    @Override
+    public QuizLog createQuizLog(QuizLogReq quizLogReq) {
+        QuizLog quizLog = new QuizLog();
+
+        Quiz quiz = quizRepository.findById(quizLogReq.getQuizId()).get();
+        Student student = studentRepository.findById(quizLogReq.getStudentId()).get();
+
+        quizLog.setQuiz(quiz);
+        quizLog.setStudent(student);
+        quizLog.setQuizResult(quizLogReq.getQuizResult());
+        quizLog.setQuizResult(quizLogReq.getQuizResult());
+
+        return quizLogRepository.save(quizLog);
     }
 
 }
