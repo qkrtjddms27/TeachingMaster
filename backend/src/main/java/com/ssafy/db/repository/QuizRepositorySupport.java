@@ -4,10 +4,8 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.api.response.QuizAllRes;
-import com.ssafy.db.entity.QBookmark;
-import com.ssafy.db.entity.QFolder;
-import com.ssafy.db.entity.QFolderQuiz;
-import com.ssafy.db.entity.QQuiz;
+import com.ssafy.api.response.QuizLogRes;
+import com.ssafy.db.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +19,7 @@ public class QuizRepositorySupport {
     QFolderQuiz qFolderQuiz  = QFolderQuiz.folderQuiz;
     QFolder qFolder = QFolder.folder;
     QBookmark qBookmark = QBookmark.bookmark;
+    QQuizLog qQuizLog = QQuizLog.quizLog;
 
     public List<QuizAllRes> findAllFolderFavorQuiz(String userId) {
 
@@ -85,6 +84,19 @@ public class QuizRepositorySupport {
 
         return quizAllResList;
     }
+
+    public List<QuizLogRes> findQuizLog(String studentId) {
+        List<QuizLogRes> quizLogResList = jpaQueryFactory
+                .select((Projections.bean(QuizLogRes.class, qQuizLog.student.studentId, qQuizLog.quiz.quizId, qQuizLog.quizResult, qQuizLog.quizDate, qQuizLog.selectAnswer
+                        ,qQuiz.subject, qQuiz.quizPhoto , qQuiz.quizTitle
+                        ,qQuiz.quizContents, qQuiz.quizAnswer, qQuiz.openStatus, qQuiz.quizTimeout
+                        ,qQuiz.quizGrade, qQuiz.user.userId, qQuiz.option1, qQuiz.option2, qQuiz.option3
+                        ,qQuiz.option4)))
+                .from(qQuizLog).leftJoin(qQuiz).on(qQuizLog.quiz.quizId.eq(qQuiz.quizId))
+                .where(qQuizLog.student.studentId.eq(studentId)).fetch();
+
+        return quizLogResList;
+    }
 }
 //Quiz를 BookMark, Folder에 있는지 없는지 체크해서 return
 //    select q.*,
@@ -93,3 +105,4 @@ public class QuizRepositorySupport {
 //        (select f.folder_id from folder f where f.user_id like "ssafy1")), true, false) as "folder_check",
 //        if(b.user_id like "ssafy1", true, false)
 //        from quiz q left join bookmark b on b.quiz_id = q.quiz_id;
+

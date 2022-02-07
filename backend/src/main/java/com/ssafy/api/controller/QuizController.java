@@ -205,22 +205,7 @@ public class QuizController {
         return ResponseEntity.status(200).body(FolderQuizRes.of(folderQuiz));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @GetMapping("/select/quiz_log/{student_id}")
-    @ApiOperation(value = "학생 퀴즈 로그보기", notes = "학생 퀴즈 로그보기")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<List<QuizLogRes>> select_quizLog(
-            @PathVariable("student_id") String studentId
-            ) {
-        List<QuizLogRes> quizLogResList = quizService.selectQuizLog(studentId);
 
-        return ResponseEntity.status(200).body(quizLogResList);
-    }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/delete/folder_quiz/{folder_id}/{quiz_id}")
@@ -271,4 +256,6 @@ public class QuizController {
         quizService.deleteFolder(folderId);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
+
+
 }
