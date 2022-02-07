@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { serverUrl, setToken } from '../../components/TOKEN';
 
-const StudentLogin = () => {
+const StudentLogin = ({student,setStudent}) => {
   const history = useHistory()
   const [studentId, setStudentId] = useState('')
   const [grade, setGrade] = useState('')
@@ -26,10 +26,11 @@ const StudentLogin = () => {
     })
     .then(({data}) => {
       // console.log(data)
-      localStorage.setItem('student', JSON.stringify(data))
+      setStudent({...data,studentId:studentId})
+      // localStorage.setItem('student', JSON.stringify({...data,studentId:studentId}))
+      history.push('/class/student')
     })
     .catch(err => console.log(err))
-    history.push('/class/student')
   }
 
   return (

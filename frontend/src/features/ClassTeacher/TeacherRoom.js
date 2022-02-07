@@ -26,13 +26,14 @@ class Classroom extends Component {
     super(props);
     this.state = {
       // OV
-      mySessionId: 'ssafy' + (parseInt(user.roomGrade)*100 + parseInt(user.roomNum)),
+      mySessionId: this.props.match.params.roomId,
       myUserName: user.userName,
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
       subscribers: [],
       // TM
+      total :0,
       messages: [],
       message: '',
       videostate: true,
@@ -78,8 +79,15 @@ class Classroom extends Component {
   }
   
   changeHighlightingstate() {
+    let total = 0
+    // eslint-disable-next-line no-lone-blocks
+    {this.state.subscribers.map((sub) => (
+      total = total + Number(JSON.parse(sub.stream.connection.data).weeklyStar)
+    ))}
+    total = total/(this.state.subscribers).length
     this.setState({
-      highlighting: !this.state.highlighting
+      highlighting: !this.state.highlighting,
+      total: total
     })
   }
   
@@ -307,7 +315,7 @@ class Classroom extends Component {
     this.setState({
       session: undefined,
       subscribers: [],
-      mySessionId: 'ssafy' + (parseInt(user.roomGrade)*100 + parseInt(user.roomNum)),
+      mySessionId: this.props.match.params.roomId,
       myUserName: user.userName,
       mainStreamManager: undefined,
       publisher: undefined
@@ -348,7 +356,6 @@ class Classroom extends Component {
                     value={mySessionId}
                     onChange={this.handleChangeSessionId}
                     required
-                    disabled
                   />
                 </div>
                 <div className="btn_box">           
@@ -368,13 +375,13 @@ class Classroom extends Component {
                 {this.state.publisher !== undefined && (
                   <div>
                     {/* <UserVideoComponent streamManager={this.state.publisher} /> */}
-                    <StudentScreen streamManager={this.state.publisher} />
+                    <UserVideoComponent score="teacherScore" streamManager={this.state.publisher} />
                   </div>
                 )}
                 {this.state.subscribers.map((sub, i) => (
                   <div key={i}>
                     {/* <UserVideoComponent streamManager={sub} />  */}
-                    <StudentScreen streamManager={sub} />
+                    <StudentScreen highlighting={this.state.highlighting} total={this.state.total}  streamManager={sub} />
                   </div>
                 ))}
               </div>
