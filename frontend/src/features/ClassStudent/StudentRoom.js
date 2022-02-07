@@ -16,7 +16,6 @@ import CamOff from './image/카메라끄기.png'
 import quizDino from './image/퀴즈공룡.png'
 import OO from './image/O.png'
 import penguin from './image/펭귄.png'
-
 import XX from './image/X.png'
 
 // const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
