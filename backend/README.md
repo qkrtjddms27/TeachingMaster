@@ -55,14 +55,11 @@ Windows 기준 개발 환경 구성 설명
          ```
       - User 생성
          ```sql
-         create user '사용자계정'@'localhost' identified by '비밀번호';
+         create user 'ssafy'@'localhost' identified by 'ssafy';
          grant all privileges on ssafy_web_db.* to 'ssafy'@'localhost';
          flush privileges;
          ```
-      ```
-      
-      ```
-   
+
 3. IDE 설치 *(이미 설치되어 있거나 IntelliJ 등 다른 편집기를 사용할 경우 생략)*
    1. Eclipse 다운로드 사이트에서 Eclipse IDE 설치 파일 다운로드 및 실행
       - https://www.eclipse.org/downloads/
@@ -76,85 +73,47 @@ Windows 기준 개발 환경 구성 설명
       - [Help] - [Install New Software] - Work with: https://projectlombok.org/p2 입력 후 Lombok 설치 진행
    6. Eclipse 재시작   
 
-4. 스켈레톤 다운로드 및 실행
+## 배포
+EC2(ubuntu)환경에 backend Docker 배포
 
-   1. 프로젝트 다운로드
-      ```
-      git clone <repo URL>
-      ```
-
-   2. Eclipse의 [File] - [Import] - [Grade] - [Existing Gradle Project]에서 backend-java 폴더 선택 후 [Finish]
-   
-   3. Project Explorer에서 프로젝트 우클릭 후 [Spring] - [Add Spring Nature] 선택
-      
-   4. src/main/resources/application.properties 수정
-   
-      ```
-   spring.datasource.hikari.username=<사용자 계정>
-      spring.datasource.hikari.password=<비밀번호>
-      ```
-   
-   5. [Gradle Tasks] 탭의 [Rub Gradle Tasks] 선택하여 실행
-
-
-
-
-## 디렉토리 구조
-
+1. gradle build (배포할 jar 파일 만들기, build.gradle 파일에서 설정.)
 ```
-.
-└── main
-    ├── generated
-    ├── java
-    │   └── com
-    │       └── ssafy
-    │           ├── GroupCallApplication.java
-    │           ├── api  /* REST API 요청관련 컨트롤러, 서비스, 요청/응답 모델 정의*/
-    │           │   ├── controller
-    │           │   │   ├── AuthController.java
-    │           │   │   └── UserController.java
-    │           │   ├── request
-    │           │   │   ├── UserLoginPostReq.java
-    │           │   │   └── UserRegisterPostReq.java
-    │           │   ├── response
-    │           │   │   ├── UserLoginPostRes.java
-    │           │   │   └── UserRes.java
-    │           │   └── service
-    │           │       ├── UserService.java
-    │           │       └── UserServiceImpl.java
-    │           ├── common /* 공용 유틸, 응답 모델, 인증, 예외처리 관련 정의*/
-    │           │   ├── auth
-    │           │   │   ├── JwtAuthenticationFilter.java
-    │           │   │   ├── SsafyUserDetailService.java
-    │           │   │   └── SsafyUserDetails.java
-    │           │   ├── exception
-    │           │   │   └── handler
-    │           │   │       └── NotFoundHandler.java
-    │           │   ├── model
-    │           │   │   └── response
-    │           │   │       └── BaseResponseBody.java
-    │           │   └── util
-    │           │       ├── JwtTokenUtil.java
-    │           │       └── ResponseBodyWriteUtil.java
-    │           ├── config /* WebMvc 및 JPA, Security, Swagger 등의 추가 플러그인 설정 정의*/
-    │           │   ├── JpaConfig.java
-    │           │   ├── SecurityConfig.java
-    │           │   ├── SwaggerConfig.java
-    │           │   └── WebMvcConfig.java
-    │           └── db /* 디비에 저장될 모델 정의 및 쿼리 구현 */
-    │               ├── entity
-    │               │   ├── BaseEntity.java
-    │               │   └── User.java
-    │               └── repository
-    │                   ├── UserRepository.java
-    │                   └── UserRepositorySupport.java
-    └── resources
-        ├── README.md
-        ├── application.properties /* 웹 리소스(서버 host/port, 디비 host/port/계정/패스워드) 관련 설정 정의 */
-        ├── babel.config.js
-        ├── dist
-        ├── package-lock.json
-        ├── package.json
-        ├── public
+./gradlew bootjar
 ```
 
+2. Docker image 만들기 (dockerfile 필수)
+```
+docker build -t qkrtjddms27/backend:[버전태그] .
+```
+
+3. Docker Hub 에 push
+```
+docker push qkrtjddms27/backend:[버전태그]
+```
+
+4. 권한 획득
+
+   아래 명령어를 사용하면 sudo를 붙이지 않아도 된다. (reboot)
+```
+sudo usermod -aG docker $USER
+```
+
+5. ec2 환경에서 pull 받기
+```
+docker pull qkrtjddms27/backend:[버전태그]
+```
+
+6.ec2 환경에서 실행하기
+```
+docker run -b -p 8080:8080 --rm qkrtjddms27/baceknd:[버전태그]
+```
+
+### 배포와 관련된 설정 파일
+1. Dockerfile
+```
+FROM openjdk:8-jdk-alpine
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+```
+빌드된 *.jar 파일을 ./로 가져와서 실행하는 도커파일 
