@@ -66,6 +66,11 @@
           background-color: whitesmoke;
           width: 10vw;
         }
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          flex-flow: wrap;
+        }
       }
     }
   }

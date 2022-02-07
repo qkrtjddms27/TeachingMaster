@@ -10,10 +10,11 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  min-width: 1000px;
   .login_box {
     background-color: rgba(248, 244, 236, 0.712);
-    width: 40%;
-    height: 70%;
+    width: 50vw;
+    height: 80vh;
     margin: auto;
     border-radius: 20px;
     display: flex;
@@ -55,7 +56,6 @@
     width: 90vw;
     background-color: rgba(245, 245, 245, 0.712);
     box-shadow: 3px 3px 7px;
-
     margin: auto;
     border-radius: 10px;
     .top {
@@ -149,6 +149,7 @@
     }
     .bottom {
       display: flex;
+      flex-flow: wrap;
       justify-content: space-between;
       margin: 3vh 1.7vw;
       .left_btn_box {
@@ -194,4 +195,9 @@
       border: 1px solid transparent;
     }
   }
+}
+.student_screen {
+  min-width: 10rem;
+  display: flex;
+  flex-flow: wrap;
 }

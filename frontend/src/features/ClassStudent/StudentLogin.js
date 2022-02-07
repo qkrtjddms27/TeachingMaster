@@ -4,6 +4,8 @@ import penguin from './image/펭귄.png'
 import { roomData } from '../../components/TOKEN';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import { serverUrl, setToken } from '../../components/TOKEN';
 
 const StudentLogin = () => {
   const history = useHistory()
@@ -16,7 +18,17 @@ const StudentLogin = () => {
     console.log('studentId:', studentId)
     console.log('학년:', grade, '반: ', group)
     // axios 요청으로 studentId(학번)를 보내 학생정보 받아오기
-    // .then 그 정보를 student 데이터로 local에 저장? 
+    axios({
+      url: `${serverUrl}/student/${studentId}`,
+      method: 'GET',
+      // 나중에 토큰 지우기!!!!
+      headers: setToken(),
+    })
+    .then(({data}) => {
+      // console.log(data)
+      localStorage.setItem('student', JSON.stringify(data))
+    })
+    .catch(err => console.log(err))
     history.push('/class/student')
   }
 

@@ -22,19 +22,22 @@ import XX from './image/X.png'
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
 // const student = JSON.parse(localStorage.getItem('student'))
-const student = {
-  "address": "부산광역시 북구 구포3동 9987-42번지",
-  "parentsName": "진진자라",
-  "parentsPhone": "01066512222",
-  "relation": "부",
-  "roomGrade": 1,
-  "roomNum": 5,
-  "studentEmail": "pseseseps@naver.com",
-  "studentId": "A12312B",
-  "studentName": "진현은",
-  "studentPhone": "01066511111",
-  "studentProfile": "asdkgn123kasdnkgn2knagikegadg"
-}
+
+// const student = {
+//   "address": "부산광역시 북구 구포3동 9987-42번지",
+//   "parentsName": "진진자라",
+//   "parentsPhone": "01066512222",
+//   "relation": "부",
+//   "roomGrade": 2,
+//   "roomNum": 1,
+//   "studentEmail": "pseseseps@naver.com",
+//   "studentId": "A12312B",
+//   "studentName": "진현은",
+//   "studentPhone": "01066511111",
+//   "studentProfile": "asdkgn123kasdnkgn2knagikegadg"
+// }
+
+const student = JSON.parse(localStorage.getItem('student'))
 
 class StudentRoom extends Component {
   constructor(props) {
@@ -227,16 +230,19 @@ class StudentRoom extends Component {
       },
       () => {
         // console.log('*****OV.init: ', this.OV.initSession())
-        console.log('*****state.session: ', this.state.session)
-        var mySession = this.state.session;
+        // console.log('*****state.session: ', this.state.session)
+        let mySession = this.state.session;
 
         // --- 3) Specify the actions when events take place in the session ---
         // On every new Stream received...
         mySession.on('streamCreated', (event) => {
           // Subscribe to the Stream to receive it. Second parameter is undefined
           // so OpenVidu doesn't create an HTML video by its own
-          var subscriber = mySession.subscribe(event.stream, undefined);
-          var subscribers = this.state.subscribers;
+          let subscriber = mySession.subscribe(event.stream, undefined);
+          subscriber['student'] = true
+          subscriber['teacher'] = false
+          console.log('늦은 학생', subscriber)
+          let subscribers = this.state.subscribers;
           subscribers.push(subscriber);
 
           // Update the state with the new subscribers
@@ -273,7 +279,7 @@ class StudentRoom extends Component {
           mySession
             .connect(
               token,
-              { clientData: this.state.myUserName, master:"teacher" },
+              { clientData: this.state.myUserName, role:"student" },
             )
             .then(() => {
               // --- 5) Get your own camera stream ---
@@ -289,6 +295,9 @@ class StudentRoom extends Component {
                 insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
                 mirror: true, // Whether to mirror your local video or not
               });
+              // publisher['teacher'] = false
+              // publisher['student'] = true
+              // console.log('1등 학생', publisher)
               // --- 6) Publish your stream ---
               mySession.publish(publisher);
               // Set the main video in the page to display our webcam and store our Publisher
@@ -328,61 +337,59 @@ class StudentRoom extends Component {
   render() {
     const mySessionId = this.state.mySessionId;
     const myUserName = this.state.myUserName;
-
+    const { path } = this.props.match
+    // console.log('프랍프랍', path)
     return (
       <div className="ClassStudent">
         {/* 세션에 참가하기 전 */}
         {this.state.session === undefined && (
           <div className="join">
-          <div className='student_login'>
-          <div className='box'>
-            <div className='left'>
-              <Image className='penguin' src={penguin} />
-            </div>
-            <div className='right'> 
-              <div className='grade_room'>
-                
-                <form className="form-group" onSubmit={this.joinSession}>
-                <div>
-                  <label className="label-control">이름 </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="userName"
-                    value={myUserName}
-                    onChange={this.handleChangeUserName}
-                    required
-                    disabled
-                  />
+            <div className='student_login'>
+              <div className='box'>
+                <div className='left'>
+                  <Image className='penguin' src={penguin} />
                 </div>
-                <br/>
-                <div>
-                  <label className="label-control"> 교실번호 </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="sessionId"
-                    value={mySessionId}
-                    onChange={this.handleChangeSessionId}
-                    required
-                    disabled
+                <div className='right'> 
+                  <div className='grade_room'>
+                    
+                    <form className="form-group" onSubmit={this.joinSession}>
+                      <div>
+                        <label className="label-control">이름 </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          id="userName"
+                          value={myUserName}
+                          onChange={this.handleChangeUserName}
+                          required
+                          disabled
+                        />
+                      </div>
+                      <br/>
+                      <div>
+                        <label className="label-control"> 교실번호 </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          id="sessionId"
+                          value={mySessionId}
+                          onChange={this.handleChangeSessionId}
+                          required
+                          disabled
 
-                  />
+                        />
+                      </div>
+                      <div className="btn_box">           
+                          <Button colorScheme='linkedin' className="submit_button" type="submit" >들어가기</Button>
+                      </div>
+                    </form>
+                    
+                    
+                  </div>
                 </div>
-                <div className="btn_box">           
-                    <Button colorScheme='linkedin' className="submit_button" type="submit" >들어가기</Button>
-                </div>
-              </form>
-                
-                
               </div>
-            </div>
+            </div>  
           </div>
-        </div>  
-        </div>
-          
-              
-         
         )}
 
         {/* 세션에 참가한 후 */}
@@ -391,21 +398,37 @@ class StudentRoom extends Component {
               <div className='left'>
                 {/* 상단 학생 페이지  */}
                   <div className='student_box'>
-                    {this.state.subscribers.map((sub, i) => (
-                      <div key={i}>
-                        <UserVideoComponent who="student" streamManager={sub} /> 
-                        {/* <StudentScreen streamManager={sub} /> */}
+                    {this.state.publisher !== undefined && (
+                      <div>
+                        <UserVideoComponent who="student" streamManager={this.state.publisher} />
                       </div>
-                    ))}
+                    )}
+                    {this.state.subscribers.map((sub, i) => {
+                      // console.log('*****************************************')
+                      // console.log(JSON.parse(sub.stream.connection.data).role)
+                      if (JSON.parse(sub.stream.connection.data).role === "student") {
+                        return (
+                          <div key={i}>
+                            <UserVideoComponent who="student" streamManager={sub} />
+                          </div>
+                        )
+                      }
+                    } )}
                   </div>
                   <div className='teacher_button_box'>
                     {/* 선생님 화면 */}
                     <div className='teacher_box'>
-                      {this.state.publisher !== undefined && (
-                        <div>
-                          <UserVideoComponent who="teacher" streamManager={this.state.publisher} />
-                        </div>
-                      )}
+                      {this.state.subscribers.map((sub, i) => {
+                        // console.log('*****************************************')
+                        // console.log(JSON.parse(sub.stream.connection.data).role)
+                        if (JSON.parse(sub.stream.connection.data).role === "teacher") {
+                          return (
+                            <div key={i}>
+                              <UserVideoComponent who="teacher" streamManager={sub} />
+                            </div>
+                          )
+                        }
+                      } )}
                     </div>
                     
                     {/* 버튼들 */}
@@ -471,7 +494,7 @@ class StudentRoom extends Component {
 
   createSession(sessionId) {
     return new Promise((resolve, reject) => {
-      var data = JSON.stringify({ customSessionId: sessionId });
+      let data = JSON.stringify({ customSessionId: sessionId });
       axios
         .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
           headers: {
@@ -484,7 +507,7 @@ class StudentRoom extends Component {
           resolve(response.data.id);
         })
         .catch((response) => {
-          var error = Object.assign({}, response);
+          let error = Object.assign({}, response);
           if (error?.response?.status === 409) {
             resolve(sessionId);
           } else {
@@ -513,7 +536,7 @@ class StudentRoom extends Component {
 
   createToken(sessionId) {
     return new Promise((resolve, reject) => {
-      var data = {};
+      let data = {};
       axios
         .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection", data, {
           headers: {
