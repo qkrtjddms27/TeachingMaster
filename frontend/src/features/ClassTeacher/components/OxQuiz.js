@@ -1,4 +1,4 @@
-import { ModalBody, ModalCloseButton, ModalContent, ModalHeader, Textarea, Image, RadioGroup, Stack, Radio, Button } from '@chakra-ui/react';
+import { ModalBody, ModalCloseButton, ModalContent, ModalHeader, Textarea, RadioGroup, Stack, Radio, Button } from '@chakra-ui/react';
 import '../scss/TeacherModal.scss'
 import React, { useState } from 'react';
 
