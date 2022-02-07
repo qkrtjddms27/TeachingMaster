@@ -11,6 +11,7 @@ import InFolder from '../features/quiz/InFolder';
 import Updatequiz from '../features/quiz/Updatequiz';
 import Createquiz from '../features/quiz/Createquiz';
 import ClassTeacher from '../features/ClassTeacher/TeacherRoom';
+import OnAir from '../features/onair/OnAir';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
 
@@ -54,8 +55,8 @@ export default [
     name: "내 회의 로그"
   },
   {
-    path: "/ingclass",
-    component: IngClass,
+    path: "/onair",
+    component: OnAir,
     name: "수업중인반"
   },
 ]
