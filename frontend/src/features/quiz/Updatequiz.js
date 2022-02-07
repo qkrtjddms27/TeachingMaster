@@ -90,7 +90,7 @@ const Updatequiz = () => {
     ).then(res=>{
       setQuiz(data)
       alert('수정완료')
-      // history.push('/quiz/')
+      history.push('/quiz/')
     }).catch(err=>{
       alert('문제 UPDATE 실패')
     })

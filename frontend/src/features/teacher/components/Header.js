@@ -18,7 +18,9 @@ const Header = ({isLogin,setisLogin,user,setUser}) => {
     history.push('/')
   }
   if(window.location.pathname==="/class/student") return null;
+  if(window.location.pathname==="/class/student/login") return null;
   if(window.location.pathname==="/class/teacher") return null;
+  if(window.location.pathname==="/") return null;
   return (
     <div>
       <Box className='header-box' 
