@@ -3,22 +3,28 @@ import {Route,Switch} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ChakraProvider } from '@chakra-ui/react'
 import './App.scss'
-import TeacherPage from './TeacherPage';
+import TeacherApp from './TeacherApp';
 import { useEffect, useState } from 'react';
 import MainPage from '../features/mainpage/MainPage';
-import ClassStudent from '../features/ClassStudent/ClassStudent';
+import StudentRoom from '../features/ClassStudent/StudentRoom';
+import StudentLogin from '../features/ClassStudent/StudentLogin';
+import ClassTeacher from '../features/ClassTeacher/TeacherRoom';
 
 
 function App() {
   const [who,setWho] = useState(localStorage.getItem("user")&&"teacher") 
+  // "teacher", "room"
   return (
     <div className='App'>
       <ChakraProvider>
         <Switch>
+          <Route path="/class/student" exact render={()=><StudentRoom />}/>
           <Route path="/" exact render={()=><MainPage setWho={setWho}/>}/>
-          <Route path="/class/student" exact render={(props)=><ClassStudent />}/>
+          {/* <Route path="/" exact render={()=><MainPage/>}/> */}
+          <Route path="/class/student/login" exact render={(props)=><StudentLogin />}/>
+          <Route path="/class/teacher" exact render={(props)=><ClassTeacher setWho={setWho}/>}/>
         </Switch>
-        {who ==="teacher" &&<TeacherPage setWho={setWho}/>}
+        {who ==="teacher" &&<TeacherApp who={who} setWho={setWho}/>}
       </ChakraProvider>
     </div>
   );

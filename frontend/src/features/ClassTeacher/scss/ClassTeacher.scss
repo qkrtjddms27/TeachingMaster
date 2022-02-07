@@ -1,16 +1,63 @@
 .ClassTeacher {
-  background-image: url("../image/grass.jpg");
+  background-image: linear-gradient(
+      rgba(173, 173, 173, 0.5),
+      rgba(173, 173, 173, 0.5)
+    ),
+    // url("../image/.jpg");
+    url("../image/식물배경.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  .login_box {
+    background-color: rgba(248, 244, 236, 0.712);
+    width: 40%;
+    height: 70%;
+    margin: auto;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+
+    .form-group {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      margin-top: 6rem;
+      .teacher_img {
+        height: 15rem;
+        width: 15rem;
+        margin-bottom: 2rem;
+        border-radius: 100%;
+      }
+      .label-control {
+        font-size: 2rem;
+      }
+      .form-control {
+        color: rgb(27, 27, 144);
+        font-weight: 700;
+        display: inline-block;
+        border: none;
+        width: 10rem;
+        background-color: rgba(255, 255, 255, 0);
+        font-size: 2rem;
+      }
+      .submit_button {
+        margin-top: 2rem;
+      }
+    }
+  }
+
   .Conference_box {
+    box-shadow: 3px 3px 7p;
     height: 93vh;
     width: 90vw;
     background-color: rgba(245, 245, 245, 0.712);
+    box-shadow: 3px 3px 7px;
+
     margin: auto;
-    border-radius: 20px;
+    border-radius: 10px;
     .top {
       display: flex;
       .student_box {
@@ -43,8 +90,8 @@
         .student_screen {
           cursor: pointer;
           // 16:9 비율 맞추기
-          height: 16vh;
-          width: 26vh;
+          height: 24vh;
+          width: 39vh;
           margin-left: 1rem;
           margin-right: 1rem;
           img {
@@ -57,26 +104,46 @@
       }
       .chatting_box {
         height: 81vh;
-        width: 20vw;
-        margin: 1.5vh 1.5vw 0 1.5vw;
+        width: 25vw;
+        margin: 1.5vh 1vw 1vh 1vw;
+        padding: 1rem;
         border-radius: 10px;
+        background-color: rgba(98, 207, 78, 0.582);
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        background-color: rgba(223, 182, 187, 0.39);
+        flex-flow: wrap;
         .chatting_log {
           height: 70vh;
-          width: 18vw;
-          margin: 2vh 1vw 2vh 1vw;
-          border-radius: 10px;
+          width: 23vw;
+          border-radius: 5px;
+          padding-bottom: 1rem;
           background-color: rgb(246, 233, 233);
+          .text {
+            margin-left: 1rem;
+            .chat_line {
+              margin-top: 0.3rem;
+              width: 95%;
+              .chat_name {
+                font-weight: 600;
+                text-align: center;
+                padding: 0.1rem 0.4rem;
+              }
+              .chat_content {
+                display: inline;
+                width: 100%;
+                margin-left: 0.5rem;
+                background-color: rgb(253, 208, 216);
+                border-radius: 5px;
+                padding: 0.1rem 0.3rem;
+              }
+            }
+          }
         }
         .input_box {
-          height: 6vh;
-          width: 18vw;
-          margin: 0 1vw 2vh 1vw;
-          border-radius: 10px;
           background-color: whitesmoke;
+          height: 5vh;
+          width: 23vw;
+          margin-top: 1rem;
         }
       }
     }
@@ -104,6 +171,27 @@
           }
         }
       }
+    }
+  }
+}
+#chatting_scroll {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  flex-direction: column;
+  &::-webkit-scrollbar {
+    visibility: hidden;
+    width: 7px;
+  }
+  &:hover {
+    &::-webkit-scrollbar {
+      visibility: visible;
+      width: 7px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #698e34;
+      border-radius: 10px;
+      background-clip: padding-box;
+      border: 1px solid transparent;
     }
   }
 }

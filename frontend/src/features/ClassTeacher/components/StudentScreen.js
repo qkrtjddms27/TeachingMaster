@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import child_img from './image/아이.png'
 import {Box,Popover,PopoverTrigger,PopoverContent,PopoverBody,PopoverArrow,
   PopoverCloseButton,Heading,Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,
 } from '@chakra-ui/react'
 import { Button } from 'bootstrap';
-const StudentScreen = ({student}) => {
+import UserVideoComponent from '../openVidu/UserVideoComponent'
+
+const StudentScreen = ({student,streamManager}) => {
   const [memo,setMemo] = useState('')
   const onSubmit = (e)=>{
     e.preventDefault();
@@ -16,14 +17,15 @@ const StudentScreen = ({student}) => {
       <Popover >
         <PopoverTrigger>
           <div className='student_screen' >
-            <img src={child_img} alt='애'/>
+            <UserVideoComponent streamManager={streamManager} />
           </div>
         </PopoverTrigger>
         <PopoverContent width="15rem">
           <PopoverArrow />
           <PopoverCloseButton />
           <PopoverBody>
-            <Heading>{student.name}</Heading>
+            <Heading>이름</Heading>
+            {/* <Heading>"{streamManager.name}"</Heading> */}
             <div> 주간⭐:10</div>
             <div> 총 ⭐:20</div>
             <div> 발표 시키기</div>

@@ -6,11 +6,8 @@ import { serverUrl,setToken } from '../../components/TOKEN'
 
 const Settings = ({user,setUser}) => {
   const [imgBase64,setImagbase64] = useState(user.userProfile) // 파일 base64
-  const [password,setPassword] = useState("")
   const onSubmit = () =>{
-    console.log(user)
     const data ={...user,"userProfile":imgBase64}
-    console.log(data)
     axios({
       url:`${serverUrl}/v1/users/update`,
       method:"PUT",
@@ -18,7 +15,7 @@ const Settings = ({user,setUser}) => {
       data,
     })
     .then(res=>{
-      console.log(data)
+      localStorage.user = JSON.stringify(data)
       setUser(data)
     })
     .catch(err=>console.log(err))
@@ -33,19 +30,17 @@ const Settings = ({user,setUser}) => {
       }
     };
     if (event.target.files[0]) {
-      console.log(event)
       reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다. 저장후 onloadend 트리거
     }
   };
   return (
     <div className='setting_box'>
       <div className=''>
-        <img alt='선생님' src={imgBase64} />
+        <img alt='선생님' className='teacher_img' src={imgBase64} />
         <label htmlFor="input-file" className="input-file-button" onChange={handleChangeFile}>
           사진 업로드
         </label>
         <Input type="file" onChange={handleChangeFile}  id="input-file" style={{display:"none"}}/>
-        <Input onChange={(e)=>{setPassword(e.target.value)}} placeholder='비밀번호확인' />
         <Button onClick={()=>{onSubmit()}}>저장</Button>
         <Text> 이름 : {user.userName} </Text>
         <Text> {user.roomGrade}학년 {user.roomNum}반 </Text>
