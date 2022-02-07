@@ -8,19 +8,19 @@ import Login from '../features/user/Login';
 import ClassTeacher from '../features/ClassTeacher/TeacherRoom';
 import Settings from '../features/teacher/Settings';
 
-const TeacherApp = () => {
+const TeacherApp = ({who,setWho}) => {
   const [isLogin,setisLogin] =useState(localStorage.getItem("user")===null ? false: true )
   const [user,setUser] = useState({"userName":"하이","userProfile":"none"})
-  const [onAir,setOnAir] = useState(false)
   useEffect(()=>{
-    setOnAir(false)
+    setWho("teacher")
   },[])
   return ( 
     <div>
-      <Header setisLogin={setisLogin} isLogin={isLogin} user={user} setUser={setUser}/>
+      {who ==="teacher" &&
+      <Header setisLogin={setisLogin} isLogin={isLogin} user={user} setUser={setUser}/>}
         <Switch>
           <Route path="/login" render={(props)=><Login setisLogin={setisLogin} isLogin={isLogin} user={user} setUser={setUser}/>}/>
-          <Route path="/home" render={(props)=><Home user={user} setOnAir={setOnAir} setUser={setUser} />}/>
+          <Route path="/home" render={(props)=><Home user={user} setWho={setWho} setUser={setUser} />}/>
           <Route path="/settings" exact render={(props)=><Settings setUser={setUser} user={user} />}/>
           {routes.map(route=>{
             return (
