@@ -211,18 +211,21 @@ class Classroom extends Component {
       },
       () => {
         // console.log('*****OV.init: ', this.OV.initSession())
-        console.log('*****state.session: ', this.state.session)
-        var mySession = this.state.session;
+        // console.log('*****state.session: ', this.state.session)
+        let mySession = this.state.session;
 
         // --- 3) Specify the actions when events take place in the session ---
         // On every new Stream received...
         mySession.on('streamCreated', (event) => {
           // Subscribe to the Stream to receive it. Second parameter is undefined
           // so OpenVidu doesn't create an HTML video by its own
-          var subscriber = mySession.subscribe(event.stream, undefined);
-          var subscribers = this.state.subscribers;
-          subscribers.push(subscriber);
+          let subscriber = mySession.subscribe(event.stream, undefined);
 
+          let subscribers = this.state.subscribers;
+          subscribers.push(subscriber);
+          subscriber['student'] = false
+          subscriber['teacher'] = true
+          console.log('늦은 교사', subscriber)
           // Update the state with the new subscribers
           this.setState({
             subscribers: subscribers,
@@ -257,7 +260,7 @@ class Classroom extends Component {
           mySession
             .connect(
               token,
-              { clientData: this.state.myUserName, master:"teacher" },
+              { clientData: this.state.myUserName, role:"teacher" },
             )
             .then(() => {
               // --- 5) Get your own camera stream ---
@@ -273,6 +276,9 @@ class Classroom extends Component {
                 insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
                 mirror: true, // Whether to mirror your local video or not
               });
+              // publisher['teacher'] = true
+              // publisher['student'] = false
+              // console.log('1등 교사', publisher)
               // --- 6) Publish your stream ---
               mySession.publish(publisher);
               // Set the main video in the page to display our webcam and store our Publisher
@@ -456,7 +462,7 @@ class Classroom extends Component {
 
   createSession(sessionId) {
     return new Promise((resolve, reject) => {
-      var data = JSON.stringify({ customSessionId: sessionId });
+      let data = JSON.stringify({ customSessionId: sessionId });
       axios
         .post(OPENVIDU_SERVER_URL + '/openvidu/api/sessions', data, {
           headers: {
@@ -469,7 +475,7 @@ class Classroom extends Component {
           resolve(response.data.id);
         })
         .catch((response) => {
-          var error = Object.assign({}, response);
+          let error = Object.assign({}, response);
           if (error?.response?.status === 409) {
             resolve(sessionId);
           } else {
@@ -498,7 +504,7 @@ class Classroom extends Component {
 
   createToken(sessionId) {
     return new Promise((resolve, reject) => {
-      var data = {};
+      let data = {};
       axios
         .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection", data, {
           headers: {
