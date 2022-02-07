@@ -394,7 +394,6 @@ class Classroom extends Component {
                 <Button className='exitButton' onClick={() => {
                   this.leaveSession()
                   this.handleHistory('/home')
-                  this.props.setWho("teacher")
                   }}
                 >
                   수업 나가기
