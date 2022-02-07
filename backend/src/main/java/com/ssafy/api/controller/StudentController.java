@@ -49,7 +49,7 @@ public class StudentController {
         return ResponseEntity.status(200).body(StudentListRes.of(students,200,"Success"));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{student_id}")
     @ApiOperation(value = "학생 조회", notes = "아이디를 통해 회원가입 한다.")
     @ApiResponses({
