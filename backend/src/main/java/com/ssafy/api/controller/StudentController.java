@@ -1,11 +1,18 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.QuizLogReq;
+import com.ssafy.api.request.QuizRegisterReq;
 import com.ssafy.api.request.StudentRegisterPostReq;
 import com.ssafy.api.request.StudentInfoUpdateReq;
+import com.ssafy.api.response.QuizLogRes;
+import com.ssafy.api.response.QuizRes;
 import com.ssafy.api.response.StudentListRes;
 import com.ssafy.api.response.StudentRes;
+import com.ssafy.api.service.QuizService;
 import com.ssafy.api.service.StudentService;
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.Quiz;
+import com.ssafy.db.entity.QuizLog;
 import com.ssafy.db.entity.Student;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +33,8 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
+    @Autowired
+    QuizService quizService;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/studentAll")
@@ -101,6 +110,40 @@ public class StudentController {
             @RequestBody @ApiParam(value="회원가입 정보", required = true) StudentInfoUpdateReq updateInfo){
         Student student = studentService.updateStudent(updateInfo);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @GetMapping("/select/quiz_log/{student_id}")
+    @ApiOperation(value = "학생 퀴즈 로그보기", notes = "학생 퀴즈 로그보기")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<QuizLogRes>> select_quizLog(
+            @PathVariable("student_id") String studentId
+    ) {
+        List<QuizLogRes> quizLogResList = quizService.selectQuizLog(studentId);
+
+        return ResponseEntity.status(200).body(quizLogResList);
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PostMapping("/student/")
+    @ApiOperation(value = "학생 quiz log 저장", notes = "학생이 퀴즈를 풀면 해당 QuizLog 저장")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<QuizLogRes> register_quizLog(
+            @RequestBody @ApiParam(value = "퀴즈 등록 정보", required = true) QuizLogReq quizLogReq) {
+
+        QuizLog quizLog = quizService.createQuizLog(quizLogReq);
+
+        return ResponseEntity.status(200).body(QuizLogRes.of(quizLog));
     }
 
 }
