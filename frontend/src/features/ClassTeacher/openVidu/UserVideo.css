@@ -1,4 +1,32 @@
-video {
+.normal {
+  margin-top: 1rem;
+  width: 40vh;
+  height: auto;
+  float: left;
+  cursor: pointer;
+  border-radius: 15px;
+}
+.low {
+  margin-top: 1rem;
+  width: 40vh;
+  height: auto;
+  float: left;
+  cursor: pointer;
+  border-radius: 15px;
+  border: 5px solid rgb(97, 172, 0);
+  filter: hue-rotate(260deg);
+}
+.high {
+  margin-top: 1rem;
+  width: 40vh;
+  height: auto;
+  float: left;
+  cursor: pointer;
+  border-radius: 15px;
+  border: 5px solid rgb(238, 234, 12);
+  filter: hue-rotate(70deg);
+}
+.teacherScore {
   margin-top: 1rem;
   width: 40vh;
   height: auto;
