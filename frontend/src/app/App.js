@@ -12,19 +12,18 @@ import ClassTeacher from '../features/ClassTeacher/TeacherRoom';
 
 
 function App() {
-  const [who,setWho] = useState(localStorage.getItem("user")&&"teacher") 
   // "teacher", "room"
   return (
     <div className='App'>
       <ChakraProvider>
         <Switch>
           <Route path="/class/student" exact render={()=><StudentRoom />}/>
-          <Route path="/" exact render={()=><MainPage setWho={setWho}/>}/>
+          <Route path="/" exact render={()=><MainPage />}/>
           {/* <Route path="/" exact render={()=><MainPage/>}/> */}
           <Route path="/class/student/login" exact render={(props)=><StudentLogin />}/>
-          <Route path="/class/teacher" exact render={(props)=><ClassTeacher setWho={setWho}/>}/>
+          <Route path="/class/teacher" exact render={(props)=><ClassTeacher />}/>
         </Switch>
-        {who ==="teacher" &&<TeacherApp who={who} setWho={setWho}/>}
+        <TeacherApp />
       </ChakraProvider>
     </div>
   );
