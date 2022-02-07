@@ -26,7 +26,7 @@ function Sidebar({user,setUser}) {
             <Link onClick={onClose} to="/home">홈</Link>
             <Link onClick={onClose} to="/students">학생</Link>
             <Link onClick={onClose} to="/quiz/folder">퀴즈</Link>
-            <Link onClick={onClose} to="/conference">수업중</Link>
+            <Link onClick={onClose} to="/onair">수업중</Link>
             <Link onClick={onClose} to="/myconference">내수업내역</Link>
             <Link onClick={onClose} to="/settings">환경설정</Link>
             <Link onClick={onClose} to="/settings">연극 / 공연</Link>
