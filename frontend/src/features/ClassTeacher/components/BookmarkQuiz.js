@@ -45,7 +45,7 @@ const BookmarkQuiz = () => {
                 <h2>
                   <AccordionButton>
                     <Box className='in-fd-quiz' flex='1'>
-                      <Image src={qicon} boxSize='4%' alt='Q?' />
+                      <Image src='https://i.ibb.co/LpSCBYt/qicon.png' boxSize='4%' alt='Q?' />
                       <Text className='in-fd-name'>{q.subject}</Text>
                       <Text>{q.quizTitle}</Text>
                     </Box>
@@ -54,7 +54,7 @@ const BookmarkQuiz = () => {
                 </h2>
                 <AccordionPanel pb={4} className='in-fd-quiz-open'>
                   <div className='in-fd-quiz in-fd-acco-content'>
-                    <Image src={aicon} boxSize='4%' alt='A!' />
+                    <Image src='https://i.ibb.co/Wy3q8HN/question.png' boxSize='4%' alt='A!' />
                     <Text className='in-fd-name'>내용</Text>
                     <Text className='in-fd-quiz-last'>{q.quizContents}</Text>
                   </div>
