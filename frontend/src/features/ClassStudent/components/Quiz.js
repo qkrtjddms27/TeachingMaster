@@ -5,18 +5,18 @@ import Timer from './Timer';
 
 const Quiz = ({ setModalForm, setOX, quizs }) => {
   const quiz = {
-    "quizId": quizs[0].quizId,
-    "subject": quizs[0].subject,
-    "quizPhoto": quizs[0].quizPhoto,
-    "quizTitle": quizs[0].quizTitle,
-    "quizContents": quizs[0].quizContents,
-    "quizAnswer": quizs[0].quizAnswer,
-    "openStatus": quizs[0].openStatus,
-    "quizTimeout": quizs[0].quizTimeout,
-    "quizGrade": quizs[0].quizGrade,
-    "userId": quizs[0].userId,
+    "quizId": quizs[quizs.length - 1].quizId,
+    "subject": quizs[quizs.length - 1].subject,
+    "quizPhoto": quizs[quizs.length - 1].quizPhoto,
+    "quizTitle": quizs[quizs.length - 1].quizTitle,
+    "quizContents": quizs[quizs.length - 1].quizContents,
+    "quizAnswer": quizs[quizs.length - 1].quizAnswer,
+    "openStatus": quizs[quizs.length - 1].openStatus,
+    "quizTimeout": quizs[quizs.length - 1].quizTimeout,
+    "quizGrade": quizs[quizs.length - 1].quizGrade,
+    "userId": quizs[quizs.length - 1].userId,
     "options": [
-      quizs[0].option1,quizs[0].option2, quizs[0].option3,quizs[0].option4
+      quizs[quizs.length - 1].option1,quizs[quizs.length - 1].option2, quizs[quizs.length - 1].option3,quizs[quizs.length - 1].option4
     ]
   }
 

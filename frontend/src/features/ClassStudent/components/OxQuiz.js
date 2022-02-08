@@ -7,15 +7,19 @@ import x from '../image/letter-x.png'
 
 const OxQuiz = ({ setModalForm, setOX , quizs}) => {
   const quiz = {
-    "quizContent": quizs[0].quizContents,
-    "quizAnswer": quizs[0].quizAnswer * 1
+    "quizContent": quizs[quizs.length - 1].quizContents,
+    "quizAnswer": quizs[quizs.length - 1].quizAnswer
   }
+  console.log(quiz.quizAnswer)
+  console.log(typeof(quiz.quizAnswer))
+  
   const [choice, setChoice] = useState('0')
   const axiosMyQuiz = () => {
 
     sessionStorage.setItem('studentresult', quiz.quizAnswer === choice)
     sessionStorage.setItem('quizId', 0)
 
+    console.log(quiz.quizAnswer === choice)
     setOX(quiz.quizAnswer === choice)
     setModalForm('result')
   }
