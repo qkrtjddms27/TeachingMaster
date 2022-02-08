@@ -8,10 +8,11 @@ import axios from 'axios'
 import { setToken, serverUrl } from '../../components/TOKEN'
 import { useHistory } from 'react-router-dom'
 // 유저정보에서 선생님 사진 받아오기
-const Home = ({user,setUser}) => {
+const Home = ({user,setUser,setHeader}) => {
   const history = useHistory()
   const [quiz,setQuiz] =useState([])
   useEffect(()=>{
+    setHeader(true)
     AOS.init()
   },[])
 
