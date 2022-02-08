@@ -82,10 +82,6 @@ class StudentRoom extends Component {
     this.changeAudiostate = this.changeAudiostate.bind(this)
 
     // quiz
-    this.handleQUIZIdChange = this.handleQUIZIdChange.bind(this);
-    this.handleQUIZanswerChange = this.handleQUIZanswerChange.bind(this);
-    this.quizHandler = this.quizHandler.bind(this);
-
     //학생 결과 전송
     this.sendresultHandle = this.sendresultHandle.bind(this);
   }
@@ -105,7 +101,7 @@ class StudentRoom extends Component {
       audiostate: !this.state.audiostate
     })
   }
-
+  
   handleHistory(path) {
     this.props.history.push(path)
   }
@@ -167,7 +163,7 @@ class StudentRoom extends Component {
       message: '',
     });
   }
-
+  
   sendmessageByEnter(e) {
     if (e.key === 'Enter') {
       this.setState({
@@ -219,99 +215,23 @@ class StudentRoom extends Component {
     }
   }
 
-  //quiz
-// window.addEventListener("storage")
-sendresultHandle(){
-
-  const mySession = this.state.session;
-  console.log(this.state.student.studentId);
-  console.log();
-  mySession.signal({
-    data:`${this.state.myUserName},${sessionStorage.getItem('quizId')},${sessionStorage.getItem('studentresult')}`,
-    to: [],
-    type: 'studentQuizresult',
-  });
+  //quiz 학생 결과 전송
   
-  this.setState({
-    studentAnswer:'',
-  });
-  sessionStorage.removeItem('studentresult');
-}
+  sendresultHandle(){
+    const mySession = this.state.session;
+    mySession.signal({
+      data:`${this.state.student.studentId},${sessionStorage.getItem('quizId')},${sessionStorage.getItem('studentresult')}`,
+      to: [],
+      type: 'studentQuizresult',
+    });
+    
+    this.setState({
+      studentAnswer:'',
+    });
+    sessionStorage.removeItem('studentresult');
+  }
 
-handleQUIZIdChange(e) {
-  this.setState({
-    quizId: sessionStorage.getItem('quizText'),
-  });
   
-}
-
-handleQUIZanswerChange(e) {
-  this.setState({
-    quizAnswer: sessionStorage.getItem('quizAnswer'),
-  });
-  
-  
-}
-
-quizHandler(){
-
-  this.setState({
-  quizs: [
-    ...this.state.quizs,//스프에드 연산자
-    {
-      quizId: this.state.quizId,
-      subject: this.state.subject,
-      quizPhoto: this.state.quizPhoto,
-      quizTitle: this.state.quizTitle,
-      quizContents: this.state.quizContents,
-      quizAnswer: this.state.quizAnswer,
-      openStatus: this.state.openStatus,
-      quizTimeout: this.state.quizTimeout,
-      quizGrade: this.state.quizGrade,
-      userId: this.state.userId,
-      option1 : this.state.option1,
-      option2 : this.state.option2,
-      option3 : this.state.option3,
-      option4 : this.state.option4,
-
-
-      chatClass: 'quizs__item--operator',
-    },
-  ],
-  });
-  const mySession = this.state.session;
-
-mySession.signal({
-  data:`${this.state.quizId},${this.state.subject},${this.state.quizPhoto},${this.state.quizTitle},${this.state.quizContents},${this.state.quizAnswer},${this.state.openStatus},${this.state.quizTimeout},${this.state.quizGrade},${this.state.myUserName},${this.state.option1},${this.state.option2},${this.state.option3},${this.state.option4},${this.state.studentId},${this.state.studentAnswer}`,
-  to: [],
-  type: 'quiz',
-});
-
-this.setState({
-  quizId: '',
-  subject: '',
-  quizPhoto: '',
-  quizTitle: '',
-  quizContents: '',
-  quizAnswer: '',
-  openStatus: true,
-  quizTimeout: '',
-  quizGrade: '',
-  userId:'',
-  option1:'',
-  option2:'',
-  option3:'',
-  option4:'',
-  studentId:'',
-  studentAnswer:'',
-});
-sessionStorage.removeItem('quizText');
-sessionStorage.removeItem('quizAnswer');
-sessionStorage.removeItem('quizset');
-}
-
-//modal
-
   joinSession() {
     this.OV = new OpenVidu();
     console.log("join!")
@@ -322,7 +242,7 @@ sessionStorage.removeItem('quizset');
       () => {
 
         let mySession = this.state.session;
-
+        
         mySession.on('streamCreated', (event) => {
 
           let subscriber = mySession.subscribe(event.stream, undefined);
@@ -359,44 +279,27 @@ sessionStorage.removeItem('quizset');
         });
         
         //quiz
+        //ox용
         mySession.on('signal:quiz', (event) => {
-          let quizdata = event.data.split(',');
-          if (quizdata[9] !== this.state.myUserName) {
+          let quizdata = JSON.parse(event.data);
             this.setState({
               quizs: [
                 ...this.state.quizs,
                 {
-                  quizId:quizdata[0],
-                  subject:quizdata[1],
-                  quizPhoto:quizdata[2],
-                  quizTitle:quizdata[3],
-                  quizContents:quizdata[4],
-                  quizAnswer:quizdata[5],
-                  openStatus:quizdata[6],
-                  quizTimeout:quizdata[7],
-                  quizGrade:quizdata[8],
-                  userId:quizdata[9],
-                  option1:quizdata[10],
-                  option2:quizdata[11],
-                  option3:quizdata[12],
-                  option4:quizdata[13],
-                  studentId:quizdata[14],
-                  studentAnswer:quizdata[15],
-
+                  quizContents:quizdata.value,
+                  quizAnswer:quizdata.ans,
+                  
                   chatClass: 'quizs__item--visitor',
                 },
               ],
               
-            });
-          }
-        });
+            });            
+          });
 
         //북마크 용 quiz
         mySession.on('signal:bookmarkQuiz', (event) => {
-        // let quizdata = event.data.split(',');
         
           let quizdata = JSON.parse(event.data);
-          // if (quizdata.userId[9] !== this.state.myUserName) {
             this.setState({
               quizs: [
                 ...this.state.quizs,
@@ -421,9 +324,6 @@ sessionStorage.removeItem('quizset');
               ],
               
             });
-
-            //모달 창 오픈
-        // }
         });
         
         this.getToken().then((token) => {
@@ -633,8 +533,7 @@ sessionStorage.removeItem('quizset');
                   {this.state.audiostate ? <div className='warning'>마이크가 켜져있어요</div>:<div  className='warning' />}
                 <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={OO} title='발표하자' />
                 <StudentModal kind='quiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={XX} title='퀴즈' />
-                <StudentModal kind='oxQuiz' iconAs={OO} title='OX퀴즈' />
-                <button onClick={this.sendresultHandle}> 결과 제출</button>
+                <StudentModal kind='oxQuiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={OO} title='OX퀴즈' />
                 </div>
           </Box>
         )}

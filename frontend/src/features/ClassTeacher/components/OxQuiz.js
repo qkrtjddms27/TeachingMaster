@@ -2,7 +2,7 @@ import { ModalBody, ModalCloseButton, ModalContent, ModalHeader, Textarea, Radio
 import '../scss/TeacherModal.scss'
 import React, { useState } from 'react';
 
-const OxQuiz = ({quizQ}) => {
+const OxQuiz = ({quizQ, onClose}) => {
   const [ans, setAns] = useState('1')
   const [value, setValue] = useState('')
   const inputChange = (e) => {
@@ -12,7 +12,8 @@ const OxQuiz = ({quizQ}) => {
   const submitOX = () => {
     console.log(`inputData: ${value}`)
     console.log(`answer: ${ans}`)
-    sessionStorage.setItem('OXQuiz',{'value':value, 'ans':ans})
+    sessionStorage.setItem('OXQuiz',JSON.stringify({'value':value, 'ans':ans}))
+    onClose()
     quizQ()
   }
 

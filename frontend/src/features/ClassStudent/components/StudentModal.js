@@ -31,7 +31,7 @@ const StudentModal = ({kind, iconAs, title,setState, quizs, resultQ }) => {
         <ModalOverlay />
         {modalForm === 'sticker' && <Sticker onClose={onClose} />}
         {modalForm === 'quiz' && <Quiz quizs = {quizs} onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
-        {modalForm === 'oxQuiz' && <OxQuiz onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
+        {modalForm === 'oxQuiz' && <OxQuiz quizs = {quizs} onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
         {modalForm === 'result' && <QuizResult resultQ={resultQ}  ox={ox} onClose={onClose} />}
         {modalForm === 'announce' && <Announce setState={setState} onClose={onClose}/>}
       </Modal>

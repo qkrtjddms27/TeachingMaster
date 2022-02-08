@@ -390,56 +390,56 @@ class Classroom extends Component {
         
         //quiz
         //ox용
-        mySession.on('signal:quiz', (event) => {
-          let quizdata = JSON.parse(event.data);
-          //if (quizdata[9] !== this.state.myUserName) {
-            this.setState({
-              quizs: [
-                ...this.state.quizs,
-                {
-                  quizContents:quizdata.value,
-                  quizAnswer:quizdata.quizAnswer,
+    //     mySession.on('signal:quiz', (event) => {
+    //       let quizdata = JSON.parse(event.data);
+    //       //if (quizdata[9] !== this.state.myUserName) {
+    //         this.setState({
+    //           quizs: [
+    //             ...this.state.quizs,
+    //             {
+    //               quizContents:quizdata.value,
+    //               quizAnswer:quizdata.ans,
                   
-                  chatClass: 'quizs__item--visitor',
-                },
-              ],
+    //               chatClass: 'quizs__item--visitor',
+    //             },
+    //           ],
               
-            });
-         // }
-      });
+    //         });
+    //      // }
+    //   });
       
-      //북마크 용
-      mySession.on('signal:bookmarkQuiz', (event) => {
-        // let quizdata = event.data.split(',');
+    //   //북마크 용
+    //   mySession.on('signal:bookmarkQuiz', (event) => {
+    //     // let quizdata = event.data.split(',');
         
-        let quizdata = JSON.parse(event.data);
-        // if (quizdata.userId[9] !== this.state.myUserName) {
-          this.setState({
-            quizs: [
-              ...this.state.quizs,
-              {
-                quizId:quizdata.quizId,
-                subject:quizdata.subject,
-                quizPhoto:quizdata.quizPhoto,
-                quizTitle:quizdata.quizTitle,
-                quizContents:quizdata.quizContents,
-                quizAnswer:quizdata.quizAnswer,
-                openStatus:quizdata.openStatus,
-                quizTimeout:quizdata.quizTimeout,
-                quizGrade:quizdata.quizGrade,
-                userId:quizdata.userId,
-                option1:quizdata.options[0],
-                option2:quizdata.options[1],
-                option3:quizdata.options[2],
-                option4:quizdata.options[3],
+    //     let quizdata = JSON.parse(event.data);
+    //     // if (quizdata.userId[9] !== this.state.myUserName) {
+    //       this.setState({
+    //         quizs: [
+    //           ...this.state.quizs,
+    //           {
+    //             quizId:quizdata.quizId,
+    //             subject:quizdata.subject,
+    //             quizPhoto:quizdata.quizPhoto,
+    //             quizTitle:quizdata.quizTitle,
+    //             quizContents:quizdata.quizContents,
+    //             quizAnswer:quizdata.quizAnswer,
+    //             openStatus:quizdata.openStatus,
+    //             quizTimeout:quizdata.quizTimeout,
+    //             quizGrade:quizdata.quizGrade,
+    //             userId:quizdata.userId,
+    //             option1:quizdata.options[0],
+    //             option2:quizdata.options[1],
+    //             option3:quizdata.options[2],
+    //             option4:quizdata.options[3],
 
-                chatClass: 'quizs__item--visitor',
-              },
-            ],
+    //             chatClass: 'quizs__item--visitor',
+    //           },
+    //         ],
             
-          });
-        // }
-    });
+    //       });
+    //     // }
+    // });
 
 
     //quiz 학생 결과 가지기 용
@@ -614,7 +614,7 @@ class Classroom extends Component {
                 </Button>
               </div>
               <div className='right_btn_box'>
-                <TeacherModal kind='ox' quizQ = {this.quizHandlerStar} iconAs={MdQuiz} title='OX 퀴즈' />
+                <TeacherModal kind='ox' quizQ = {this.quizHandler} iconAs={MdQuiz} title='OX 퀴즈' />
                 <TeacherModal kind='bookmark' quizQ = {this.quizHandlerStar} iconAs={BsFillStarFill} title='즐겨찾기 퀴즈' />
                 {this.state.videostate ? (
                   <Toast setState={this.changeVideostate} iconAs={BsFillCameraVideoFill} title='Video Off'

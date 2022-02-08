@@ -26,7 +26,7 @@ const TeacherModal = ({ kind, iconAs, title, quizQ }) => {
       >
         <ModalOverlay />
         {modalForm === 'bookmark' && <BookmarkQuiz onClose = {onClose} quizQ = {quizQ} setModalForm={setModalForm}/>}
-        {modalForm === 'ox' && <OxQuiz quizQ = {quizQ} />}
+        {modalForm === 'ox' && <OxQuiz onClose = {onClose} quizQ = {quizQ} />}
       </Modal>
     </>
   );
