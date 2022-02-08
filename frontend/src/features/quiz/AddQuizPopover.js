@@ -42,7 +42,8 @@ const AddQuizPopover = ({myFolders, setMyFolders}) => {
       <Popover placement='top-start'>
           <PopoverTrigger>
             {/* <Image data-aos="fade-up-left" data-aos-duration="1500" alt='더하기' className='plus-button' src={add} /> */}
-            <img data-aos="fade-up-left" data-aos-duration="1500" alt='더하기' className='plus-button' src={add} />
+            {/* <img data-aos="fade-up-left" data-aos-duration="1500" alt='더하기' className='plus-button' src={add} /> */}
+            <img data-aos="fade-up-left" data-aos-duration="1500" alt='더하기+' className='plus-button' src={require("./image/add.png").default} />
           </PopoverTrigger>
           <PopoverContent>
             <PopoverHeader fontWeight='semibold'>
