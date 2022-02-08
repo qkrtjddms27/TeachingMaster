@@ -8,23 +8,22 @@ import { useEffect, useState } from 'react';
 import MainPage from '../features/mainpage/MainPage';
 import StudentRoom from '../features/ClassStudent/StudentRoom';
 import StudentLogin from '../features/ClassStudent/StudentLogin';
-import ClassTeacher from '../features/ClassTeacher/TeacherRoom';
 
 
 function App() {
-  // "teacher", "room"
+  const [header,setHeader] =useState(false)
   const [student,setStudent] = useState({})
+
   return (
     <div className='App'>
       <ChakraProvider>
-        <Switch>
-          <Route path="/" exact render={()=><MainPage />}/>
-          
-          <Route path="/class/student/login" exact render={(props)=><StudentLogin student={student} setStudent={setStudent} />}/>
-          <Route path="/class/student" exact render={()=><StudentRoom student={student} setStudent={setStudent} />}/>
-          <Route path="/class/teacher/:roomId" exact render={(props)=><ClassTeacher />}/>
+        <TeacherApp header={header} setHeader={setHeader}/>
+        <Switch> 
+          {/* 헤더 안쓰는 곳 */}
+          <Route path="/"   exact render={()=><MainPage setHeader={setHeader} />}/>
+          <Route path="/class/student/login" exact render={(props)=><StudentLogin setHeader={setHeader} student={student} setStudent={setStudent} />}/>
+          <Route path="/class/student" exact render={()=><StudentRoom setHeader={setHeader} student={student} setStudent={setStudent} />}/>
         </Switch>
-        <TeacherApp />
       </ChakraProvider>
     </div>
   );

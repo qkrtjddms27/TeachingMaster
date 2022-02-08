@@ -6,8 +6,12 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { serverUrl, setToken } from '../../components/TOKEN';
+import { useEffect } from 'react';
 
-const StudentLogin = ({student,setStudent}) => {
+const StudentLogin = ({student,setStudent,setHeader}) => {
+  useEffect(()=>{
+    setHeader(false)
+  },[])
   const history = useHistory()
   const [studentId, setStudentId] = useState('')
   const [grade, setGrade] = useState('')
@@ -37,7 +41,7 @@ const StudentLogin = ({student,setStudent}) => {
     <div className='student_login'>
       <div className='box'>
         <div className='left'>
-          <Image className='penguin' src={penguin} />
+          <Image className='penguin' src="https://cdn.discordapp.com/attachments/885744368399560725/940498613614805022/be64e7a5abcb6882.png" />
         </div>
         <div className='right'>
           <div className='id'>

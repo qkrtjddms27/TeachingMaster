@@ -19,7 +19,6 @@ import StudentScreen from './components/StudentScreen'
 // const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
-const user = JSON.parse(localStorage.getItem('user'))
 
 class Classroom extends Component {
   constructor(props) {
@@ -27,7 +26,7 @@ class Classroom extends Component {
     this.state = {
       // OV
       mySessionId: this.props.match.params.roomId,
-      myUserName: user.userName,
+      myUserName: this.props.user.userName,
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
@@ -135,6 +134,7 @@ class Classroom extends Component {
     }
   } 
   componentDidMount() {
+    this.setState({ user : JSON.parse(localStorage.getItem('user'))})
     window.addEventListener('beforeunload', this.onbeforeunload);
     this.leaveSession()
   }
@@ -354,10 +354,6 @@ class Classroom extends Component {
 
           let subscribers = this.state.subscribers;
           subscribers.push(subscriber);
-          subscriber['student'] = false
-          subscriber['teacher'] = true
-          console.log('늦은 교사', subscriber)
-          // Update the state with the new subscribers
           this.setState({
             subscribers: subscribers,
           });
@@ -517,7 +513,7 @@ class Classroom extends Component {
       session: undefined,
       subscribers: [],
       mySessionId: this.props.match.params.roomId,
-      myUserName: user.userName,
+      myUserName: this.props.user.userName,
       mainStreamManager: undefined,
       publisher: undefined
     });
@@ -534,7 +530,7 @@ class Classroom extends Component {
         {this.state.session === undefined && (
           <div className="login_box"> 
               <form className="form-group" onSubmit={this.joinSession}>
-                <img className="teacher_img" src={user.userProfile} alt="선생님사진"/>
+                <img className="teacher_img" src={this.props.user.userProfile} alt="선생님사진"/>
               <div>
               <span className="label-control">선생님 : </span>
                   <input

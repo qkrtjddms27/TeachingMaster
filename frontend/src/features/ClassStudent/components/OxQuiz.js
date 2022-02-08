@@ -37,10 +37,10 @@ const OxQuiz = ({ setModalForm, setOX , quizs}) => {
         </div>
         <div className='ox-quiz-content'>
           <div className='ox-quiz-option' id={choice === '1' ? 'selected' : ''} onClick={() => setChoice('1')}>
-            <Image src={o} alt='O' boxSize='150px' />
+            <Image src="https://i.ibb.co/N67Qt5H/letter-o.png" alt='O' boxSize='150px' />
           </div>
           <div className='ox-quiz-option' id={choice === '2' ? 'selected' : ''} onClick={() => setChoice('2')}>
-            <Image src={x} alt='X' boxSize='150px' />
+            <Image src="https://i.ibb.co/ZhRZcMg/letter-x.png" alt='X' boxSize='150px' />
           </div>
         </div>
       </ModalBody>

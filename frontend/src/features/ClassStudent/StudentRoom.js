@@ -9,15 +9,14 @@ import Toast from './components/Toast';
 import UserVideoComponent from './openVidu/UserVideoComponent';
 import Messages from './components/Messages';
 import StudentModal from './components/StudentModal';
+
 import micOn from './image/말할래요.png'
 import micOff from './image/쉿버튼.png'
 import CamOn from './image/카메라켜기.png'
 import CamOff from './image/카메라끄기.png'
-import quizDino from './image/퀴즈공룡.png'
-import OO from './image/O.png'
-import penguin from './image/펭귄.png'
-import XX from './image/X.png'
 
+// import quizDino from './image/퀴즈공룡.png'
+const quizDino = "https://cdn.discordapp.com/attachments/885744368399560725/940498039402037248/Pngtreecute_lively_green_little_dinosaur_4659657.png"
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
 
@@ -396,7 +395,7 @@ class StudentRoom extends Component {
             <div className='student_login'>
               <div className='box'>
                 <div className='left'>
-                  <Image className='penguin' src={penguin} />
+                  <Image className='penguin' src="https://cdn.discordapp.com/attachments/885744368399560725/940498613614805022/be64e7a5abcb6882.png" />
                 </div>
                 <div className='right'> 
                   <div className='grade_room'>
