@@ -413,8 +413,8 @@ class Classroom extends Component {
                 </Button>
               </div>
               <div className='right_btn_box'>
-                <TeacherModal kind='ox' iconAs={MdQuiz} title='즐겨찾기 퀴즈' />
-                <TeacherModal kind='bookmark' iconAs={BsFillStarFill} title='OX 퀴즈' />
+                <TeacherModal kind='ox' iconAs={MdQuiz} title='OX 퀴즈' />
+                <TeacherModal kind='bookmark' iconAs={BsFillStarFill} title='즐겨찾기 퀴즈' />
                 {this.state.videostate ? (
                   <Toast setState={this.changeVideostate} iconAs={BsFillCameraVideoFill} title='Video Off'
                     change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.500'} />

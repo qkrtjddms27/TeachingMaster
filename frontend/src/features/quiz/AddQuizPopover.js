@@ -41,10 +41,7 @@ const AddQuizPopover = ({myFolders, setMyFolders}) => {
     <div>
       <Popover placement='top-start'>
           <PopoverTrigger>
-            {/* <Image data-aos="fade-up-left" data-aos-duration="1500" alt='더하기' className='plus-button' src={add} /> */}
-            {/* <img data-aos="fade-up-left" data-aos-duration="1500" alt='더하기' className='plus-button' src={add} /> */}
-            {/* <img data-aos="fade-up-left" data-aos-duration="1500" alt='더하기+' className='plus-button' src={require("./image/add.png").default} /> */}
-            <Image data-aos="fade-up-left" data-aos-duration="1500" alt='더하기+' className='plus-button' src={`${process.env.PUBLIC_URL}/quiz_assets/add.png`} />
+            <Image data-aos="fade-up-left" data-aos-duration="1500" alt='더하기' className='plus-button' src='https://i.ibb.co/cy0srwg/add.png' />
           </PopoverTrigger>
           <PopoverContent>
             <PopoverHeader fontWeight='semibold'>
