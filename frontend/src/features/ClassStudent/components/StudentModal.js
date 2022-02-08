@@ -7,7 +7,7 @@ import OxQuiz from './OxQuiz';
 import QuizResult from './QuizResult';
 import Announce from './Announce';
 
-const StudentModal = ({kind, iconAs, title,setState }) => {
+const StudentModal = ({kind, iconAs, title,setState, quizs, resultQ }) => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure()
   const [modalForm, setModalForm] = useState(null)
   const modalOpen = (kind) => {
@@ -30,9 +30,9 @@ const StudentModal = ({kind, iconAs, title,setState }) => {
       >
         <ModalOverlay />
         {modalForm === 'sticker' && <Sticker onClose={onClose} />}
-        {modalForm === 'quiz' && <Quiz onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
+        {modalForm === 'quiz' && <Quiz quizs = {quizs} onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
         {modalForm === 'oxQuiz' && <OxQuiz onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
-        {modalForm === 'result' && <QuizResult ox={ox} onClose={onClose} />}
+        {modalForm === 'result' && <QuizResult resultQ={resultQ}  ox={ox} onClose={onClose} />}
         {modalForm === 'announce' && <Announce setState={setState} onClose={onClose}/>}
       </Modal>
     </>

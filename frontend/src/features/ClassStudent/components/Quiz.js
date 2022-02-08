@@ -3,23 +3,20 @@ import { useState } from 'react';
 import '../scss/StudentModal.scss'
 import Timer from './Timer';
 
-const Quiz = ({ setModalForm, setOX }) => {
+const Quiz = ({ setModalForm, setOX, quizs }) => {
   const quiz = {
-    "quizId": 3,
-    "subject": "English",
-    "quizPhoto": "http://dummyimage.com/135x100.png/cc0000/ffffff",
-    "quizTitle": "Software Engineer II",
-    "quizContents": "Nulla tempus.",
-    "quizAnswer": 3,
-    "openStatus": true,
-    "quizTimeout": 2,
-    "quizGrade": 5,
-    "userId": "ssafy3",
+    "quizId": quizs[0].quizId,
+    "subject": quizs[0].subject,
+    "quizPhoto": quizs[0].quizPhoto,
+    "quizTitle": quizs[0].quizTitle,
+    "quizContents": quizs[0].quizContents,
+    "quizAnswer": quizs[0].quizAnswer,
+    "openStatus": quizs[0].openStatus,
+    "quizTimeout": quizs[0].quizTimeout,
+    "quizGrade": quizs[0].quizGrade,
+    "userId": quizs[0].userId,
     "options": [
-      "Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.",
-      "Praesent id massa id nisl venenatis lacinia.",
-      "Cras non velit nec nisi vulputate nonummy.",
-      "Cras pellentesque volutpat dui."
+      quizs[0].option1,quizs[0].option2, quizs[0].option3,quizs[0].option4
     ]
   }
 
@@ -31,6 +28,10 @@ const Quiz = ({ setModalForm, setOX }) => {
   const axiosMyQuiz = () => {         // 퀴즈 제출
     console.log(`quizId: ${quiz.quizId}`)
     console.log(`choice: ${choice}`)
+    
+    sessionStorage.setItem('studentresult', quiz.quizAnswer === choice)
+    sessionStorage.setItem('quizId', quiz.quizId)
+    
     setOX(quiz.quizAnswer === choice)
     setModalForm('result')
   }
