@@ -1,14 +1,6 @@
-.normal {
-  margin-top: 1rem;
-  width: 40vh;
-  height: auto;
-  float: left;
-  cursor: pointer;
-  border-radius: 15px;
-}
 .low {
   margin-top: 1rem;
-  width: 40vh;
+  width: 24rem;
   height: auto;
   float: left;
   cursor: pointer;
@@ -18,7 +10,7 @@
 }
 .high {
   margin-top: 1rem;
-  width: 40vh;
+  width: 24rem;
   height: auto;
   float: left;
   cursor: pointer;
@@ -26,26 +18,43 @@
   border: 5px solid rgb(238, 234, 12);
   filter: hue-rotate(70deg);
 }
+
+.normal {
+  margin-top: 1rem;
+  width: 24rem;
+  height: auto;
+  float: left;
+  cursor: pointer;
+  border: 3px solid #58cbcf;
+  border-radius: 15px;
+}
 .teacherScore {
   margin-top: 1rem;
-  width: 40vh;
+  width: 24rem;
   height: auto;
   float: left;
   cursor: pointer;
   border-radius: 15px;
+  border: 3px solid rgb(65, 134, 37);
 }
-.streamcomponent div {
+.studentName {
   position: absolute;
   margin-top: 1rem;
-  margin-left: 7%;
-  background: #ee9e9e;
+  background: #58cbcf;
   padding-left: 5px;
   padding-right: 5px;
-  color: #0f0f0f;
-  font-weight: bold;
+  color: #ffffff;
   border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
 }
-p {
-  margin: 0;
+
+.teacherName {
+  position: absolute;
+  margin-top: 1rem;
+  background: rgb(65, 134, 37);
+  padding-left: 5px;
+  padding-right: 5px;
+  color: rgb(255, 253, 253);
+  border-bottom-right-radius: 4px;
+  border-top-left-radius: 4px;
 }

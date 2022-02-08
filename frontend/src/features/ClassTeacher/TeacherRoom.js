@@ -372,18 +372,18 @@ class Classroom extends Component {
             <div className='top'>
               {/* 영상 받아오는 상자 */}
               <div className='student_box'>
-                {this.state.publisher !== undefined && (
-                  <div>
-                    {/* <UserVideoComponent streamManager={this.state.publisher} /> */}
-                    <UserVideoComponent score="teacherScore" streamManager={this.state.publisher} />
-                  </div>
-                )}
                 {this.state.subscribers.map((sub, i) => (
                   <div key={i}>
                     {/* <UserVideoComponent streamManager={sub} />  */}
                     <StudentScreen highlighting={this.state.highlighting} total={this.state.total}  streamManager={sub} />
                   </div>
                 ))}
+                {this.state.publisher !== undefined && (
+                  <div>
+                    {/* <UserVideoComponent streamManager={this.state.publisher} /> */}
+                    <UserVideoComponent score="teacherScore" streamManager={this.state.publisher} />
+                  </div>
+                )}
               </div>
               {/* 채팅 상자 */}
               <div className='chatting_box'>
