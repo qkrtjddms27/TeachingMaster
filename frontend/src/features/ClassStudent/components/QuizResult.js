@@ -26,7 +26,10 @@ const OX = ({ onClose, ox }) => {
     <ModalContent bgColor='transparent' boxShadow='none' w='70rem' h='30rem' marginY='7rem' marginX='1rem' >
       {/* <ModalCloseButton /> */}
       <ModalBody className='OX'>
-        <Image src={ox ? O : X} boxSize='lg' marginX='auto'/>
+        <Image src={ox ? 
+        "https://cdn.discordapp.com/attachments/885744368399560725/940500434345426944/O.png" : 
+        "https://cdn.discordapp.com/attachments/885744368399560725/940500440368418868/X.png"}
+         boxSize='lg' marginX='auto'/>
       </ModalBody>
     </ModalContent>
   );

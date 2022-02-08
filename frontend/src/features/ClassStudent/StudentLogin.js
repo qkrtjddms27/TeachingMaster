@@ -41,7 +41,7 @@ const StudentLogin = ({student,setStudent,setHeader}) => {
     <div className='student_login'>
       <div className='box'>
         <div className='left'>
-          <Image className='penguin' src={penguin} />
+          <Image className='penguin' src="https://cdn.discordapp.com/attachments/885744368399560725/940498613614805022/be64e7a5abcb6882.png" />
         </div>
         <div className='right'>
           <div className='id'>
