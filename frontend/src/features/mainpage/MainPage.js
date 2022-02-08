@@ -5,7 +5,11 @@ import Main1 from './Main1';
 import Main2 from './Main2';
 import Main3 from './Main3';
 import Concert from '../teacher/Concert';
-const MainPage = () => {
+const MainPage = ({setHeader}) => {
+  useEffect(()=>{
+    setHeader(false)
+  },[])
+  
   return(
   <div>
     <Main1 />
