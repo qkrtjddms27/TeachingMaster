@@ -95,7 +95,7 @@
 .quiz-option {
   padding: 2rem;
   border-radius: 1.2rem;
-  background-color: whitesmoke;
+  background-color: rgb(245, 245, 245);
   width: 48%;
   height: 45%;
   display: flex;
@@ -104,13 +104,56 @@
   font-weight: 400;
   font-size: 2rem;
   &#selected {
-    background-color: #a8bef5;
+    background-color: #f4f5a8;
     // &:hover {
-    //   background-color: #e2e8f8;
+    //   background-color: #c7e4f5;
     // }
   }
   &:hover {
-    background-color: #e2e8f8;
+    background-color: #f8f7e2;
     cursor: pointer;
+  }
+}
+.ox-quiz-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 3rem;
+  user-select: none;
+  .ox-quiz-name {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 1.2rem;
+    background-color: whitesmoke;
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+  .ox-quiz-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-between;
+    .ox-quiz-option {
+      margin: auto 0;
+      padding: 2rem;
+      border-radius: 1.2rem;
+      background-color: rgb(245, 245, 245);
+      width: 48%;
+      height: 80%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 400;
+      font-size: 2rem;
+      &#selected {
+        background-color: #f4f5a8;
+      }
+      &:hover {
+        background-color: #f8f7e2;
+        cursor: pointer;
+      }
+    }
   }
 }

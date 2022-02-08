@@ -55,8 +55,8 @@ const Home = ({user,setUser}) => {
                 {class_open?
               <div className='when-open'>
                 <Box className='class-enter' onClick={()=>{
-                  
-                  history.push('/class/teacher')
+                  const roomId = `ssafy${user.roomGrade}0${user.roomNum}`
+                  history.push(`/class/teacher/${roomId}`)
                 }} >교실 입장</Box>
                 <Box className='class-close' onClick={()=>setClass_open(!class_open)} >교실 닫기</Box>
               </div>:

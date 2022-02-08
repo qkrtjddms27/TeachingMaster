@@ -23,8 +23,8 @@
   display: flex;
   flex-flow: wrap;
   .box {
-    height: 80vh;
-    width: 80vw;
+    height: 40rem;
+    width: 70rem;
     background-color: rgba(245, 245, 245, 0.712);
     margin: auto;
     border-radius: 2.5rem;
@@ -33,7 +33,7 @@
     justify-content: space-evenly;
     align-items: center;
     .left {
-      width: 34vw;
+      width: 30rem;
       // margin: auto 0;
       .penguin {
         animation: pengSpinner 1.5s;
@@ -41,8 +41,8 @@
       }
     }
     .right {
-      width: 34vw;
-      height: 30vh;
+      width: 35rem;
+      height: 20rem;
       margin-right: 3rem;
       background-color: #9ee2fd;
       border-radius: 1.5rem;
@@ -64,7 +64,7 @@
         justify-content: space-between;
         select {
           background-color: whitesmoke;
-          width: 10vw;
+          width: 11rem;
         }
         .form-group {
           display: flex;

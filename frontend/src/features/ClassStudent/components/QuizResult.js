@@ -23,7 +23,7 @@ const OX = ({ onClose, ox }) => {
   }, [sec])
 
   return (
-    <ModalContent bgColor='transparent' w='70rem' h='30rem' marginY='7rem' marginX='1rem' >
+    <ModalContent bgColor='transparent' boxShadow='none' w='70rem' h='30rem' marginY='7rem' marginX='1rem' >
       {/* <ModalCloseButton /> */}
       <ModalBody className='OX'>
         <Image src={ox ? O : X} boxSize='lg' marginX='auto'/>
