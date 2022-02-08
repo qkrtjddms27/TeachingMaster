@@ -32,7 +32,7 @@ const Quiz = ({ setModalForm, setOX }) => {
     console.log(`quizId: ${quiz.quizId}`)
     console.log(`choice: ${choice}`)
     setOX(quiz.quizAnswer === choice)
-    setModalForm('OX')
+    setModalForm('result')
   }
 
   return (
