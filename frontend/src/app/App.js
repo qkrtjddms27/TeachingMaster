@@ -13,15 +13,16 @@ import ClassTeacher from '../features/ClassTeacher/TeacherRoom';
 
 function App() {
   // "teacher", "room"
+  const [student,setStudent] = useState({})
   return (
     <div className='App'>
       <ChakraProvider>
         <Switch>
-          <Route path="/class/student" exact render={()=><StudentRoom />}/>
           <Route path="/" exact render={()=><MainPage />}/>
-          {/* <Route path="/" exact render={()=><MainPage/>}/> */}
-          <Route path="/class/student/login" exact render={(props)=><StudentLogin />}/>
-          <Route path="/class/teacher" exact render={(props)=><ClassTeacher />}/>
+          
+          <Route path="/class/student/login" exact render={(props)=><StudentLogin student={student} setStudent={setStudent} />}/>
+          <Route path="/class/student" exact render={()=><StudentRoom student={student} setStudent={setStudent} />}/>
+          <Route path="/class/teacher/:roomId" exact render={(props)=><ClassTeacher />}/>
         </Switch>
         <TeacherApp />
       </ChakraProvider>

@@ -1,6 +1,4 @@
 .ClassStudent {
-  min-width: 1200px;
-  max-width: none;
   .student_login {
     .label-control {
       font-weight: 700;
@@ -8,7 +6,6 @@
       display: inline-block;
     }
     .form-control {
-      display: inline-block;
       width: 10rem;
       font-size: 2rem;
       background-color: rgba(251, 251, 251, 0);
@@ -19,7 +16,7 @@
       display: block;
     }
     .btn_box {
-      width: 100%;
+      width: 25rem;
       display: flex;
       justify-content: end;
       .submit_button {
@@ -39,30 +36,29 @@
   display: flex;
 
   .Conference_box {
-    height: 93vh;
-    width: 90vw;
+    height: 55rem;
+    width: 110rem;
     background-color: rgba(245, 245, 245, 0.712);
     display: flex;
     margin: auto;
-    margin-top: 3vh;
+    margin-top: 2rem;
     border-radius: 10px;
     box-shadow: 3px 3px 7px;
     .left {
-      width: 63vw;
+      width: 84rem;
       display: flex;
       flex-direction: column;
       .student_box {
-        height: 18vh;
-        margin-top: 2vh;
-        margin-left: 2vw;
+        height: 11rem;
+        margin-top: 1rem;
+        margin-left: 1rem;
         border-radius: 20px;
         display: flex;
         flex-wrap: nowrap;
-        background-color: rgba(202, 202, 202, 0.692);
+        background-color: rgba(190, 184, 184, 0.301);
         overflow-x: scroll;
         &::-webkit-scrollbar {
           visibility: hidden;
-          // visibility: visible;
           width: 1px;
         }
         &:hover {
@@ -83,8 +79,8 @@
         .teacher_box {
           flex: 9;
 
-          margin-top: 2vh;
-          border-radius: 3vh;
+          margin-top: 1rem;
+          border-radius: 15px;
           background-color: rgba(202, 202, 202, 0);
           img {
             width: 100%;
@@ -101,42 +97,52 @@
             margin-top: 5rem;
             cursor: pointer;
             &:hover {
-              transform: scale(1.1);
-              transition: 0.1s;
+              transform: scale(1.2);
+              transition: 0.2s;
             }
           }
         }
       }
     }
     .right {
-      .exitButton {
+      .right_up {
+        display: flex;
         margin-top: 1rem;
-        margin-left: 40vh;
-        width: 7rem;
-        background-color: #f53d3d;
-        color: white;
+        justify-content: space-around;
+        .grade_room {
+          color: #51ca9c;
+          display: inline-block;
+          font-weight: 700;
+          font-size: 1.5rem;
+        }
+        .exitButton {
+          width: 7rem;
+          background-color: #f53d3d;
+          color: white;
+        }
       }
+
       .chatting_box {
-        height: 81vh;
-        width: 25vw;
-        margin: 1.5vh 1vw 1vh 1vw;
+        height: 47rem;
+        width: 25rem;
+        margin: 1rem 1rem 1rem 1rem;
         padding: 1rem;
         border-radius: 10px;
-        background-color: rgba(98, 207, 78, 0.582);
+        background-color: rgba(63, 184, 147, 0.582);
         display: flex;
         flex-direction: column;
         flex-flow: wrap;
         .chatting_log {
-          height: 70vh;
-          width: 23vw;
+          height: 40rem;
+          width: 30rem;
           border-radius: 5px;
           padding-bottom: 1rem;
-          background-color: rgb(246, 233, 233);
+          background-color: rgb(227, 243, 238);
           .text {
             margin-left: 1rem;
             .chat_line {
               margin-top: 0.3rem;
-              width: 95%;
+              width: 30rem;
               .chat_name {
                 font-weight: 600;
                 text-align: center;
@@ -146,7 +152,7 @@
                 display: inline;
                 width: 100%;
                 margin-left: 0.5rem;
-                background-color: rgb(253, 208, 216);
+                background-color: rgb(3, 255, 242);
                 border-radius: 5px;
                 padding: 0.1rem 0.3rem;
               }
@@ -155,8 +161,8 @@
         }
         .input_box {
           background-color: whitesmoke;
-          height: 5vh;
-          width: 23vw;
+          height: 3rem;
+          width: 30rem;
           margin-top: 1rem;
         }
       }

@@ -2,35 +2,44 @@ import React, { useEffect, useState } from 'react';
 import {Box,Popover,PopoverTrigger,PopoverContent,PopoverBody,PopoverArrow,
   PopoverCloseButton,Heading,Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,
 } from '@chakra-ui/react'
-import { Button } from 'bootstrap';
 import UserVideoComponent from '../openVidu/UserVideoComponent'
 
-const StudentScreen = ({student,streamManager}) => {
+const StudentScreen = ({highlighting,streamManager,total}) => {
   const [memo,setMemo] = useState('')
+  let scoreState  = "normal"
   const onSubmit = (e)=>{
     e.preventDefault();
     console.log(memo)
     setMemo("")
   }
+  const student = JSON.parse(streamManager.stream.connection.data)
+  console.log(student)
+  // eslint-disable-next-line no-lone-blocks
+  { if (highlighting){
+    if(student.weeklyStar >=total){
+      scoreState = "high"
+    }
+    else{ scoreState = "low"
+  }}}
+
   return (
     <div>
       <Popover >
         <PopoverTrigger>
           <div className='student_screen' >
-            <UserVideoComponent streamManager={streamManager} />
+            <UserVideoComponent 
+            score={ scoreState}
+            streamManager={streamManager} />
           </div>
         </PopoverTrigger>
         <PopoverContent width="15rem">
           <PopoverArrow />
           <PopoverCloseButton />
           <PopoverBody>
-            <Heading>이름</Heading>
-            {/* <Heading>"{streamManager.name}"</Heading> */}
-            <div> 주간⭐:10</div>
-            <div> 총 ⭐:20</div>
+            <Heading>{student.clientData}</Heading>
+            <div> 주간⭐:{student.weeklyStar}</div>
+            <div> 총 ⭐:{student.allStar}</div>
             <div> 발표 시키기</div>
-            <div> 마이크 Off</div>
-            <div> 카메라 Off</div>
             <div> 별점 주기</div>
             <Accordion allowToggle>
               <AccordionItem>

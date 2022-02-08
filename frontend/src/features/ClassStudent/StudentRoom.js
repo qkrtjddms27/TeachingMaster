@@ -18,46 +18,29 @@ import OO from './image/O.png'
 import penguin from './image/펭귄.png'
 import XX from './image/X.png'
 
-// const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
-// const student = JSON.parse(localStorage.getItem('student'))
-
-// const student = {
-//   "address": "부산광역시 북구 구포3동 9987-42번지",
-//   "parentsName": "진진자라",
-//   "parentsPhone": "01066512222",
-//   "relation": "부",
-//   "roomGrade": 2,
-//   "roomNum": 1,
-//   "studentEmail": "pseseseps@naver.com",
-//   "studentId": "A12312B",
-//   "studentName": "진현은",
-//   "studentPhone": "01066511111",
-//   "studentProfile": "asdkgn123kasdnkgn2knagikegadg"
-// }
-
-const student = JSON.parse(localStorage.getItem('student'))
 
 class StudentRoom extends Component {
   constructor(props) {
     super(props);
-  
+    const student = this.props.student
     this.state = {
       // OV
-      mySessionId: 'ssafy' + (parseInt(student.roomGrade)*100 + parseInt(student.roomNum)),
-      myUserName: student.studentName,
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
       subscribers: [],
       // TM
+      student : student,
       messages: [],
       message: '',
       videostate: true,
       audiostate: false,
       highlighting: false,
       breaktime: false,
+      mySessionId: 'ssafy' + (parseInt(student.roomGrade)*100 + parseInt(student.roomNum)),
+      myUserName: student.studentName,
     };
 
     // OV
@@ -76,8 +59,6 @@ class StudentRoom extends Component {
     this.handleHistory = this.handleHistory.bind(this)
     this.changeVideostate = this.changeVideostate.bind(this)
     this.changeAudiostate = this.changeAudiostate.bind(this)
-    this.changeHighlightingstate = this.changeHighlightingstate.bind(this)
-    this.changeBreaktimestate = this.changeBreaktimestate.bind(this)
   }
 
 
@@ -95,18 +76,6 @@ class StudentRoom extends Component {
       audiostate: !this.state.audiostate
     })
   }
-  
-  changeHighlightingstate() {
-    this.setState({
-      highlighting: !this.state.highlighting
-    })
-  }
-  
-  changeBreaktimestate() {
-    this.setState({
-      breaktime: !this.state.breaktime
-    })
-  }
 
   handleHistory(path) {
     this.props.history.push(path)
@@ -117,11 +86,13 @@ class StudentRoom extends Component {
   componentDidUpdate(previousProps, previousState) {
     if (this.refs.chatoutput != null) {
       this.refs.chatoutput.scrollTop = this.refs.chatoutput.scrollHeight;
+      // this.setState({student:JSON.parse(localStorage.getItem('student'))}) 
     }
   } 
   componentDidMount() {
     window.addEventListener('beforeunload', this.onbeforeunload);
     this.leaveSession()
+
   }
 
   componentWillUnmount() {
@@ -220,32 +191,22 @@ class StudentRoom extends Component {
   }
 
   joinSession() {
-    // --- 1) Get an OpenVidu object ---
     this.OV = new OpenVidu();
     console.log("join!")
-    // --- 2) Init a session ---
     this.setState(
       {
         session: this.OV.initSession(),
       },
       () => {
-        // console.log('*****OV.init: ', this.OV.initSession())
-        // console.log('*****state.session: ', this.state.session)
+
         let mySession = this.state.session;
 
-        // --- 3) Specify the actions when events take place in the session ---
-        // On every new Stream received...
         mySession.on('streamCreated', (event) => {
-          // Subscribe to the Stream to receive it. Second parameter is undefined
-          // so OpenVidu doesn't create an HTML video by its own
+
           let subscriber = mySession.subscribe(event.stream, undefined);
-          subscriber['student'] = true
-          subscriber['teacher'] = false
-          console.log('늦은 학생', subscriber)
           let subscribers = this.state.subscribers;
           subscribers.push(subscriber);
 
-          // Update the state with the new subscribers
           this.setState({
             subscribers: subscribers,
           });
@@ -279,12 +240,15 @@ class StudentRoom extends Component {
           mySession
             .connect(
               token,
-              { clientData: this.state.myUserName, role:"student" },
+              // 여기가 데이터가 담기는 곳 !!!!
+              { clientData: this.state.myUserName, 
+                role:"student",
+                studentId:this.state.student.studentId,
+                weeklyStar: this.state.student.roomGrade,
+                allStar : this.state.student.roomNum     // 이 두값 바꿔주기
+              },
             )
             .then(() => {
-              // --- 5) Get your own camera stream ---
-              // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
-              // element: we will manage it on our own) and with the desired properties
               let publisher = this.OV.initPublisher(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
@@ -295,12 +259,8 @@ class StudentRoom extends Component {
                 insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
                 mirror: true, // Whether to mirror your local video or not
               });
-              // publisher['teacher'] = false
-              // publisher['student'] = true
-              // console.log('1등 학생', publisher)
-              // --- 6) Publish your stream ---
+             
               mySession.publish(publisher);
-              // Set the main video in the page to display our webcam and store our Publisher
               this.setState({
                 mainStreamManager: publisher,
                 publisher: publisher,
@@ -316,18 +276,16 @@ class StudentRoom extends Component {
   }
 
   leaveSession() {
-    // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
     const mySession = this.state.session;
     if (mySession) {
       mySession.disconnect();
     }
-    // Empty all properties...
     this.OV = null;
     this.setState({
       session: undefined,
       subscribers: [],
-      mySessionId: 'ssafy' + (parseInt(student.roomGrade)*100 + parseInt(student.roomNum)),
-      myUserName: student.studentName,
+      mySessionId: 'ssafy' + (parseInt(this.state.student.roomGrade)*100 + parseInt(this.state.student.roomNum)),
+      myUserName: this.state.student.studentName,
       mainStreamManager: undefined,
       publisher: undefined
     });
@@ -375,7 +333,7 @@ class StudentRoom extends Component {
                           value={mySessionId}
                           onChange={this.handleChangeSessionId}
                           required
-                          disabled
+                          // disabled
 
                         />
                       </div>
@@ -458,11 +416,14 @@ class StudentRoom extends Component {
 
               </div>
                 <div className='right'>
-                  <Button className='exitButton' onClick={() => {
-                    this.leaveSession()
-                    this.handleHistory('/')
-                    }}
-                  >수업 떠나기</Button>
+                  <div className='right_up'>
+                    <span className='grade_room'>{this.state.student.roomGrade}학년 {this.state.student.roomNum}반</span>
+                    <Button className='exitButton' onClick={() => {
+                      this.leaveSession()
+                      this.handleHistory('/')
+                      }}
+                    >수업 떠나기</Button>
+                  </div>
                 {/* 채팅 상자 */}
                   <div className='chatting_box'>
                       <div className="chatting_log" ref="chatoutput" id='chatting_scroll'>
@@ -481,6 +442,7 @@ class StudentRoom extends Component {
                   {this.state.audiostate ? <div className='warning'>마이크가 켜져있어요</div>:<div  className='warning' />}
                 <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={OO} title='발표하자' />
                 <StudentModal kind='quiz' iconAs={XX} title='퀴즈' />
+                <StudentModal kind='oxQuiz' iconAs={OO} title='OX퀴즈' />
                 </div>
           </Box>
         )}
