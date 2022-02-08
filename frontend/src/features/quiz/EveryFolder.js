@@ -70,7 +70,8 @@ const Folder = () => {
           <div data-aos="fade-up" data-aos-duration="1500" className='mine'>
             {/* <Link to="/quiz/folder/bookmark"><Image className='folder-icon' src={star} alt='즐겨찾기'/></Link>           */}
             {/* <Link to="/quiz/folder/bookmark"><Image className='folder-icon' src={require('./image/star.png')} alt='즐겨찾기'/></Link>           */}
-            <Link to="/quiz/folder/bookmark"><img className='folder-icon' src={require('./image/star.png')} alt='즐겨찾기*'/></Link>          
+            {/* <Link to="/quiz/folder/bookmark"><img className='folder-icon' src={require('./image/star.png')} alt='즐겨찾기*'/></Link>           */}
+            <Link to="/quiz/folder/bookmark"><Image className='folder-icon' src={`${process.env.PUBLIC_URL}/quiz_assets/star.png`} alt='즐겨찾기**'/></Link>          
             <Heading className='all-cart-mine-title'>즐겨찾기</Heading>
           </div>
           <div data-aos="fade-down" data-aos-duration="1500" className='mine'>
