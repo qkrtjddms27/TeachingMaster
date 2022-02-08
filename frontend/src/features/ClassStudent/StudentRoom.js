@@ -73,12 +73,12 @@ class StudentRoom extends Component {
     // 채팅
     this.handleChatMessageChange = this.handleChatMessageChange.bind(this);
     this.messageContainer = createRef(null);
-    this.sendmessageByClick = this.sendmessageByClick.bind(this);
     this.sendmessageByEnter = this.sendmessageByEnter.bind(this);
     // TM
     this.handleHistory = this.handleHistory.bind(this)
     this.changeVideostate = this.changeVideostate.bind(this)
     this.changeAudiostate = this.changeAudiostate.bind(this)
+    this.modalPop = this.modalPop.bind(this)
 
     // quiz
     //학생 결과 전송
@@ -87,6 +87,9 @@ class StudentRoom extends Component {
 
 
   // TM
+  modalPop(kind) {
+    this.props.modalOpen(kind)
+  }
   changeVideostate() {
     this.state.publisher.publishVideo(!this.state.videostate);
     this.setState({
@@ -139,30 +142,6 @@ class StudentRoom extends Component {
     });
   }
 
-  sendmessageByClick() {
-    this.setState({
-      messages: [
-        ...this.state.messages,
-        {
-          userName: this.state.myUserName,
-          text: this.state.message,
-          chatClass: 'messages__item--operator',
-        },
-      ],
-    });
-  
-    const mySession = this.state.session;
-    mySession.signal({
-      data: `${this.state.myUserName},${this.state.message}`,
-      to: [],
-      type: 'chat',
-    });
-  
-    this.setState({
-      message: '',
-    });
-  }
-  
   sendmessageByEnter(e) {
     if (e.key === 'Enter') {
       this.setState({
@@ -215,7 +194,6 @@ class StudentRoom extends Component {
   }
 
   //quiz 학생 결과 전송
-  
   sendresultHandle(){
     const mySession = this.state.session;
     mySession.signal({
@@ -299,30 +277,35 @@ class StudentRoom extends Component {
         mySession.on('signal:bookmarkQuiz', (event) => {
         
           let quizdata = JSON.parse(event.data);
-            this.setState({
-              quizs: [
-                ...this.state.quizs,
-                {
-                  quizId:quizdata.quizId,
-                  subject:quizdata.subject,
-                  quizPhoto:quizdata.quizPhoto,
-                  quizTitle:quizdata.quizTitle,
-                  quizContents:quizdata.quizContents,
-                  quizAnswer:quizdata.quizAnswer,
-                  openStatus:quizdata.openStatus,
-                  quizTimeout:quizdata.quizTimeout,
-                  quizGrade:quizdata.quizGrade,
-                  userId:quizdata.userId,
-                  option1:quizdata.options[0],
-                  option2:quizdata.options[1],
-                  option3:quizdata.options[2],
-                  option4:quizdata.options[3],
+          // console.log('*********************************')
+          // console.log('quizdata', quizdata)
+          // console.log('*********************************')
+          this.setState({
+            quizs: [
+              ...this.state.quizs,
+              {
+                quizId:quizdata.quizId,
+                subject:quizdata.subject,
+                quizPhoto:quizdata.quizPhoto,
+                quizTitle:quizdata.quizTitle,
+                quizContents:quizdata.quizContents,
+                quizAnswer:quizdata.quizAnswer,
+                openStatus:quizdata.openStatus,
+                quizTimeout:quizdata.quizTimeout,
+                quizGrade:quizdata.quizGrade,
+                userId:quizdata.userId,
+                option1:quizdata.options[0],
+                option2:quizdata.options[1],
+                option3:quizdata.options[2],
+                option4:quizdata.options[3],
 
-                  chatClass: 'quizs__item--visitor',
-                },
-              ],
-              
-            });
+                chatClass: 'quizs__item--visitor',
+              },
+            ],
+            
+          });
+          // console.log(this.state.quizs)
+          this.modalPop('quiz')
         });
         
         this.getToken().then((token) => {
@@ -530,9 +513,12 @@ class StudentRoom extends Component {
                       />
                   </div>
                   {this.state.audiostate ? <div className='warning'>마이크가 켜져있어요</div>:<div  className='warning' />}
-                <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={OO} title='발표하자' />
-                <StudentModal kind='quiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={XX} title='퀴즈' />
-                <StudentModal kind='oxQuiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={OO} title='OX퀴즈' />
+                <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={micOn} title='발표하자' 
+                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}/>
+                <StudentModal kind='quiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={micOn} title='퀴즈'
+                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}/>
+                <StudentModal kind='oxQuiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={micOn} title='OX퀴즈' 
+                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}/>
                 </div>
           </Box>
         )}

@@ -25,8 +25,6 @@ const StudentLogin = ({student,setStudent,setHeader}) => {
     axios({
       url: `${serverUrl}/student/${studentId}`,
       method: 'GET',
-      // 나중에 토큰 지우기!!!!
-      headers: setToken(),
     })
     .then(({data}) => {
       // console.log(data)

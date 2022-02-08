@@ -1,19 +1,13 @@
-import { Modal, ModalOverlay, Image, useDisclosure } from '@chakra-ui/react';
+import { Modal, ModalOverlay, Image } from '@chakra-ui/react';
 import '../scss/StudentModal.scss'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Sticker from './Sticker'
 import Quiz from './Quiz';
 import OxQuiz from './OxQuiz';
 import QuizResult from './QuizResult';
 import Announce from './Announce';
 
-const StudentModal = ({kind, iconAs, title,setState, quizs, resultQ }) => {
-  const { isOpen, onOpen, onClose, onToggle } = useDisclosure()
-  const [modalForm, setModalForm] = useState(null)
-  const modalOpen = (kind) => {
-    setModalForm(kind)
-    onOpen()
-  }
+const StudentModal = ({kind, iconAs, title, setState, quizs, resultQ, isOpen, onOpen, onClose, modalForm, setModalForm, modalOpen }) => {
   const [ox,setOX ] = useState(false)
   return (
     <>

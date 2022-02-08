@@ -1,7 +1,7 @@
 import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
 
-const Timer = ({ quizTime, axiosMyQuiz }) => {
+const Timer = ({ quizTime, axiosMyQuiz, choice }) => {
   const [sec, setSec] = useState(quizTime)
   const time = useRef(quizTime)
   const timerId = useRef(null)
@@ -16,7 +16,7 @@ const Timer = ({ quizTime, axiosMyQuiz }) => {
 
   useEffect(() => {
     if (time.current < 0) {           // 만약 타임 아웃이 발생했을 경우
-      axiosMyQuiz()
+      axiosMyQuiz(choice)
       clearInterval(timerId.current)
     }
   }, [sec])
