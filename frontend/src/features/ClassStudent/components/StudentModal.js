@@ -3,7 +3,8 @@ import '../scss/StudentModal.scss'
 import { useState } from 'react';
 import Sticker from './Sticker'
 import Quiz from './Quiz';
-import OX from './OX';
+import OxQuiz from './OxQuiz';
+import QuizResult from './QuizResult';
 import Announce from './Announce';
 
 const StudentModal = ({kind, iconAs, title,setState }) => {
@@ -25,12 +26,13 @@ const StudentModal = ({kind, iconAs, title,setState }) => {
         onClose={onClose}
         isOpen={isOpen}
         motionPreset='slideInBottom'
-        closeOnOverlayClick={modalForm!=='quiz' && modalForm !=='OX'}
+        closeOnOverlayClick={modalForm!=='quiz' && modalForm !=='OX' && modalForm !== 'oxQuiz'}
       >
         <ModalOverlay />
         {modalForm === 'sticker' && <Sticker onClose={onClose} />}
         {modalForm === 'quiz' && <Quiz onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
-        {modalForm === 'OX' && <OX ox={ox} onClose={onClose} />}
+        {modalForm === 'oxQuiz' && <OxQuiz onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
+        {modalForm === 'result' && <QuizResult ox={ox} onClose={onClose} />}
         {modalForm === 'announce' && <Announce setState={setState} onClose={onClose}/>}
       </Modal>
     </>
