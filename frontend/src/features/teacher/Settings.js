@@ -3,9 +3,11 @@ import React,{useState} from 'react'
 import './scss/setting.scss'
 import axios from 'axios'
 import { serverUrl,setToken } from '../../components/TOKEN'
+import { useHistory } from 'react-router-dom'
 
 const Settings = ({user,setUser}) => {
   const [imgBase64,setImagbase64] = useState(user.userProfile) // 파일 base64
+  const history = useHistory()
   const onSubmit = () =>{
     const data ={...user,"userProfile":imgBase64}
     axios({
@@ -17,8 +19,11 @@ const Settings = ({user,setUser}) => {
     .then(res=>{
       localStorage.user = JSON.stringify(data)
       setUser(data)
+
+      history.push('/home')
     })
-    .catch(err=>console.log(err))
+    .catch(err=>{console.log(err);alert('수정-에러')})
+    
   }
   const handleChangeFile = event => {
     let reader = new FileReader(); 
@@ -35,18 +40,22 @@ const Settings = ({user,setUser}) => {
   };
   return (
     <div className='setting_box'>
-      <div className=''>
+      <div className='left'>
         <img alt='선생님' className='teacher_img' src={imgBase64} />
-        <label htmlFor="input-file" className="input-file-button" onChange={handleChangeFile}>
+        <label htmlFor="input-file" 
+        className="upload_button" onChange={handleChangeFile}>
           사진 업로드
         </label>
         <Input type="file" onChange={handleChangeFile}  id="input-file" style={{display:"none"}}/>
-        <Button onClick={()=>{onSubmit()}}>저장</Button>
-        <Text> 이름 : {user.userName} </Text>
-        <Text> {user.roomGrade}학년 {user.roomNum}반 </Text>
+      </div>
+      <div className='right'>
+
+        <Text className='userName'> {user.userName} 선생님 </Text>
+        <Text className='room'> {user.roomGrade}학년 {user.roomNum}반 </Text>
         <Text> 아이디 : {user.userId} </Text>
-        <Text> 이름 : {user.userName} </Text>
-        <Text>비밀번호 변경</Text>
+        <Button borderRadius={0} variant="solid" className="submit_button" 
+            bgColor="#7e5526" colorScheme="#472b0a" width="48%"  onClick={()=>{onSubmit()}}
+        >저장</Button>
       </div>
     </div>
   )

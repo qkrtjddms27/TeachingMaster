@@ -6,8 +6,12 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { serverUrl, setToken } from '../../components/TOKEN';
+import { useEffect } from 'react';
 
-const StudentLogin = ({student,setStudent}) => {
+const StudentLogin = ({student,setStudent,setHeader}) => {
+  useEffect(()=>{
+    setHeader(false)
+  },[])
   const history = useHistory()
   const [studentId, setStudentId] = useState('')
   const [grade, setGrade] = useState('')

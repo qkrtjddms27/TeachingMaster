@@ -2,12 +2,37 @@
   margin: auto;
   margin-top: 3rem;
   background-color: whitesmoke;
-  width: 70vw;
-  height: 70vh;
+  width: 70rem;
+  height: 45rem;
   border-radius: 20px;
   box-shadow: 3px 3px 7px;
-  .teacher_img {
-    height: 15rem;
-    width: 15rem;
+  display: flex;
+  align-items: center;
+  .left {
+    margin-left: 10rem;
+    .teacher_img {
+      margin-top: 3rem;
+      height: 20rem;
+      width: 20rem;
+      border: 2px solid rgb(194, 156, 53);
+      box-shadow: 3px 3px 7px;
+    }
+    .upload_button {
+      color: gray;
+      cursor: pointer;
+    }
+  }
+  .right {
+    margin-left: 7rem;
+    font-size: 2rem;
+    .userName {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .submit_button {
+      margin-top: 5rem;
+      margin-left: 5rem;
+    }
   }
 }
