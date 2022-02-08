@@ -39,6 +39,28 @@ class Classroom extends Component {
       audiostate: false,
       highlighting: false,
       breaktime: false,
+
+      //quiz
+      quizs:[],
+      quizId: '',
+      subject: '',
+      quizPhoto: '',
+      quizTitle: '',
+      quizContents: '',
+      quizAnswer: '',
+      openStatus: true,
+      quizTimeout: '',
+      quizGrade: '',
+      userId:'',
+      option1:'',
+      option2:'',
+      option3:'',
+      option4:'',
+
+      //quizstudent
+      results:[],
+      studentId:'',
+      studentResult:'',
     };
 
     // OV
@@ -59,6 +81,10 @@ class Classroom extends Component {
     this.changeAudiostate = this.changeAudiostate.bind(this)
     this.changeHighlightingstate = this.changeHighlightingstate.bind(this)
     this.changeBreaktimestate = this.changeBreaktimestate.bind(this)
+    
+    // quiz
+    this.quizHandler = this.quizHandler.bind(this);
+    this.quizHandlerStar = this.quizHandlerStar.bind(this);
   }
 
 
@@ -208,6 +234,103 @@ class Classroom extends Component {
     }
   }
 
+  //quiz
+  //ox 퀴즈 용
+  quizHandler(){
+    let qox = sessionStorage.getItem('OXQuiz')
+    let qox1 = JSON.parse(qox);
+      this.setState({
+      quizs: [
+        ...this.state.quizs,//스프에드 연산자
+        {
+          quizContents: qox1.value,
+          quizAnswer: qox1.quizAnswer,
+
+          chatClass: 'quizs__item--operator',
+        },
+      ],
+      });
+      const mySession = this.state.session;
+
+    mySession.signal({
+      data:`${JSON.stringify(qox1)}`,
+      to: [],
+      type: 'quiz',
+    });
+
+    this.setState({
+      quizContents: '',
+      quizAnswer: '',
+    });
+    sessionStorage.removeItem('OXQuiz');
+    // sessionStorage.removeItem('quizText');
+    // sessionStorage.removeItem('quizAnswer');
+    // sessionStorage.removeItem('quizset');
+  }
+
+  //북마크 용
+  quizHandlerStar(){
+    let qq = sessionStorage.getItem('bookmarkQuiz')
+    let q1 = JSON.parse(qq);
+    console.log(q1)
+    
+      this.setState({
+        quizs: [
+          ...this.state.quizs,//스프에드 연산자
+          {
+            quizId: q1.quizId,
+            subject: q1.subject,
+            quizPhoto: q1.quizPhoto,
+            quizTitle: q1.quizTitle,
+            quizContents: q1.quizContents,
+            quizAnswer: q1.quizAnswer,
+            openStatus: q1.openStatus,
+            quizTimeout: q1.quizTimeout,
+            quizGrade: q1.quizGrade,
+            userId: q1.userId,
+            option1 : q1.options[0],
+            option2 : q1.options[1],
+            option3 : q1.options[2],
+            option4 : q1.options[3],
+    
+            chatClass: 'bookmarkQuiz__item--operator',
+          },
+        ],
+        });
+        const mySession = this.state.session;
+    
+      mySession.signal({
+        data:`${JSON.stringify(q1)}`,
+        
+        // data:`${q1.quizId}==;=${q1.subject}==;=${q1.quizPhoto}==;=${q1.quizTitle}==;=${q1.quizContents}==;=${q1.quizAnswer}==;=${q1.openStatus}==;=${q1.quizTimeout}==;=${q1.quizGrade}==;=${q1.myUserName}==;=${q1.options[0]}==;=${q1.options[1]}==;=${q1.options[2]},${q1.options[3]},${q1.studentId},${q1.studentAnswer}`,
+        to: [],
+        type: 'bookmarkQuiz',
+      });
+    
+      this.setState({
+        quizId: '',
+        subject: '',
+        quizPhoto: '',
+        quizTitle: '',
+        quizContents: '',
+        quizAnswer: '',
+        openStatus: true,
+        quizTimeout: '',
+        quizGrade: '',
+        userId:'',
+        option1:'',
+        option2:'',
+        option3:'',
+        option4:'',
+        // studentId:'',
+        // studentAnswer:'',
+      });
+      sessionStorage.removeItem('bookmarkQuiz');
+  }
+
+
+
+
   joinSession() {
     // --- 1) Get an OpenVidu object ---
     this.OV = new OpenVidu();
@@ -260,6 +383,84 @@ class Classroom extends Component {
           }
         });
         
+        
+        //quiz
+        //ox용
+    //     mySession.on('signal:quiz', (event) => {
+    //       let quizdata = JSON.parse(event.data);
+    //       //if (quizdata[9] !== this.state.myUserName) {
+    //         this.setState({
+    //           quizs: [
+    //             ...this.state.quizs,
+    //             {
+    //               quizContents:quizdata.value,
+    //               quizAnswer:quizdata.ans,
+                  
+    //               chatClass: 'quizs__item--visitor',
+    //             },
+    //           ],
+              
+    //         });
+    //      // }
+    //   });
+      
+    //   //북마크 용
+    //   mySession.on('signal:bookmarkQuiz', (event) => {
+    //     // let quizdata = event.data.split(',');
+        
+    //     let quizdata = JSON.parse(event.data);
+    //     // if (quizdata.userId[9] !== this.state.myUserName) {
+    //       this.setState({
+    //         quizs: [
+    //           ...this.state.quizs,
+    //           {
+    //             quizId:quizdata.quizId,
+    //             subject:quizdata.subject,
+    //             quizPhoto:quizdata.quizPhoto,
+    //             quizTitle:quizdata.quizTitle,
+    //             quizContents:quizdata.quizContents,
+    //             quizAnswer:quizdata.quizAnswer,
+    //             openStatus:quizdata.openStatus,
+    //             quizTimeout:quizdata.quizTimeout,
+    //             quizGrade:quizdata.quizGrade,
+    //             userId:quizdata.userId,
+    //             option1:quizdata.options[0],
+    //             option2:quizdata.options[1],
+    //             option3:quizdata.options[2],
+    //             option4:quizdata.options[3],
+
+    //             chatClass: 'quizs__item--visitor',
+    //           },
+    //         ],
+            
+    //       });
+    //     // }
+    // });
+
+
+    //quiz 학생 결과 가지기 용
+      //ox용
+        mySession.on('signal:studentQuizresult', (event) => {
+          let resultsdata = event.data.split(',');
+          //if (quizdata[9] !== this.state.myUserName) {
+            this.setState({
+              results: [
+                ...this.state.results,
+                {
+                  studentId:resultsdata[0],
+                  quizId:resultsdata[1],
+                  studentResult:resultsdata[2],
+                  
+                  chatClass: 'quizs__item--visitor',
+                },
+              ],
+              
+            });
+         // }
+      });
+
+
+
         this.getToken().then((token) => {
           mySession
             .connect(
@@ -409,8 +610,8 @@ class Classroom extends Component {
                 </Button>
               </div>
               <div className='right_btn_box'>
-                <TeacherModal kind='ox' iconAs={MdQuiz} title='OX 퀴즈' />
-                <TeacherModal kind='bookmark' iconAs={BsFillStarFill} title='즐겨찾기 퀴즈' />
+                <TeacherModal kind='ox' quizQ = {this.quizHandler} iconAs={MdQuiz} title='OX 퀴즈' />
+                <TeacherModal kind='bookmark' quizQ = {this.quizHandlerStar} iconAs={BsFillStarFill} title='즐겨찾기 퀴즈' />
                 {this.state.videostate ? (
                   <Toast setState={this.changeVideostate} iconAs={BsFillCameraVideoFill} title='Video Off'
                     change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.500'} />

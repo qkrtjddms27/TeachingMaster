@@ -3,23 +3,20 @@ import { useState } from 'react';
 import '../scss/StudentModal.scss'
 import Timer from './Timer';
 
-const Quiz = ({ setModalForm, setOX }) => {
+const Quiz = ({ setModalForm, setOX, quizs }) => {
   const quiz = {
-    "quizId": 3,
-    "subject": "English",
-    "quizPhoto": "http://dummyimage.com/135x100.png/cc0000/ffffff",
-    "quizTitle": "Software Engineer II",
-    "quizContents": "Nulla tempus.",
-    "quizAnswer": 3,
-    "openStatus": true,
-    "quizTimeout": 2,
-    "quizGrade": 5,
-    "userId": "ssafy3",
+    "quizId": quizs[quizs.length - 1].quizId,
+    "subject": quizs[quizs.length - 1].subject,
+    "quizPhoto": quizs[quizs.length - 1].quizPhoto,
+    "quizTitle": quizs[quizs.length - 1].quizTitle,
+    "quizContents": quizs[quizs.length - 1].quizContents,
+    "quizAnswer": quizs[quizs.length - 1].quizAnswer,
+    "openStatus": quizs[quizs.length - 1].openStatus,
+    "quizTimeout": quizs[quizs.length - 1].quizTimeout,
+    "quizGrade": quizs[quizs.length - 1].quizGrade,
+    "userId": quizs[quizs.length - 1].userId,
     "options": [
-      "Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.",
-      "Praesent id massa id nisl venenatis lacinia.",
-      "Cras non velit nec nisi vulputate nonummy.",
-      "Cras pellentesque volutpat dui."
+      quizs[quizs.length - 1].option1,quizs[quizs.length - 1].option2, quizs[quizs.length - 1].option3,quizs[quizs.length - 1].option4
     ]
   }
 
@@ -31,6 +28,10 @@ const Quiz = ({ setModalForm, setOX }) => {
   const axiosMyQuiz = () => {         // 퀴즈 제출
     console.log(`quizId: ${quiz.quizId}`)
     console.log(`choice: ${choice}`)
+    
+    sessionStorage.setItem('studentresult', quiz.quizAnswer === choice)
+    sessionStorage.setItem('quizId', quiz.quizId)
+    
     setOX(quiz.quizAnswer === choice)
     setModalForm('result')
   }

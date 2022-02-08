@@ -5,14 +5,21 @@ import Timer from './Timer';
 import o from '../image/letter-o.png'
 import x from '../image/letter-x.png'
 
-const OxQuiz = ({ setModalForm, setOX }) => {
+const OxQuiz = ({ setModalForm, setOX , quizs}) => {
   const quiz = {
-    "quizContent": "퀴즈 문제를 여기에 쓴다 이것의 답은 O일까 X일까 타이머는 현재 5초로 fix 참고로 엔터가 안들어감  문제는 한줄로 적혀진다",
-    "quizAnswer": "1"
+    "quizContent": quizs[quizs.length - 1].quizContents,
+    "quizAnswer": quizs[quizs.length - 1].quizAnswer
   }
-
+  console.log(quiz.quizAnswer)
+  console.log(typeof(quiz.quizAnswer))
+  
   const [choice, setChoice] = useState('0')
   const axiosMyQuiz = () => {
+
+    sessionStorage.setItem('studentresult', quiz.quizAnswer === choice)
+    sessionStorage.setItem('quizId', 0)
+
+    console.log(quiz.quizAnswer === choice)
     setOX(quiz.quizAnswer === choice)
     setModalForm('result')
   }

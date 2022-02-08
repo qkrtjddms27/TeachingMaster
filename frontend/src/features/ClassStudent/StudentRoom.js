@@ -40,6 +40,27 @@ class StudentRoom extends Component {
       breaktime: false,
       mySessionId: 'ssafy' + (parseInt(student.roomGrade)*100 + parseInt(student.roomNum)),
       myUserName: student.studentName,
+
+      //quiz
+      quizs:[],
+      quizId: '',
+      subject: '',
+      quizPhoto: '',
+      quizTitle: '',
+      quizContents: '',
+      quizAnswer: '',
+      openStatus: true,
+      quizTimeout: '',
+      quizGrade: '',
+      userId:'',
+      option1:'',
+      option2:'',
+      option3:'',
+      option4:'',
+
+      results:[],
+      studentAnswer:'',
+
     };
 
     // OV
@@ -58,6 +79,10 @@ class StudentRoom extends Component {
     this.handleHistory = this.handleHistory.bind(this)
     this.changeVideostate = this.changeVideostate.bind(this)
     this.changeAudiostate = this.changeAudiostate.bind(this)
+
+    // quiz
+    //학생 결과 전송
+    this.sendresultHandle = this.sendresultHandle.bind(this);
   }
 
 
@@ -75,7 +100,7 @@ class StudentRoom extends Component {
       audiostate: !this.state.audiostate
     })
   }
-
+  
   handleHistory(path) {
     this.props.history.push(path)
   }
@@ -137,7 +162,7 @@ class StudentRoom extends Component {
       message: '',
     });
   }
-
+  
   sendmessageByEnter(e) {
     if (e.key === 'Enter') {
       this.setState({
@@ -189,6 +214,23 @@ class StudentRoom extends Component {
     }
   }
 
+  //quiz 학생 결과 전송
+  
+  sendresultHandle(){
+    const mySession = this.state.session;
+    mySession.signal({
+      data:`${this.state.student.studentId},${sessionStorage.getItem('quizId')},${sessionStorage.getItem('studentresult')}`,
+      to: [],
+      type: 'studentQuizresult',
+    });
+    
+    this.setState({
+      studentAnswer:'',
+    });
+    sessionStorage.removeItem('studentresult');
+  }
+
+  
   joinSession() {
     this.OV = new OpenVidu();
     console.log("join!")
@@ -199,7 +241,7 @@ class StudentRoom extends Component {
       () => {
 
         let mySession = this.state.session;
-
+        
         mySession.on('streamCreated', (event) => {
 
           let subscriber = mySession.subscribe(event.stream, undefined);
@@ -233,6 +275,54 @@ class StudentRoom extends Component {
               ],
             });
           }
+        });
+        
+        //quiz
+        //ox용
+        mySession.on('signal:quiz', (event) => {
+          let quizdata = JSON.parse(event.data);
+            this.setState({
+              quizs: [
+                ...this.state.quizs,
+                {
+                  quizContents:quizdata.value,
+                  quizAnswer:quizdata.ans,
+                  
+                  chatClass: 'quizs__item--visitor',
+                },
+              ],
+              
+            });            
+          });
+
+        //북마크 용 quiz
+        mySession.on('signal:bookmarkQuiz', (event) => {
+        
+          let quizdata = JSON.parse(event.data);
+            this.setState({
+              quizs: [
+                ...this.state.quizs,
+                {
+                  quizId:quizdata.quizId,
+                  subject:quizdata.subject,
+                  quizPhoto:quizdata.quizPhoto,
+                  quizTitle:quizdata.quizTitle,
+                  quizContents:quizdata.quizContents,
+                  quizAnswer:quizdata.quizAnswer,
+                  openStatus:quizdata.openStatus,
+                  quizTimeout:quizdata.quizTimeout,
+                  quizGrade:quizdata.quizGrade,
+                  userId:quizdata.userId,
+                  option1:quizdata.options[0],
+                  option2:quizdata.options[1],
+                  option3:quizdata.options[2],
+                  option4:quizdata.options[3],
+
+                  chatClass: 'quizs__item--visitor',
+                },
+              ],
+              
+            });
         });
         
         this.getToken().then((token) => {
@@ -294,6 +384,7 @@ class StudentRoom extends Component {
   render() {
     const mySessionId = this.state.mySessionId;
     const myUserName = this.state.myUserName;
+    const quizs = this.state.quizs;
     const { path } = this.props.match
     // console.log('프랍프랍', path)
     return (
@@ -439,9 +530,9 @@ class StudentRoom extends Component {
                       />
                   </div>
                   {this.state.audiostate ? <div className='warning'>마이크가 켜져있어요</div>:<div  className='warning' />}
-                <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={micOff} title='발표하자' />
-                <StudentModal kind='quiz' iconAs={micOff} title='퀴즈' />
-                <StudentModal kind='oxQuiz' iconAs={micOff} title='OX퀴즈' />
+                <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={OO} title='발표하자' />
+                <StudentModal kind='quiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={XX} title='퀴즈' />
+                <StudentModal kind='oxQuiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={OO} title='OX퀴즈' />
                 </div>
           </Box>
         )}

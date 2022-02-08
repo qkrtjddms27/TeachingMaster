@@ -3,7 +3,7 @@ import { ModalContent, ModalBody, ModalCloseButton, Image } from '@chakra-ui/rea
 import O from '../image/O.png'
 import X from '../image/X.png'
 
-const OX = ({ onClose, ox }) => {
+const OX = ({ onClose, ox,resultQ }) => {
   const [sec, setSec] = useState(3)
   const time = useRef(3)
   const timerId = useRef(null)
@@ -17,6 +17,7 @@ const OX = ({ onClose, ox }) => {
 
   useEffect(() => {
     if (time.current < 0) {           // 만약 타임 아웃이 발생했을 경우
+      resultQ()
       onClose()
       clearInterval(timerId.current)
     }
