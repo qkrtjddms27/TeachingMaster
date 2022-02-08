@@ -442,6 +442,7 @@ class StudentRoom extends Component {
                   {this.state.audiostate ? <div className='warning'>마이크가 켜져있어요</div>:<div  className='warning' />}
                 <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={OO} title='발표하자' />
                 <StudentModal kind='quiz' iconAs={XX} title='퀴즈' />
+                <StudentModal kind='oxQuiz' iconAs={OO} title='OX퀴즈' />
                 </div>
           </Box>
         )}
