@@ -5,6 +5,8 @@ import Main1 from './Main1';
 import Main2 from './Main2';
 import Main3 from './Main3';
 import Concert from '../teacher/Concert';
+import Main4 from './Main4';
+import Main6 from './Main6';
 const MainPage = ({setHeader}) => {
   useEffect(()=>{
     setHeader(false)
@@ -12,10 +14,12 @@ const MainPage = ({setHeader}) => {
   
   return(
   <div>
-    <Main1 />
+    <Main4 />
+    {/* <Main1 /> */}
     <Main2/>
-    <Main3/>
-    <Concert/>
+    {/* <Main3/> */}
+    <Main6 />
+    {/* <Concert/> */}
   </div>)
 };
 
