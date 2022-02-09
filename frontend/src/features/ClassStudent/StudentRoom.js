@@ -247,19 +247,19 @@ class StudentRoom extends Component {
               quizs: 
                 {
                   quizContents:quizdata.value,
-                  quizAnswer:quizdata.ans,    
+                  quizAnswer:quizdata.ans,
+                  quizTimeout:quizdata.quizTimeout,
+                  quizId:quizdata.quizId,
                   chatClass: 'quizs__item--visitor',
                 },
-            });            
+            });   
+            this.modalPop('oxQuiz')         
           });
 
         //북마크 용 quiz
         mySession.on('signal:bookmarkQuiz', (event) => {
         
           let quizdata = JSON.parse(event.data);
-          // console.log('*********************************')
-          // console.log('quizdata', quizdata)
-          // console.log('*********************************')
           this.setState({
             quizs:
               {
@@ -495,14 +495,16 @@ class StudentRoom extends Component {
                 <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={micOn} title='발표하자' 
                   isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}/>
                 
-                <StudentModal kind='quiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={micOn} title='퀴즈'
+                <StudentModal kind='quiz' quizs = {quizs}iconAs={micOn} title='퀴즈'
                   isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} 
                   setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
                   mySession={this.state.session} student={this.state.student} 
                 />
 
-                <StudentModal kind='oxQuiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={micOn} title='OX퀴즈' 
-                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}/>
+                <StudentModal kind='oxQuiz' quizs = {quizs} iconAs={micOn} title='OX퀴즈' 
+                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} 
+                  setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
+                  mySession={this.state.session} student={this.state.student}  />
                 </div>
           </Box>
         )}

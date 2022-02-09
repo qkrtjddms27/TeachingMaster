@@ -12,9 +12,7 @@ const StudentModal = (
     resultQ, isOpen, onOpen, onClose, modalForm, mySession,student,
     setModalForm, modalOpen, }) => {
   const [ox,setOX ] = useState("")
-  // useEffect(()=>{
-  //   return ()=> resultQ()
-  // },[])
+  
   const sendresultHandle = ()=>{
     if (mySession !== undefined){
     mySession.signal({
