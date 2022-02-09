@@ -41,7 +41,7 @@ class Classroom extends Component {
       breaktime: false,
 
       //quiz
-      quizs:[],
+      quizs:{},
       quizId: '',
       subject: '',
       quizPhoto: '',
@@ -73,7 +73,6 @@ class Classroom extends Component {
     // 채팅
     this.handleChatMessageChange = this.handleChatMessageChange.bind(this);
     this.messageContainer = createRef(null);
-    this.sendmessageByClick = this.sendmessageByClick.bind(this);
     this.sendmessageByEnter = this.sendmessageByEnter.bind(this);
     // TM
     this.handleHistory = this.handleHistory.bind(this)
@@ -159,30 +158,6 @@ class Classroom extends Component {
     });
   }
 
-  sendmessageByClick() {
-    this.setState({
-      messages: [
-        ...this.state.messages,
-        {
-          userName: this.state.myUserName,
-          text: this.state.message,
-          chatClass: 'messages__item--operator',
-        },
-      ],
-    });
-  
-    const mySession = this.state.session;
-    mySession.signal({
-      data: `${this.state.myUserName},${this.state.message}`,
-      to: [],
-      type: 'chat',
-    });
-  
-    this.setState({
-      message: '',
-    });
-  }
-
   sendmessageByEnter(e) {
     if (e.key === 'Enter') {
       this.setState({
@@ -240,20 +215,17 @@ class Classroom extends Component {
     let qox = sessionStorage.getItem('OXQuiz')
     let qox1 = JSON.parse(qox);
       this.setState({
-      quizs: [
-        ...this.state.quizs,//스프에드 연산자
+      quizs: 
         {
           quizContents: qox1.value,
           quizAnswer: qox1.quizAnswer,
-
           chatClass: 'quizs__item--operator',
         },
-      ],
       });
       const mySession = this.state.session;
 
     mySession.signal({
-      data:`${JSON.stringify(qox1)}`,
+      data: JSON.stringify(qox1),
       to: [],
       type: 'quiz',
     });
@@ -273,11 +245,9 @@ class Classroom extends Component {
   quizHandlerStar(){
     let qq = sessionStorage.getItem('bookmarkQuiz')
     let q1 = JSON.parse(qq);
-    console.log(q1)
-    
+    // console.log(q1)
       this.setState({
-        quizs: [
-          ...this.state.quizs,//스프에드 연산자
+        quizs: 
           {
             quizId: q1.quizId,
             subject: q1.subject,
@@ -296,14 +266,11 @@ class Classroom extends Component {
             results:[],
             chatClass: 'bookmarkQuiz__item--operator',
           },
-        ],
         });
         const mySession = this.state.session;
     
       mySession.signal({
-        data:`${JSON.stringify(q1)}`,
-        
-        // data:`${q1.quizId}==;=${q1.subject}==;=${q1.quizPhoto}==;=${q1.quizTitle}==;=${q1.quizContents}==;=${q1.quizAnswer}==;=${q1.openStatus}==;=${q1.quizTimeout}==;=${q1.quizGrade}==;=${q1.myUserName}==;=${q1.options[0]}==;=${q1.options[1]}==;=${q1.options[2]},${q1.options[3]},${q1.studentId},${q1.studentAnswer}`,
+        data: JSON.stringify(q1),
         to: [],
         type: 'bookmarkQuiz',
       });
@@ -439,8 +406,7 @@ class Classroom extends Component {
     // });
 
 
-    //quiz 학생 결과 가지기 용
-      //ox용
+        //quiz 학생 결과 가지기 용
         mySession.on('signal:studentQuizresult', (event) => {
           let resultsdata = event.data.split(',');
           //if (quizdata[9] !== this.state.myUserName) {
@@ -457,6 +423,9 @@ class Classroom extends Component {
               ],
               
             });
+            // 여기서 학생들 OX 표시
+            console.log('quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?')
+            console.log(this.state.results)
          // }
       });
 
@@ -482,9 +451,6 @@ class Classroom extends Component {
                 insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
                 mirror: true, // Whether to mirror your local video or not
               });
-              // publisher['teacher'] = true
-              // publisher['student'] = false
-              // console.log('1등 교사', publisher)
               // --- 6) Publish your stream ---
               mySession.publish(publisher);
               // Set the main video in the page to display our webcam and store our Publisher
