@@ -7,8 +7,8 @@ import x from '../image/letter-x.png'
 
 const OxQuiz = ({ setModalForm, setOX , quizs}) => {
   const quiz = {
-    "quizContent": quizs[quizs.length - 1].quizContents,
-    "quizAnswer": quizs[quizs.length - 1].quizAnswer
+    "quizContent": quizs[0].quizContents,
+    "quizAnswer": quizs[0].quizAnswer
   }
   console.log(quiz.quizAnswer)
   console.log(typeof(quiz.quizAnswer))
