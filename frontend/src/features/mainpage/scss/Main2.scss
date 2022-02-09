@@ -1,21 +1,22 @@
 .Main2 {
   background: linear-gradient(#b5b4ff, #807ec8, #d2d1f6);
-  height: 300vh;
+  height: 240rem;
+
   .icon {
-    height: 20vh;
+    height: 12rem;
   }
   p {
     font-size: 2rem;
     margin-bottom: 0.5rem;
   }
   .empty_box {
-    height: 10vh;
+    height: 8rem;
   }
   .tiger {
-    margin-left: 5vw;
+    margin-left: 6rem;
     background-color: #f1c46c;
-    width: 70vw;
-    height: 45vh;
+    width: 85rem;
+    height: 28rem;
     border-radius: 30px;
     display: flex;
     align-items: center;
@@ -38,11 +39,11 @@
     }
   }
   .rabbit {
-    margin-top: 10vh;
-    width: 60vw;
-    margin-left: 30vw;
+    margin-top: 8rem;
+    width: 72rem;
+    margin-left: 34rem;
     background-color: #f6aaaa;
-    height: 30vh;
+    height: 20rem;
     border-radius: 30px;
     display: flex;
     align-items: center;
@@ -66,10 +67,10 @@
   }
   .penguin {
     margin-top: 13vh;
-    margin-left: 10vw;
-    width: 60vw;
+    margin-left: 12rem;
+    width: 72rem;
     background-color: #b5e8f9;
-    height: 30vh;
+    height: 20rem;
     border-radius: 30px;
     display: flex;
     align-items: center;
@@ -82,11 +83,11 @@
     }
   }
   .dino {
-    margin-top: 10vh;
-    margin-left: 20vw;
-    width: 75vw;
+    margin-top: 8rem;
+    margin-left: 15rem;
+    width: 95rem;
     background-color: #a7de93;
-    height: 45vh;
+    height: 30rem;
     border-radius: 30px;
     display: flex;
     align-items: center;
@@ -109,17 +110,15 @@
     .icon {
       transform: scaleX(-1);
       flex: 1;
-      height: 20vh;
-      width: 15vw;
       margin-right: 1rem;
     }
   }
   .bear {
-    margin-top: 20vh;
-    margin-left: 5vw;
-    width: 80vw;
+    margin-top: 10rem;
+    margin-left: 6rem;
+    width: 96rem;
     background-color: #707cef;
-    height: 70vh;
+    height: 50rem;
     border-radius: 30px;
     display: flex;
     .content {
