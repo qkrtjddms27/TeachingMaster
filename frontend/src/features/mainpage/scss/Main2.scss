@@ -1,0 +1,130 @@
+.Main2 {
+  background: linear-gradient(#b5b4ff, #807ec8, #d2d1f6);
+  height: 300vh;
+  .icon {
+    height: 20vh;
+  }
+  p {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  .empty_box {
+    height: 10vh;
+  }
+  .tiger {
+    margin-left: 5vw;
+    background-color: #f1c46c;
+    width: 70vw;
+    height: 45vh;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    .content {
+      margin-left: 2rem;
+      display: flex;
+      .ment {
+        margin-top: 7rem;
+      }
+
+      img {
+        margin-left: 7rem;
+        height: 20rem;
+        border-radius: 10px;
+        box-shadow: 3px 3px 7px;
+      }
+    }
+    .icon {
+      transform: scaleX(-1);
+    }
+  }
+  .rabbit {
+    margin-top: 10vh;
+    width: 60vw;
+    margin-left: 30vw;
+    background-color: #f6aaaa;
+    height: 30vh;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    .content {
+      flex: 8;
+      // margin-top: 3rem;
+      margin-left: 4rem;
+      display: flex;
+      .img_box {
+        margin-top: 1rem;
+        display: flex;
+        img {
+          margin-left: 4rem;
+          height: 7rem;
+        }
+      }
+    }
+    .icon {
+      flex: 2;
+    }
+  }
+  .penguin {
+    margin-top: 13vh;
+    margin-left: 10vw;
+    width: 60vw;
+    background-color: #b5e8f9;
+    height: 30vh;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+
+    .content {
+      margin-left: 3rem;
+      p {
+        font-size: 2rem;
+      }
+    }
+  }
+  .dino {
+    margin-top: 10vh;
+    margin-left: 20vw;
+    width: 75vw;
+    background-color: #a7de93;
+    height: 45vh;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    .content {
+      flex: 9;
+      margin-left: 4rem;
+      display: flex;
+      img {
+        margin-left: 2rem;
+        transform: scaleX(1);
+        height: 20rem;
+        border-radius: 10px;
+        box-shadow: 3px 3px 7px;
+      }
+      .ment {
+        margin-top: 3rem;
+        margin-left: 3rem;
+      }
+    }
+    .icon {
+      transform: scaleX(-1);
+      flex: 1;
+      height: 20vh;
+      width: 15vw;
+      margin-right: 1rem;
+    }
+  }
+  .bear {
+    margin-top: 20vh;
+    margin-left: 5vw;
+    width: 80vw;
+    background-color: #707cef;
+    height: 70vh;
+    border-radius: 30px;
+    display: flex;
+    .content {
+    }
+    .ment {
+    }
+  }
+}
