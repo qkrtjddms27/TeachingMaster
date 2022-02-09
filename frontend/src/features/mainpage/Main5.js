@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import React, { Component } from 'react'
 
 
-export default class Main6 extends Component {
+export default class Main5 extends Component {
   render() {
     const settings = {
       infinite: true,
