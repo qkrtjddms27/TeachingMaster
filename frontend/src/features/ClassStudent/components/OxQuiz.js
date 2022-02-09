@@ -2,8 +2,6 @@ import { ModalContent, ModalHeader, ModalCloseButton, ModalBody, Image } from '@
 import { useState } from 'react';
 import '../scss/StudentModal.scss'
 import Timer from './Timer';
-import o from '../image/letter-o.png'
-import x from '../image/letter-x.png'
 
 const OxQuiz = ({ setModalForm, setOX , quizs}) => {
   const quiz = {

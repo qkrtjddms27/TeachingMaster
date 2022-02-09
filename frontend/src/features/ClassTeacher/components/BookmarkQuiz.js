@@ -3,8 +3,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { serverUrl, setToken } from '../../../components/TOKEN';
 import '../scss/TeacherModal.scss'
-import qicon from '../image/qicon.png'
-import aicon from '../image/question.png'
 
 const BookmarkQuiz = ({quizQ, onClose}) => {
   const [bookmark, setBookmark] = useState([])

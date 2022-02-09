@@ -1,6 +1,5 @@
 import { Button, FormControl, FormLabel, Image, Input, InputGroup, Select } from '@chakra-ui/react';
 import './scss/StudentLogin.scss'
-import penguin from './image/펭귄.png'
 import { roomData } from '../../components/TOKEN';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';

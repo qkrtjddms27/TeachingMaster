@@ -2,7 +2,6 @@ import React from 'react';
 import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverArrow, 
   PopoverCloseButton, PopoverBody, Button, Image, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
-import add from './image/add.png'
 import axios from 'axios'
 import { setToken, serverUrl } from '../../components/TOKEN';
 import AOS from 'aos'

@@ -35,13 +35,12 @@ const Createquiz = () => {
     }
     axios(
       { 
-        // url : "i6e107.p.ssafy.io:8080/api/v1/quiz/create"
         url : `${serverUrl}/v1/quiz/create`,
         method: "POST",
         data,
         headers : setToken()
       }
-    ).then(res=>
+    ).then(() =>
       history.push("/quiz/folder/imade")
     ).catch(err=>{
       console.log(data)

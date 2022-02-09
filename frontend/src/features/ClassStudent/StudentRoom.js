@@ -10,12 +10,9 @@ import UserVideoComponent from './openVidu/UserVideoComponent';
 import Messages from './components/Messages';
 import StudentModal from './components/StudentModal';
 
-import micOn from './image/말할래요.png'
-import micOff from './image/쉿버튼.png'
 import CamOn from './image/카메라켜기.png'
 import CamOff from './image/카메라끄기.png'
 
-// import quizDino from './image/퀴즈공룡.png'
 const quizDino = "https://cdn.discordapp.com/attachments/885744368399560725/940498039402037248/Pngtreecute_lively_green_little_dinosaur_4659657.png"
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:8443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
@@ -371,8 +368,8 @@ class StudentRoom extends Component {
     const mySessionId = this.state.mySessionId;
     const myUserName = this.state.myUserName;
     const quizs = this.state.quizs;
-    const { path } = this.props.match
-    // console.log('프랍프랍', path)
+    const micOn = 'https://cdn.discordapp.com/attachments/885744368399560725/940838592413057084/unknown.png'
+    const micOff = 'https://cdn.discordapp.com/attachments/885744368399560725/940843036705959966/90b3c558d3543a12.png'
     return (
       <div className="ClassStudent">
         {/* 세션에 참가하기 전 */}
