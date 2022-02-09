@@ -84,7 +84,7 @@ export default class Main5 extends Component {
       },
     ]
     return (
-      <div className="main6">
+      <div className="main5">
         <Slider {...settings}>
           {reviews.map((rv, idx) => (
             <div className="reviews" key={idx}>
