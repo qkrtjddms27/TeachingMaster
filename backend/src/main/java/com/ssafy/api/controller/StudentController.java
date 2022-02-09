@@ -61,8 +61,10 @@ public class StudentController {
     ResponseEntity<? extends BaseResponseBody> search(
             @PathVariable("student_id") String studentId) {
         Student student = studentService.getStudentByUserId(studentId);
-        return student != null ? ResponseEntity.status(200).body(StudentRes.of(student,200, "Success"))
-                : ResponseEntity.status(200).body(BaseResponseBody.of(200, "존재하지 않는 학생 코드입니다."));
+
+        return ResponseEntity.status(200).body(StudentRes.of(student,200, "Success"));
+//        return student != null ? ResponseEntity.status(200).body(StudentRes.of(student,200, "Success"))
+//                : ResponseEntity.status(200).body(BaseResponseBody.of(200, "존재하지 않는 학생 코드입니다."));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
