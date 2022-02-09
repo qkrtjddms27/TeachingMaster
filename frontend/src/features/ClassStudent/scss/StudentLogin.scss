@@ -18,8 +18,8 @@
     url("../image/sky4.gif");
   background-repeat: repeat;
   background-size: 60%;
-  height: 100vh;
-  width: 100vw;
+  height: 60.9rem;
+  width: 120rem;
   display: flex;
   flex-flow: wrap;
   .box {
@@ -48,12 +48,14 @@
       border-radius: 1.5rem;
       display: flex;
       flex-direction: column;
+
       // flex-flow: wrap;
       justify-content: space-evenly;
       .id {
         margin: 0 2rem;
         input {
           background-color: whitesmoke;
+          width: 10rem;
         }
       }
       .grade_room {
@@ -62,14 +64,19 @@
         flex-flow: wrap;
         align-items: flex-end;
         justify-content: space-between;
+
         select {
           background-color: whitesmoke;
           width: 11rem;
+          font-weight: 500;
         }
         .form-group {
           display: flex;
           flex-direction: column;
           flex-flow: wrap;
+        }
+        input {
+          width: 15rem;
         }
       }
     }
