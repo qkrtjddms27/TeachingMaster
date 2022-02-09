@@ -201,9 +201,12 @@ class StudentRoom extends Component {
       to: [],
       type: 'studentQuizresult',
     });
-    
+    console.log("result---handle")
+    console.log("됩니다됩니다됩니다됩니다됩니다됩니다됩니다됩니다됩니다됩니다")
+
     this.setState({
       studentAnswer:'',
+      quizs:[]
     });
     sessionStorage.removeItem('studentresult');
   }
@@ -511,7 +514,7 @@ class StudentRoom extends Component {
                         onKeyPress={this.sendmessageByEnter}
                         value={this.state.message}
                       />
-                  </div>
+                  </div> 
                   {this.state.audiostate ? <div className='warning'>마이크가 켜져있어요</div>:<div  className='warning' />}
                 <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={micOn} title='발표하자' 
                   isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}/>

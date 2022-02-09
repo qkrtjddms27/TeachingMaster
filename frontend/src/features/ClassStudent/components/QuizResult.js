@@ -16,9 +16,9 @@ const QuizResult = ({ onClose, ox, resultQ }) => {
   useEffect(() => {
     if (time.current < 0) {           // 만약 타임 아웃이 발생했을 경우
       console.log('여기까지 도착!')
-      resultQ()
-      // this.resultQ()
+      // eslint-disable-next-line no-unused-expressions
       console.log('여기까진 도착못해!')
+      // resultQ()
       onClose()
       clearInterval(timerId.current)
     }
