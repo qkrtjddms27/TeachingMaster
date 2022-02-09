@@ -17,7 +17,7 @@ import StudentScreen from './components/StudentScreen'
 
 
 // const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
-const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
+const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:8443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
 
 class Classroom extends Component {

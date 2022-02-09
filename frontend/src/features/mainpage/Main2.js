@@ -11,11 +11,12 @@ const Main2 = () => {
   return (
     <div className='Main2'>
       <div className="empty_box"/>
-      <div  data-aos="fade-right"
+      <div  className="tiger"
+            data-aos="fade-right"
             data-aos-offset="300"
             data-aos-easing="linear"
             data-aos-duration="2000"
-            className="tiger" >
+            id="animal_box" >
 
         <Img className="icon"  src="https://cdn.discordapp.com/attachments/885744368399560725/940788467040927744/1ebc39a1c15ce4e0.png"/>
         <div className="content">
@@ -30,7 +31,7 @@ const Main2 = () => {
             data-aos="fade-left"
             data-aos-offset="400"
             data-aos-duration="2000"
-            >
+            id="animal_box">
         <div className="content">
           <div className="ment">
             <p>친구들이 쓰기 좋게</p>
@@ -49,7 +50,7 @@ const Main2 = () => {
         data-aos-offset="300"
         data-aos-easing="linear"
         data-aos-duration="2000"
-        >
+        id="animal_box">
         <Img className="icon" src="https://cdn.discordapp.com/attachments/885744368399560725/940789117434875924/b8cf8311fbac34fb.png"/>
         <div className="content">
           <p>입장은 이몸 펭키가 담당하지!</p>
@@ -60,7 +61,8 @@ const Main2 = () => {
             data-aos-offset="300"
             data-aos-easing="linear"
             data-aos-duration="2000"
-             className="dino">
+             className="dino"
+             id="animal_box">
         <div className="content">
           <Img src="https://cdn.discordapp.com/attachments/885744368399560725/940833119836188734/unknown.png"/>
           <div className="ment">
@@ -75,7 +77,8 @@ const Main2 = () => {
             data-aos-offset="300"
             data-aos-easing="linear"
             data-aos-duration="2000"
-            className="bear">
+            className="bear"
+            id="animal_box">
         <Img className="icon" src="https://cdn.discordapp.com/attachments/885744368399560725/940788485227421716/6bc81f0a2e2b6c56.png"/>
         <div className="content">
         <div className="ment">
