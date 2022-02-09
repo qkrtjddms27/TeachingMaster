@@ -1,34 +1,29 @@
 import { ModalContent, ModalHeader, ModalCloseButton, ModalBody, Image } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../scss/StudentModal.scss'
 import Timer from './Timer';
 
 const OxQuiz = ({ setModalForm, setOX , quizs}) => {
-  const quiz = {
-    "quizContent": quizs[0].quizContents,
-    "quizAnswer": quizs[0].quizAnswer
-  }
-  console.log(quiz.quizAnswer)
-  console.log(typeof(quiz.quizAnswer))
-  
-  const [choice, setChoice] = useState('0')
-  const axiosMyQuiz = () => {
+  const [quiz, setQuiz] = useState({})
+  const [choice, setChoice] = useState(0)
+  useEffect(()=>{
+    if(quizs !== undefined ){
+    const tmp = {
+      "quizTimeout": quizs.quizTimeout,
+      "quizContent": quizs.quizContents,
+      "quizAnswer": quizs.quizAnswer,
+      "quizId": quizs.quizId
+    }
+    setQuiz(tmp)
+    console.log('setQuiz', quiz)}
+  },[])
 
-    sessionStorage.setItem('studentresult', quiz.quizAnswer === choice)
-    sessionStorage.setItem('quizId', 0)
-
-    console.log(quiz.quizAnswer === choice)
-    setOX(quiz.quizAnswer === choice)
-    setModalForm('result')
-  }
   return (
-    // <ModalContent bgColor='#c7e4f5' w='50rem' h='10rem' marginY='3rem' marginX='1rem' >
     <ModalContent bgColor='#c7e4f5' w='50rem' h='3rem' marginY='7rem' marginX='1rem' >
       <ModalHeader className='student-modal-header'>
         <div style={{"fontSize": "xx-large"}}>신나는 OX퀴즈 시간</div>
-        <Timer quizTime={5} axiosMyQuiz={axiosMyQuiz} />
+        <Timer setOX={setOX} quiz={quiz} setModalForm={setModalForm}  />
       </ModalHeader>
-      {/* <ModalCloseButton /> */}
       <ModalBody className='ox-quiz-body'>
         <div className='ox-quiz-name'>
           <span>{quiz.quizContent}</span>
