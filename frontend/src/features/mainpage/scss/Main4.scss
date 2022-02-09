@@ -61,9 +61,34 @@
   }
 }
 .main6 {
-  height: 50vh;
+  height: 45vh;
   width: 100vw;
-  display: flex;
-  flex-flow: wrap;
-  background-color: aliceblue;
+  background-color: white;
+  .reviews {
+    margin-top: 3rem;
+    height: 40vh;
+    padding: 1rem;
+    .review {
+      height: 80%;
+      width: 80%;
+      min-width: 15rem;
+      border: 1px solid black;
+      margin: auto;
+      border-radius: 1rem;
+      box-shadow: 2px 2px 7px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .review-title {
+        font-weight: bold;
+        font-size: 1.1rem;
+        min-width: 12rem;
+      }
+      .review-footer {
+        font-size: 0.9rem;
+        text-align: right;
+      }
+    }
+  }
 }
