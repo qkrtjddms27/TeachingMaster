@@ -20,8 +20,8 @@ public class StudentRes extends BaseResponseBody {
     @ApiModelProperty(name="학생 전화번호", example="01066511111")
     private String studentPhone;
 
-    @ApiModelProperty(name="학생 사진", example="asdkgn123kasdnkgn2knagikegadg")
-    private String studentProfile;
+//    @ApiModelProperty(name="학생 사진", example="asdkgn123kasdnkgn2knagikegadg")
+//    private String studentProfile;
 
     @ApiModelProperty(name="상점", example="0")
     private int studentScore;
@@ -54,7 +54,7 @@ public class StudentRes extends BaseResponseBody {
         StudentRes res = new StudentRes();
         res.setStudentName(student.getStudentName());
         res.setStudentPhone(student.getStudentPhone());
-        res.setStudentProfile(student.getStudentProfile());
+//        res.setStudentProfile(student.getStudentProfile());
         res.setStudentScore(student.getStudentScore());
         res.setStudentEmail(student.getStudentEmail());
         res.setCountingStar(student.getCountingStar());
