@@ -1,11 +1,20 @@
 import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
 
-const Timer = ({ quizTime, axiosMyQuiz, choice }) => {
-  const [sec, setSec] = useState(quizTime)
-  const time = useRef(quizTime)
+const Timer = ({ quiz,setOX,setModalForm }) => {
+  const [sec, setSec] = useState(quiz.quizTimeout)
+  const time = useRef(quiz.quizTimeout)
   const timerId = useRef(null)
-
+  
+  const axiosMyQuiz = (choice) => {         // 퀴즈 제출
+    console.log(`quizId: ${quiz.quizId}`)
+    console.log(`choice: ${choice}`)
+    sessionStorage.setItem('studentresult', quiz.quizAnswer === Number(choice))
+    sessionStorage.setItem('quizId', quiz.quizId)
+    
+    setOX(quiz.quizAnswer === Number(choice) ? "O":"X")
+    setModalForm('result')
+  }
   useEffect(() => {
     timerId.current = setInterval(() => {
       setSec(time.current)
@@ -16,14 +25,14 @@ const Timer = ({ quizTime, axiosMyQuiz, choice }) => {
 
   useEffect(() => {
     if (time.current < 0) {           // 만약 타임 아웃이 발생했을 경우
-      axiosMyQuiz(choice)
+      axiosMyQuiz(localStorage.getItem("thisone"))
       clearInterval(timerId.current)
     }
   }, [sec])
 
   return (
     <div className='quiz-timer'>
-      <CircularProgress value={quizTime} color='orange' isIndeterminate>
+      <CircularProgress value={quiz.quizTimeout} color='orange' isIndeterminate>
         <CircularProgressLabel>{sec < 10 ? `0${sec}` : sec}초</CircularProgressLabel>
       </CircularProgress>
     </div>
