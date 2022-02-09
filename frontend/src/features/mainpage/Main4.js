@@ -1,10 +1,10 @@
 import './scss/Main4.scss'
-
+import { Link } from 'react-router-dom';
 const Main4 = () => {
   return (
     <div className='main4'>
       <div className='rainbow' id='rb1'>
-        <div />
+        <div />    
         <div />
         <p className='rainbow-p'>티</p>
         <img className='rainbow-img' src='https://i.ibb.co/cCDcZVk/1.png' alt='티랑'/>
@@ -19,7 +19,9 @@ const Main4 = () => {
         <div />
         <div />
         <p className='rainbow-p'>마</p>
-        <img className='rainbow-img' src='https://i.ibb.co/Nm4QdRb/1.png' alt='펭키'/>
+        <Link to="/class/student/login" > 
+          <img className='rainbow-img' src='https://i.ibb.co/Nm4QdRb/1.png' alt='펭키'/>
+        </Link>
       </div>
       <div className='rainbow' id='rb4'>
         <div />
@@ -31,7 +33,9 @@ const Main4 = () => {
         <div />
         <div />
         <p className='rainbow-p'>터</p>
-        <img className='rainbow-img' src='https://i.ibb.co/L8gSsGD/image-27.png' alt='마곰'/>
+        <Link to="/login" >
+          <img className='rainbow-img' src='https://i.ibb.co/L8gSsGD/image-27.png' alt='마곰'/>
+        </Link>
       </div>
     </div>
   );

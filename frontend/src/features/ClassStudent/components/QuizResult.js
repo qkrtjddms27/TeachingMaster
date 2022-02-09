@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ModalContent, ModalBody, ModalCloseButton, Image } from '@chakra-ui/react';
 
-const QuizResult = ({ onClose, ox, resultQ }) => {
+const QuizResult = ({ onClose, ox, sendresultHandle }) => {
   const [sec, setSec] = useState(3)
   const time = useRef(3)
   const timerId = useRef(null)
@@ -15,10 +15,7 @@ const QuizResult = ({ onClose, ox, resultQ }) => {
 
   useEffect(() => {
     if (time.current < 0) {           // 만약 타임 아웃이 발생했을 경우
-      console.log('여기까지 도착!')
-      // eslint-disable-next-line no-unused-expressions
-      console.log('여기까진 도착못해!')
-      // resultQ()
+      sendresultHandle()
       onClose()
       clearInterval(timerId.current)
     }
@@ -28,11 +25,8 @@ const QuizResult = ({ onClose, ox, resultQ }) => {
     <ModalContent bgColor='transparent' boxShadow='none' w='70rem' h='30rem' marginY='7rem' marginX='1rem' >
       {/* <ModalCloseButton /> */}
       <ModalBody className='OX'>
-        <Image src={ox ? 
-          "https://cdn.discordapp.com/attachments/885744368399560725/940500434345426944/O.png" : 
-          "https://cdn.discordapp.com/attachments/885744368399560725/940500440368418868/X.png"}
-          boxSize='lg' marginX='auto'
-        />
+        {ox ==="O" && <Image  boxSize='lg' marginX='auto' src="https://cdn.discordapp.com/attachments/885744368399560725/940500434345426944/O.png" />}
+        {ox ==="X" && <Image  boxSize='lg' marginX='auto' src="https://cdn.discordapp.com/attachments/885744368399560725/940500440368418868/X.png" />}
       </ModalBody>
     </ModalContent>
   );
