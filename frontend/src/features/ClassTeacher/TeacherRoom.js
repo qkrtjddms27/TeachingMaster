@@ -261,6 +261,7 @@ class Classroom extends Component {
     this.setState({
       quizContents: '',
       quizAnswer: '',
+      results:[],
     });
     sessionStorage.removeItem('OXQuiz');
     // sessionStorage.removeItem('quizText');
@@ -292,7 +293,7 @@ class Classroom extends Component {
             option2 : q1.options[1],
             option3 : q1.options[2],
             option4 : q1.options[3],
-    
+            results:[],
             chatClass: 'bookmarkQuiz__item--operator',
           },
         ],

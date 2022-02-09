@@ -9,6 +9,9 @@ import Announce from './Announce';
 
 const StudentModal = ({kind, iconAs, title, setState, quizs, resultQ, isOpen, onOpen, onClose, modalForm, setModalForm, modalOpen }) => {
   const [ox,setOX ] = useState(false)
+  useEffect(()=>{
+    return ()=> resultQ()
+  },[])
   return (
     <>
       <button className='state_button' title={title}
