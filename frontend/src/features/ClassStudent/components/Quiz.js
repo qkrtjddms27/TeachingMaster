@@ -6,7 +6,6 @@ import Timer from './Timer';
 const Quiz = ({ setModalForm, setOX, quizs }) => {
   const [quiz, setQuiz] = useState({})
   const [choice, setChoice] = useState(0)
-  const [myChoice,setMyChoice] =useState(0)
 
   useEffect(() => {
     console.log('quizs', quizs)
@@ -30,7 +29,6 @@ const Quiz = ({ setModalForm, setOX, quizs }) => {
       setQuiz(tmp)
       console.log('setQuiz', quiz)
     }
-    return (() => console.log("cleanupFunction",choice))
   }, [])
 
   const thisone = (idx)=>{
