@@ -2,14 +2,14 @@ import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
 
 const Timer = ({ quiz,setOX,setModalForm }) => {
-  const [sec, setSec] = useState(quiz.quizTimeout)
-  const time = useRef(quiz.quizTimeout)
+  const [sec, setSec] = useState( quiz ===undefined ? 5 :  quiz.quizTimeout)
+  const time = useRef( quiz ===undefined ? 5 :  quiz.quizTimeout)
   const timerId = useRef(null)
   
   const axiosMyQuiz = (choice) => {         // 퀴즈 제출
     console.log(`quizId: ${quiz.quizId}`)
     console.log(`choice: ${choice}`)
-    sessionStorage.setItem('studentresult', quiz.quizAnswer === Number(choice))
+    sessionStorage.setItem('studentResult', quiz.quizAnswer === Number(choice))
     sessionStorage.setItem('quizId', quiz.quizId)
     
     setOX(quiz.quizAnswer === Number(choice) ? "O":"X")
