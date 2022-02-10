@@ -1,13 +1,13 @@
 .main4 {
   @keyframes rbSpinner {
     from {
-      transform: rotate(-5deg)
+      transform: rotate(-5deg);
     }
     50% {
-      transform: rotate(5deg)
+      transform: rotate(5deg);
     }
     to {
-      transform: rotate(-5deg)
+      transform: rotate(-5deg);
     }
   }
   height: 100vh;
@@ -44,26 +44,26 @@
       height: 25vh;
     }
     &#rb1 {
-      background-color: #F1C46C;
+      background-color: #f1c46c;
     }
     &#rb2 {
-      background-color: #F6AAAA;
+      background-color: #f6aaaa;
     }
     &#rb3 {
-      background-color: #B5E8F9;
+      background-color: #b5e8f9;
     }
     &#rb4 {
-      background-color: #A7DE93;
+      background-color: #a7de93;
     }
     &#rb5 {
-      background-color: #707CEF;
+      background-color: #707cef;
     }
   }
 }
 .main5 {
-  height: 45vh;
+  height: 50vh;
   width: 100vw;
-  background-color: #d2d1f6;
+  background-color: #443ed8;
   .reviews {
     margin-top: 3rem;
     height: 40vh;

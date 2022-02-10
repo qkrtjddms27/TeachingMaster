@@ -26,7 +26,7 @@ export const QUIZ  =
     ]
   }
 
-export const serverUrl = 'http://i6e107.p.ssafy.io:8080/api'
+export const serverUrl = 'https://i6e107.p.ssafy.io:8080/api'
 // export const serverUrl = 'http://localhost:8080/api'
 
 export const roomData = {'ban': [4, 5, 6, 4, 5, 6]}
