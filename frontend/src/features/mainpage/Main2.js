@@ -10,6 +10,7 @@ const Main2 = () => {
   },[])
   return (
     <div className='Main2'>
+      <div className="scroll-down"/>
       <div className="empty_box"/>
       <div  className="tiger"
             data-aos="fade-right"

@@ -6,9 +6,11 @@ import UserVideoComponent from '../openVidu/UserVideoComponent'
 import '../scss/ClassTeacher.scss'
 import axios from 'axios';
 import { setToken, serverUrl } from '../../../components/TOKEN';
+import { useEffect } from 'react';
 
-const StudentScreen = ({highlighting,streamManager,total, i, announce, plusStar}) => {
+const StudentScreen = ({highlighting,streamManager,total, i, announce, plusStar, results, answerCheck}) => {
   const [memo,setMemo] = useState('')
+  const [check, setCheck] = useState(true)
   let scoreState  = "normal"
   const onSubmit = (e)=>{
     e.preventDefault();
@@ -42,12 +44,24 @@ const StudentScreen = ({highlighting,streamManager,total, i, announce, plusStar}
     star(i)
   }
 
+  useEffect(() => {
+    if (answerCheck) {
+      results.map(result => {
+        if (result.studentId === student.studentId) {
+          setCheck(result.studentResult === 'true' ? true : false)
+        }
+      })
+    }
+  }, [answerCheck])
+
   return (
     <div>
       <Popover >
         <PopoverTrigger>
           <div className='student_screen' >
             <UserVideoComponent 
+            answerCheck={answerCheck}
+            check={check}
             score={ scoreState}
             streamManager={streamManager} />
           </div>
