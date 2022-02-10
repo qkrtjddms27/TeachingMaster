@@ -9,7 +9,6 @@ const Quiz = ({ setModalForm, setOX, quizs }) => {
 
   useEffect(() => {
     console.log('quizs', quizs)
-    // console.log('length', quizs.length)
     if (quizs !== undefined) {
       const tmp = {
         "quizId": quizs.quizId,
