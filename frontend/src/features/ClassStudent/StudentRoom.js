@@ -9,15 +9,14 @@ import Toast from './components/Toast';
 import UserVideoComponent from './openVidu/UserVideoComponent';
 import Messages from './components/Messages';
 import StudentModal from './components/StudentModal';
+
 import micOn from './image/말할래요.png'
 import micOff from './image/쉿버튼.png'
 import CamOn from './image/카메라켜기.png'
 import CamOff from './image/카메라끄기.png'
-import quizDino from './image/퀴즈공룡.png'
-import OO from './image/O.png'
-import penguin from './image/펭귄.png'
-import XX from './image/X.png'
 
+// import quizDino from './image/퀴즈공룡.png'
+const quizDino = "https://cdn.discordapp.com/attachments/885744368399560725/940498039402037248/Pngtreecute_lively_green_little_dinosaur_4659657.png"
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
 
@@ -41,6 +40,27 @@ class StudentRoom extends Component {
       breaktime: false,
       mySessionId: 'ssafy' + (parseInt(student.roomGrade)*100 + parseInt(student.roomNum)),
       myUserName: student.studentName,
+
+      //quiz
+      quizs:[],
+      quizId: '',
+      subject: '',
+      quizPhoto: '',
+      quizTitle: '',
+      quizContents: '',
+      quizAnswer: '',
+      openStatus: true,
+      quizTimeout: '',
+      quizGrade: '',
+      userId:'',
+      option1:'',
+      option2:'',
+      option3:'',
+      option4:'',
+
+      results:[],
+      studentAnswer:'',
+
     };
 
     // OV
@@ -53,16 +73,23 @@ class StudentRoom extends Component {
     // 채팅
     this.handleChatMessageChange = this.handleChatMessageChange.bind(this);
     this.messageContainer = createRef(null);
-    this.sendmessageByClick = this.sendmessageByClick.bind(this);
     this.sendmessageByEnter = this.sendmessageByEnter.bind(this);
     // TM
     this.handleHistory = this.handleHistory.bind(this)
     this.changeVideostate = this.changeVideostate.bind(this)
     this.changeAudiostate = this.changeAudiostate.bind(this)
+    this.modalPop = this.modalPop.bind(this)
+
+    // quiz
+    //학생 결과 전송
+    this.sendresultHandle = this.sendresultHandle.bind(this);
   }
 
 
   // TM
+  modalPop(kind) {
+    this.props.modalOpen(kind)
+  }
   changeVideostate() {
     this.state.publisher.publishVideo(!this.state.videostate);
     this.setState({
@@ -76,7 +103,7 @@ class StudentRoom extends Component {
       audiostate: !this.state.audiostate
     })
   }
-
+  
   handleHistory(path) {
     this.props.history.push(path)
   }
@@ -112,30 +139,6 @@ class StudentRoom extends Component {
   handleChatMessageChange(e) {
     this.setState({
       message: e.target.value,
-    });
-  }
-
-  sendmessageByClick() {
-    this.setState({
-      messages: [
-        ...this.state.messages,
-        {
-          userName: this.state.myUserName,
-          text: this.state.message,
-          chatClass: 'messages__item--operator',
-        },
-      ],
-    });
-  
-    const mySession = this.state.session;
-    mySession.signal({
-      data: `${this.state.myUserName},${this.state.message}`,
-      to: [],
-      type: 'chat',
-    });
-  
-    this.setState({
-      message: '',
     });
   }
 
@@ -190,6 +193,22 @@ class StudentRoom extends Component {
     }
   }
 
+  //quiz 학생 결과 전송
+  sendresultHandle(){
+    const mySession = this.state.session;
+    mySession.signal({
+      data:`${this.state.student.studentId},${sessionStorage.getItem('quizId')},${sessionStorage.getItem('studentresult')}`,
+      to: [],
+      type: 'studentQuizresult',
+    });
+    
+    this.setState({
+      studentAnswer:'',
+    });
+    sessionStorage.removeItem('studentresult');
+  }
+
+  
   joinSession() {
     this.OV = new OpenVidu();
     console.log("join!")
@@ -200,7 +219,7 @@ class StudentRoom extends Component {
       () => {
 
         let mySession = this.state.session;
-
+        
         mySession.on('streamCreated', (event) => {
 
           let subscriber = mySession.subscribe(event.stream, undefined);
@@ -234,6 +253,59 @@ class StudentRoom extends Component {
               ],
             });
           }
+        });
+        
+        //quiz
+        //ox용
+        mySession.on('signal:quiz', (event) => {
+          let quizdata = JSON.parse(event.data);
+            this.setState({
+              quizs: [
+                ...this.state.quizs,
+                {
+                  quizContents:quizdata.value,
+                  quizAnswer:quizdata.ans,
+                  
+                  chatClass: 'quizs__item--visitor',
+                },
+              ],
+              
+            });            
+          });
+
+        //북마크 용 quiz
+        mySession.on('signal:bookmarkQuiz', (event) => {
+        
+          let quizdata = JSON.parse(event.data);
+          // console.log('*********************************')
+          // console.log('quizdata', quizdata)
+          // console.log('*********************************')
+          this.setState({
+            quizs: [
+              ...this.state.quizs,
+              {
+                quizId:quizdata.quizId,
+                subject:quizdata.subject,
+                quizPhoto:quizdata.quizPhoto,
+                quizTitle:quizdata.quizTitle,
+                quizContents:quizdata.quizContents,
+                quizAnswer:quizdata.quizAnswer,
+                openStatus:quizdata.openStatus,
+                quizTimeout:quizdata.quizTimeout,
+                quizGrade:quizdata.quizGrade,
+                userId:quizdata.userId,
+                option1:quizdata.options[0],
+                option2:quizdata.options[1],
+                option3:quizdata.options[2],
+                option4:quizdata.options[3],
+
+                chatClass: 'quizs__item--visitor',
+              },
+            ],
+            
+          });
+          // console.log(this.state.quizs)
+          this.modalPop('quiz')
         });
         
         this.getToken().then((token) => {
@@ -295,6 +367,7 @@ class StudentRoom extends Component {
   render() {
     const mySessionId = this.state.mySessionId;
     const myUserName = this.state.myUserName;
+    const quizs = this.state.quizs;
     const { path } = this.props.match
     // console.log('프랍프랍', path)
     return (
@@ -305,7 +378,7 @@ class StudentRoom extends Component {
             <div className='student_login'>
               <div className='box'>
                 <div className='left'>
-                  <Image className='penguin' src={penguin} />
+                  <Image className='penguin' src="https://cdn.discordapp.com/attachments/885744368399560725/940498613614805022/be64e7a5abcb6882.png" />
                 </div>
                 <div className='right'> 
                   <div className='grade_room'>
@@ -440,9 +513,12 @@ class StudentRoom extends Component {
                       />
                   </div>
                   {this.state.audiostate ? <div className='warning'>마이크가 켜져있어요</div>:<div  className='warning' />}
-                <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={OO} title='발표하자' />
-                <StudentModal kind='quiz' iconAs={XX} title='퀴즈' />
-                <StudentModal kind='oxQuiz' iconAs={OO} title='OX퀴즈' />
+                <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={micOn} title='발표하자' 
+                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}/>
+                <StudentModal kind='quiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={micOn} title='퀴즈'
+                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}/>
+                <StudentModal kind='oxQuiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={micOn} title='OX퀴즈' 
+                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}/>
                 </div>
           </Box>
         )}

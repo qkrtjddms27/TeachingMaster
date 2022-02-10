@@ -1,19 +1,23 @@
 .student {
   float: left;
-  width: 11.8rem;
+  width: 12rem;
+  height: 8.5rem;
   border-radius: 10px;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   margin-right: 1rem;
   margin-left: 1rem;
   border: 2px solid #58cbcf;
+  object-fit: cover;
 }
 .teacher {
-  width: 50rem;
+  width: 70rem;
+  height: 40rem;
   float: left;
   margin-bottom: 3rem;
-  margin-left: 10rem;
+  margin-left: 3rem;
   border-radius: 10px;
   border: 3px solid #0c59a1;
+  object-fit: cover;
 }
 
 #student div {
@@ -31,7 +35,7 @@
 #teacher div {
   position: absolute;
   background: #0c59a1;
-  margin-left: 10rem;
+  margin-left: 3rem;
   padding-left: 5px;
   padding-right: 5px;
   color: white;

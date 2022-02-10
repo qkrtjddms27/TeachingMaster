@@ -27,7 +27,7 @@ const Sticker = ({ isOpen, onOpen, onClose }) => {
       <ModalCloseButton />
       <ModalBody className='sticker-body'>
         <div className='sticker-left'>
-          <Image className='big-dino' src={dinosaur} 
+          <Image className='big-dino' src="https://cdn.discordapp.com/attachments/885744368399560725/940498039402037248/Pngtreecute_lively_green_little_dinosaur_4659657.png"
             data-aos="zoom-in-up"
             data-aos-duration="1000" 
           /> 

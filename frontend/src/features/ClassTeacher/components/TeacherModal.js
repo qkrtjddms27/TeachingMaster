@@ -4,7 +4,7 @@ import '../scss/TeacherModal.scss'
 import BookmarkQuiz from './BookmarkQuiz';
 import OxQuiz from './OxQuiz';
 
-const TeacherModal = ({ kind, iconAs, title }) => {
+const TeacherModal = ({ kind, iconAs, title, quizQ }) => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure()
   const [modalForm, setModalForm] = useState(null)
   const modalOpen = (kind) => {
@@ -25,8 +25,8 @@ const TeacherModal = ({ kind, iconAs, title }) => {
         motionPreset='slideInBottom'
       >
         <ModalOverlay />
-        {modalForm === 'bookmark' && <BookmarkQuiz setModalForm={setModalForm}/>}
-        {modalForm === 'ox' && <OxQuiz />}
+        {modalForm === 'bookmark' && <BookmarkQuiz onClose = {onClose} quizQ = {quizQ} setModalForm={setModalForm}/>}
+        {modalForm === 'ox' && <OxQuiz onClose = {onClose} quizQ = {quizQ} />}
       </Modal>
     </>
   );

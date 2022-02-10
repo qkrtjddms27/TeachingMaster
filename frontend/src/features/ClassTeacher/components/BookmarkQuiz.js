@@ -1,4 +1,4 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Image, ModalBody, ModalCloseButton, ModalContent, ModalHeader, Text, Button } from '@chakra-ui/react';
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Image, ModalBody, ModalCloseButton, ModalContent, ModalHeader, Text, Button, useDisclosure } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { serverUrl, setToken } from '../../../components/TOKEN';
@@ -6,9 +6,11 @@ import '../scss/TeacherModal.scss'
 import qicon from '../image/qicon.png'
 import aicon from '../image/question.png'
 
-const BookmarkQuiz = () => {
+const BookmarkQuiz = ({quizQ, onClose}) => {
   const [bookmark, setBookmark] = useState([])
   const { userId } = JSON.parse(localStorage.getItem("user"))
+  // const { onClose } = useDisclosure()
+  
   useEffect(() => {
     axios({
       url: `${serverUrl}/v1/quiz/select/favor/${userId}`,
@@ -27,6 +29,11 @@ const BookmarkQuiz = () => {
 
   const submitBookmark = (q) => {
     console.log('submit quiz data:', q)
+    
+    sessionStorage.setItem("bookmarkQuiz",JSON.stringify(q))
+    onClose()
+    quizQ()
+    
   }
 
   return (
@@ -45,7 +52,7 @@ const BookmarkQuiz = () => {
                 <h2>
                   <AccordionButton>
                     <Box className='in-fd-quiz' flex='1'>
-                      <Image src={qicon} boxSize='4%' alt='Q?' />
+                      <Image src='https://i.ibb.co/LpSCBYt/qicon.png' boxSize='4%' alt='Q?' />
                       <Text className='in-fd-name'>{q.subject}</Text>
                       <Text>{q.quizTitle}</Text>
                     </Box>
@@ -54,7 +61,7 @@ const BookmarkQuiz = () => {
                 </h2>
                 <AccordionPanel pb={4} className='in-fd-quiz-open'>
                   <div className='in-fd-quiz in-fd-acco-content'>
-                    <Image src={aicon} boxSize='4%' alt='A!' />
+                    <Image src='https://i.ibb.co/Wy3q8HN/question.png' boxSize='4%' alt='A!' />
                     <Text className='in-fd-name'>내용</Text>
                     <Text className='in-fd-quiz-last'>{q.quizContents}</Text>
                   </div>

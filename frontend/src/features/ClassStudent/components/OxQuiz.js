@@ -5,14 +5,21 @@ import Timer from './Timer';
 import o from '../image/letter-o.png'
 import x from '../image/letter-x.png'
 
-const OxQuiz = ({ setModalForm, setOX }) => {
+const OxQuiz = ({ setModalForm, setOX , quizs}) => {
   const quiz = {
-    "quizContent": "퀴즈 문제를 여기에 쓴다 이것의 답은 O일까 X일까 타이머는 현재 5초로 fix 참고로 엔터가 안들어감  문제는 한줄로 적혀진다",
-    "quizAnswer": "1"
+    "quizContent": quizs[quizs.length - 1].quizContents,
+    "quizAnswer": quizs[quizs.length - 1].quizAnswer
   }
-
+  console.log(quiz.quizAnswer)
+  console.log(typeof(quiz.quizAnswer))
+  
   const [choice, setChoice] = useState('0')
   const axiosMyQuiz = () => {
+
+    sessionStorage.setItem('studentresult', quiz.quizAnswer === choice)
+    sessionStorage.setItem('quizId', 0)
+
+    console.log(quiz.quizAnswer === choice)
     setOX(quiz.quizAnswer === choice)
     setModalForm('result')
   }
@@ -30,10 +37,10 @@ const OxQuiz = ({ setModalForm, setOX }) => {
         </div>
         <div className='ox-quiz-content'>
           <div className='ox-quiz-option' id={choice === '1' ? 'selected' : ''} onClick={() => setChoice('1')}>
-            <Image src={o} alt='O' boxSize='150px' />
+            <Image src="https://i.ibb.co/N67Qt5H/letter-o.png" alt='O' boxSize='150px' />
           </div>
           <div className='ox-quiz-option' id={choice === '2' ? 'selected' : ''} onClick={() => setChoice('2')}>
-            <Image src={x} alt='X' boxSize='150px' />
+            <Image src="https://i.ibb.co/ZhRZcMg/letter-x.png" alt='X' boxSize='150px' />
           </div>
         </div>
       </ModalBody>
