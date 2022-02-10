@@ -1,4 +1,4 @@
-import { Heading, Img } from "@chakra-ui/react";
+import { Heading, Img,Button } from "@chakra-ui/react";
 import {useEffect, useState} from 'react'
 import './scss/Main2.scss'
 import AOS from 'aos'
@@ -73,11 +73,11 @@ const Main2 = () => {
         </div>
         <Img className="icon" src="https://cdn.discordapp.com/attachments/885744368399560725/940789109855748126/d58eac80c7e49975.png"/>
       </div>
-      <div data-aos="fade-right"
+      <div  className="bear"
+            data-aos="fade-right"      
             data-aos-offset="300"
             data-aos-easing="linear"
             data-aos-duration="1000"
-            className="bear"
             id="animal_box">
         <Img className="icon" src="https://cdn.discordapp.com/attachments/885744368399560725/940788485227421716/6bc81f0a2e2b6c56.png"/>
         <div className="content">
@@ -91,7 +91,8 @@ const Main2 = () => {
 
           </div>
         </div>
-      </div>          
+      </div>      
+      <Button onClick={()=>{window.scrollTo({top:0,left:0,behavior:"smooth"})}} className="movetoTop">꼭대기로</Button>
     </div>
   )
 };
