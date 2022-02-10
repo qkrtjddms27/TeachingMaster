@@ -82,6 +82,7 @@ class Classroom extends Component {
     this.changeAudiostate = this.changeAudiostate.bind(this)
     this.changeHighlightingstate = this.changeHighlightingstate.bind(this)
     this.changeBreaktimestate = this.changeBreaktimestate.bind(this)
+    this.announceHandler = this.announceHandler.bind(this)
     
     // quiz
     this.quizHandler = this.quizHandler.bind(this);
@@ -211,8 +212,16 @@ class Classroom extends Component {
     }
   }
 
-  //quiz
-  //ox 퀴즈 용
+  // 발표시키기
+  announceHandler(i){
+    const mySession = this.state.session;
+    mySession.signal({
+      to: [this.state.subscribers[i].stream.inboundStreamOpts.connection],
+      type: 'announcement',
+    });
+    console.log(this.state.subscribers[i])
+  }
+
   quizHandler(){
     let qox = sessionStorage.getItem('OXQuiz')
     // console.log('getItem??', qox)
@@ -561,7 +570,7 @@ class Classroom extends Component {
                 {this.state.subscribers.map((sub, i) => (
                   <div key={i}>
                     {/* <UserVideoComponent streamManager={sub} />  */}
-                    <StudentScreen highlighting={this.state.highlighting} total={this.state.total}  streamManager={sub} />
+                    <StudentScreen highlighting={this.state.highlighting} total={this.state.total}  streamManager={sub} i={i} announce={this.announceHandler} />
                   </div>
                 ))}
                 {this.state.publisher !== undefined && (

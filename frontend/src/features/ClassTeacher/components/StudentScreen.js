@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {Box,Popover,PopoverTrigger,PopoverContent,PopoverBody,PopoverArrow,
   PopoverCloseButton,Heading,Accordion,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,
 } from '@chakra-ui/react'
 import UserVideoComponent from '../openVidu/UserVideoComponent'
+import '../scss/ClassTeacher.scss'
 
-const StudentScreen = ({highlighting,streamManager,total}) => {
+const StudentScreen = ({highlighting,streamManager,total, i, announce}) => {
   const [memo,setMemo] = useState('')
   let scoreState  = "normal"
   const onSubmit = (e)=>{
@@ -38,7 +39,7 @@ const StudentScreen = ({highlighting,streamManager,total}) => {
             <Heading>{student.clientData}</Heading>
             <div> 주간⭐:{student.weeklyStar}</div>
             <div> 총 ⭐:{student.allStar}</div>
-            <div> 발표 시키기</div>
+            <div onClick={() => announce(i)} className='pointer'> 발표 시키기</div>
             <div> 별점 주기</div>
             <Accordion allowToggle>
               <AccordionItem>
