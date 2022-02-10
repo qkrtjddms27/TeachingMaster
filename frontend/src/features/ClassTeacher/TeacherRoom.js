@@ -14,6 +14,8 @@ import Toast from './components/Toast';
 import UserVideoComponent from './openVidu/UserVideoComponent';
 import Messages from './components/Messages';
 import StudentScreen from './components/StudentScreen'
+import {serverUrl, setToken } from '../../components/TOKEN';
+
 
 
 // const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
@@ -290,12 +292,30 @@ class Classroom extends Component {
         option2:'',
         option3:'',
         option4:'',
+        results:[]
         // studentId:'',
         // studentAnswer:'',
       });
       sessionStorage.removeItem('bookmarkQuiz');
   }
 
+  saveStudentQuizLog(data){
+    console.log(data)
+    axios(
+        {
+          url : `${serverUrl}/student/student/`,
+          method: "POST",
+          data,
+          headers : setToken()
+        }
+      ).then(res=>{
+        console.log(res)
+        
+      }).catch(err=>{
+
+        alert("학생 로그 UPDATE 에러")
+      })
+  }
 
 
 
@@ -607,6 +627,16 @@ class Classroom extends Component {
                   <Toast setState={this.changeBreaktimestate} iconAs={FaSchool} title='쉬는시간 갖기'
                     change={true} message={'쉬는시간 입니다'} color={'black'} bg={'green.100'} />
                 )}
+                <div>
+                  <p>{this.state.subscribers.length}</p>
+                  <p>{this.state.results.length}</p>
+                  {/* 학생의 결과값이 세션에 있는 학생수 와 동일합니다.? (axios):null */
+                    (this.state.subscribers.length === this.state.results.length) && (this.state.results.length!==0 )  ?
+                    this.saveStudentQuizLog(this.state.results)
+                    : null
+                  }
+                </div>
+
               </div>
             </div>
           </Box>
