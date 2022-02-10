@@ -10,8 +10,8 @@ const OxQuiz = ({quizQ, onClose}) => {
     setValue(inputValue)
   }
   const submitOX = () => {
-    const q = {'value': value, 'ans': ans, 'quizTimeout': 5, 'quizId': 1004}
-    console.log('submit ox quiz data:', q)
+    const q = {'quizContents': value, 'quizAnswer': Number(ans), 'quizTimeout': 5, 'quizId': 1004}
+    console.log('set OX Quiz:', q)
     sessionStorage.setItem('OXQuiz', JSON.stringify(q))
     onClose()
     quizQ()

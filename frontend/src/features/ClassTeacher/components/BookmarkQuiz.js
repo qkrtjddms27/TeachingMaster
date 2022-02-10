@@ -24,7 +24,7 @@ const BookmarkQuiz = ({quizQ, onClose}) => {
   }, [])
 
   const submitBookmark = (q) => {
-    console.log('submit quiz data:', q)
+    console.log('set Bookmark Quiz:', q)
     sessionStorage.setItem("bookmarkQuiz", JSON.stringify(q))
     onClose()
     quizQ()
