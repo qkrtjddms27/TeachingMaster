@@ -28,7 +28,7 @@ class Classroom extends Component {
     this.state = {
       // OV
       mySessionId: this.props.match.params.roomId,
-      myUserName: this.props.user.userName,
+      myUserName: JSON.parse(localStorage.getItem('user')).userName,
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
@@ -40,8 +40,8 @@ class Classroom extends Component {
       videostate: true,
       audiostate: false,
       highlighting: false,
-      breaktime: false,
-
+      answerCheck: false,
+      user: JSON.parse(localStorage.getItem('user')),
       //quiz
       quizs:{},
       quizId: '',
@@ -81,9 +81,10 @@ class Classroom extends Component {
     this.changeVideostate = this.changeVideostate.bind(this)
     this.changeAudiostate = this.changeAudiostate.bind(this)
     this.changeHighlightingstate = this.changeHighlightingstate.bind(this)
-    this.changeBreaktimestate = this.changeBreaktimestate.bind(this)
+    this.changeAnswerCheckstate = this.changeAnswerCheckstate.bind(this)
     this.announceHandler = this.announceHandler.bind(this)
     this.plusStarHandler = this.plusStarHandler.bind(this)
+    this.resultsHandler = this.resultsHandler.bind(this)
     
     // quiz
     this.quizHandler = this.quizHandler.bind(this);
@@ -92,6 +93,16 @@ class Classroom extends Component {
 
 
   // TM
+  resultsHandler() {
+    const newResults = this.state.results.filter(result => result.studentResult)
+    // console.log(newResults)
+    this.setState({
+      results: newResults,
+      answerCheck: true
+    })
+
+  }
+
   changeVideostate() {
     this.state.publisher.publishVideo(!this.state.videostate);
     this.setState({
@@ -119,9 +130,9 @@ class Classroom extends Component {
     })
   }
   
-  changeBreaktimestate() {
+  changeAnswerCheckstate() {
     this.setState({
-      breaktime: !this.state.breaktime
+      answerCheck: !this.state.answerCheck
     })
   }
 
@@ -446,29 +457,25 @@ class Classroom extends Component {
     //     // }
     // });
 
-
         //quiz 학생 결과 가지기 용
         mySession.on('signal:studentQuizresult', (event) => {
           let resultsdata = JSON.parse(event.data);
           // console.log('resultsdata', resultsdata)
-          //if (quizdata[9] !== this.state.myUserName) {
-            this.setState({
-              results: [
-                ...this.state.results,
-                {
-                  studentId:resultsdata.studentId,
-                  quizId:resultsdata.quizId,
-                  studentResult:resultsdata.studentResult,
-                  chatClass: 'quizs__item--visitor',
-                },
-              ],
-              
-            });
-            // 여기서 학생들 OX 표시
-            console.log('quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?')
-            console.log(this.state.results)
-         // }
-      });
+          this.setState({
+            results: [
+              ...this.state.results,
+              {
+                studentId:resultsdata.studentId,
+                quizId:resultsdata.quizId,
+                studentResult:resultsdata.studentResult,
+                chatClass: 'quizs__item--visitor',
+              },
+            ],
+          });
+          if ((2*this.state.subscribers.length === this.state.results.length) && (this.state.results.length!==0 )) {
+            this.resultsHandler()
+          }
+        });
 
 
 
@@ -530,7 +537,7 @@ class Classroom extends Component {
 
   render() {
     const mySessionId = this.state.mySessionId;
-    const myUserName = this.state.myUserName;
+    const myUserName = JSON.parse(localStorage.getItem('user')).userName;
 
     return (
       <div className="ClassTeacher">
@@ -580,7 +587,7 @@ class Classroom extends Component {
                 {this.state.subscribers.map((sub, i) => (
                   <div key={i}>
                     {/* <UserVideoComponent streamManager={sub} />  */}
-                    <StudentScreen highlighting={this.state.highlighting} total={this.state.total}  streamManager={sub} i={i} announce={this.announceHandler} plusStar={this.plusStarHandler} />
+                    <StudentScreen answerCheck={this.state.answerCheck} results={this.state.results} highlighting={this.state.highlighting} total={this.state.total}  streamManager={sub} i={i} announce={this.announceHandler} plusStar={this.plusStarHandler} />
                   </div>
                 ))}
                 {this.state.publisher !== undefined && (
@@ -641,12 +648,12 @@ class Classroom extends Component {
                   <Toast setState={this.changeHighlightingstate} iconAs={MdOutlineExtensionOff} title='하이라이팅 켜기'
                     change={true} message={'하이라이팅을 켰습니다'} color={'black'} bg={'blue.100'} />
                 )}
-                {this.state.breaktime ? (
-                  <Toast setState={this.changeBreaktimestate} iconAs={GiCoffeeCup} title='수업 시작하기'
-                    change={false} message={'쉬는시간이 끝났습니다'} color={'black'} bg={'orange.100'} />
+                {this.state.answerCheck ? (
+                  <Toast setState={this.changeAnswerCheckstate} iconAs={GiCoffeeCup} title='퀴즈결과 끄기'
+                    change={false} message={'퀴즈결과 끄기'} color={'black'} bg={'orange.100'} />
                     ) : (
-                  <Toast setState={this.changeBreaktimestate} iconAs={FaSchool} title='쉬는시간 갖기'
-                    change={true} message={'쉬는시간 입니다'} color={'black'} bg={'green.100'} />
+                  <Toast setState={this.changeAnswerCheckstate} iconAs={FaSchool} title='퀴즈결과 보기'
+                    change={true} message={'퀴즈결과 보기'} color={'black'} bg={'green.100'} />
                 )}
                 <div>
                   <p>{this.state.subscribers.length}</p>

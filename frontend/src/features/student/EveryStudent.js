@@ -57,9 +57,9 @@ const EveryStudent = () => {
     return ( 
       <div className='card-case'>
         <div className='Spinner'>
-        <div class="mul13">
-          <div class="m13s m13c1"></div>
-          <div class="m13s m13c2"></div>
+        <div className="mul13">
+          <div className="m13s m13c1"></div>
+          <div className="m13s m13c2"></div>
         </div>
           {/* <Spinner speed='0.8s' thickness='10px' height="10rem" width="10rem" color='blue.500'/> */}
         </div>    

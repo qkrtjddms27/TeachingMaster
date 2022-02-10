@@ -11,12 +11,11 @@
     }
   }
   height: 100vh;
-  width: 100vw;
   display: flex;
   flex-flow: wrap;
   .rainbow {
     height: 100vh;
-    width: 20vw;
+    width: 20%;
     display: flex;
     flex-flow: wrap;
     flex-direction: column;
@@ -62,7 +61,7 @@
 }
 .main5 {
   height: 50vh;
-  width: 100vw;
+  width: 99.1vw;
   background-color: #443ed8;
   .reviews {
     margin-top: 3rem;
@@ -92,4 +91,12 @@
       }
     }
   }
+}
+.slick-prev {
+  left: 1% !important;
+  z-index: 1;
+}
+.slick-next {
+  right: 1% !important;
+  z-index: 1;
 }
