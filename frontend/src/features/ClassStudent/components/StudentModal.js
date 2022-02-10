@@ -19,13 +19,13 @@ const StudentModal = (
       data: JSON.stringify({
         "studentId":student.studentId,
         "quizId":sessionStorage.getItem('quizId'),
-        "studentresult": sessionStorage.getItem('studentresult'),
+        "studentResult": sessionStorage.getItem('studentResult'),
         "studentanswer": localStorage.getItem("thisone")
       }),
       to: [],
       type: 'studentQuizresult',
     });
-    sessionStorage.removeItem('studentresult');
+    sessionStorage.removeItem('studentResult');
   }}
   return (
     <>

@@ -215,11 +215,14 @@ class Classroom extends Component {
   //ox 퀴즈 용
   quizHandler(){
     let qox = sessionStorage.getItem('OXQuiz')
+    // console.log('getItem??', qox)
     let qox1 = JSON.parse(qox);
       this.setState({
       quizs: 
         {
-          quizContents: qox1.value,
+          quizTimeout: qox1.quizTimeout,
+          quizId: qox1.quizId,
+          quizContents: qox1.quizContents,
           quizAnswer: qox1.quizAnswer,
           chatClass: 'quizs__item--operator',
         },
@@ -246,6 +249,7 @@ class Classroom extends Component {
   //북마크 용
   quizHandlerStar(){
     let qq = sessionStorage.getItem('bookmarkQuiz')
+    // console.log('getItem??', qq)
     let q1 = JSON.parse(qq);
     // console.log(q1)
       this.setState({
@@ -310,9 +314,7 @@ class Classroom extends Component {
         }
       ).then(res=>{
         console.log(res)
-        
       }).catch(err=>{
-
         alert("학생 로그 UPDATE 에러")
       })
   }
@@ -428,16 +430,16 @@ class Classroom extends Component {
 
         //quiz 학생 결과 가지기 용
         mySession.on('signal:studentQuizresult', (event) => {
-          let resultsdata = event.data.split(',');
+          let resultsdata = JSON.parse(event.data);
+          // console.log('resultsdata', resultsdata)
           //if (quizdata[9] !== this.state.myUserName) {
             this.setState({
               results: [
                 ...this.state.results,
                 {
-                  studentId:resultsdata[0],
-                  quizId:resultsdata[1],
-                  studentResult:resultsdata[2],
-                  
+                  studentId:resultsdata.studentId,
+                  quizId:resultsdata.quizId,
+                  studentResult:resultsdata.studentResult,
                   chatClass: 'quizs__item--visitor',
                 },
               ],
@@ -631,7 +633,7 @@ class Classroom extends Component {
                   <p>{this.state.subscribers.length}</p>
                   <p>{this.state.results.length}</p>
                   {/* 학생의 결과값이 세션에 있는 학생수 와 동일합니다.? (axios):null */
-                    (this.state.subscribers.length === this.state.results.length) && (this.state.results.length!==0 )  ?
+                    (this.state.subscribers.length === this.state.results.length) && (this.state.results.length!==0 ) && (this.state.results[0].quizId !== "1004") ?
                     this.saveStudentQuizLog(this.state.results)
                     : null
                   }
