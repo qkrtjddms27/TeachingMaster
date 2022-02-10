@@ -10,11 +10,7 @@ import './scss/InFolder.scss'
 const InFolder = () => {
   let now = useParams().thisFolder
   const [thisFolder, setThisFolder] = useState(now)
-  // useEffect(() => {
-  //   setThisFolder(now)
-  // }, [])
-  
-  
+
   const {userId} = JSON.parse(localStorage.getItem("user"))
   const [qz, setQz] = useState([])                  // url 바뀔 때 받아오는 퀴즈들(안변함)
   const [myfd, setMyfd] = useState([])              // url 바뀔 때 받아오는 내 폴더 목록
@@ -22,8 +18,8 @@ const InFolder = () => {
   const [sub, setSub] = useState('전체')
   const [grade, setGrade] = useState('all')
 
-
-  useEffect(() => {     // url 바뀌면 실행
+  // url 바뀌면 실행
+  useEffect(() => {
     let url
     if (thisFolder === 'all' || thisFolder === 'imade') {
       url = `${serverUrl}/v1/quiz/findAll/${userId}`               // 전체 문제 or 내가만든 문제
@@ -32,6 +28,7 @@ const InFolder = () => {
     } else {
       url = `${serverUrl}/v1/quiz/find/folderQuiz/${thisFolder}`   // 내 폴더안에 있는 문제
     }
+    // url에 맞는 퀴즈 받아오기
     axios({
       url,
       method: "GET",
@@ -43,17 +40,16 @@ const InFolder = () => {
       } else {
         setQz(data.filter(quiz => quiz.openStatus || quiz.userId === userId))
       }
-      console.log('axios url:', url)
+      // console.log('axios url:', url)
       // console.log('res.data:', data)
     })
     .catch(err => {
-      console.log(thisFolder + '에 요청보냈는데 오류났다')
-      console.log(err)
+      console.log('axios quiz get err', err)
     })
   }, [thisFolder])
 
-
-  useEffect(() => {     // 처음 한번만 실행
+  // 처음 한번만 실행
+  useEffect(() => {
     axios({
       url: `${serverUrl}/v1/quiz/folder/${userId}`,
       method: "GET",
@@ -63,20 +59,19 @@ const InFolder = () => {
       setMyfd(data)
     })
     .catch(err => {
-      console.log('내가 가진 폴더 리스트 받아와야하는데 오류났다')
-      console.log(err)
+      console.log('InFolder: get my folder list err', err)
     })
   }, [])
-  
 
-  useEffect(() => {     // myfd 저장하면 처음 qzList 초기화
+  // myfd 저장하면 처음 qzList 초기화
+  useEffect(() => {
     setQzList(qz)
-    console.log(qz)
+    // console.log(qz)
   // setQzList(qz.filter(quiz => quiz.openStatus || quiz.userId === userId))
   }, [qz])
 
-
-  useEffect(() => {     // 학년이나 과목이 바뀌면 바꿔 보여줘야 함
+  // 학년이나 과목이 바뀌면 바꿔 보여줘야 함
+  useEffect(() => {
     if (grade === 'all') {
       if (sub === '전체') {
         setQzList(qz)
@@ -93,6 +88,7 @@ const InFolder = () => {
   }, [sub, grade])
 
   const toast = useToast()
+  // 퀴즈 폴더에 담기
   const quizAddFolder = (folderId, quizId) => {
     // console.log("폴더아이디:", folderId, "퀴즈아이디:", quizId, "요청은 나중에 보낼게여...확인이 힘드네여...")
     axios({
@@ -118,36 +114,65 @@ const InFolder = () => {
       status: 'success'
     }))
     .catch(err => {
-      console.log('폴더이 퀴즈 담다가 오류났다')
-      console.log(err)
+      console.log('InFolder: quiz folder err', err)
     })
   }
 
 
-  // 내 개인 폴더에서 지우고 싶을 때 -> 나중에 하기
-  // const quizDelFolder = (folderId, quizId) => {
-  //   axios({
-  //     url: `${serverUrl}/v1/quiz/어딘가의주소`,
-  //     method: '뭘까',
-  //     headers: setToken(),
-  //     data: { folderId, quizId }
-  //   })
-  //   .then(res => {
-  //     console.log(res)
-  //   })
-  //   .catch(err => {
-  //     console.log(err)
-  //   })
-  // }
+  // 내 개인 폴더에서 퀴즈 지우기
+  const quizDelFolder = (folderId, quizId) => {
+    axios({
+      url: `${serverUrl}/v1/quiz/delete/folder_quiz/${folderId}/${quizId}`,
+      method: 'DELETE',
+      headers: setToken(),
+    })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log('InFolder: quizDelFolder', err)
+    })
+  }
+
+  // 내가 만든 퀴즈 삭제
+  const delQuiz = (quizId) => {
+    axios({
+      url: `${serverUrl}/v1/quiz/delete/${quizId}`,
+      method: 'DELETE',
+      headers: setToken(),
+    })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log('InFolder: delQuiz', err)
+    })
+  }
+
+  // 폴더 삭제
+  const delFolder = (folderId) => {
+    axios({
+      url: `${serverUrl}/v1/quiz/delete/folder/${folderId}`,
+      method: 'DELETE',
+      headers: setToken(),
+    })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log('InFolder: delFolder', err)
+    })
+  }
 
 
   const changeStar = (q) => {                   // 즐겨찾기 요청
     // console.log("별 바꿀 퀴즈 정보:", q)
     setQzList( 
       qzList.map(quiz=>quiz.quizId === q.quizId ?
-        {...quiz,bookMarkCheck:!quiz.bookMarkCheck}:quiz)
+        {...quiz, bookMarkCheck: !quiz.bookMarkCheck} : quiz)
     )
     if (!q.bookMarkCheck) {
+      // 즐겨찾기에 추가
       const data = { quizId: q.quizId, userId }
       data.bookMarkCheck = !q.bookMarkCheck
       axios({
@@ -160,8 +185,20 @@ const InFolder = () => {
         console.log(res)
       })
       .catch(err => {
-        console.log('즐겨찾기 별 바꾸기 오류')
-        console.log(err)
+        console.log('InFolder: changeStar(post)', err)
+      })
+    } else {
+      // 즐겨찾기에서 제거
+      axios({
+        url: `${serverUrl}/v1/quiz/delete/bookmark/${userId}/${q.quizId}`,
+        method: 'DELETE',
+        headers: setToken(),
+      })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log('InFolder: changeStar(delete)', err)
       })
     }
   }
