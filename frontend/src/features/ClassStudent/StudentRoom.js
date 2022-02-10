@@ -192,8 +192,13 @@ class StudentRoom extends Component {
   //quiz 학생 결과 전송
   sendresultHandle(){
     const mySession = this.state.session
+    console.log('⭐⭐⭐⭐제출⭐⭐⭐⭐')
     mySession.signal({
-      data:`${this.state.student.studentId},${sessionStorage.getItem('quizId')},${sessionStorage.getItem('studentresult')}}`,
+      data:JSON.stringify({
+        studentId:this.state.student.studentId,
+        quizId:sessionStorage.getItem('quizId'),
+        studentResult:sessionStorage.getItem('studentResult')
+      }),
       to:[],
       type:'studentQuizresult'
     })
@@ -201,7 +206,8 @@ class StudentRoom extends Component {
       studentAnswer:'',
       quizs:{}
     })
-    sessionStorage.removeItem('studentresult')
+    sessionStorage.removeItem('studentResult')
+    sessionStorage.removeItem('quizId')
   }
 
   
@@ -258,8 +264,8 @@ class StudentRoom extends Component {
             this.setState({
               quizs: 
                 {
-                  quizContents:quizdata.value,
-                  quizAnswer:quizdata.ans,
+                  quizContents:quizdata.quizContents,
+                  quizAnswer:quizdata.quizAnswer,
                   quizTimeout:quizdata.quizTimeout,
                   quizId:quizdata.quizId,
                   chatClass: 'quizs__item--visitor',
