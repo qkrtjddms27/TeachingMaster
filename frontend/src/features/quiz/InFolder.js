@@ -1,13 +1,14 @@
 import {Image, Select, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, 
-  Box, Text, Menu, MenuButton, MenuList, MenuItem, useToast } from '@chakra-ui/react'
+  Box, Text, Menu, MenuButton, MenuList, MenuItem, useToast, Button } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { setToken, serverUrl } from '../../components/TOKEN'
 import './scss/InFolder.scss'
 
 
 const InFolder = () => {
+  let history = useHistory()
   let now = useParams().thisFolder
   const [thisFolder, setThisFolder] = useState(now)
 
@@ -120,17 +121,33 @@ const InFolder = () => {
 
 
   // 내 개인 폴더에서 퀴즈 지우기
-  const quizDelFolder = (folderId, quizId) => {
+  const quizDelFolder = (quizId) => {
     axios({
-      url: `${serverUrl}/v1/quiz/delete/folder_quiz/${folderId}/${quizId}`,
+      url: `${serverUrl}/v1/quiz/delete/folder_quiz/${thisFolder}/${quizId}`,
       method: 'DELETE',
       headers: setToken(),
     })
-    .then(res => {
-      console.log(res)
+    .then(() => {
+      console.log(qzList)
+      setQzList(qzList.filter(quiz => quiz.quizId !== quizId))
     })
     .catch(err => {
       console.log('InFolder: quizDelFolder', err)
+    })
+  }
+
+  // 폴더 삭제
+  const delFolder = (folderId) => {
+    axios({
+      url: `${serverUrl}/v1/quiz/delete/folder/${folderId}`,
+      method: 'DELETE',
+      headers: setToken(),
+    })
+    .then(() => {
+      history.push('/quiz/folder')
+    })
+    .catch(err => {
+      console.log('InFolder: delFolder', err)
     })
   }
 
@@ -142,25 +159,11 @@ const InFolder = () => {
       headers: setToken(),
     })
     .then(res => {
-      console.log(res)
+      // console.log(res)
+      setQzList(qzList.filter(quiz => quiz.quizId !== quizId))
     })
     .catch(err => {
       console.log('InFolder: delQuiz', err)
-    })
-  }
-
-  // 폴더 삭제
-  const delFolder = (folderId) => {
-    axios({
-      url: `${serverUrl}/v1/quiz/delete/folder/${folderId}`,
-      method: 'DELETE',
-      headers: setToken(),
-    })
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => {
-      console.log('InFolder: delFolder', err)
     })
   }
 
@@ -194,8 +197,8 @@ const InFolder = () => {
         method: 'DELETE',
         headers: setToken(),
       })
-      .then(res => {
-        console.log(res)
+      .then(() => {
+        setQzList(qzList.filter(quiz => quiz.quizId !== q.quizId))
       })
       .catch(err => {
         console.log('InFolder: changeStar(delete)', err)
@@ -225,8 +228,9 @@ const InFolder = () => {
             {myfd.map(({folderId, folderName}, idx) => {
               const myFolderUrl = `/quiz/folder/${folderId}`
               return (
-                <MenuItem key={idx}>
+                <MenuItem key={idx} className='infd-myfd-list'>
                   <Link to={myFolderUrl}><span onClick={() => setThisFolder(folderId)}>{folderName}</span></Link>
+                  <Image onClick={() => delFolder(folderId)} src='https://i.ibb.co/1sbCZjR/cross-circle.png' boxSize='15px' alt='폴더 삭제' title='폴더삭제'/>
                 </MenuItem>
               )
             })}
@@ -303,6 +307,9 @@ const InFolder = () => {
                       <Text>{q.quizTimeout}초</Text>
                     </div>
                     <div className='in-fd-btns'>
+                      {thisFolder === 'imade' && (
+                        <Image onClick={() => delQuiz(q.quizId)} boxSize='25px' src='https://cdn-icons-png.flaticon.com/512/3096/3096673.png' alt='퀴즈 삭제' title='퀴즈 삭제' />
+                      )}
                       {!q.folderCheck && (
                         <Menu>
                           <MenuButton title="폴더에 추가!"><Image src='https://i.ibb.co/5sdgMB7/inmyfolder.png' boxSize="25px" /></MenuButton>
@@ -316,6 +323,9 @@ const InFolder = () => {
                             ))}
                           </MenuList>
                         </Menu>
+                      )}
+                      {thisFolder !== 'all' && thisFolder !== 'imade' && thisFolder !== 'bookmark' && (
+                        <Image onClick={() => quizDelFolder(q.quizId)} src='https://i.ibb.co/1sbCZjR/cross-circle.png' boxSize='25px' alt='폴더에서 삭제' title='폴더에서 퀴즈 빼기!'/>
                       )}
                       {q.userId === userId && (
                         <Link title="퀴즈 수정!" to={qzUpdateUrl}><Image className='in-fd-btn2' src='https://i.ibb.co/GCQKnYH/edit.png' boxSize="25px" /></Link>

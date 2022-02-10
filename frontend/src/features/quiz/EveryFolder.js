@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Heading, Image } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Button, Heading, Image, Text } from '@chakra-ui/react'
+import { Link, useHistory } from 'react-router-dom'
 import React,{ useEffect, useState } from 'react'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Modal } from 'react-bootstrap'
 import axios from 'axios'
 import AddQuizPopover from './AddQuizPopover'
 import AOS from 'aos'
@@ -19,7 +19,6 @@ const Folder = () => {
     AOS.init()
   })
 
-  // user의 폴더 목록 받기 -> 토큰사용은 나중으로 미룸
   const [myFolders, setMyFolders] = useState([])
   useEffect (() => {
     axios({
@@ -52,27 +51,26 @@ const Folder = () => {
   const Imgurl1 = `https://cdn-icons-png.flaticon.com/512/1081/${imgUrls[imgUrls.length-1]}.png`
   const Imgurl2 = `https://cdn-icons-png.flaticon.com/512/1081/${imgUrls[imgUrls.length-2]}.png`
 
-
   return (
     <div className="every-folder">
       <div className="ev-fd"></div>
 
 
       <div>
-        <Heading className='title'>폴더들</Heading>
+        <Text className='title'>폴더들</Text>
 
         <div className='all-cart-mine'>
           <div data-aos="fade-down" data-aos-duration="1500" className='mine'>
             <Link to="/quiz/folder/all"><img className='folder-icon' src={Imgurl1} alt='그림'/></Link>                    
-            <Heading className='all-cart-mine-title'>전체보기</Heading>
+            <Text className='all-cart-mine-title'>전체보기</Text>
           </div>
           <div data-aos="fade-up" data-aos-duration="1500" className='mine'>
             <Link to="/quiz/folder/bookmark"><Image className='folder-icon' src='https://i.ibb.co/VjCdMxC/star.png' alt='즐겨찾기'/></Link>
-            <Heading className='all-cart-mine-title'>즐겨찾기</Heading>
+            <Text className='all-cart-mine-title'>즐겨찾기</Text>
           </div>
           <div data-aos="fade-down" data-aos-duration="1500" className='mine'>
             <Link to="/quiz/folder/imade"><img className='folder-icon' src={Imgurl2} alt='그림'/></Link>
-            <Heading className='all-cart-mine-title'>내가 만든문제</Heading>
+            <Text className='all-cart-mine-title'>내가 만든문제</Text>
           </div>
         </div>
 
@@ -86,7 +84,7 @@ const Folder = () => {
               return (
                 <Col className='col' sm = {3} key={idx}>
                   <div data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1500" key={url}>
-                    <Link to={url}><img className='folder-icon' src={imgUrl} alt='그림'/></Link>
+                    <Link to={url}><img className='folder-icon' src={imgUrl} alt='그림' title={`${fd.folderName} 들어가기`} /></Link>
                     <p className='title'>{fd.folderName}</p>
                   </div>
                 </Col>
