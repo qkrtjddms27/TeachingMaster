@@ -190,7 +190,19 @@ class StudentRoom extends Component {
   }
 
   //quiz 학생 결과 전송
-  
+  sendresultHandle(){
+    const mySession = this.state.session
+    mySession.signal({
+      data:`${this.state.student.studentId},${sessionStorage.getItem('quizId')},${sessionStorage.getItem('studentresult')}}`,
+      to:[],
+      type:'studentQuizresult'
+    })
+    this.setState({
+      studentAnswer:'',
+      quizs:{}
+    })
+    sessionStorage.removeItem('studentresult')
+  }
 
   
   joinSession() {
@@ -505,6 +517,10 @@ class StudentRoom extends Component {
                   isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} 
                   setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
                   mySession={this.state.session} student={this.state.student}  />
+
+                <Button onClick={()=>{
+                  this.sendresultHandle()
+                }} /> 
                 </div>
           </Box>
         )}
