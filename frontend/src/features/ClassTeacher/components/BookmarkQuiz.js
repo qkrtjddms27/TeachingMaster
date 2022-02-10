@@ -3,13 +3,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { serverUrl, setToken } from '../../../components/TOKEN';
 import '../scss/TeacherModal.scss'
-import qicon from '../image/qicon.png'
-import aicon from '../image/question.png'
 
 const BookmarkQuiz = ({quizQ, onClose}) => {
   const [bookmark, setBookmark] = useState([])
   const { userId } = JSON.parse(localStorage.getItem("user"))
-  // const { onClose } = useDisclosure()
   
   useEffect(() => {
     axios({
@@ -18,7 +15,6 @@ const BookmarkQuiz = ({quizQ, onClose}) => {
       headers: setToken()
     })
     .then(({data}) => {
-      // console.log(data)
       setBookmark(data.filter(quiz => quiz.openStatus || quiz.userId === userId))
     })
     .catch(err => {
@@ -29,8 +25,7 @@ const BookmarkQuiz = ({quizQ, onClose}) => {
 
   const submitBookmark = (q) => {
     console.log('submit quiz data:', q)
-    
-    sessionStorage.setItem("bookmarkQuiz",JSON.stringify(q))
+    sessionStorage.setItem("bookmarkQuiz", JSON.stringify(q))
     onClose()
     quizQ()
     

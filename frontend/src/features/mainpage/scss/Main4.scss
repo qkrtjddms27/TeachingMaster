@@ -1,0 +1,95 @@
+.main4 {
+  @keyframes rbSpinner {
+    from {
+      transform: rotate(-5deg)
+    }
+    50% {
+      transform: rotate(5deg)
+    }
+    to {
+      transform: rotate(-5deg)
+    }
+  }
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-flow: wrap;
+  .rainbow {
+    height: 100vh;
+    width: 20vw;
+    display: flex;
+    flex-flow: wrap;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    &:hover {
+      transform: scaleX(1.07);
+      transition: 0.5s;
+      .rainbow-p {
+        transform: scale(1.2);
+        transition: 1s;
+      }
+      .rainbow-img {
+        animation: rbSpinner 1s;
+        animation-iteration-count: infinite;
+      }
+    }
+    .rainbow-p {
+      color: aliceblue;
+      font-weight: bold;
+      font-size: 5rem;
+    }
+    .rainbow-img {
+      width: 15vw;
+      height: 25vh;
+    }
+    &#rb1 {
+      background-color: #F1C46C;
+    }
+    &#rb2 {
+      background-color: #F6AAAA;
+    }
+    &#rb3 {
+      background-color: #B5E8F9;
+    }
+    &#rb4 {
+      background-color: #A7DE93;
+    }
+    &#rb5 {
+      background-color: #707CEF;
+    }
+  }
+}
+.main5 {
+  height: 45vh;
+  width: 100vw;
+  background-color: #d2d1f6;
+  .reviews {
+    margin-top: 3rem;
+    height: 40vh;
+    padding: 1rem;
+    .review {
+      background-color: white;
+      height: 80%;
+      width: 80%;
+      min-width: 15rem;
+      border: 1px solid black;
+      margin: auto;
+      border-radius: 1rem;
+      box-shadow: 2px 2px 7px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .review-title {
+        font-weight: bold;
+        font-size: 1.1rem;
+        min-width: 12rem;
+      }
+      .review-footer {
+        font-size: 0.9rem;
+        text-align: right;
+      }
+    }
+  }
+}

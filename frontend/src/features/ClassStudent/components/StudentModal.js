@@ -7,8 +7,26 @@ import OxQuiz from './OxQuiz';
 import QuizResult from './QuizResult';
 import Announce from './Announce';
 
-const StudentModal = ({kind, iconAs, title, setState, quizs, resultQ, isOpen, onOpen, onClose, modalForm, setModalForm, modalOpen }) => {
-  const [ox,setOX ] = useState(false)
+const StudentModal = (
+  {kind, iconAs, title, setState, quizs, 
+    resultQ, isOpen, onOpen, onClose, modalForm, mySession,student,
+    setModalForm, modalOpen, }) => {
+  const [ox,setOX ] = useState("")
+  
+  const sendresultHandle = ()=>{
+    if (mySession !== undefined){
+    mySession.signal({
+      data: JSON.stringify({
+        "studentId":student.studentId,
+        "quizId":sessionStorage.getItem('quizId'),
+        "studentresult": sessionStorage.getItem('studentresult'),
+        "studentanswer": localStorage.getItem("thisone")
+      }),
+      to: [],
+      type: 'studentQuizresult',
+    });
+    sessionStorage.removeItem('studentresult');
+  }}
   return (
     <>
       <button className='state_button' title={title}
@@ -26,7 +44,7 @@ const StudentModal = ({kind, iconAs, title, setState, quizs, resultQ, isOpen, on
         {modalForm === 'sticker' && <Sticker onClose={onClose} />}
         {modalForm === 'quiz' && <Quiz quizs = {quizs} onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
         {modalForm === 'oxQuiz' && <OxQuiz quizs = {quizs} onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
-        {modalForm === 'result' && <QuizResult resultQ={resultQ}  ox={ox} onClose={onClose} />}
+        {modalForm === 'result' && <QuizResult sendresultHandle={sendresultHandle}  ox={ox} onClose={onClose} />}
         {modalForm === 'announce' && <Announce setState={setState} onClose={onClose}/>}
       </Modal>
     </>
