@@ -1,4 +1,4 @@
-import { ModalContent, ModalHeader, ModalCloseButton, ModalBody } from '@chakra-ui/react';
+import { ModalContent, ModalHeader, ModalCloseButton, ModalBody, Img } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import '../scss/StudentModal.scss'
 import Timer from './Timer';
@@ -36,9 +36,10 @@ const Quiz = ({ setModalForm, setOX, quizs }) => {
   }
 
   return (
-    <div>
+    <div className='modal_quiz_box'> 
       {quiz.options !== undefined && (
-        <ModalContent bgColor='#84BAAE' w='70rem' h='40rem' marginY='7rem' marginX='1rem' >
+        <ModalContent bgColor='rgb(245, 198, 110)' w='70rem' h='40rem' marginY='7rem' marginX='1rem' >
+          <Img className='tiger' src="https://cdn.discordapp.com/attachments/885744368399560725/940788467040927744/1ebc39a1c15ce4e0.png"/>
           <ModalHeader className='student-modal-header'>
             <div style={{"fontSize": "xx-large"}}>신나는 퀴즈 시간</div>
             <Timer setOX={setOX} quiz={quiz} setModalForm={setModalForm}  />

@@ -30,7 +30,7 @@ const Main2 = () => {
       <div className="rabbit"
             data-aos="fade-left"
             data-aos-offset="400"
-            data-aos-duration="2000"
+            data-aos-duration="1000"
             id="animal_box">
         <div className="content">
           <div className="ment">
@@ -49,7 +49,7 @@ const Main2 = () => {
         data-aos="fade-right"
         data-aos-offset="300"
         data-aos-easing="linear"
-        data-aos-duration="2000"
+        data-aos-duration="1000"
         id="animal_box">
         <Img className="icon" src="https://cdn.discordapp.com/attachments/885744368399560725/940789117434875924/b8cf8311fbac34fb.png"/>
         <div className="content">
@@ -60,7 +60,7 @@ const Main2 = () => {
       <div data-aos="fade-left"
             data-aos-offset="300"
             data-aos-easing="linear"
-            data-aos-duration="2000"
+            data-aos-duration="1000"
              className="dino"
              id="animal_box">
         <div className="content">
@@ -76,7 +76,7 @@ const Main2 = () => {
       <div data-aos="fade-right"
             data-aos-offset="300"
             data-aos-easing="linear"
-            data-aos-duration="2000"
+            data-aos-duration="1000"
             className="bear"
             id="animal_box">
         <Img className="icon" src="https://cdn.discordapp.com/attachments/885744368399560725/940788485227421716/6bc81f0a2e2b6c56.png"/>
