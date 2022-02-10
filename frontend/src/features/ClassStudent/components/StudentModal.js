@@ -8,9 +8,9 @@ import QuizResult from './QuizResult';
 import Announce from './Announce';
 
 const StudentModal = (
-  {kind, iconAs, title, setState, quizs, 
+  {kind, iconAs, title, quizs, 
     resultQ, isOpen, onOpen, onClose, modalForm, mySession,student,
-    setModalForm, modalOpen, }) => {
+    setModalForm, modalOpen }) => {
   const [ox,setOX ] = useState("")
   
   const sendresultHandle = ()=>{
@@ -27,11 +27,13 @@ const StudentModal = (
     });
     sessionStorage.removeItem('studentResult');
   }}
+  
   return (
     <>
       <button className='state_button' title={title}
         onClick={() => modalOpen(kind)}
-      ><Image src={iconAs} height="100" /></button>
+      > {iconAs!=="" &&  <Image className='dino' src={iconAs}  /> }
+      </button>
       <Modal
         size="full"
         isCentered
@@ -41,11 +43,11 @@ const StudentModal = (
         closeOnOverlayClick={modalForm!=='quiz' && modalForm !=='OX' && modalForm !== 'oxQuiz'}
       >
         <ModalOverlay />
-        {modalForm === 'sticker' && <Sticker onClose={onClose} />}
+        {modalForm === 'sticker' && <Sticker onClose={onClose} student={student} />}
         {modalForm === 'quiz' && <Quiz quizs = {quizs} onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
         {modalForm === 'oxQuiz' && <OxQuiz quizs = {quizs} onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
         {modalForm === 'result' && <QuizResult sendresultHandle={sendresultHandle}  ox={ox} onClose={onClose} />}
-        {modalForm === 'announce' && <Announce setState={setState} onClose={onClose}/>}
+        {modalForm === 'announce' && <Announce  onClose={onClose}/>}
       </Modal>
     </>
   );
