@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.awt.print.Book;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service("QuizService")
@@ -288,18 +289,20 @@ System.out.println(folder.getUser().getUserId());
     }
 
     @Override
-    public QuizLog createQuizLog(QuizLogReq quizLogReq) {
-        QuizLog quizLog = new QuizLog();
+    public void createQuizLog(List<QuizLogReq> quizLogReq) {
+        for (int i = 0; i < quizLogReq.size();i++) {
+            QuizLog quizLog = new QuizLog();
 
-        Quiz quiz = quizRepository.findById(quizLogReq.getQuizId()).get();
-        Student student = studentRepository.findById(quizLogReq.getStudentId()).get();
+            Quiz quiz = quizRepository.findById(quizLogReq.get(i).getQuizId()).get();
+            Student student = studentRepository.findById(quizLogReq.get(i).getStudentId()).get();
 
-        quizLog.setQuiz(quiz);
-        quizLog.setStudent(student);
-        quizLog.setQuizResult(quizLogReq.getQuizResult());
-        quizLog.setQuizResult(quizLogReq.getQuizResult());
+            quizLog.setQuiz(quiz);
+            quizLog.setStudent(student);
+            quizLog.setQuizResult(quizLogReq.get(i).getStudentResult());
+            quizLog.setQuizResult(quizLogReq.get(i).getStudentResult());
 
-        return quizLogRepository.save(quizLog);
+            quizLogRepository.save(quizLog);
+        }
+//        return quizLogRepository.save(quizLog);
     }
-
 }

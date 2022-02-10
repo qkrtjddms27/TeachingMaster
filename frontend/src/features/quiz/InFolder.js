@@ -5,14 +5,6 @@ import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import { setToken, serverUrl } from '../../components/TOKEN'
 import './scss/InFolder.scss'
-import onetwo from './image/plusicon.gif'
-import qicon from './image/qicon.png'
-import aicon from './image/question.png'
-import inmyfolder from './image/inmyfolder.png'
-import edit from './image/edit.png'
-import star3 from './image/star3.png'
-import star4 from './image/star4.png'
-import fileadd from './image/fileadd.png'
 
 
 const InFolder = () => {
@@ -210,7 +202,7 @@ const InFolder = () => {
       <div className='in-fd-scroll'>
 
         <div>
-          <Image className='in-fd-img' src={onetwo} boxSize='30%' alt='띵동' />
+          <Image className='in-fd-img' src='https://i.ibb.co/YQHgst6/plusicon.gif' boxSize='30%' alt='띵동' />
         </div>
 
         <div className='in-fd-sub'>
@@ -245,7 +237,7 @@ const InFolder = () => {
                   <h2>
                     <AccordionButton>
                       <Box className='in-fd-quiz' flex='1'>
-                        <Image src={qicon} boxSize='4%' alt='Q?' />
+                        <Image src='https://i.ibb.co/LpSCBYt/qicon.png' boxSize='4%' alt='Q?' />
                         <Text className='in-fd-name'>{q.subject}</Text>
                         <Text>{q.quizTitle}</Text>
                       </Box>
@@ -254,7 +246,7 @@ const InFolder = () => {
                   </h2>
                   <AccordionPanel pb={4} className='in-fd-quiz-open'>
                     <div className='in-fd-quiz in-fd-acco-content'>
-                      <Image src={aicon} boxSize='4%' alt='A!' />
+                      <Image src='https://i.ibb.co/Wy3q8HN/question.png' boxSize='4%' alt='A!' />
                       <Text className='in-fd-name'>내용</Text>
                       <Text className='in-fd-quiz-last'>{q.quizContents}</Text>
                     </div>
@@ -276,7 +268,7 @@ const InFolder = () => {
                     <div className='in-fd-btns'>
                       {!q.folderCheck && (
                         <Menu>
-                          <MenuButton title="폴더에 추가!"><Image src={inmyfolder} boxSize="25px" /></MenuButton>
+                          <MenuButton title="폴더에 추가!"><Image src='https://i.ibb.co/5sdgMB7/inmyfolder.png' boxSize="25px" /></MenuButton>
                           <MenuList>
                             {myfd.map((fd, idx) => (
                               <MenuItem key={idx}>
@@ -289,12 +281,12 @@ const InFolder = () => {
                         </Menu>
                       )}
                       {q.userId === userId && (
-                        <Link title="퀴즈 수정!" to={qzUpdateUrl}><Image className='in-fd-btn2' src={edit} boxSize="25px" /></Link>
+                        <Link title="퀴즈 수정!" to={qzUpdateUrl}><Image className='in-fd-btn2' src='https://i.ibb.co/GCQKnYH/edit.png' boxSize="25px" /></Link>
                       )}
                       {q.bookMarkCheck ? (
-                        <Image title="즐겨찾기 제외!" src={star4} onClick={() => changeStar(q)} boxSize="25px" />
+                        <Image title="즐겨찾기 제외!" src='https://i.ibb.co/8KprR2y/star4.png' onClick={() => changeStar(q)} boxSize="25px" />
                         ) : (
-                        <Image title="즐겨찾기 추가!!" src={star3} onClick={() => changeStar(q)} boxSize="25px" />
+                        <Image title="즐겨찾기 추가!!" src='https://i.ibb.co/QPDyvqQ/star3.png' onClick={() => changeStar(q)} boxSize="25px" />
                       )}
                     </div>
                   </AccordionPanel>
@@ -311,7 +303,7 @@ const InFolder = () => {
 
     <div className='in-fd-fileadd' title='퀴즈 생성!'>
       <div></div>
-      <Link to="/quiz/create"><Image src={fileadd} className='in-fd-add-quiz' /></Link>
+      <Link to="/quiz/create"><Image src='https://i.ibb.co/p0j4x07/folderadd.png' className='in-fd-add-quiz' /></Link>
     </div>
 
 
