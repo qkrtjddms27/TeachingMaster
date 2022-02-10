@@ -119,11 +119,11 @@ const Updatequiz = () => {
         </div>
         <div className='time-box'>
           <Select value={timeout} onChange={(e)=>setTimeout(e.target.value)} className='time-select'>
+            <option value={5}>5초</option>
+            <option value={10}>10초</option>
             <option value={15}>15초</option>
             <option value={30}>30초</option>
             <option value={60}>1분</option>
-            <option value={120}>2분</option>
-            <option value={180}>3분</option>
           </Select>
         </div>
         <div className='grade-box'>

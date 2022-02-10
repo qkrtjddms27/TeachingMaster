@@ -13,7 +13,6 @@ const StudentScreen = ({highlighting,streamManager,total}) => {
     setMemo("")
   }
   const student = JSON.parse(streamManager.stream.connection.data)
-  console.log(student)
   // eslint-disable-next-line no-lone-blocks
   { if (highlighting){
     if(student.weeklyStar >=total){

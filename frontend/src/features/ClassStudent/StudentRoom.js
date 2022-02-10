@@ -10,14 +10,11 @@ import UserVideoComponent from './openVidu/UserVideoComponent';
 import Messages from './components/Messages';
 import StudentModal from './components/StudentModal';
 
-import micOn from './image/말할래요.png'
-import micOff from './image/쉿버튼.png'
 import CamOn from './image/카메라켜기.png'
 import CamOff from './image/카메라끄기.png'
 
-// import quizDino from './image/퀴즈공룡.png'
 const quizDino = "https://cdn.discordapp.com/attachments/885744368399560725/940498039402037248/Pngtreecute_lively_green_little_dinosaur_4659657.png"
-const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:443';
+const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:8443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
 
 class StudentRoom extends Component {
@@ -42,7 +39,7 @@ class StudentRoom extends Component {
       myUserName: student.studentName,
 
       //quiz
-      quizs:[],
+      quizs:{},
       quizId: '',
       subject: '',
       quizPhoto: '',
@@ -82,7 +79,6 @@ class StudentRoom extends Component {
 
     // quiz
     //학생 결과 전송
-    this.sendresultHandle = this.sendresultHandle.bind(this);
   }
 
 
@@ -195,17 +191,17 @@ class StudentRoom extends Component {
 
   //quiz 학생 결과 전송
   sendresultHandle(){
-    const mySession = this.state.session;
+    const mySession = this.state.session
     mySession.signal({
-      data:`${this.state.student.studentId},${sessionStorage.getItem('quizId')},${sessionStorage.getItem('studentresult')}`,
-      to: [],
-      type: 'studentQuizresult',
-    });
-    
+      data:`${this.state.student.studentId},${sessionStorage.getItem('quizId')},${sessionStorage.getItem('studentresult')}}`,
+      to:[],
+      type:'studentQuizresult'
+    })
     this.setState({
       studentAnswer:'',
-    });
-    sessionStorage.removeItem('studentresult');
+      quizs:{}
+    })
+    sessionStorage.removeItem('studentresult')
   }
 
   
@@ -260,29 +256,24 @@ class StudentRoom extends Component {
         mySession.on('signal:quiz', (event) => {
           let quizdata = JSON.parse(event.data);
             this.setState({
-              quizs: [
-                ...this.state.quizs,
+              quizs: 
                 {
                   quizContents:quizdata.value,
                   quizAnswer:quizdata.ans,
-                  
+                  quizTimeout:quizdata.quizTimeout,
+                  quizId:quizdata.quizId,
                   chatClass: 'quizs__item--visitor',
                 },
-              ],
-              
-            });            
+            });   
+            this.modalPop('oxQuiz')         
           });
 
         //북마크 용 quiz
         mySession.on('signal:bookmarkQuiz', (event) => {
         
           let quizdata = JSON.parse(event.data);
-          // console.log('*********************************')
-          // console.log('quizdata', quizdata)
-          // console.log('*********************************')
           this.setState({
-            quizs: [
-              ...this.state.quizs,
+            quizs:
               {
                 quizId:quizdata.quizId,
                 subject:quizdata.subject,
@@ -300,9 +291,7 @@ class StudentRoom extends Component {
                 option4:quizdata.options[3],
 
                 chatClass: 'quizs__item--visitor',
-              },
-            ],
-            
+              },       
           });
           // console.log(this.state.quizs)
           this.modalPop('quiz')
@@ -368,8 +357,8 @@ class StudentRoom extends Component {
     const mySessionId = this.state.mySessionId;
     const myUserName = this.state.myUserName;
     const quizs = this.state.quizs;
-    const { path } = this.props.match
-    // console.log('프랍프랍', path)
+    const micOn = 'https://cdn.discordapp.com/attachments/885744368399560725/940838592413057084/unknown.png'
+    const micOff = 'https://cdn.discordapp.com/attachments/885744368399560725/940843036705959966/90b3c558d3543a12.png'
     return (
       <div className="ClassStudent">
         {/* 세션에 참가하기 전 */}
@@ -465,7 +454,9 @@ class StudentRoom extends Component {
                     {/* 버튼들 */}
                     <div className='center_button_box'>
                     
-                    <StudentModal kind='sticker' iconAs={quizDino} title='스티커' />
+                    <StudentModal kind='sticker' iconAs={quizDino} title='스티커' 
+                    isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
+                    />
                     <div className='state_button' >
                       {this.state.videostate ? (
                         <Toast setState={this.changeVideostate} iconAs={CamOff} title='Video Off'
@@ -511,14 +502,25 @@ class StudentRoom extends Component {
                         onKeyPress={this.sendmessageByEnter}
                         value={this.state.message}
                       />
-                  </div>
+                  </div> 
                   {this.state.audiostate ? <div className='warning'>마이크가 켜져있어요</div>:<div  className='warning' />}
                 <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={micOn} title='발표하자' 
                   isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}/>
-                <StudentModal kind='quiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={micOn} title='퀴즈'
-                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}/>
-                <StudentModal kind='oxQuiz' quizs = {quizs} resultQ = {this.sendresultHandle} iconAs={micOn} title='OX퀴즈' 
-                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}/>
+                
+                <StudentModal kind='quiz' quizs = {quizs}iconAs={micOn} title='퀴즈'
+                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} 
+                  setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
+                  mySession={this.state.session} student={this.state.student} 
+                />
+
+                <StudentModal kind='oxQuiz' quizs = {quizs} iconAs={micOn} title='OX퀴즈' 
+                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} 
+                  setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
+                  mySession={this.state.session} student={this.state.student}  />
+
+                <Button onClick={()=>{
+                  this.sendresultHandle()
+                }} /> 
                 </div>
           </Box>
         )}

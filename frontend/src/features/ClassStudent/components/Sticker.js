@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Image } from '@chakra-ui/react';
 import '../scss/StudentModal.scss'
-import dinosaur from '../image/퀴즈공룡.png'
 import AOS from 'aos'
 import "aos/dist/aos.css"
 
