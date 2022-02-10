@@ -11,12 +11,12 @@ export default class Main5 extends Component {
       slidesToShow: 4,
       slidesToScroll: 1,
       autoplay: true,
-      speed: 3000,
+      speed: 2000,
       autoplaySpeed: 2000,
       pauseOnHover: true,
       responsive: [
         {
-          breakpoint: 1024,
+          breakpoint: 600,
           settings: {
             slidesToShow: 3,
             slidesToScroll: 3,
