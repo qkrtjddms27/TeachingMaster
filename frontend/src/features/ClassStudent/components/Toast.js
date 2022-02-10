@@ -1,5 +1,5 @@
 import React from 'react';
-import { useToast, Box, Icon,Image } from '@chakra-ui/react';
+import { useToast, Box, Image } from '@chakra-ui/react';
 
 const Toast = ({ setState, iconAs, message, color, bg, title }) => {
   const toast = useToast()

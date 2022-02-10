@@ -92,10 +92,14 @@
           flex: 1;
           display: flex;
           flex-direction: column;
-          margin-top: 3rem;
+
           .state_button {
             margin-top: 5rem;
             cursor: pointer;
+            .dino {
+              height: 10rem;
+              transform: scaleX(-1);
+            }
             &:hover {
               transform: scale(1.2);
               transition: 0.2s;

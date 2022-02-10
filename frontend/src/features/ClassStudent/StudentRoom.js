@@ -10,9 +10,6 @@ import UserVideoComponent from './openVidu/UserVideoComponent';
 import Messages from './components/Messages';
 import StudentModal from './components/StudentModal';
 
-import CamOn from './image/카메라켜기.png'
-import CamOff from './image/카메라끄기.png'
-
 const quizDino = "https://cdn.discordapp.com/attachments/885744368399560725/940498039402037248/Pngtreecute_lively_green_little_dinosaur_4659657.png"
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:8443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
@@ -99,7 +96,7 @@ class StudentRoom extends Component {
       audiostate: !this.state.audiostate
     })
   }
-  
+
   handleHistory(path) {
     this.props.history.push(path)
   }
@@ -257,7 +254,17 @@ class StudentRoom extends Component {
           }
         });
         
-        //quiz
+        // 점수주기
+        mySession.on('signal:star',(event)=>{
+          this.setState({
+           student: {...this.state.student,
+                    countingStar: this.state.student.countingStar +1,
+                    studentScore : this.state.student.studentScore +1   }
+          })
+          console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐')
+          console.log(this.state.student)
+        })
+        //quiz  
         //ox용
         mySession.on('signal:quiz', (event) => {
           let quizdata = JSON.parse(event.data);
@@ -273,7 +280,11 @@ class StudentRoom extends Component {
             });   
             this.modalPop('oxQuiz')         
           });
-
+        // 발표하세요 Page
+        mySession.on('signal:announcement', (event) => {  
+            this.modalPop('announce')         
+        });
+          
         //북마크 용 quiz
         mySession.on('signal:bookmarkQuiz', (event) => {
         
@@ -304,6 +315,8 @@ class StudentRoom extends Component {
         });
         
         this.getToken().then((token) => {
+          console.log('⭐⭐⭐⭐⭐⭐⭐⭐')
+          console.log(this.state.student)
           mySession
             .connect(
               token,
@@ -311,8 +324,8 @@ class StudentRoom extends Component {
               { clientData: this.state.myUserName, 
                 role:"student",
                 studentId:this.state.student.studentId,
-                weeklyStar: this.state.student.roomGrade,
-                allStar : this.state.student.roomNum     // 이 두값 바꿔주기
+                countingStar: this.state.student.countingStar,
+                studentScore : this.state.student.studentScore     // 이 두값 바꿔주기
               },
             )
             .then(() => {
@@ -326,7 +339,6 @@ class StudentRoom extends Component {
                 insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
                 mirror: true, // Whether to mirror your local video or not
               });
-             
               mySession.publish(publisher);
               this.setState({
                 mainStreamManager: publisher,
@@ -365,6 +377,8 @@ class StudentRoom extends Component {
     const quizs = this.state.quizs;
     const micOn = 'https://cdn.discordapp.com/attachments/885744368399560725/940838592413057084/unknown.png'
     const micOff = 'https://cdn.discordapp.com/attachments/885744368399560725/940843036705959966/90b3c558d3543a12.png'
+    const CamOn = "https://cdn.discordapp.com/attachments/885744368399560725/941232727225667594/07fcab7c699aa813.png"
+    const CamOff = "https://cdn.discordapp.com/attachments/885744368399560725/941232721185873940/ffc10215d5c0b3bc.png"
     return (
       <div className="ClassStudent">
         {/* 세션에 참가하기 전 */}
@@ -430,8 +444,6 @@ class StudentRoom extends Component {
                       </div>
                     )}
                     {this.state.subscribers.map((sub, i) => {
-                      // console.log('*****************************************')
-                      // console.log(JSON.parse(sub.stream.connection.data).role)
                       if (JSON.parse(sub.stream.connection.data).role === "student") {
                         return (
                           <div key={i}>
@@ -445,8 +457,6 @@ class StudentRoom extends Component {
                     {/* 선생님 화면 */}
                     <div className='teacher_box'>
                       {this.state.subscribers.map((sub, i) => {
-                        // console.log('*****************************************')
-                        // console.log(JSON.parse(sub.stream.connection.data).role)
                         if (JSON.parse(sub.stream.connection.data).role === "teacher") {
                           return (
                             <div key={i}>
@@ -460,24 +470,24 @@ class StudentRoom extends Component {
                     {/* 버튼들 */}
                     <div className='center_button_box'>
                     
-                    <StudentModal kind='sticker' iconAs={quizDino} title='스티커' 
+                    <StudentModal kind='sticker' iconAs={quizDino} title='스티커'  student={this.state.student}
                     isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
                     />
                     <div className='state_button' >
                       {this.state.videostate ? (
-                        <Toast setState={this.changeVideostate} iconAs={CamOff} title='Video Off'
+                        <Toast setState={this.changeVideostate} iconAs={CamOff} title='영상끄기'
                           change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.500'} />
                         ) : (
-                        <Toast setState={this.changeVideostate} iconAs={CamOn} title='Video On'
+                        <Toast setState={this.changeVideostate} iconAs={CamOn} title='영상켜기'
                           change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.500'} />
                       )}  
                     </div>
                     <div className='state_button'>
                       {this.state.audiostate ? (
-                        <Toast setState={this.changeAudiostate} iconAs={micOff} title='Mic Off'
+                        <Toast setState={this.changeAudiostate} iconAs={micOff} title='음성끄기'
                           message={'마이크를 껐습니다'} color={'white'} bg={'orange.500'} />
                         ) : (
-                        <Toast setState={this.changeAudiostate} iconAs={micOn} title='Mic On'
+                        <Toast setState={this.changeAudiostate} iconAs={micOn} title='음성켜기'
                           message={'마이크를 켰습니다'} color={'white'} bg={'blue.200'} />
                       )}
                     </div>
@@ -510,21 +520,22 @@ class StudentRoom extends Component {
                       />
                   </div> 
                   {this.state.audiostate ? <div className='warning'>마이크가 켜져있어요</div>:<div  className='warning' />}
-                <StudentModal setState={this.changeAudiostate} kind='announce' iconAs={micOn} title='발표하자' 
-                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}/>
+                <StudentModal  kind='announce' iconAs="" title='발표하자' 
+                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} 
+                  setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen} />
                 
-                <StudentModal kind='quiz' quizs = {quizs}iconAs={micOn} title='퀴즈'
+                <StudentModal kind='quiz' quizs = {quizs}iconAs="" title='퀴즈'
                   isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} 
                   setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
                   mySession={this.state.session} student={this.state.student} 
                 />
 
-                <StudentModal kind='oxQuiz' quizs = {quizs} iconAs={micOn} title='OX퀴즈' 
+                <StudentModal kind='oxQuiz' quizs = {quizs} iconAs="" title='OX퀴즈' 
                   isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} 
                   setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
                   mySession={this.state.session} student={this.state.student}  />
 
-                <Button onClick={()=>{
+                <Button colorScheme='red' onClick={()=>{
                   this.sendresultHandle()
                 }} /> 
                 </div>

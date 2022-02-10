@@ -4,14 +4,8 @@ import '../scss/StudentModal.scss'
 import AOS from 'aos'
 import "aos/dist/aos.css"
 
-const Sticker = ({ isOpen, onOpen, onClose }) => {
-  const me = {
-    "student_id": 3,
-    "student_name": "새로운",
-    "counting_star": 13,
-    "student_score": 52,
-  }
-
+const Sticker = ({ isOpen, onOpen, onClose,student }) => {
+  
   const [nums, setNums] = useState([])
   useEffect(() => {
     setNums(Array(20).fill().map((v, i) => i))
@@ -21,7 +15,7 @@ const Sticker = ({ isOpen, onOpen, onClose }) => {
   return (
     <ModalContent bgColor='#B2CCC1' w='85rem' h='45rem' marginY='7rem' marginX='1rem' >
       <ModalHeader className='student-modal-header'>
-        <span style={{"fontSize": "xx-large"}}>내 공룡은 {parseInt(me.student_score/20)}살!</span>
+        <span style={{"fontSize": "xx-large"}}>내 공룡은 {parseInt(student.studentScore/20)}살!</span>
       </ModalHeader>
       <ModalCloseButton />
       <ModalBody className='sticker-body'>
@@ -36,7 +30,7 @@ const Sticker = ({ isOpen, onOpen, onClose }) => {
               const dinoUrl = `https://cdn-icons-png.flaticon.com/512/145/${145297+num}.png`
               return (
                 <div key={num} className='sticker-mini'>
-                  {num < (me.student_score%20) && 
+                  {num < (student.studentScore%20) && 
                     <Image src={dinoUrl} className='mini-dino' 
                   />}
                 </div>
