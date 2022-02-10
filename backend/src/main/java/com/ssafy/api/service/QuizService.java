@@ -33,5 +33,5 @@ public interface QuizService {
     void deleteBookmark(String userId, Long quizId);
     void deleteFolder(Long folderId);
 
-    QuizLog createQuizLog(QuizLogReq quizLogReq);
+    void createQuizLog(List<QuizLogReq> quizLogReq);
 }

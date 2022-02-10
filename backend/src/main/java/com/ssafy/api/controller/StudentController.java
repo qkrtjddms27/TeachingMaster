@@ -138,12 +138,13 @@ public class StudentController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<QuizLogRes> register_quizLog(
-            @RequestBody @ApiParam(value = "퀴즈 등록 정보", required = true) QuizLogReq quizLogReq) {
+    public ResponseEntity<? extends BaseResponseBody> register_quizLog(
+            @RequestBody @ApiParam(value = "퀴즈 등록 정보", required = true) List<QuizLogReq> quizLogReq) {
 
-        QuizLog quizLog = quizService.createQuizLog(quizLogReq);
+        quizService.createQuizLog(quizLogReq);
 
-        return ResponseEntity.status(200).body(QuizLogRes.of(quizLog));
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+
     }
 
 }
