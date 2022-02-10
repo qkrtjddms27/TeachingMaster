@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button, Heading, Image, Text } from '@chakra-ui/react'
-import { Link, useHistory } from 'react-router-dom'
+import { Image, Text } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 import React,{ useEffect, useState } from 'react'
-import { Row, Col, Modal } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 import AddQuizPopover from './AddQuizPopover'
 import AOS from 'aos'
