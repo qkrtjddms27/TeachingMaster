@@ -1,9 +1,6 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.QuizLogReq;
-import com.ssafy.api.request.QuizRegisterReq;
-import com.ssafy.api.request.StudentRegisterPostReq;
-import com.ssafy.api.request.StudentInfoUpdateReq;
+import com.ssafy.api.request.*;
 import com.ssafy.api.response.QuizLogRes;
 import com.ssafy.api.response.QuizRes;
 import com.ssafy.api.response.StudentListRes;
@@ -148,5 +145,24 @@ public class StudentController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PostMapping("/star/{student_id}")
+    @ApiOperation(value = "학생 점수 +1", notes = "학생의 countingstar와 studentscore을 1점 올림")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> plus_studentScore(
+            @RequestBody @ApiParam(value = "학생아이디", required = true) StudentScoreUpReq studentScoreUpReq) {
+
+        studentService.plusStudentScore(studentScoreUpReq);
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+
+    }
+
 
 }

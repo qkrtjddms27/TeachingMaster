@@ -2,6 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.StudentInfoUpdateReq;
 import com.ssafy.api.request.StudentRegisterPostReq;
+import com.ssafy.api.request.StudentScoreUpReq;
 import com.ssafy.db.entity.Room;
 import com.ssafy.db.entity.Student;
 import com.ssafy.db.repository.StudentRepository;
@@ -87,5 +88,14 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.save(student);
     }
 
+    @Override
+    public Student plusStudentScore(StudentScoreUpReq studentScoreUpReq){
+        Student student = getStudentByUserId(studentScoreUpReq.getStudentId());
+
+        student.setCountingStar(student.getCountingStar() + 1);
+        student.setStudentScore(student.getStudentScore() + 1);
+
+        return studentRepository.save(student);
+    }
 
 }
