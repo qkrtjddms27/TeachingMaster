@@ -85,10 +85,10 @@ class Classroom extends Component {
     this.announceHandler = this.announceHandler.bind(this)
     this.plusStarHandler = this.plusStarHandler.bind(this)
     this.resultsHandler = this.resultsHandler.bind(this)
-    
     // quiz
     this.quizHandler = this.quizHandler.bind(this);
     this.quizHandlerStar = this.quizHandlerStar.bind(this);
+    this.getAverage = this.getAverage.bind(this);
   }
 
 
@@ -116,7 +116,8 @@ class Classroom extends Component {
     })
   }
   
-  changeHighlightingstate() {
+  getAverage(){
+    console.log('⭐⭐⭐⭐계산중입니다⭐⭐⭐⭐')
     let total = 0
     // eslint-disable-next-line no-lone-blocks
     {this.state.subscribers.map((sub) => (
@@ -124,8 +125,13 @@ class Classroom extends Component {
     ))}
     total = total/(this.state.subscribers).length
     this.setState({
+      total:total
+    })
+  }
+
+  changeHighlightingstate() {
+    this.setState({
       highlighting: !this.state.highlighting,
-      total: total
     })
   }
   
@@ -139,6 +145,7 @@ class Classroom extends Component {
     this.props.history.push(path)
   }
 
+  
 
   // OV
   componentDidUpdate(previousProps, previousState) {
@@ -234,7 +241,6 @@ class Classroom extends Component {
 
   // 별점 주기
   plusStarHandler(i){
-    // console.log(this.state.subscribers[i])
     const mySession = this.state.session;
     mySession.signal({
       to: [this.state.subscribers[i].stream.inboundStreamOpts.connection],
@@ -270,9 +276,6 @@ class Classroom extends Component {
       results:[],
     });
     sessionStorage.removeItem('OXQuiz');
-    // sessionStorage.removeItem('quizText');
-    // sessionStorage.removeItem('quizAnswer');
-    // sessionStorage.removeItem('quizset');
   }
 
   //북마크 용
@@ -354,21 +357,13 @@ class Classroom extends Component {
     // --- 1) Get an OpenVidu object ---
     this.OV = new OpenVidu();
 
-    // --- 2) Init a session ---
     this.setState(
       {
         session: this.OV.initSession(),
       },
       () => {
-        // console.log('*****OV.init: ', this.OV.initSession())
-        // console.log('*****state.session: ', this.state.session)
         let mySession = this.state.session;
-
-        // --- 3) Specify the actions when events take place in the session ---
-        // On every new Stream received...
         mySession.on('streamCreated', (event) => {
-          // Subscribe to the Stream to receive it. Second parameter is undefined
-          // so OpenVidu doesn't create an HTML video by its own
           let subscriber = mySession.subscribe(event.stream, undefined);
 
           let subscribers = this.state.subscribers;
@@ -377,12 +372,9 @@ class Classroom extends Component {
             subscribers: subscribers,
           });
         });
-        // On every Stream destroyed...
         mySession.on('streamDestroyed', (event) => {
-          // Remove the stream from 'subscribers' array
           this.deleteSubscriber(event.stream.streamManager);
         });
-        // On every asynchronous exception...
         mySession.on('exception', (exception) => {
           console.warn(exception);
         });
@@ -402,60 +394,28 @@ class Classroom extends Component {
           }
         });
         
-        
-        //quiz
-        //ox용
-    //     mySession.on('signal:quiz', (event) => {
-    //       let quizdata = JSON.parse(event.data);
-    //       //if (quizdata[9] !== this.state.myUserName) {
-    //         this.setState({
-    //           quizs: [
-    //             ...this.state.quizs,
-    //             {
-    //               quizContents:quizdata.value,
-    //               quizAnswer:quizdata.ans,
-                  
-    //               chatClass: 'quizs__item--visitor',
-    //             },
-    //           ],
-              
-    //         });
-    //      // }
-    //   });
-      
-    //   //북마크 용
-    //   mySession.on('signal:bookmarkQuiz', (event) => {
-    //     // let quizdata = event.data.split(',');
-        
-    //     let quizdata = JSON.parse(event.data);
-    //     // if (quizdata.userId[9] !== this.state.myUserName) {
-    //       this.setState({
-    //         quizs: [
-    //           ...this.state.quizs,
-    //           {
-    //             quizId:quizdata.quizId,
-    //             subject:quizdata.subject,
-    //             quizPhoto:quizdata.quizPhoto,
-    //             quizTitle:quizdata.quizTitle,
-    //             quizContents:quizdata.quizContents,
-    //             quizAnswer:quizdata.quizAnswer,
-    //             openStatus:quizdata.openStatus,
-    //             quizTimeout:quizdata.quizTimeout,
-    //             quizGrade:quizdata.quizGrade,
-    //             userId:quizdata.userId,
-    //             option1:quizdata.options[0],
-    //             option2:quizdata.options[1],
-    //             option3:quizdata.options[2],
-    //             option4:quizdata.options[3],
-
-    //             chatClass: 'quizs__item--visitor',
-    //           },
-    //         ],
-            
-    //       });
-    //     // }
-    // });
-
+        // {this.state.subscribers.map((sub) => (
+        //   total = total + Number(JSON.parse(sub.stream.connection.data).countingStar)
+        // ))}
+        mySession.on('signal:receiveStar',(event)=>{
+          let student = JSON.parse(event.data)
+          console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐')
+          console.log(student.studentId)
+          console.log(JSON.parse(this.state.subscribers[0].stream.connection.data).studentId)
+          this.state.subscribers.map((sub,i)=>{
+            if(student.studentId === JSON.parse(sub.stream.connection.data).studentId){
+              let tmp = JSON.parse(sub.stream.connection.data)
+              tmp = JSON.stringify({...tmp,countingStar:tmp.countingStar+1,studentScore:tmp.studentScore+1 } )
+              let newsubscribers = this.state.subscribers
+              newsubscribers[i].stream.connection.data = tmp
+              this.setState({
+                subscribers: newsubscribers
+              })
+            }
+          })
+          this.getAverage()
+          console.log(this.state.subscribers)
+        })
         //quiz 학생 결과 가지기 용
         mySession.on('signal:studentQuizresult', (event) => {
           let resultsdata = JSON.parse(event.data);
@@ -585,8 +545,9 @@ class Classroom extends Component {
               <div className='student_box'>
                 {this.state.subscribers.map((sub, i) => (
                   <div key={i}>
-                    {/* <UserVideoComponent streamManager={sub} />  */}
-                    <StudentScreen answerCheck={this.state.answerCheck} results={this.state.results} highlighting={this.state.highlighting} total={this.state.total}  streamManager={sub} i={i} announce={this.announceHandler} plusStar={this.plusStarHandler} />
+                    <StudentScreen  subscribers={this.state.subscribers} answerCheck={this.state.answerCheck} results={this.state.results} 
+                    highlighting={this.state.highlighting} total={this.state.total}  streamManager={sub} 
+                    i={i} announce={this.announceHandler} plusStar={this.plusStarHandler} />
                   </div>
                 ))}
                 {this.state.publisher !== undefined && (
