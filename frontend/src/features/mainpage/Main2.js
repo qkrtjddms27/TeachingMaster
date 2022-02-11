@@ -1,4 +1,4 @@
-import { Heading, Img } from "@chakra-ui/react";
+import { Heading, Img,Button } from "@chakra-ui/react";
 import {useEffect, useState} from 'react'
 import './scss/Main2.scss'
 import AOS from 'aos'
@@ -10,6 +10,7 @@ const Main2 = () => {
   },[])
   return (
     <div className='Main2'>
+      <div className="scroll-down"/>
       <div className="empty_box"/>
       <div  className="tiger"
             data-aos="fade-right"
@@ -30,7 +31,7 @@ const Main2 = () => {
       <div className="rabbit"
             data-aos="fade-left"
             data-aos-offset="400"
-            data-aos-duration="2000"
+            data-aos-duration="1000"
             id="animal_box">
         <div className="content">
           <div className="ment">
@@ -49,7 +50,7 @@ const Main2 = () => {
         data-aos="fade-right"
         data-aos-offset="300"
         data-aos-easing="linear"
-        data-aos-duration="2000"
+        data-aos-duration="1000"
         id="animal_box">
         <Img className="icon" src="https://cdn.discordapp.com/attachments/885744368399560725/940789117434875924/b8cf8311fbac34fb.png"/>
         <div className="content">
@@ -60,7 +61,7 @@ const Main2 = () => {
       <div data-aos="fade-left"
             data-aos-offset="300"
             data-aos-easing="linear"
-            data-aos-duration="2000"
+            data-aos-duration="1000"
              className="dino"
              id="animal_box">
         <div className="content">
@@ -73,11 +74,11 @@ const Main2 = () => {
         </div>
         <Img className="icon" src="https://cdn.discordapp.com/attachments/885744368399560725/940789109855748126/d58eac80c7e49975.png"/>
       </div>
-      <div data-aos="fade-right"
+      <div  className="bear"
+            data-aos="fade-right"      
             data-aos-offset="300"
             data-aos-easing="linear"
-            data-aos-duration="2000"
-            className="bear"
+            data-aos-duration="1000"
             id="animal_box">
         <Img className="icon" src="https://cdn.discordapp.com/attachments/885744368399560725/940788485227421716/6bc81f0a2e2b6c56.png"/>
         <div className="content">
@@ -91,7 +92,8 @@ const Main2 = () => {
 
           </div>
         </div>
-      </div>          
+      </div>      
+      <Button onClick={()=>{window.scrollTo({top:0,left:0,behavior:"smooth"})}} className="movetoTop">꼭대기로</Button>
     </div>
   )
 };

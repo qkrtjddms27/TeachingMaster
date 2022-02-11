@@ -6,24 +6,21 @@ import UserVideoComponent from '../openVidu/UserVideoComponent'
 import '../scss/ClassTeacher.scss'
 import axios from 'axios';
 import { setToken, serverUrl } from '../../../components/TOKEN';
+import { useEffect } from 'react';
 
-const StudentScreen = ({highlighting,streamManager,total, i, announce, plusStar}) => {
+const StudentScreen = ({subscribers,highlighting,streamManager,total, i, announce, plusStar, results, answerCheck}) => {
   const [memo,setMemo] = useState('')
-  let scoreState  = "normal"
+  const [check, setCheck] = useState(true)
+  const [scoreState,setScoreState] = useState("normal")
+
   const onSubmit = (e)=>{
     e.preventDefault();
     console.log(memo)
     setMemo("")
   }
-  // const student = JSON.parse(streamManager.stream.connection.data)
   const [student, setStudent] = useState(JSON.parse(streamManager.stream.connection.data))
-  // eslint-disable-next-line no-lone-blocks
-  { if (highlighting){
-    if(student.countingStar >=total){
-      scoreState = "high"
-    }
-    else{ scoreState = "low"
-  }}}
+  
+  
   const star = (i) => {
     setStudent({...student, "countingStar": student.countingStar+1, "studentScore": student.studentScore+1})
     plusStar(i)
@@ -36,11 +33,31 @@ const StudentScreen = ({highlighting,streamManager,total, i, announce, plusStar}
       }
     })
   }
+  useEffect(()=>{
+    setScoreState("normal")
+      // eslint-disable-next-line no-lone-blocks
+    { if (highlighting){
+      if(student.countingStar >=total){
+        setScoreState("high")
+      }
+      else{ setScoreState("low")
+    }}}
+  },[highlighting,total])
 
   const ann = (i) => {
     announce(i)
     star(i)
   }
+
+  useEffect(() => {
+    if (answerCheck) {
+      results.map(result => {
+        if (result.studentId === student.studentId) {
+          setCheck(result.studentResult === 'true' ? true : false)
+        }
+      })
+    }
+  }, [answerCheck])
 
   return (
     <div>
@@ -48,6 +65,8 @@ const StudentScreen = ({highlighting,streamManager,total, i, announce, plusStar}
         <PopoverTrigger>
           <div className='student_screen' >
             <UserVideoComponent 
+            answerCheck={answerCheck}
+            check={check}
             score={ scoreState}
             streamManager={streamManager} />
           </div>
