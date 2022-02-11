@@ -34,13 +34,7 @@ public class MemoServiceImpl implements MemoService{
         Student findStudent = studentRepository.findByStudentId(memoRegisterReq.getStudentId());
         User findUser = userRepository.findUserByUserId(memoRegisterReq.getUserId()).orElse(null);
         Memo findMemo = memoRepository.findByStudentAndUser(findStudent,findUser);
-
-        System.out.println(findMemo.getStudent());
-        System.out.println(findMemo.getUser().getUserId());
-        System.out.println(findMemo.getStudent().getStudentId());
-        System.out.println(findMemo.getMemoDate());
-        System.out.println(findMemo);
-
+        
         Calendar cal = new GregorianCalendar();
         Date date = new Date(cal.getTimeInMillis());
 
@@ -52,7 +46,7 @@ public class MemoServiceImpl implements MemoService{
             memo.setMemoContent((findMemo.getMemoContent() + "/n" + memoRegisterReq.getMemoContent()));
 
             return memoRepository.save(memo);
-        }
+        }else{
 
         Memo memo = new Memo();
         memo.setMemoDate(date);
@@ -62,6 +56,7 @@ public class MemoServiceImpl implements MemoService{
 
 
         return memoRepository.save(memo);
+        }
     }
 
     @Override
