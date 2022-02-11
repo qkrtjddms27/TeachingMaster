@@ -1,0 +1,42 @@
+.teacher-modal-header {
+  display: flex;
+  justify-content: center;
+  font-size: xx-large;
+}
+.ox-bottom {
+  margin: 2rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bookmark-bottom {
+  margin-left: 0.5rem;
+  display: flex;
+  text-align: left;
+  p {
+    margin-left: 2rem;
+  }
+}
+.bookmark-body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 45rem;
+  margin-top: 1rem;
+  flex-direction: column;
+  &::-webkit-scrollbar {
+    visibility: visible;
+    width: 7px;
+  }
+  &:hover {
+    &::-webkit-scrollbar {
+      visibility: visible;
+      width: 7px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #607dfc;
+      border-radius: 10px;
+      background-clip: padding-box;
+      border: 1px solid transparent;
+    }
+  }
+}

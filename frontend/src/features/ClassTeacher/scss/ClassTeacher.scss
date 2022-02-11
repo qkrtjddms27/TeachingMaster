@@ -1,0 +1,195 @@
+.ClassTeacher {
+  background-image: linear-gradient(
+      rgba(173, 173, 173, 0.5),
+      rgba(173, 173, 173, 0.5)
+    ),
+    url("../image/식물배경.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 93.4vh;
+  display: flex;
+  flex-direction: column;
+  min-width: 1000px;
+  .login_box {
+    background-color: rgba(248, 244, 236, 0.712);
+    width: 60rem;
+    height: 45rem;
+    margin: auto;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+
+    .form-group {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      margin-top: 6rem;
+      .teacher_img {
+        height: 15rem;
+        width: 15rem;
+        margin-bottom: 2rem;
+        border-radius: 100%;
+      }
+      .label-control {
+        font-size: 2rem;
+      }
+      .form-control {
+        color: rgb(27, 27, 144);
+        font-weight: 700;
+        display: inline-block;
+        border: none;
+        width: 12rem;
+        background-color: rgba(255, 255, 255, 0);
+        font-size: 2rem;
+      }
+      .submit_button {
+        margin-top: 2rem;
+      }
+    }
+  }
+
+  .Conference_box {
+    box-shadow: 3px 3px 7p;
+    height: 56rem;
+    width: 110rem;
+    background-color: rgba(245, 245, 245, 0.712);
+    box-shadow: 3px 3px 7px;
+    margin: auto;
+    border-radius: 10px;
+    .top {
+      display: flex;
+      .student_box {
+        height: 49rem;
+        width: 80rem;
+        margin: 1rem 0 0 2rem;
+        border-radius: 10px;
+        display: flex;
+        flex-flow: wrap;
+        justify-content: space-evenly;
+        background-color: rgba(73, 128, 63, 0.198);
+        overflow-x: hidden;
+        overflow-y: scroll;
+        &::-webkit-scrollbar {
+          visibility: hidden;
+          width: 1px;
+        }
+        &:hover {
+          &::-webkit-scrollbar {
+            visibility: visible;
+            width: 1px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background-color: #6bcaa6;
+            border-radius: 7px;
+            background-clip: padding-box;
+            border: 1px solid transparent;
+          }
+        }
+        .student_screen {
+          cursor: pointer;
+          margin-left: 1rem;
+          margin-right: 1rem;
+        }
+      }
+      .chatting_box {
+        height: 49rem;
+        width: 25rem;
+        margin: 1rem 0rem 0rem 1.5rem;
+        padding: 1rem;
+        border-radius: 10px;
+        background-color: rgba(86, 136, 79, 0.692);
+        display: flex;
+        flex-direction: column;
+        flex-flow: wrap;
+
+        .chatting_log {
+          height: 43em;
+          width: 23rem;
+          border-radius: 5px;
+          padding-bottom: 1rem;
+          background-color: rgba(234, 236, 232, 0.984);
+          .text {
+            margin-left: 1rem;
+            .chat_line {
+              margin-top: 0.3rem;
+              width: 95%;
+              .chat_name {
+                font-weight: 600;
+                text-align: center;
+                padding: 0.1rem 0.4rem;
+              }
+              .chat_content {
+                display: inline;
+                width: 100%;
+                margin-left: 0.5rem;
+                background-color: rgb(253, 208, 216);
+                border-radius: 5px;
+                padding: 0.1rem 0.3rem;
+              }
+            }
+          }
+        }
+        .input_box {
+          background-color: whitesmoke;
+          height: 3rem;
+          width: 23rem;
+          margin-top: 1rem;
+        }
+      }
+    }
+    .bottom {
+      display: flex;
+      flex-flow: wrap;
+      justify-content: space-between;
+      margin: 2rem 4rem;
+      .left_btn_box {
+        display: flex;
+        .exitButton {
+          background-color: #f53d3d;
+          color: white;
+        }
+      }
+      .right_btn_box {
+        display: flex;
+        .OnOffButton {
+          margin-left: 2rem;
+          cursor: pointer;
+          &:hover {
+            transform: scale(1.2);
+            transition: 0.1s;
+          }
+        }
+      }
+    }
+  }
+}
+#chatting_scroll {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  flex-direction: column;
+  &::-webkit-scrollbar {
+    visibility: hidden;
+    width: 7px;
+  }
+  &:hover {
+    &::-webkit-scrollbar {
+      visibility: visible;
+      width: 7px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #698e34;
+      border-radius: 10px;
+      background-clip: padding-box;
+      border: 1px solid transparent;
+    }
+  }
+}
+.student_screen {
+  min-width: 10rem;
+  display: flex;
+  flex-flow: wrap;
+}
+.pointer {
+  cursor: pointer;
+}

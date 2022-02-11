@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Radio,RadioGroup,Stack,Textarea,Input,Button,Select } from '@chakra-ui/react';
 import './scss/createquiz.scss'
 import { useParams } from 'react-router-dom';
-import { QUIZ, setToken } from '../../components/TOKEN';
+import { QUIZ, setToken, serverUrl } from '../../components/TOKEN';
 
 const Updatequiz = () => {
   let {id} = useParams()
@@ -26,7 +26,7 @@ const Updatequiz = () => {
   useEffect (()=>{
     console.log(id)
     axios({
-      url:`http://localhost:8080/api/v1/quiz/find/Quiz/${id}`,
+      url:`${serverUrl}/v1/quiz/find/Quiz/${id}`,
       method:"GET",
       headers: setToken()
     })
@@ -51,7 +51,7 @@ const Updatequiz = () => {
   
   const DELETE = ()=>{
     axios({
-      url :`http://localhost:8080/api/v1/quiz/delete/${id}`,
+      url :`${serverUrl}/v1/quiz/delete/${id}`,
       method:"DELETE",
       headers:setToken()
     }
@@ -82,7 +82,7 @@ const Updatequiz = () => {
     }
     axios(
       {
-        url : "http://localhost:8080/api/v1/quiz/update/quiz",
+        url : `${serverUrl}/v1/quiz/update/quiz`,
         method: "PUT",
         data,
         headers : setToken()
@@ -90,7 +90,7 @@ const Updatequiz = () => {
     ).then(res=>{
       setQuiz(data)
       alert('수정완료')
-      // history.push('/quiz/')
+      history.push('/quiz/')
     }).catch(err=>{
       alert('문제 UPDATE 실패')
     })
@@ -119,11 +119,11 @@ const Updatequiz = () => {
         </div>
         <div className='time-box'>
           <Select value={timeout} onChange={(e)=>setTimeout(e.target.value)} className='time-select'>
+            <option value={5}>5초</option>
+            <option value={10}>10초</option>
             <option value={15}>15초</option>
             <option value={30}>30초</option>
             <option value={60}>1분</option>
-            <option value={120}>2분</option>
-            <option value={180}>3분</option>
           </Select>
         </div>
         <div className='grade-box'>

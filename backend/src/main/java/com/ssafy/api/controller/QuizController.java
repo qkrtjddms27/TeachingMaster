@@ -205,20 +205,57 @@ public class QuizController {
         return ResponseEntity.status(200).body(FolderQuizRes.of(folderQuiz));
     }
 
+
+
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @GetMapping("/select/quiz_log/{student_id}")
-    @ApiOperation(value = "학생 퀴즈 로그보기", notes = "학생 퀴즈 로그보기")
+    @DeleteMapping("/delete/folder_quiz/{folder_id}/{quiz_id}")
+    @ApiOperation(value = "폴더에서 퀴즈제거", notes = "폴더에서 퀴즈제거")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<List<QuizLogRes>> select_quizLog(
-            @PathVariable("student_id") String studentId
-            ) {
-        List<QuizLogRes> quizLogResList = quizService.selectQuizLog(studentId);
-
-        return ResponseEntity.status(200).body(quizLogResList);
+    public ResponseEntity<? extends BaseResponseBody> delete_folderQuiz(
+            @PathVariable("folder_id") Long folderId,
+            @PathVariable("quiz_id") Long quizId
+    ) {
+        quizService.deleteFolderQuiz(folderId, quizId);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @DeleteMapping("/delete/bookmark/{user_id}/{quiz_id}")
+    @ApiOperation(value = "즐겨찾기 제거", notes = "즐겨찾기 제거")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> delete_bookmark(
+            @PathVariable("user_id") String user_id,
+            @PathVariable("quiz_id") Long quizId
+    ) {
+        quizService.deleteBookmark(user_id, quizId);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @DeleteMapping("/delete/folder/{folder_id}")
+    @ApiOperation(value = "폴더 삭제", notes = "폴더 삭제")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> delete_folder(
+            @PathVariable("folder_id") Long folderId
+    ) {
+        quizService.deleteFolder(folderId);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+
 }
