@@ -123,7 +123,7 @@
 
 ## ERD
 
-![ERD_220114](README.assets/ERD_220114.png)
+![ERD_220128](README.assets/ERD_220128.png)
 
 
 
@@ -133,7 +133,7 @@
 
 ![ㅅㅌㄹ](README.assets/ㅅㅌㄹ.png)
 
-[스토리보드링크](https://www.figma.com/file/COFtDlmHGiKRHsNe8TZvWh/%E3%85%85%E3%85%8C%E3%84%B9?node-id=0%3A1)
+[스토리보드링크](https://www.figma.com/file/7fXabDqdvMHRCGn3vPnAVq/TEACHING-MASTER?node-id=1%3A3)
 
 
 

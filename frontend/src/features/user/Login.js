@@ -5,17 +5,20 @@ import { FaUserAlt, FaLock } from "react-icons/fa"
 import './scss/Login.scss'
 import axios from "axios";
 import AlertDialogModal from "../../components/AlertModal";
-import { setToken } from "../../components/TOKEN";
+import { setToken,serverUrl } from "../../components/TOKEN";
+
 
 const CFaUserAlt = chakra(FaUserAlt)
 const CFaLock = chakra(FaLock)
 
-const Login = ({is_login,setIs_Login,user,setUser}) => {
+const Login = ({isLogin,setisLogin,user,setUser}) => {
   let history = useHistory()
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
   useEffect(() => {
+    console.log("확인")
     setShowPassword(false)
+    if(isLogin){history.push('/home')}
   }, [])
 
   // input태그에 들어오는 user 정보로 업데이트
@@ -35,27 +38,25 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
     }
     axios(
       {
-        url: "http://localhost:8080/api/v1/auth/login",
+        url : `${serverUrl}/v1/auth/login`,
         method: "POST",
         data,
       }
     )
     .then(({data}) => {
-      setIs_Login(true)
+      setisLogin(true)
       localStorage.setItem('jwt', data.accessToken)
       localStorage.setItem('userId', userId)
-      setIs_Login(true)
-      history.push('/home')
-      
       axios({
-        url:"http://localhost:8080/api/v1/users/me",
+        url:`${serverUrl}/v1/users/me`,
         method:"GET",
         headers:setToken(),
       })
         .then(res=>{
           localStorage.setItem('user',JSON.stringify(res.data)) 
           setUser(res.data)
-          setIs_Login(true)
+          setisLogin(true)
+          history.push('/home')
         })
           // 비밀번호 빼고 저장하기 object -> string으로 저장되게 하기 사용할때는 parse를 이용
         .catch(err=>{
@@ -64,6 +65,7 @@ const Login = ({is_login,setIs_Login,user,setUser}) => {
         })})
 
     .catch(err => {
+      console.log("로그인실패")
       console.log(err)
       setIsOpen(true)
       setUserId('')

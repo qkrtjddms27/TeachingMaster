@@ -10,4 +10,6 @@ import java.util.List;
 public interface FolderQuizRepository extends JpaRepository<FolderQuiz, Long> {
     List<FolderQuiz> findByFolder(Folder folder);
     List<FolderQuiz> findByQuiz(Quiz quiz);
+    FolderQuiz findByFolderAndQuiz(Folder folder, Quiz quiz);
+    void deleteByFolder(Folder folder);
 }

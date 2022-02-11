@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface BookMarkRepository extends JpaRepository<Bookmark, BookmarkId> {
     List<Bookmark> findByUser(User user);
+    Bookmark findByUserAndQuiz(User user, Quiz quiz);
 }

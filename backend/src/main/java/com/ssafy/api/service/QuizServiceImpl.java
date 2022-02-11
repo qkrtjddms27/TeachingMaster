@@ -10,7 +10,9 @@ import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service("QuizService")
@@ -242,40 +244,65 @@ System.out.println(folder.getUser().getUserId());
 
     @Override
     public List<QuizLogRes> selectQuizLog(String studentId) {
-        List<QuizLog> quizLogList = quizLogRepository.findByStudent(studentRepository.findByStudentId(studentId));
+        List<QuizLogRes> quizLogResList = quizRepositorySupport.findQuizLog(studentId);
 
-        List<QuizLogRes> quizLogRes = new ArrayList<>();
-
-        for (QuizLog quizLog : quizLogList) {
-            QuizLogRes quizLogTemp = new QuizLogRes();
-            Quiz quiz = quizLog.getQuiz();
-
-            quizLogTemp.setStudentId(studentId);
-            quizLogTemp.setQuizId(quiz.getQuizId());
-            quizLogTemp.setQuizResult(quizLog.getQuizResult());
-            quizLogTemp.setQuizDate(quizLog.getQuizDate());
-            quizLogTemp.setSelectAnswer(quizLog.getSelectAnswer());
-            quizLogTemp.setSubject(quiz.getSubject());
-            quizLogTemp.setQuizPhoto(quiz.getQuizPhoto());
-            quizLogTemp.setQuizTitle(quiz.getQuizTitle());
-            quizLogTemp.setQuizContents(quiz.getQuizContents());
-            quizLogTemp.setQuizAnswer(quiz.getQuizAnswer());
-            quizLogTemp.setOpenStatus(quiz.getOpenStatus());
-            quizLogTemp.setQuizTimeout(quiz.getQuizTimeout());
-            quizLogTemp.setQuizGrade(quiz.getQuizGrade());
+        for (QuizLogRes quizLogRes : quizLogResList) {
 
             String[] options = new String[4];
-            options[0] = quiz.getOption1();
-            options[1] = quiz.getOption2();
-            options[2] = quiz.getOption3();
-            options[3] = quiz.getOption4();
+            options[0] = quizLogRes.getOption1();
+            options[1] = quizLogRes.getOption2();
+            options[2] = quizLogRes.getOption3();
+            options[3] = quizLogRes.getOption4();
 
-            quizLogTemp.setOptions(options);
-
-            quizLogRes.add(quizLogTemp);
+            quizLogRes.setOptions(options);
         }
 
-        return quizLogRes;
+        return quizLogResList;
     }
 
+    @Override
+    public void deleteFolderQuiz(Long folderId, Long quizId) {
+        Folder folder = folderRepository.findById(folderId).get();
+        Quiz quiz = quizRepository.findById(quizId).get();
+        FolderQuiz folderQuiz = folderQuizRepository.findByFolderAndQuiz(folder, quiz);
+
+        folderQuizRepository.delete(folderQuiz);
+    }
+
+    @Override
+    public void deleteBookmark(String userId, Long quizId) {
+        User user = userRepository.findById(userId).get();
+        Quiz quiz = quizRepository.findById(quizId).get();
+        Bookmark bookmark = bookMarkRepository.findByUserAndQuiz(user, quiz);
+
+        bookMarkRepository.delete(bookmark);
+    }
+
+    @Override
+    public void deleteFolder(Long folderId) {
+        Folder folder = folderRepository.findById(folderId).get();
+        List<FolderQuiz> folderQuizList = folderQuizRepository.findByFolder(folder);
+        for (FolderQuiz folderquiz: folderQuizList) {
+            folderQuizRepository.delete(folderquiz);
+        }
+        folderRepository.delete(folder);
+    }
+
+    @Override
+    public void createQuizLog(List<QuizLogReq> quizLogReq) {
+        for (int i = 0; i < quizLogReq.size();i++) {
+            QuizLog quizLog = new QuizLog();
+
+            Quiz quiz = quizRepository.findById(quizLogReq.get(i).getQuizId()).get();
+            Student student = studentRepository.findById(quizLogReq.get(i).getStudentId()).get();
+
+            quizLog.setQuiz(quiz);
+            quizLog.setStudent(student);
+            quizLog.setQuizResult(quizLogReq.get(i).getStudentResult());
+            quizLog.setQuizResult(quizLogReq.get(i).getStudentResult());
+
+            quizLogRepository.save(quizLog);
+        }
+//        return quizLogRepository.save(quizLog);
+    }
 }

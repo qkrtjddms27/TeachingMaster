@@ -2,9 +2,8 @@ import React from 'react';
 import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverArrow, 
   PopoverCloseButton, PopoverBody, Button, Image, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
-import add from './image/add.png'
 import axios from 'axios'
-import { setToken } from '../../components/TOKEN';
+import { setToken, serverUrl } from '../../components/TOKEN';
 import AOS from 'aos'
 import "aos/dist/aos.css"
 
@@ -19,7 +18,7 @@ const AddQuizPopover = ({myFolders, setMyFolders}) => {
     const {userId} = JSON.parse(localStorage.getItem("user"))
     const data = { userId, folderName }
     axios({
-      url: 'http://localhost:8080/api/v1/quiz/create/folder',
+      url: `${serverUrl}/v1/quiz/create/folder`,
       method: "POST",
       headers: setToken(),
       data,
@@ -41,7 +40,7 @@ const AddQuizPopover = ({myFolders, setMyFolders}) => {
     <div>
       <Popover placement='top-start'>
           <PopoverTrigger>
-            <Image data-aos="fade-up-left" data-aos-duration="1500" alt='더하기' className='plus-button' src={add} />
+            <Image data-aos="fade-up-left" data-aos-duration="1500" alt='더하기' className='plus-button' src='https://i.ibb.co/cy0srwg/add.png' />
           </PopoverTrigger>
           <PopoverContent>
             <PopoverHeader fontWeight='semibold'>

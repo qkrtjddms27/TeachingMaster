@@ -2,6 +2,7 @@ package com.ssafy.api.request;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,4 +42,5 @@ public class StudentInfoUpdateReq {
 
     @ApiModelProperty(name="반", example="5")
     private int roomNum;
+
 }

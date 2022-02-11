@@ -2,6 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.StudentInfoUpdateReq;
 import com.ssafy.api.request.StudentRegisterPostReq;
+import com.ssafy.api.request.StudentScoreUpReq;
 import com.ssafy.db.entity.Room;
 import com.ssafy.db.entity.Student;
 import com.ssafy.db.repository.StudentRepository;
@@ -25,39 +26,38 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student createStudent(StudentRegisterPostReq studentRegisterInfo) {
-        Student findStudent = studentRepository.findByStudentId(studentRegisterInfo.getStudentId());
+    public Student createStudent(StudentRegisterPostReq body) {
+        Student findStudent = studentRepository.findByStudentId(body.getStudentId());
 
         if(findStudent != null) { // 해당 ID로 만들어진 Student가 있으면 아래 로직을 하지 실행하지 않는다.
             return null;
         }
 
-        Student student = new Student();
-
-        student.setStudentId(studentRegisterInfo.getStudentId());
-        student.setStudentName(studentRegisterInfo.getStudentName());
-        student.setStudentEmail(studentRegisterInfo.getStudentEmail());
-        student.setStudentPhone(studentRegisterInfo.getStudentPhone());
-        student.setAddress(studentRegisterInfo.getAddress());
-        student.setParentsName(studentRegisterInfo.getParentsName());
-        student.setParentsPhone(studentRegisterInfo.getParentsPhone());
-        student.setRelation(studentRegisterInfo.getRelation());
-        student.setStudentProfile(studentRegisterInfo.getStudentProfile());
-
-        Room room = roomService.getRoomByRoomGradeAndRoomNum(studentRegisterInfo.getRoomGrade(),
-                studentRegisterInfo.getRoomNum());
+//        Room room = roomService.getRoomByRoomGradeAndRoomNum(body.getRoomGrade(),
+//                body.getRoomNum());
 
         // Room 객체가 없으면 Room 객체가 없으면 생성해서 넣는다.
-        if(room == null) {
-            room = new Room();
-            room.setRoomNum(studentRegisterInfo.getRoomNum());
-            room.setRoomGrade(studentRegisterInfo.getRoomGrade());
-            room = roomService.createRoom(room);
-        }
+//        if(room == null) {
+//            room = new Room();
+//            room.setRoomNum(body.getRoomNum());
+//            room.setRoomGrade(body.getRoomGrade());
+//            room = roomService.createRoom(room);
+//        }
 
-        student.setRoom(room);
+//        Student student = new Student();
+//
+//        student.setStudentId(studentRegisterInfo.getStudentId());
+//        student.setStudentName(studentRegisterInfo.getStudentName());
+//        student.setStudentEmail(studentRegisterInfo.getStudentEmail());
+//        student.setStudentPhone(studentRegisterInfo.getStudentPhone());
+//        student.setAddress(studentRegisterInfo.getAddress());
+//        student.setParentsName(studentRegisterInfo.getParentsName());
+//        student.setParentsPhone(studentRegisterInfo.getParentsPhone());
+//        student.setRelation(studentRegisterInfo.getRelation());
+//        student.setStudentProfile(studentRegisterInfo.getStudentProfile());
+//        student.setRoom(room);
 
-        return studentRepository.save(student);
+        return studentRepository.save(body.toEntity(body));
     }
 
     @Override
@@ -72,21 +72,30 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student updateStudent(StudentInfoUpdateReq userUpdateInfo) {
-        Student student = getStudentByUserId(userUpdateInfo.getStudentId());
+    public Student updateStudent(StudentInfoUpdateReq body) {
+        Student student = getStudentByUserId(body.getStudentId());
 
-        student.setStudentId(userUpdateInfo.getStudentId());
-        student.setStudentName(userUpdateInfo.getStudentName());
-        student.setStudentEmail(userUpdateInfo.getStudentEmail());
-        student.setStudentPhone(userUpdateInfo.getStudentPhone());
-        student.setAddress(userUpdateInfo.getAddress());
-        student.setParentsName(userUpdateInfo.getParentsName());
-        student.setParentsPhone(userUpdateInfo.getParentsPhone());
-        student.setRelation(userUpdateInfo.getRelation());
-        student.setStudentProfile(userUpdateInfo.getStudentProfile());
+        student.setStudentId(body.getStudentId());
+        student.setStudentName(body.getStudentName());
+        student.setStudentEmail(body.getStudentEmail());
+        student.setStudentPhone(body.getStudentPhone());
+        student.setAddress(body.getAddress());
+        student.setParentsName(body.getParentsName());
+        student.setParentsPhone(body.getParentsPhone());
+        student.setRelation(body.getRelation());
+        student.setStudentProfile(body.getStudentProfile());
 
         return studentRepository.save(student);
     }
 
+    @Override
+    public Student plusStudentScore(StudentScoreUpReq studentScoreUpReq){
+        Student student = getStudentByUserId(studentScoreUpReq.getStudentId());
+
+        student.setCountingStar(student.getCountingStar() + 1);
+        student.setStudentScore(student.getStudentScore() + 1);
+
+        return studentRepository.save(student);
+    }
 
 }

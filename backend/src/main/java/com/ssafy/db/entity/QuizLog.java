@@ -3,9 +3,11 @@ package com.ssafy.db.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -30,8 +32,8 @@ public class QuizLog {
 
     private Boolean quizResult; //정답유무
 
-    @Temporal(TemporalType.DATE) //출제날짜
-    private Date quizDate;
+    @CreationTimestamp
+    private Date quizDate; //출제날짜
 
     private int selectAnswer; //선택한 답
 }

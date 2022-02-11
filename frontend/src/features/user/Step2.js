@@ -3,6 +3,7 @@ import { Stack, Button, Box, Text, FormControl, InputGroup, Input,
 import { useState, useEffect, useRef } from 'react';
 import './scss/Signup.scss'
 import AlertDialogModal from '../../components/AlertModal';
+import { roomData } from '../../components/TOKEN';
 
 
 // 학교코드 & 담임여부(학년, 반) 페이지
@@ -12,30 +13,22 @@ const Step2 = ({ step, setStep, isClassTeacher, setIsClassTeacher, grade, setGra
 
   // 학교코드 보내면 그 학교의 학년, 반 정보 받아오는 부분 / 빈코드를 입력하면 경고창
   const [schoolCode, setSchoolCode] = useState('')
-  const [banInfo, setBanInfo] = useState([])
   const [chkSchool, setChkSchool] = useState(false)
   const [openChkSchool, setOpenChkSchool] = useState(false)
+
   // 학교코드 확인버튼
   const handleSchoolCheck = (e) => {
     e.preventDefault()
     if (schoolCode.length) {
-      console.log(schoolCode, '담아서 back으로 요청')
-      // 대충 이렇게 받아온다면 banInfo에 그대로 넣어준다 -> 나중에 꺼내쓴다
-      const data = {'ban': [5, 4, 10, 3, 6, 4]}
-      // console.log(data['ban'])
+      // roomData 받아오기
+      console.log('axios - check schoolCode:',schoolCode)
       setChkSchool(true)
-      setBanInfo(data['ban'])
     } else {
       setOpenChkSchool(true)
     }
   }
 
-  // 담임이면 학년, 반 입력 필수 -> prop으로 옮김
-  // const [isClassTeacher, setIsClassTeacher] = useState(false)
-  // const [grade, setGrade] = useState('')
-  // const [group, setGroup] = useState('')
   const [chkG, setChkG] = useState(false)
-
   // 다음버튼
   const onClickHandle = () => {
     if (!chkSchool) {
@@ -101,7 +94,7 @@ const Step2 = ({ step, setStep, isClassTeacher, setIsClassTeacher, grade, setGra
               <option value='6'>6학년</option>
             </Select>
             <Select id='group' placeholder='반' variant='flushed' onChange={(e) => setGroup(e.target.value)}>
-              {range(banInfo[grade-1]).map((gp) => (
+              {range(roomData['ban'][grade-1]).map((gp) => (
                 <option value={gp} key={gp}>{gp}반</option>
                 ))}
             </Select>
