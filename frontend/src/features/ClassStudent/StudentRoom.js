@@ -17,7 +17,7 @@ const OPENVIDU_SERVER_SECRET = 'ssafy';
 class StudentRoom extends Component {
   constructor(props) {
     super(props);
-    const student = this.props.student
+    const student = JSON.parse(localStorage.getItem('student'))
     this.state = {
       // OV
       session: undefined,
@@ -112,6 +112,7 @@ class StudentRoom extends Component {
   componentDidMount() {
     window.addEventListener('beforeunload', this.onbeforeunload);
     this.leaveSession()
+    this.props.setHeader(false)
 
   }
 
@@ -388,6 +389,7 @@ class StudentRoom extends Component {
     const micOff = 'https://cdn.discordapp.com/attachments/885744368399560725/940843036705959966/90b3c558d3543a12.png'
     const CamOn = "https://cdn.discordapp.com/attachments/885744368399560725/941232727225667594/07fcab7c699aa813.png"
     const CamOff = "https://cdn.discordapp.com/attachments/885744368399560725/941232721185873940/ffc10215d5c0b3bc.png"
+    const teacherScreen = this.state.subscribers.filter(sub=> JSON.parse(sub.stream.connection.data).role ==="teacher" )
     return (
       <div className="ClassStudent">
         {/* 세션에 참가하기 전 */}
@@ -465,15 +467,7 @@ class StudentRoom extends Component {
                   <div className='teacher_button_box'>
                     {/* 선생님 화면 */}
                     <div className='teacher_box'>
-                      {this.state.subscribers.map((sub, i) => {
-                        if (JSON.parse(sub.stream.connection.data).role === "teacher") {
-                          return (
-                            <div key={i}>
-                              <UserVideoComponent who="teacher" streamManager={sub} />
-                            </div>
-                          )
-                        }
-                      } )}
+                      <UserVideoComponent who="teacher" streamManager={teacherScreen[0]} />
                     </div>
                     
                     {/* 버튼들 */}
@@ -542,11 +536,7 @@ class StudentRoom extends Component {
                 <StudentModal kind='oxQuiz' quizs = {quizs} iconAs="" title='OX퀴즈' 
                   isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} 
                   setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
-                  mySession={this.state.session} student={this.state.student}  />
-
-                <Button colorScheme='red' onClick={()=>{
-                  this.sendresultHandle()
-                }} /> 
+                  mySession={this.state.session} student={this.state.student}  />         
                 </div>
           </Box>
         )}

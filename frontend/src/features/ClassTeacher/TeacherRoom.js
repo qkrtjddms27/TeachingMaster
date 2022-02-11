@@ -25,10 +25,11 @@ const OPENVIDU_SERVER_SECRET = 'ssafy';
 class Classroom extends Component {
   constructor(props) {
     super(props);
+    const user = JSON.parse(localStorage.getItem('user'))
     this.state = {
       // OV
-      mySessionId: this.props.match.params.roomId,
-      myUserName: JSON.parse(localStorage.getItem('user')).userName,
+      mySessionId: 'ssafy' + (parseInt(user.roomGrade)*100 + parseInt(user.roomNum)),
+      myUserName: user.userName,
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
@@ -41,7 +42,7 @@ class Classroom extends Component {
       audiostate: false,
       highlighting: false,
       answerCheck: false,
-      user: JSON.parse(localStorage.getItem('user')),
+      user: user,
       //quiz
       quizs:{},
       quizId: '',
@@ -152,6 +153,7 @@ class Classroom extends Component {
     if (this.refs.chatoutput != null) {
       this.refs.chatoutput.scrollTop = this.refs.chatoutput.scrollHeight;
     }
+    this.props.setHeader(true)
   } 
   componentDidMount() {
     this.setState({ user : JSON.parse(localStorage.getItem('user'))})
@@ -486,8 +488,8 @@ class Classroom extends Component {
     this.setState({
       session: undefined,
       subscribers: [],
-      mySessionId: this.props.match.params.roomId,
-      myUserName: this.props.user.userName,
+      mySessionId: this.state.mySessionId,
+      myUserName: this.state.myUserName,
       mainStreamManager: undefined,
       publisher: undefined
     });
