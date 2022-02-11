@@ -28,7 +28,7 @@ const StudentLogin = ({student,setStudent,setHeader}) => {
     .then(({data}) => {
       // console.log(data)
       setStudent({...data,studentId:studentId})
-      // localStorage.setItem('student', JSON.stringify({...data,studentId:studentId}))
+      localStorage.setItem('student', JSON.stringify({...data,studentId:studentId}))
       history.push('/class/student')
     })
     .catch(err => console.log(err))

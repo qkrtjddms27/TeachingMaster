@@ -1,4 +1,4 @@
-import { Heading, Img,Button } from "@chakra-ui/react";
+import { Heading, Img,Button, Text } from "@chakra-ui/react";
 import {useEffect, useState} from 'react'
 import './scss/Main2.scss'
 import AOS from 'aos'
@@ -22,10 +22,10 @@ const Main2 = () => {
         <Img className="icon"  src="https://cdn.discordapp.com/attachments/885744368399560725/940788467040927744/1ebc39a1c15ce4e0.png"/>
         <div className="content">
           <div className="ment">
-            <p>나는 퀴즈를 좋아하는 티랑이야 </p>
+            <Text>나는 퀴즈를 좋아하는 티랑이야 </Text>
             <p>나랑 문제 풀지 않을래?</p>
           </div>
-          <Img src="https://cdn.discordapp.com/attachments/885744368399560725/940799962118246410/unknown.png"/>
+          <Img src="https://cdn.discordapp.com/attachments/885744368399560725/941674737967464498/32b2d81cb2be8692.gif"/>
         </div>
       </div>
       <div className="rabbit"
@@ -65,7 +65,7 @@ const Main2 = () => {
              className="dino"
              id="animal_box">
         <div className="content">
-          <Img src="https://cdn.discordapp.com/attachments/885744368399560725/940833119836188734/unknown.png"/>
+          <Img src="https://cdn.discordapp.com/attachments/885744368399560725/941676784351600660/f7cbd3db5297dccd.gif"/>
           <div className="ment">
             <p>디노의 친구들을 찾아줘 </p>
             <p>수업을 열심히 들으면 친구들이</p>

@@ -1,7 +1,11 @@
 .student-modal-header {
   display: flex;
   justify-content: center;
-  font-size: xx-large;
+
+  span {
+    margin-top: 3rem;
+    font-size: 3rem;
+  }
 }
 @keyframes mySpinner {
   from {
@@ -18,10 +22,10 @@
 .sticker-body {
   display: flex;
   align-items: center;
+  margin-bottom: 3rem;
   .sticker-left {
     .big-dino {
       width: 120rem;
-
       animation: mySpinner 3s;
       animation-iteration-count: infinite;
     }
