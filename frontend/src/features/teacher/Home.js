@@ -33,9 +33,49 @@ const Home = ({user,setUser,setHeader}) => {
     })
   },[])
 
-  
-  const [classTitle,setClassTitle] = useState("🎈 행복이 가득한")
-  const [class_open,setClass_open] =useState(true)
+  const [classTitle, setClassTitle] = useState("🎈 행복이 가득한")
+  const [class_open, setClass_open] =useState(false)
+
+  // 처음에 교실이 열렸는지 닫혔는지 확인
+  useEffect(() => {
+    const userId = localStorage.getItem("userId")
+    axios({
+      url: `${serverUrl}/conference/check`,
+      method: 'GET',
+      headers: setToken(),
+    })
+    .then(({data}) => {
+      // data에 내 userId가 있으면 setClass_open(true)
+      data.map(activeClass => {
+        if (activeClass.userId === userId) {
+          setClass_open(true)
+        }
+      })
+    })
+    .catch(err => console.log('isActive class:', err))
+  }, [])
+
+  // 강의실 열기 닫기
+  const openOrClose = (changeActive) => {
+    // console.log(changeActive, '로 바꿀건데 요청보낼 주소를 몰라요')
+    axios({
+      url: `${serverUrl}/conference`,
+      method: 'PUT',
+      headers: setToken(),
+      data: {
+        userId: localStorage.getItem("userId"),
+        buttonValue: changeActive
+      }
+    })
+    .then(() => {
+      if (changeActive === 0) {
+        setClass_open(true)
+      } else {
+        setClass_open(false)
+      }
+    })
+    .catch(err => console.log('change classroom active:', err))
+  }
 
   return (
     <div>
@@ -59,10 +99,10 @@ const Home = ({user,setUser,setHeader}) => {
                   const roomId = `ssafy${user.roomGrade}0${user.roomNum}`
                   history.push(`/class/teacher/${roomId}`)
                 }} >교실 입장</Box>
-                <Box className='class-close' onClick={()=>setClass_open(!class_open)} >교실 닫기</Box>
+                <Box className='class-close' onClick={() => openOrClose(1)} >교실 닫기</Box>
               </div>:
               <div className='when-close'>
-                <Box className='class-open' onClick={()=>setClass_open(!class_open)}>교실 열기</Box>
+                <Box className='class-open' onClick={() => openOrClose(0)}>교실 열기</Box>
               </div>}
             </div>
             
