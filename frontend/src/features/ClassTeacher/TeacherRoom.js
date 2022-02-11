@@ -100,7 +100,6 @@ class Classroom extends Component {
       results: newResults,
       answerCheck: true
     })
-
   }
 
   changeVideostate() {
@@ -625,34 +624,34 @@ class Classroom extends Component {
                 </Button>
               </div>
               <div className='right_btn_box'>
-                <TeacherModal kind='ox' quizQ = {this.quizHandler} iconAs={MdQuiz} title='OX 퀴즈' />
-                <TeacherModal kind='bookmark' quizQ = {this.quizHandlerStar} iconAs={BsFillStarFill} title='즐겨찾기 퀴즈' />
+                <TeacherModal kind='ox' quizQ = {this.quizHandler} imgSrc='https://i.ibb.co/fDyyfz0/answer.png' title='OX 퀴즈' />
+                <TeacherModal kind='bookmark' quizQ = {this.quizHandlerStar} imgSrc='https://i.ibb.co/cg8bVJZ/laptop.png' title='즐겨찾기 퀴즈' />
                 {this.state.videostate ? (
-                  <Toast setState={this.changeVideostate} iconAs={BsFillCameraVideoFill} title='Video Off'
-                    change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.500'} />
+                  <Toast setState={this.changeVideostate} imgSrc='https://i.ibb.co/XD4nJG0/video-player.png' title='Video Off'
+                    change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.300'} />
                   ) : (
-                  <Toast setState={this.changeVideostate} iconAs={BsCameraVideoOff} title='Video On'
-                    change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.500'} />
+                  <Toast setState={this.changeVideostate} imgSrc='https://cdn-icons-png.flaticon.com/512/3557/3557161.png' title='Video On'
+                    change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.300'} />
                 )}  
                 {this.state.audiostate ? (
-                  <Toast setState={this.changeAudiostate} iconAs={BsFillMicFill} title='Mic Off'
-                    message={'마이크를 껐습니다'} color={'white'} bg={'orange.500'} />
+                  <Toast setState={this.changeAudiostate} imgSrc='https://cdn-icons-png.flaticon.com/512/2972/2972122.png' title='Mic Off'
+                    message={'마이크를 껐습니다'} color={'white'} bg={'orange.300'} />
                   ) : (
-                  <Toast setState={this.changeAudiostate} iconAs={BsMicMute} title='Mic On'
-                    message={'마이크를 켰습니다'} color={'white'} bg={'blue.200'} />
+                  <Toast setState={this.changeAudiostate} imgSrc='https://i.ibb.co/Cmw64C6/mute.png' title='Mic On'
+                    message={'마이크를 켰습니다'} color={'white'} bg={'green.300'} />
                 )}
                 {this.state.highlighting ? (
-                  <Toast setState={this.changeHighlightingstate} iconAs={MdExtension} title='하이라이팅 끄기'
+                  <Toast setState={this.changeHighlightingstate} imgSrc='https://i.ibb.co/NNd1Vpx/highlighter.png' title='하이라이팅 끄기'
                     change={false} message={'하이라이팅을 껐습니다'} color={'black'} bg={'red.100'} />
                     ) : (
-                  <Toast setState={this.changeHighlightingstate} iconAs={MdOutlineExtensionOff} title='하이라이팅 켜기'
+                  <Toast setState={this.changeHighlightingstate} imgSrc='https://i.ibb.co/pdJQQ89/highlighter-1.png' title='하이라이팅 켜기'
                     change={true} message={'하이라이팅을 켰습니다'} color={'black'} bg={'blue.100'} />
                 )}
                 {this.state.answerCheck ? (
-                  <Toast setState={this.changeAnswerCheckstate} iconAs={GiCoffeeCup} title='퀴즈결과 끄기'
+                  <Toast setState={this.changeAnswerCheckstate} imgSrc='https://cdn-icons-png.flaticon.com/512/3208/3208770.png' title='퀴즈결과 끄기'
                     change={false} message={'퀴즈결과 끄기'} color={'black'} bg={'orange.100'} />
                     ) : (
-                  <Toast setState={this.changeAnswerCheckstate} iconAs={FaSchool} title='퀴즈결과 보기'
+                  <Toast setState={this.changeAnswerCheckstate} imgSrc='https://cdn-icons-png.flaticon.com/512/3208/3208648.png' title='퀴즈결과 보기'
                     change={true} message={'퀴즈결과 보기'} color={'black'} bg={'green.100'} />
                 )}
                 <div>
