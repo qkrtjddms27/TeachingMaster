@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * 메모 정보 조회 API
@@ -16,23 +17,12 @@ import java.sql.Date;
 @Getter
 @Setter
 @ApiModel("MemoResponse")
-public class MemoRes extends BaseResponseBody {
-    @ApiModelProperty(name="학생 Id", example="A12340987")
-    private String studentId;
-
-    @ApiModelProperty(name="선생님 Id", example="ssafy_web")
-    private String userId;
-
+public class MemoRes{
     @ApiModelProperty(name="내용", example="굿")
     private String memoContent;
 
-    public static MemoRes of(Memo memo, Integer statusCode, String message){
-        MemoRes res = new MemoRes();
-        res.setStudentId(memo.getStudent().getStudentId());
-        res.setUserId(memo.getUser().getUserId());
-        res.setMemoContent(memo.getMemoContent());
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
+    public static List<MemoRes> of(List<MemoRes> memo){
+        List<MemoRes> res = memo;
         return res;
     }
 }

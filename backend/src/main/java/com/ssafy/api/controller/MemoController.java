@@ -2,6 +2,7 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.MemoRegisterReq;
 import com.ssafy.api.request.StudentScoreUpReq;
+import com.ssafy.api.response.ConferenceRes;
 import com.ssafy.api.response.MemoRes;
 import com.ssafy.api.service.MemoService;
 import com.ssafy.api.service.StudentService;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Api(value = "메모", tags = {"Memo"})
 @RestController
 @RequestMapping("/api/memo")
@@ -20,6 +23,7 @@ public class MemoController {
 
     @Autowired
     MemoService memoService;
+
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("")
@@ -41,7 +45,7 @@ public class MemoController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @GetMapping("/{student_id}/{user_id}")
+    @GetMapping("/{student_id}")
     @ApiOperation(value = "학생 메모 조회", notes = "학생 메모를 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -49,13 +53,12 @@ public class MemoController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> search_memo(
-            @PathVariable("student_id") String studentId, @PathVariable("user_id") String userId) {
+    public ResponseEntity<List<MemoRes>> search_memo(
+            @PathVariable("student_id") String studentId) {
 
+        List<MemoRes> memo = memoService.searchMemo(studentId);
 
-        Memo memo = memoService.searchMemo(studentId, userId);
-
-        return ResponseEntity.status(200).body(MemoRes.of(memo, 200, "Success"));
+        return ResponseEntity.status(200).body(MemoRes.of(memo));
 
     }
 
