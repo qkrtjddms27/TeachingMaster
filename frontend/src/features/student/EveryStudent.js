@@ -7,7 +7,7 @@ import AOS from 'aos'
 import "aos/dist/aos.css"
 import axios from 'axios'
 import { setToken, serverUrl } from '../../components/TOKEN'
-import { Button, Heading, Select } from '@chakra-ui/react'
+import { Button,  Select } from '@chakra-ui/react'
 
 const EveryStudent = () => {
   const [students,setStudents] = useState([])
@@ -61,7 +61,6 @@ const EveryStudent = () => {
           <div className="m13s m13c1"></div>
           <div className="m13s m13c2"></div>
         </div>
-          {/* <Spinner speed='0.8s' thickness='10px' height="10rem" width="10rem" color='blue.500'/> */}
         </div>    
       </div>
     )

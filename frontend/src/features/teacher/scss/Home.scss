@@ -76,7 +76,20 @@
       }
     }
   }
-
+  .TM-circle {
+    position: absolute;
+    left: 62%;
+    top: 60%;
+    height: 15rem;
+    animation: rotate_image 8s linear infinite;
+    transform-origin: 50% 50%;
+    z-index: 1;
+    @keyframes rotate_image {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
   .quizbox {
     box-shadow: 3px 3px 7px;
     margin-top: 5rem;
