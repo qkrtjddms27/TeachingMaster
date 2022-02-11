@@ -11,7 +11,7 @@ import StudentLogin from '../features/ClassStudent/StudentLogin';
 
 
 function App() {
-  const [header,setHeader] =useState(false)
+  const [header,setHeader] =useState(true)
   const [student,setStudent] = useState({})
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure()
   const [modalForm, setModalForm] = useState(null)
