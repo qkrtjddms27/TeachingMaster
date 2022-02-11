@@ -39,7 +39,7 @@ const OnAir = () => {
 
   const enterClass = (v) => {
     // 학년, 반을 url params에서 가져오게 하고
-    const roomId = `ssafy${v.roomeGrade}0${v.roomNum}`
+    const roomId = `ssafy${v.roomGrade}0${v.roomNum}`
     // userName은 localStorage에서 가져오게 하는게 맞는듯?
     history.push(`/class/teacher/${roomId}`)
   }
