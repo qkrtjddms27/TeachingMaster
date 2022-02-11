@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@chakra-ui/react';
 import '../scss/modal.scss'
 
 const ModalMain = ({change,student,onClose}) => {
+  const [memos,setMemos] = useState([])
+  useEffect(()=>{
+
+  },[])
   return (
     <div className='modal-main'>
       <div className='left'>

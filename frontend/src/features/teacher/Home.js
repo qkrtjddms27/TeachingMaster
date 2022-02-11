@@ -65,8 +65,8 @@ const Home = ({user,setUser,setHeader}) => {
                 <Box className='class-open' onClick={()=>setClass_open(!class_open)}>교실 열기</Box>
               </div>}
             </div>
-            
           </Box>
+            <img className='TM-circle' alt="TM" src="https://cdn.discordapp.com/attachments/885744368399560725/941713229422395452/TM_circle.png"/>
         <div data-aos="fade-up"
             data-aos-duration="1000"
             data-aos-easing="line">
