@@ -2,9 +2,7 @@ package com.ssafy.api.service;
 
 
 import com.ssafy.api.request.*;
-import com.ssafy.api.response.QuizAllRes;
-import com.ssafy.api.response.QuizLogRes;
-import com.ssafy.api.response.QuizRes;
+import com.ssafy.api.response.MemoRes;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,8 @@ public class MemoServiceImpl implements MemoService{
     @Autowired
     MemoRepository memoRepository;
 
-
+    @Autowired
+    MemoRepositorySupport memoRepositorySupport;
 
     @Override
     public Memo createMemo(MemoRegisterReq memoRegisterReq) {
@@ -60,9 +59,7 @@ public class MemoServiceImpl implements MemoService{
     }
 
     @Override
-    public Memo searchMemo(String studentId, String userId){
-        Student findStudent = studentRepository.findByStudentId(studentId);
-        User findUser = userRepository.findUserByUserId(userId).orElse(null);
-        return memoRepository.findByStudentAndUser(findStudent, findUser);
+    public List<MemoRes> searchMemo(String studentId){
+        return memoRepositorySupport.findMemoByStudentId(studentId);
     }
 }
