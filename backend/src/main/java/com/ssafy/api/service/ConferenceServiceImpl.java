@@ -26,8 +26,19 @@ public class ConferenceServiceImpl implements ConferenceService{
         User user = userRepositorySupport.findUserByUserId(updateInfo.getUserId()).orElse(null);
         //int roomGrade, int roomNum
         Conference search = conferenceRepository.findByRoom(user.getRoom());
+
         if(updateInfo.getButtonValue() == 0){
-            search.setActive(true);
+            if(search == null){
+                Conference conference = new Conference();
+
+                conference.setLessonUrl("a");
+                conference.setRoom(user.getRoom());
+                conference.setActive(true);
+
+                return conferenceRepository.save(conference);
+            }else {
+                search.setActive(true);
+            }
         }
         else{
             search.setActive(false);
