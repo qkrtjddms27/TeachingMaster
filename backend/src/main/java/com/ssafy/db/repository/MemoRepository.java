@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface MemoRepository extends JpaRepository<Memo, Long> {
     Memo findByStudentAndUser(Student student, User user);
+    List<Memo> findMemoByStudent(Student student);
 }
