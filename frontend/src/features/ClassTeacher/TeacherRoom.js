@@ -28,7 +28,7 @@ class Classroom extends Component {
     this.state = {
       // OV
       mySessionId: this.props.match.params.roomId,
-      myUserName: this.props.user.userName,
+      myUserName: JSON.parse(localStorage.getItem('user')).userName,
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
@@ -40,8 +40,8 @@ class Classroom extends Component {
       videostate: true,
       audiostate: false,
       highlighting: false,
-      breaktime: false,
-
+      answerCheck: false,
+      user: JSON.parse(localStorage.getItem('user')),
       //quiz
       quizs:{},
       quizId: '',
@@ -81,17 +81,27 @@ class Classroom extends Component {
     this.changeVideostate = this.changeVideostate.bind(this)
     this.changeAudiostate = this.changeAudiostate.bind(this)
     this.changeHighlightingstate = this.changeHighlightingstate.bind(this)
-    this.changeBreaktimestate = this.changeBreaktimestate.bind(this)
+    this.changeAnswerCheckstate = this.changeAnswerCheckstate.bind(this)
     this.announceHandler = this.announceHandler.bind(this)
     this.plusStarHandler = this.plusStarHandler.bind(this)
-    
+    this.resultsHandler = this.resultsHandler.bind(this)
     // quiz
     this.quizHandler = this.quizHandler.bind(this);
     this.quizHandlerStar = this.quizHandlerStar.bind(this);
+    this.getAverage = this.getAverage.bind(this);
   }
 
 
   // TM
+  resultsHandler() {
+    const newResults = this.state.results.filter(result => result.studentResult)
+    // console.log(newResults)
+    this.setState({
+      results: newResults,
+      answerCheck: true
+    })
+  }
+
   changeVideostate() {
     this.state.publisher.publishVideo(!this.state.videostate);
     this.setState({
@@ -106,7 +116,8 @@ class Classroom extends Component {
     })
   }
   
-  changeHighlightingstate() {
+  getAverage(){
+    console.log('⭐⭐⭐⭐계산중입니다⭐⭐⭐⭐')
     let total = 0
     // eslint-disable-next-line no-lone-blocks
     {this.state.subscribers.map((sub) => (
@@ -114,14 +125,19 @@ class Classroom extends Component {
     ))}
     total = total/(this.state.subscribers).length
     this.setState({
+      total:total
+    })
+  }
+
+  changeHighlightingstate() {
+    this.setState({
       highlighting: !this.state.highlighting,
-      total: total
     })
   }
   
-  changeBreaktimestate() {
+  changeAnswerCheckstate() {
     this.setState({
-      breaktime: !this.state.breaktime
+      answerCheck: !this.state.answerCheck
     })
   }
 
@@ -129,6 +145,7 @@ class Classroom extends Component {
     this.props.history.push(path)
   }
 
+  
 
   // OV
   componentDidUpdate(previousProps, previousState) {
@@ -224,7 +241,6 @@ class Classroom extends Component {
 
   // 별점 주기
   plusStarHandler(i){
-    // console.log(this.state.subscribers[i])
     const mySession = this.state.session;
     mySession.signal({
       to: [this.state.subscribers[i].stream.inboundStreamOpts.connection],
@@ -260,9 +276,6 @@ class Classroom extends Component {
       results:[],
     });
     sessionStorage.removeItem('OXQuiz');
-    // sessionStorage.removeItem('quizText');
-    // sessionStorage.removeItem('quizAnswer');
-    // sessionStorage.removeItem('quizset');
   }
 
   //북마크 용
@@ -344,21 +357,13 @@ class Classroom extends Component {
     // --- 1) Get an OpenVidu object ---
     this.OV = new OpenVidu();
 
-    // --- 2) Init a session ---
     this.setState(
       {
         session: this.OV.initSession(),
       },
       () => {
-        // console.log('*****OV.init: ', this.OV.initSession())
-        // console.log('*****state.session: ', this.state.session)
         let mySession = this.state.session;
-
-        // --- 3) Specify the actions when events take place in the session ---
-        // On every new Stream received...
         mySession.on('streamCreated', (event) => {
-          // Subscribe to the Stream to receive it. Second parameter is undefined
-          // so OpenVidu doesn't create an HTML video by its own
           let subscriber = mySession.subscribe(event.stream, undefined);
 
           let subscribers = this.state.subscribers;
@@ -367,12 +372,9 @@ class Classroom extends Component {
             subscribers: subscribers,
           });
         });
-        // On every Stream destroyed...
         mySession.on('streamDestroyed', (event) => {
-          // Remove the stream from 'subscribers' array
           this.deleteSubscriber(event.stream.streamManager);
         });
-        // On every asynchronous exception...
         mySession.on('exception', (exception) => {
           console.warn(exception);
         });
@@ -392,83 +394,47 @@ class Classroom extends Component {
           }
         });
         
-        
-        //quiz
-        //ox용
-    //     mySession.on('signal:quiz', (event) => {
-    //       let quizdata = JSON.parse(event.data);
-    //       //if (quizdata[9] !== this.state.myUserName) {
-    //         this.setState({
-    //           quizs: [
-    //             ...this.state.quizs,
-    //             {
-    //               quizContents:quizdata.value,
-    //               quizAnswer:quizdata.ans,
-                  
-    //               chatClass: 'quizs__item--visitor',
-    //             },
-    //           ],
-              
-    //         });
-    //      // }
-    //   });
-      
-    //   //북마크 용
-    //   mySession.on('signal:bookmarkQuiz', (event) => {
-    //     // let quizdata = event.data.split(',');
-        
-    //     let quizdata = JSON.parse(event.data);
-    //     // if (quizdata.userId[9] !== this.state.myUserName) {
-    //       this.setState({
-    //         quizs: [
-    //           ...this.state.quizs,
-    //           {
-    //             quizId:quizdata.quizId,
-    //             subject:quizdata.subject,
-    //             quizPhoto:quizdata.quizPhoto,
-    //             quizTitle:quizdata.quizTitle,
-    //             quizContents:quizdata.quizContents,
-    //             quizAnswer:quizdata.quizAnswer,
-    //             openStatus:quizdata.openStatus,
-    //             quizTimeout:quizdata.quizTimeout,
-    //             quizGrade:quizdata.quizGrade,
-    //             userId:quizdata.userId,
-    //             option1:quizdata.options[0],
-    //             option2:quizdata.options[1],
-    //             option3:quizdata.options[2],
-    //             option4:quizdata.options[3],
-
-    //             chatClass: 'quizs__item--visitor',
-    //           },
-    //         ],
-            
-    //       });
-    //     // }
-    // });
-
-
+        // {this.state.subscribers.map((sub) => (
+        //   total = total + Number(JSON.parse(sub.stream.connection.data).countingStar)
+        // ))}
+        mySession.on('signal:receiveStar',(event)=>{
+          let student = JSON.parse(event.data)
+          console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐')
+          console.log(student.studentId)
+          console.log(JSON.parse(this.state.subscribers[0].stream.connection.data).studentId)
+          this.state.subscribers.map((sub,i)=>{
+            if(student.studentId === JSON.parse(sub.stream.connection.data).studentId){
+              let tmp = JSON.parse(sub.stream.connection.data)
+              tmp = JSON.stringify({...tmp,countingStar:tmp.countingStar+1,studentScore:tmp.studentScore+1 } )
+              let newsubscribers = this.state.subscribers
+              newsubscribers[i].stream.connection.data = tmp
+              this.setState({
+                subscribers: newsubscribers
+              })
+            }
+          })
+          this.getAverage()
+          console.log(this.state.subscribers)
+        })
         //quiz 학생 결과 가지기 용
         mySession.on('signal:studentQuizresult', (event) => {
           let resultsdata = JSON.parse(event.data);
           // console.log('resultsdata', resultsdata)
-          //if (quizdata[9] !== this.state.myUserName) {
-            this.setState({
-              results: [
-                ...this.state.results,
-                {
-                  studentId:resultsdata.studentId,
-                  quizId:resultsdata.quizId,
-                  studentResult:resultsdata.studentResult,
-                  chatClass: 'quizs__item--visitor',
-                },
-              ],
-              
-            });
-            // 여기서 학생들 OX 표시
-            console.log('quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?quiz?ox?')
-            console.log(this.state.results)
-         // }
-      });
+          this.setState({
+            results: [
+              ...this.state.results,
+              {
+                studentId:resultsdata.studentId,
+                quizId:resultsdata.quizId,
+                studentResult:resultsdata.studentResult,
+                chatClass: 'quizs__item--visitor',
+              },
+            ],
+          });
+          if ((2*this.state.subscribers.length === this.state.results.length) && (this.state.results.length!==0 )) {
+            this.resultsHandler()
+          }
+        });
 
 
 
@@ -530,7 +496,7 @@ class Classroom extends Component {
 
   render() {
     const mySessionId = this.state.mySessionId;
-    const myUserName = this.state.myUserName;
+    const myUserName = JSON.parse(localStorage.getItem('user')).userName;
 
     return (
       <div className="ClassTeacher">
@@ -579,8 +545,9 @@ class Classroom extends Component {
               <div className='student_box'>
                 {this.state.subscribers.map((sub, i) => (
                   <div key={i}>
-                    {/* <UserVideoComponent streamManager={sub} />  */}
-                    <StudentScreen highlighting={this.state.highlighting} total={this.state.total}  streamManager={sub} i={i} announce={this.announceHandler} plusStar={this.plusStarHandler} />
+                    <StudentScreen  subscribers={this.state.subscribers} answerCheck={this.state.answerCheck} results={this.state.results} 
+                    highlighting={this.state.highlighting} total={this.state.total}  streamManager={sub} 
+                    i={i} announce={this.announceHandler} plusStar={this.plusStarHandler} />
                   </div>
                 ))}
                 {this.state.publisher !== undefined && (
@@ -618,35 +585,35 @@ class Classroom extends Component {
                 </Button>
               </div>
               <div className='right_btn_box'>
-                <TeacherModal kind='ox' quizQ = {this.quizHandler} iconAs={MdQuiz} title='OX 퀴즈' />
-                <TeacherModal kind='bookmark' quizQ = {this.quizHandlerStar} iconAs={BsFillStarFill} title='즐겨찾기 퀴즈' />
+                <TeacherModal kind='ox' quizQ = {this.quizHandler} imgSrc='https://i.ibb.co/fDyyfz0/answer.png' title='OX 퀴즈' />
+                <TeacherModal kind='bookmark' quizQ = {this.quizHandlerStar} imgSrc='https://i.ibb.co/cg8bVJZ/laptop.png' title='즐겨찾기 퀴즈' />
                 {this.state.videostate ? (
-                  <Toast setState={this.changeVideostate} iconAs={BsFillCameraVideoFill} title='Video Off'
-                    change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.500'} />
+                  <Toast setState={this.changeVideostate} imgSrc='https://i.ibb.co/XD4nJG0/video-player.png' title='Video Off'
+                    change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.300'} />
                   ) : (
-                  <Toast setState={this.changeVideostate} iconAs={BsCameraVideoOff} title='Video On'
-                    change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.500'} />
+                  <Toast setState={this.changeVideostate} imgSrc='https://cdn-icons-png.flaticon.com/512/3557/3557161.png' title='Video On'
+                    change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.300'} />
                 )}  
                 {this.state.audiostate ? (
-                  <Toast setState={this.changeAudiostate} iconAs={BsFillMicFill} title='Mic Off'
-                    message={'마이크를 껐습니다'} color={'white'} bg={'orange.500'} />
+                  <Toast setState={this.changeAudiostate} imgSrc='https://cdn-icons-png.flaticon.com/512/2972/2972122.png' title='Mic Off'
+                    message={'마이크를 껐습니다'} color={'white'} bg={'orange.300'} />
                   ) : (
-                  <Toast setState={this.changeAudiostate} iconAs={BsMicMute} title='Mic On'
-                    message={'마이크를 켰습니다'} color={'white'} bg={'blue.200'} />
+                  <Toast setState={this.changeAudiostate} imgSrc='https://i.ibb.co/Cmw64C6/mute.png' title='Mic On'
+                    message={'마이크를 켰습니다'} color={'white'} bg={'green.300'} />
                 )}
                 {this.state.highlighting ? (
-                  <Toast setState={this.changeHighlightingstate} iconAs={MdExtension} title='하이라이팅 끄기'
+                  <Toast setState={this.changeHighlightingstate} imgSrc='https://i.ibb.co/NNd1Vpx/highlighter.png' title='하이라이팅 끄기'
                     change={false} message={'하이라이팅을 껐습니다'} color={'black'} bg={'red.100'} />
                     ) : (
-                  <Toast setState={this.changeHighlightingstate} iconAs={MdOutlineExtensionOff} title='하이라이팅 켜기'
+                  <Toast setState={this.changeHighlightingstate} imgSrc='https://i.ibb.co/pdJQQ89/highlighter-1.png' title='하이라이팅 켜기'
                     change={true} message={'하이라이팅을 켰습니다'} color={'black'} bg={'blue.100'} />
                 )}
-                {this.state.breaktime ? (
-                  <Toast setState={this.changeBreaktimestate} iconAs={GiCoffeeCup} title='수업 시작하기'
-                    change={false} message={'쉬는시간이 끝났습니다'} color={'black'} bg={'orange.100'} />
+                {this.state.answerCheck ? (
+                  <Toast setState={this.changeAnswerCheckstate} imgSrc='https://cdn-icons-png.flaticon.com/512/3208/3208770.png' title='퀴즈결과 끄기'
+                    change={false} message={'퀴즈결과 끄기'} color={'black'} bg={'orange.100'} />
                     ) : (
-                  <Toast setState={this.changeBreaktimestate} iconAs={FaSchool} title='쉬는시간 갖기'
-                    change={true} message={'쉬는시간 입니다'} color={'black'} bg={'green.100'} />
+                  <Toast setState={this.changeAnswerCheckstate} imgSrc='https://cdn-icons-png.flaticon.com/512/3208/3208648.png' title='퀴즈결과 보기'
+                    change={true} message={'퀴즈결과 보기'} color={'black'} bg={'green.100'} />
                 )}
                 <div>
                   <p>{this.state.subscribers.length}</p>

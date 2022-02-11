@@ -254,15 +254,24 @@ class StudentRoom extends Component {
           }
         });
         
-        // 점수주기
+        // 점수 받자마자 보내기
         mySession.on('signal:star',(event)=>{
           this.setState({
            student: {...this.state.student,
                     countingStar: this.state.student.countingStar +1,
                     studentScore : this.state.student.studentScore +1   }
           })
-          console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐')
-          console.log(this.state.student)
+          mySession.signal({
+            data:JSON.stringify({
+              clientData: this.state.myUserName, 
+              role:"student",
+              studentId:this.state.student.studentId,
+              countingStar: this.state.student.countingStar,
+              studentScore : this.state.student.studentScore
+            }),
+            to:[],
+            type:'receiveStar'
+          })
         })
         //quiz  
         //ox용
