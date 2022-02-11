@@ -15,7 +15,7 @@ const Sticker = ({ isOpen, onOpen, onClose,student }) => {
     <ModalContent bgColor='#B2CCC1' w='85rem' h='45rem' marginY='7rem' marginX='1rem' >
         {student !== undefined &&<>
       <ModalHeader className='student-modal-header'>
-        <span >내 공룡은 {parseInt(student.studentScore/20)}살!</span>
+        <span >내 디노는 {parseInt(student.studentScore/20)}살!</span>
       </ModalHeader>
       <ModalCloseButton />
       <ModalBody className='sticker-body'>
