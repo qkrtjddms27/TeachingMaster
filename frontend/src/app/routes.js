@@ -5,7 +5,6 @@ import Settings from '../features/teacher/Settings';
 import Signup from '../features/user/Signup'
 import EveryStudent from '../features/student/EveryStudent'
 import Folder from '../features/quiz/EveryFolder'
-import IngClass from '../features/teacher/IngClass'
 import ConferenceLog from '../features/teacher/ConferenceLog'
 import InFolder from '../features/quiz/InFolder';
 import Updatequiz from '../features/quiz/Updatequiz';
