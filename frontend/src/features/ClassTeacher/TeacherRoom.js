@@ -103,6 +103,15 @@ class Classroom extends Component {
       results: newResults,
       answerCheck: true
     })
+    console.log('newResults:', this.state.results)
+    axios({
+      url: `${serverUrl}/student/student`,
+      method: 'POST',
+      headers: setToken(),
+      data: newResults
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log('quiz log err', err))
   }
 
   changeVideostate() {
@@ -437,10 +446,11 @@ class Classroom extends Component {
             results: [
               ...this.state.results,
               {
+                studentAnswer: resultsdata.studentAnswer,
                 studentId:resultsdata.studentId,
                 quizId:resultsdata.quizId,
                 studentResult:resultsdata.studentResult,
-                chatClass: 'quizs__item--visitor',
+                // chatClass: 'quizs__item--visitor',
               },
             ],
           });
