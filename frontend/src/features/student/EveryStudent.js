@@ -26,6 +26,7 @@ const EveryStudent = () => {
       const response = await axios(options)
       setStudents(response.data.students)
       setEveryStudent(response.data.students)
+      console.log(response.data.students)
     }catch(e){
       console.log(e)
     }
