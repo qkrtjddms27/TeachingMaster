@@ -106,7 +106,8 @@ const Home = ({user,setUser,setHeader}) => {
               </div>}
             </div>
           </Box>
-            <img className='TM-circle' alt="TM" src="https://cdn.discordapp.com/attachments/885744368399560725/941713229422395452/TM_circle.png"/>
+            <img className='TM-circle-out' alt="TM" src="https://cdn.discordapp.com/attachments/885744368399560725/941713229422395452/TM_circle.png"/>
+            <img className='TM-circle-in' alt="TM" src="https://cdn.discordapp.com/attachments/885744368399560725/941713229422395452/TM_circle.png"/>
         <div data-aos="fade-up"
             data-aos-duration="1000"
             data-aos-easing="line">
