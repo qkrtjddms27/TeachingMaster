@@ -43,6 +43,7 @@ class Classroom extends Component {
       highlighting: false,
       answerCheck: false,
       user: user,
+      rollingStudent: undefined,
       //quiz
       quizs:{},
       quizId: '',
@@ -90,6 +91,7 @@ class Classroom extends Component {
     this.quizHandler = this.quizHandler.bind(this);
     this.quizHandlerStar = this.quizHandlerStar.bind(this);
     this.getAverage = this.getAverage.bind(this);
+    this.doRolling = this.doRolling.bind(this)
   }
 
 
@@ -180,7 +182,16 @@ class Classroom extends Component {
       message: e.target.value,
     });
   }
-
+  doRolling(){
+    const mySession = this.state.session;
+    const pickone = Math.floor(Math.random()*this.state.subscribers.length) 
+    console.log("⭐랜덤함수:",JSON.parse(this.state.subscribers[pickone].stream.connection.data).clientData)
+    mySession.signal({
+      data: JSON.parse(this.state.subscribers[pickone].stream.connection.data).clientData,
+      to: [],
+      type: 'rolling',
+    });
+  }
   sendmessageByEnter(e) {
     if (e.key === 'Enter') {
       this.setState({
@@ -587,6 +598,7 @@ class Classroom extends Component {
                 </Button>
               </div>
               <div className='right_btn_box'>
+                <Button onClick={()=>{this.doRolling()}}>랜덤뽑기</Button>
                 <TeacherModal kind='ox' quizQ = {this.quizHandler} imgSrc='https://i.ibb.co/fDyyfz0/answer.png' title='OX 퀴즈' />
                 <TeacherModal kind='bookmark' quizQ = {this.quizHandlerStar} imgSrc='https://i.ibb.co/cg8bVJZ/laptop.png' title='즐겨찾기 퀴즈' />
                 {this.state.videostate ? (
