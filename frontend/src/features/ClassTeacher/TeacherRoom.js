@@ -5,10 +5,6 @@ import React, { Component,createRef } from 'react';
 import { Button, Box, Input } from '@chakra-ui/react';
 import "./scss/ClassTeacher.scss"
 import TeacherModal from './components/TeacherModal';
-import { BsMicMute, BsFillMicFill, BsCameraVideoOff, BsFillCameraVideoFill, BsFillStarFill } from "react-icons/bs"
-import { MdExtension, MdOutlineExtensionOff, MdQuiz } from "react-icons/md"
-import { GiCoffeeCup } from "react-icons/gi"
-import { FaSchool } from "react-icons/fa"
 import { withRouter } from 'react-router-dom';
 import Toast from './components/Toast';
 import UserVideoComponent from './openVidu/UserVideoComponent';
@@ -16,19 +12,17 @@ import Messages from './components/Messages';
 import StudentScreen from './components/StudentScreen'
 import {serverUrl, setToken } from '../../components/TOKEN';
 
-
-
-// const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:8443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
 
 class Classroom extends Component {
   constructor(props) {
     super(props);
+    const user = JSON.parse(localStorage.getItem('user'))
     this.state = {
       // OV
       mySessionId: this.props.match.params.roomId,
-      myUserName: JSON.parse(localStorage.getItem('user')).userName,
+      myUserName: user.userName,
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
@@ -39,9 +33,11 @@ class Classroom extends Component {
       message: '',
       videostate: true,
       audiostate: false,
+      screenShareState: false,
       highlighting: false,
       answerCheck: false,
-      user: JSON.parse(localStorage.getItem('user')),
+      user: user,
+      rollingStudent: undefined,
       //quiz
       quizs:{},
       quizId: '',
@@ -63,6 +59,8 @@ class Classroom extends Component {
       results:[],
       studentId:'',
       studentResult:'',
+      pickone:"랜덤뽑기",
+
     };
 
     // OV
@@ -85,14 +83,86 @@ class Classroom extends Component {
     this.announceHandler = this.announceHandler.bind(this)
     this.plusStarHandler = this.plusStarHandler.bind(this)
     this.resultsHandler = this.resultsHandler.bind(this)
+    this.changeOnScreenShareState = this.changeOnScreenShareState.bind(this)
+    this.changeOffScreenShareState = this.changeOffScreenShareState.bind(this)
     // quiz
     this.quizHandler = this.quizHandler.bind(this);
     this.quizHandlerStar = this.quizHandlerStar.bind(this);
     this.getAverage = this.getAverage.bind(this);
+    this.doRolling = this.doRolling.bind(this)
+    this.screenShare = this.screenShare.bind(this);
+    this.stopScreenShare = this.stopScreenShare.bind(this);
   }
 
 
   // TM
+  screenShare() {
+    const videoSource =
+      navigator.userAgent.indexOf('Firefox') !== -1 ? 'window' : 'screen';
+    this.OV = new OpenVidu();
+    // publisher 정보 담기
+    const publisher = this.OV.initPublisher(
+      undefined,
+      {
+        videoSource: videoSource,
+        publishAudio: this.state.audiostate,
+        publishVideo: true,
+        mirror: false,
+      },
+      error => {
+        if (error && error.name === 'SCREEN_EXTENSION_NOT_INSTALLED') {
+          this.setState({ showExtensionDialog: true });
+        } else if (error && error.name === 'SCREEN_SHARING_NOT_SUPPORTED') {
+          alert('Your browser does not support screen sharing');
+        } else if (error && error.name === 'SCREEN_EXTENSION_DISABLED') {
+          alert('You need to enable screen sharing extension');
+        } else if (error && error.name === 'SCREEN_CAPTURE_DENIED') {
+          alert('You need to choose a window or application to share');
+        }
+      }
+    );
+
+    publisher.once('accessAllowed', () => {
+      this.state.session.unpublish(this.state.mainStreamManager); // 송출하고 있는거 중단 (안하면 에러)
+      this.state.session.publish(publisher).then(() => {
+        // 송출하기
+
+        // this.props.doMainStreamManagerInfo(publisher); // 스타 publisher 정보 바꾸기
+        // state 변경
+        this.setState({
+          screenShareState: true,
+          mainStreamManager:publisher
+        });
+      });
+    });
+  }
+  stopScreenShare() {
+    this.state.session.unpublish(this.state.mainStreamManager); // 화면 공유 중지
+    this.OV = new OpenVidu();
+    // publisher 설정
+    let publisher = this.OV.initPublisher(undefined, {
+      audioSource: undefined, // The source of audio. If undefined default microphone
+      videoSource: undefined, // The source of video. If undefined default webcam
+      publishAudio: this.state.audiostate, // Whether you want to start publishing with your audio unmuted or not
+      publishVideo: true, // Whether you want to start publishing with your video enabled or not
+      resolution: '640x480', // The resolution of your video
+      frameRate: 30, // The frame rate of your video
+      insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
+      mirror: false, // Whether to mirror your local video or not
+    });
+
+    this.state.session.publish(publisher); // 캠 송출하기
+    // this.props.doMainStreamManagerInfo(publisher); // 스타 publisher 정보 바꾸기
+    this.setState({
+      audioState: false,
+      videoState: true,
+      screenShareState: false,
+      mainStreamManager:publisher
+
+    });
+  }
+
+
   resultsHandler() {
     const newResults = this.state.results.filter(result => result.studentResult)
     // console.log(newResults)
@@ -100,6 +170,15 @@ class Classroom extends Component {
       results: newResults,
       answerCheck: true
     })
+    console.log('newResults:', this.state.results)
+    axios({
+      url: `${serverUrl}/student/student`,
+      method: 'POST',
+      headers: setToken(),
+      data: newResults
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log('quiz log err', err))
   }
 
   changeVideostate() {
@@ -140,6 +219,19 @@ class Classroom extends Component {
       answerCheck: !this.state.answerCheck
     })
   }
+  
+  changeOnScreenShareState(){
+    this.screenShare();
+    this.setState({
+      screenShareState: true,
+    });
+  }
+  changeOffScreenShareState(){
+    this.stopScreenShare();
+    this.setState({
+      screenShareState: false,
+    });
+  }
 
   handleHistory(path) {
     this.props.history.push(path)
@@ -152,6 +244,7 @@ class Classroom extends Component {
     if (this.refs.chatoutput != null) {
       this.refs.chatoutput.scrollTop = this.refs.chatoutput.scrollHeight;
     }
+    this.props.setHeader(true)
   } 
   componentDidMount() {
     this.setState({ user : JSON.parse(localStorage.getItem('user'))})
@@ -176,6 +269,19 @@ class Classroom extends Component {
   handleChatMessageChange(e) {
     this.setState({
       message: e.target.value,
+    });
+  }
+  doRolling(){
+    const mySession = this.state.session;
+    const pickone = Math.floor(Math.random()*this.state.subscribers.length) 
+    console.log("⭐랜덤함수:",JSON.parse(this.state.subscribers[pickone].stream.connection.data).clientData)
+    this.setState({
+      pickone:JSON.parse(this.state.subscribers[pickone].stream.connection.data).clientData
+    })
+    mySession.signal({
+      data: JSON.parse(this.state.subscribers[pickone].stream.connection.data).clientData,
+      to: [],
+      type: 'rolling',
     });
   }
 
@@ -393,10 +499,16 @@ class Classroom extends Component {
             });
           }
         });
+      //   mySession.on('publisherStartSpeaking', (event) => {
+      //     console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐')
+      //     console.log('User ' + (event.connection.data)+ ' start speaking');
+      //     console.log(this.state.subscribers.stream.connection)
+      //     console.log(this.state.subscribers.indexOf(event.connection.data))
+      //   });
+      //   mySession.on('publisherStopSpeaking', (event) => {
+      //     console.log('User ' + event.connection.connectionId + ' stop speaking');
+      // });
         
-        // {this.state.subscribers.map((sub) => (
-        //   total = total + Number(JSON.parse(sub.stream.connection.data).countingStar)
-        // ))}
         mySession.on('signal:receiveStar',(event)=>{
           let student = JSON.parse(event.data)
           console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐')
@@ -424,10 +536,11 @@ class Classroom extends Component {
             results: [
               ...this.state.results,
               {
+                studentAnswer: resultsdata.studentAnswer,
                 studentId:resultsdata.studentId,
                 quizId:resultsdata.quizId,
                 studentResult:resultsdata.studentResult,
-                chatClass: 'quizs__item--visitor',
+                // chatClass: 'quizs__item--visitor',
               },
             ],
           });
@@ -486,8 +599,8 @@ class Classroom extends Component {
     this.setState({
       session: undefined,
       subscribers: [],
-      mySessionId: this.props.match.params.roomId,
-      myUserName: this.props.user.userName,
+      mySessionId: this.state.mySessionId,
+      myUserName: this.state.myUserName,
       mainStreamManager: undefined,
       publisher: undefined
     });
@@ -550,10 +663,11 @@ class Classroom extends Component {
                     i={i} announce={this.announceHandler} plusStar={this.plusStarHandler} />
                   </div>
                 ))}
-                {this.state.publisher !== undefined && (
+                
+                
+                {this.state.mainStreamManager !== undefined && (
                   <div>
-                    {/* <UserVideoComponent streamManager={this.state.publisher} /> */}
-                    <UserVideoComponent score="teacherScore" streamManager={this.state.publisher} />
+                    <UserVideoComponent score="teacherScore" streamManager={this.state.mainStreamManager} />
                   </div>
                 )}
               </div>
@@ -585,6 +699,7 @@ class Classroom extends Component {
                 </Button>
               </div>
               <div className='right_btn_box'>
+              <Button onClick={()=>{this.doRolling()}}>{this.state.pickone}</Button>
                 <TeacherModal kind='ox' quizQ = {this.quizHandler} imgSrc='https://i.ibb.co/fDyyfz0/answer.png' title='OX 퀴즈' />
                 <TeacherModal kind='bookmark' quizQ = {this.quizHandlerStar} imgSrc='https://i.ibb.co/cg8bVJZ/laptop.png' title='즐겨찾기 퀴즈' />
                 {this.state.videostate ? (
@@ -608,12 +723,20 @@ class Classroom extends Component {
                   <Toast setState={this.changeHighlightingstate} imgSrc='https://i.ibb.co/pdJQQ89/highlighter-1.png' title='하이라이팅 켜기'
                     change={true} message={'하이라이팅을 켰습니다'} color={'black'} bg={'blue.100'} />
                 )}
+                
                 {this.state.answerCheck ? (
                   <Toast setState={this.changeAnswerCheckstate} imgSrc='https://cdn-icons-png.flaticon.com/512/3208/3208770.png' title='퀴즈결과 끄기'
                     change={false} message={'퀴즈결과 끄기'} color={'black'} bg={'orange.100'} />
                     ) : (
                   <Toast setState={this.changeAnswerCheckstate} imgSrc='https://cdn-icons-png.flaticon.com/512/3208/3208648.png' title='퀴즈결과 보기'
                     change={true} message={'퀴즈결과 보기'} color={'black'} bg={'green.100'} />
+                )}
+                {this.state.screenShareState ? (
+                  <Toast setState={this.changeOffScreenShareState} imgSrc='https://cdn.discordapp.com/attachments/885744368399560725/942115654251720724/share.png' title='화면공유 끄기'
+                    change={false} message={'화면공유 끄기'} color={'black'} bg={'orange.100'} />
+                    ) : (
+                  <Toast setState={this.changeOnScreenShareState} imgSrc='https://cdn.discordapp.com/attachments/885744368399560725/942115858157830204/monitor.png' title='화면공유'
+                    change={true} message={'화면공유'} color={'black'} bg={'green.100'} />
                 )}
                 <div>
                   <p>{this.state.subscribers.length}</p>

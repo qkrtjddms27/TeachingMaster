@@ -22,10 +22,10 @@
   position: absolute;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   border-radius: 5px;
   box-shadow: 3px 3px 7px;
-
   .image {
     margin: auto;
     margin-top: 3.5rem;
@@ -33,17 +33,20 @@
     height: 10rem;
     border-radius: 100%;
   }
-  .card-title {
-    font-weight: 1000;
-    font-size: 1.5rem;
-    margin-top: 0.5rem;
-    margin-left: 0.5rem;
-  }
-  .stars {
-    margin-left: 0.7rem;
-    font-size: 1.2rem;
-    font-weight: 700;
-    user-select: none;
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .stars {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .card-title {
+      margin-top: 0.2rem;
+      font-weight: 1000;
+      font-size: 1.5rem;
+    }
   }
 }
 .b-cardbox {

@@ -7,8 +7,6 @@ const OxQuiz = ({ setModalForm, setOX , quizs}) => {
   const [quiz, setQuiz] = useState({})
   const [choice, setChoice] = useState(0)
   useEffect(()=>{
-    console.log("⭐⭐⭐⭐quizs⭐⭐⭐⭐⭐")
-    console.log(quizs)
     if(quizs !== undefined ){
       const tmp = {
         "quizTimeout": quizs.quizTimeout,
@@ -16,11 +14,7 @@ const OxQuiz = ({ setModalForm, setOX , quizs}) => {
         "quizAnswer": quizs.quizAnswer,
         "quizId": quizs.quizId
       }
-      console.log('⭐⭐⭐⭐tmp')
-      console.log(tmp)
       setQuiz(tmp)
-      console.log("⭐⭐⭐⭐setQuiz⭐⭐⭐⭐⭐")
-      console.log('setQuiz', quiz)
     }
   },[])
   const thisone = (idx)=>{

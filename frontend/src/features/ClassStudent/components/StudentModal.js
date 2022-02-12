@@ -6,11 +6,12 @@ import Quiz from './Quiz';
 import OxQuiz from './OxQuiz';
 import QuizResult from './QuizResult';
 import Announce from './Announce';
+import Rolling from './Rolling';
 
 const StudentModal = (
   {kind, iconAs, title, quizs, 
     resultQ, isOpen, onOpen, onClose, modalForm, mySession,student,
-    setModalForm, modalOpen }) => {
+    setModalForm, modalOpen,pickone,studentsName }) => {
   const [ox,setOX ] = useState("")
   
   const sendresultHandle = ()=>{
@@ -20,7 +21,7 @@ const StudentModal = (
         "studentId":student.studentId,
         "quizId":sessionStorage.getItem('quizId'),
         "studentResult": sessionStorage.getItem('studentResult'),
-        "studentanswer": localStorage.getItem("thisone")
+        "studentAnswer": localStorage.getItem("thisone")
       }),
       to: [],
       type: 'studentQuizresult',
@@ -42,12 +43,15 @@ const StudentModal = (
         motionPreset='slideInBottom'
         closeOnOverlayClick={modalForm!=='quiz' && modalForm !=='OX' && modalForm !== 'oxQuiz'}
       >
-        <ModalOverlay />
+        {/* <ModalOverlay  style={{"zIndex": '-1'}} /> */}
+        <ModalOverlay  style={{"zIndex": '0'}} />
+        {/* <ModalOverlay /> */}
         {modalForm === 'sticker' && <Sticker onClose={onClose} student={student} />}
         {modalForm === 'quiz' && <Quiz quizs = {quizs} onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
         {modalForm === 'oxQuiz' && <OxQuiz quizs = {quizs} onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
         {modalForm === 'result' && <QuizResult sendresultHandle={sendresultHandle}  ox={ox} onClose={onClose} />}
         {modalForm === 'announce' && <Announce  onClose={onClose}/>}
+        {modalForm === 'rolling' && <Rolling studentsName={studentsName} pickone={pickone} student={student}  onClose={onClose}/>}
       </Modal>
     </>
   );

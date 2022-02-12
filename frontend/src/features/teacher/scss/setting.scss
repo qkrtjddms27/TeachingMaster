@@ -8,6 +8,20 @@
   box-shadow: 3px 3px 7px;
   display: flex;
   align-items: center;
+  .TM-circle {
+    position: absolute;
+    left: 75%;
+    top: 8%;
+    height: 12rem;
+    animation: rotate_image 8s linear infinite;
+    transform-origin: 50% 50%;
+    z-index: 1;
+    @keyframes rotate_image {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
   .left {
     margin-left: 10rem;
     .teacher_img {
