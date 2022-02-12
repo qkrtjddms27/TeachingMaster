@@ -21,7 +21,7 @@ const StudentModal = (
         "studentId":student.studentId,
         "quizId":sessionStorage.getItem('quizId'),
         "studentResult": sessionStorage.getItem('studentResult'),
-        "studentanswer": localStorage.getItem("thisone")
+        "studentAnswer": localStorage.getItem("thisone")
       }),
       to: [],
       type: 'studentQuizresult',
