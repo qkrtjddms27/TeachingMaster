@@ -6,11 +6,12 @@ import Quiz from './Quiz';
 import OxQuiz from './OxQuiz';
 import QuizResult from './QuizResult';
 import Announce from './Announce';
+import Rolling from './Rolling';
 
 const StudentModal = (
   {kind, iconAs, title, quizs, 
     resultQ, isOpen, onOpen, onClose, modalForm, mySession,student,
-    setModalForm, modalOpen }) => {
+    setModalForm, modalOpen,pickone,studentsName }) => {
   const [ox,setOX ] = useState("")
   
   const sendresultHandle = ()=>{
@@ -48,6 +49,7 @@ const StudentModal = (
         {modalForm === 'oxQuiz' && <OxQuiz quizs = {quizs} onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
         {modalForm === 'result' && <QuizResult sendresultHandle={sendresultHandle}  ox={ox} onClose={onClose} />}
         {modalForm === 'announce' && <Announce  onClose={onClose}/>}
+        {modalForm === 'rolling' && <Rolling studentsName={studentsName} pickone={pickone} student={student}  onClose={onClose}/>}
       </Modal>
     </>
   );
