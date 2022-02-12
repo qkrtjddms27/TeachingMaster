@@ -71,3 +71,20 @@
   .go_exit {
   }
 }
+.quiz-log {
+  .quiz-log-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      height: 5rem;
+    }
+    div {
+      font-size: 2rem;
+    }
+  }
+  .log-accordion {
+    display: flex;
+    flex-flow: wrap;
+  }
+}

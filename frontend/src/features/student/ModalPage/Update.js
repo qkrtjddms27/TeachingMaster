@@ -114,7 +114,7 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
               <p className='memo_title'>메모</p>
               <div className='memo_contents'>
                 {memos.map((memo, idx) =>
-                  <li style={{"list-style-type": "square"}} key={idx}>{memo.memoContent}</li>
+                  <li key={idx}>{memo.memoContent}</li>
                 )}
               </div>
             </div>
