@@ -193,6 +193,7 @@ class StudentRoom extends Component {
     console.log('⭐⭐⭐⭐제출⭐⭐⭐⭐')
     mySession.signal({
       data:JSON.stringify({
+        selectAnswer: localStorage.getItem('thisone'),
         studentId:this.state.student.studentId,
         quizId:sessionStorage.getItem('quizId'),
         studentResult:sessionStorage.getItem('studentResult')
