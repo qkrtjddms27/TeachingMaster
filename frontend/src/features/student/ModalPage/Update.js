@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button,Input } from '@chakra-ui/react';
 import '../scss/modal.scss'
 import axios from 'axios';
@@ -12,6 +12,19 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
   const [relation,setRelation] = useState(student.relation)
   const [parentsPhone,setParentsPhone] = useState(student.parentsPhone)
   const [imgBase64,setImagbase64]=useState(student.studentProfile) // 파일 base64
+  const [memos,setMemos] = useState([])
+
+  useEffect(()=>{
+    axios({
+      url: `${serverUrl}/memo/${student.studentId}`,
+      method: 'GET',
+      headers: setToken()
+    })
+    .then(({data}) => {
+      setMemos(data)
+    })
+    .catch(err => console.log('get memo list err:', err))
+  }, [])
 
   const onSubmit = ()=>{
     const data ={
@@ -100,9 +113,9 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
         <div className='memo'>
               <p className='memo_title'>메모</p>
               <div className='memo_contents'>
-                <p>우리반 반장</p>
-                <p>선생님을 잘 따른다</p>
-                <p>지난 기말고사 1등</p>
+                {memos.map((memo, idx) =>
+                  <li style={{"list-style-type": "square"}} key={idx}>{memo.memoContent}</li>
+                )}
               </div>
             </div>
         <Button onClick={()=>{change("main")}} className='go_back'>
