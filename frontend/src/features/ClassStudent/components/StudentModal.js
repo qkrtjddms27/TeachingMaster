@@ -43,7 +43,9 @@ const StudentModal = (
         motionPreset='slideInBottom'
         closeOnOverlayClick={modalForm!=='quiz' && modalForm !=='OX' && modalForm !== 'oxQuiz'}
       >
-        <ModalOverlay />
+        {/* <ModalOverlay  style={{"zIndex": '-1'}} /> */}
+        <ModalOverlay  style={{"zIndex": '0'}} />
+        {/* <ModalOverlay /> */}
         {modalForm === 'sticker' && <Sticker onClose={onClose} student={student} />}
         {modalForm === 'quiz' && <Quiz quizs = {quizs} onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
         {modalForm === 'oxQuiz' && <OxQuiz quizs = {quizs} onClose={onClose} setModalForm={setModalForm} setOX={setOX}/>}
