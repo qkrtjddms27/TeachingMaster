@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@chakra-ui/react';
+import { serverUrl, setToken } from '../../../components/TOKEN';
+import axios from 'axios';
 import '../scss/modal.scss'
 
 const ModalMain = ({change,student,onClose}) => {
   const [memos,setMemos] = useState([])
   useEffect(()=>{
+    axios({
+      url: `${serverUrl}/memo/${student.studentId}`,
+      method: 'GET',
+      headers: setToken()
+    })
+    .then(({data}) => {
+      setMemos(data)
+    })
+    .catch(err => console.log('get memo list err:', err))
+  }, [])
 
-  },[])
   return (
     <div className='modal-main'>
       <div className='left'>
@@ -37,9 +48,9 @@ const ModalMain = ({change,student,onClose}) => {
           <div className='memo'>
             <p className='memo_title'>메모</p>
             <div className='memo_contents'>
-              <p>우리반 반장</p>
-              <p>선생님을 잘 따른다</p>
-              <p>지난 기말고사 1등</p>
+              {memos.map((memo, idx) => 
+                <li style={{"list-style-type": "square"}} key={idx}>{memo.memoContent}</li>
+              )}
             </div>
 
           </div>
