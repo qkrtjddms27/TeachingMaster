@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from '@chakra-ui/react';
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Image } from '@chakra-ui/react';
 import '../scss/modal.scss'
 import axios from 'axios';
 import { serverUrl, setToken } from '../../../components/TOKEN';
-import { Accordion } from 'react-bootstrap';
 
 const Modalquiz = ({change, student, onClose}) => {
   const [logs, setLogs] = useState([])
@@ -28,30 +27,42 @@ const Modalquiz = ({change, student, onClose}) => {
       <div> {student.studentName} 학생의  퀴즈결과 </div>
       <img className='quiz-log-img' src='https://i.ibb.co/L8gSsGD/image-27.png' alt='마곰'/>
     </div>
-    <div className='log-accordion'>
-      <Accordion defaultActiveKey='0' flush>
-      {logs.map((log, idx) => {
-        return (
-        <Accordion.Item eventKey={String(idx)} key={idx}>
-          <Accordion.Header>
-            <div>{log.quizResult ? '⭕' : '❌'}&nbsp;</div>
-            <div>{idx+1}.&nbsp;</div>
-            <div>{log.quizTitle}</div>
-          </Accordion.Header>
-          <Accordion.Body>
-            <div>{log.quizContents}</div>
-            <div>1) {log.options[0]}</div>
-            <div>2) {log.options[1]}</div>
-            <div>3) {log.options[2]}</div>
-            <div>4) {log.options[3]}</div>
-          </Accordion.Body>
-        </Accordion.Item>
-        )
-      }
-      )}
+    <div className='quiz-log-scroll'>
+      <Accordion allowToggle>
+        {logs.map((log, idx) =>
+          <AccordionItem key={idx}>
+            <h2>
+              <AccordionButton>
+                <Box flex='1' textAlign='left'>{idx+1}.&nbsp;{log.quizResult ? '⭕' : '❌'}&nbsp;{log.quizTitle}</Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              <p className='Q'>
+                <span>문제) {log.quizContents}</span>
+                {log.studentAnswer === 0 && <span className='beap'>문제를 풀지 않음</span>}
+              </p>
+              {log.quizResult ? (
+              <div className='correct'>
+                <p className={log.quizAnswer === 1 ? 'o' : ''}>1) {log.options[0]}</p>
+                <p className={log.quizAnswer === 2 ? 'o' : ''}>2) {log.options[1]}</p>
+                <p className={log.quizAnswer === 3 ? 'o' : ''}>3) {log.options[2]}</p>
+                <p className={log.quizAnswer === 4 ? 'o' : ''}>4) {log.options[3]}</p>
+              </div>
+              ) : (
+                <div className='wrong'>
+                  <p className={log.quizAnswer === 1 ? 'o' : ''} id={log.studentAnswer === 1 ? 'x' : ''}>1) {log.options[0]}</p>
+                  <p className={log.quizAnswer === 2 ? 'o' : ''} id={log.studentAnswer === 2 ? 'x' : ''}>2) {log.options[1]}</p>
+                  <p className={log.quizAnswer === 3 ? 'o' : ''} id={log.studentAnswer === 3 ? 'x' : ''}>3) {log.options[2]}</p>
+                  <p className={log.quizAnswer === 4 ? 'o' : ''} id={log.studentAnswer === 4 ? 'x' : ''}>4) {log.options[3]}</p>
+                </div>
+              )}
+            </AccordionPanel>
+          </AccordionItem>
+        )}
       </Accordion>
     </div>
-    <Button onClick={()=>change("main")}>뒤로</Button>
+    <Button onClick={() => change("main")}>뒤로가기</Button>
   </div>);
 };
 
