@@ -71,3 +71,60 @@
   .go_exit {
   }
 }
+.quiz-log {
+  .quiz-log-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .quiz-log-img {
+      height: 5rem;
+    }
+    div {
+      font-size: 2rem;
+    }
+  }
+  .quiz-log-scroll {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 25rem;
+    margin: 1rem 0;
+    flex-direction: column;
+    &::-webkit-scrollbar {
+      visibility: hidden;
+      width: 7px;
+    }
+    &:hover {
+      &::-webkit-scrollbar {
+        visibility: visible;
+        width: 7px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #C49A6C;
+        border-radius: 10px;
+        background-clip: padding-box;
+        border: 1px solid transparent;
+      }
+    }
+    .Q {
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      .beap {
+        padding: 1px 5px;
+        background-color: rgba(226, 179, 93, 0.61);
+        font-weight: normal;
+      }
+    }
+    .correct>.o {
+      background-color: rgba(177, 231, 141, 0.61);
+    }
+    .wrong {
+      .o{
+        background-color: rgba(177, 231, 141, 0.61);
+      }
+      #x {
+        background-color: rgba(226, 179, 93, 0.473);
+      }
+    }
+  }
+}
