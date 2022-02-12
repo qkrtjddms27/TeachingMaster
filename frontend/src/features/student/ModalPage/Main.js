@@ -6,6 +6,7 @@ import '../scss/modal.scss'
 
 const ModalMain = ({change,student,onClose}) => {
   const [memos,setMemos] = useState([])
+  // 메모 get
   useEffect(()=>{
     axios({
       url: `${serverUrl}/memo/${student.studentId}`,
@@ -43,18 +44,15 @@ const ModalMain = ({change,student,onClose}) => {
           <Button onClick={()=>{change("quiz")}}>퀴즈 내역 보기</Button>
         </div>
       </div>
-
         <div className='right'>
           <div className='memo'>
             <p className='memo_title'>메모</p>
             <div className='memo_contents'>
               {memos.map((memo, idx) => 
-                <li style={{"list-style-type": "square"}} key={idx}>{memo.memoContent}</li>
+                <li key={idx}>{memo.memoContent}</li>
               )}
             </div>
-
           </div>
-
           <Button onClick={()=>{change("update")}} className='go_update'>수정</Button>
           <Button onClick={onClose} className='go_exit'>종료</Button>
         </div>

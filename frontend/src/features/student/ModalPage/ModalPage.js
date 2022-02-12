@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {Modal,ModalOverlay,ModalContent,ModalHeader,ModalCloseButton,ModalBody } from '@chakra-ui/react';
 import '../scss/modal.scss'
 import ModalUpdate from './Update';
