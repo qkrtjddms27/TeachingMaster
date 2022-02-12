@@ -36,6 +36,7 @@ class StudentRoom extends Component {
       myUserName: student.studentName,
 
       //quiz
+      studentsName:[],
       quizs:{},
       quizId: '',
       subject: '',
@@ -51,7 +52,7 @@ class StudentRoom extends Component {
       option2:'',
       option3:'',
       option4:'',
-
+      pickone:'',
       results:[],
       studentAnswer:'',
 
@@ -274,6 +275,22 @@ class StudentRoom extends Component {
             type:'receiveStar'
           })
         })
+        // 롤링롤링롤링
+        mySession.on('signal:rolling', (event) => {
+          let data = event.data;
+          let studentsName  = []
+          this.state.subscribers.map(sub=> 
+            {if(JSON.parse(sub.stream.connection.data).role ==="student")
+            {studentsName.push(JSON.parse(sub.stream.connection.data).clientData)}
+          })
+          console.log("⭐⭐⭐⭐⭐⭐⭐⭐⭐",studentsName)
+          studentsName.push(this.state.myUserName)
+          this.setState({
+            studentsName:studentsName,
+            pickone:data
+          })
+            this.modalPop('rolling')         
+          });
         //quiz  
         //ox용
         mySession.on('signal:quiz', (event) => {
@@ -537,6 +554,11 @@ class StudentRoom extends Component {
                   isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} 
                   setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
                   mySession={this.state.session} student={this.state.student}  />         
+
+                <StudentModal kind='rolling'  iconAs="" title='롤링' pickone={this.state.pickone} studentsName={this.state.studentsName}
+                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} 
+                  setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
+                  mySession={this.state.session} student={this.state.student}  /> 
                 </div>
           </Box>
         )}
