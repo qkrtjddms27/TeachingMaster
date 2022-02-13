@@ -21,6 +21,15 @@
   border: 5px solid rgb(238, 234, 12);
   filter: hue-rotate(70deg);
 }
+#isSpeaking {
+  margin-top: 1rem;
+  width: 24rem;
+  height: auto;
+  float: left;
+  cursor: pointer;
+  border-radius: 15px;
+  border: 6px solid rgb(219, 86, 69);
+}
 
 .normal {
   margin-top: 1rem;
@@ -31,14 +40,16 @@
   border: 3px solid #58cbcf;
   border-radius: 15px;
 }
+
 .teacherScore {
   margin-top: 1rem;
   width: 24rem;
-  height: auto;
+  height: 18.1rem;
   float: left;
   cursor: pointer;
   border-radius: 15px;
   border: 3px solid rgb(65, 134, 37);
+  object-fit: cover;
 }
 .studentName {
   display: flex;
