@@ -7,7 +7,6 @@ const StudentScreen = ({who,speakingStudents,streamManager}) => {
   const [student, setStudent] = useState(JSON.parse(streamManager.stream.connection.data))
 
   useEffect(()=>{
-    console.log("⭐⭐⭐⭐⭐⭐⭐","이스스피킹")
     const isIn = speakingStudents.includes(student.studentId)
     if (isIn){setIsSpeaking(true)}
     else{setIsSpeaking(false)}

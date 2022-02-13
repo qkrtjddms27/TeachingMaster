@@ -66,7 +66,6 @@ const StudentScreen = ({speakingStudents,highlighting,streamManager,total,getAve
     .catch(err => console.log('get memo list err:', err))
   }
   useEffect(()=>{
-    console.log("⭐⭐⭐⭐⭐⭐⭐","이스스피킹")
     const isIn = speakingStudents.includes(student.studentId)
     if (isIn){setIsSpeaking(true)}
     else{setIsSpeaking(false)}
@@ -92,7 +91,7 @@ const StudentScreen = ({speakingStudents,highlighting,streamManager,total,getAve
         }
       })
     }
-  }, [answerCheck])
+  }, [answerCheck, results])
 
   return (
     <div>

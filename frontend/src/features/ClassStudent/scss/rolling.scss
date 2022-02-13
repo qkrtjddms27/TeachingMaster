@@ -4,14 +4,14 @@
       height: 15rem;
       position: fixed;
       left: 43%;
-      animation: rbSpinner 1s;
+      animation: rbSpinner 0.8s;
       animation-iteration-count: infinite;
       @keyframes rbSpinner {
         from {
           transform: rotate(-5deg);
         }
         50% {
-          transform: rotate(5deg);
+          transform: scale(1.07) rotate(5deg);
         }
         to {
           transform: rotate(-5deg);

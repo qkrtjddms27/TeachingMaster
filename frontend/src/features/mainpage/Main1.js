@@ -8,7 +8,7 @@ const Main1 = () => {
         <div className='blank' />
         <p className='rainbow-p'>티</p>
         <div className='blank' />
-        <img className='rainbow-img' src='https://i.ibb.co/cCDcZVk/1.png' alt='티랑' title='티랑'/>
+        <img className='rainbow-img' style={{marginTop: "10rem"}} src='https://i.ibb.co/cCDcZVk/1.png' alt='티랑' title='티랑'/>
       </div>
       <div className='rainbow' id='rb2'>
         <div className='blank' />
@@ -31,7 +31,7 @@ const Main1 = () => {
         <div className='blank' />
         <p className='rainbow-p'>스</p>
         <div className='blank' />
-        <img className='rainbow-img' src='https://i.ibb.co/SPPx4bm/1.png' alt='디노' title='디노'/>
+        <img className='rainbow-img' style={{width: "12vw", height: "20vh"}} src='https://i.ibb.co/SPPx4bm/1.png' alt='디노' title='디노'/>
       </div>
       <div className='rainbow' id='rb5'>
         <div className='blank' />

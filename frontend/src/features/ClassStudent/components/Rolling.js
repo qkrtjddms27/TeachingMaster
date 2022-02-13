@@ -3,7 +3,6 @@ import {  ModalContent,  ModalBody,  } from '@chakra-ui/react';
 import '../scss/rolling.scss'
 
 const Rolling = ({ isOpen, onOpen, onClose,student,pickone,studentsName }) => {
-  console.log("⭐⭐⭐⭐픽원 : ",pickone)
   const [sec, setSec] = useState(5)
   const time = useRef(5)
   const timerId = useRef(null)

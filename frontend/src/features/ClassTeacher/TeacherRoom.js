@@ -197,7 +197,6 @@ class Classroom extends Component {
   }
   
   getAverage(){
-    console.log('⭐⭐⭐⭐계산중입니다⭐⭐⭐⭐')
     let total = 0
     // eslint-disable-next-line no-lone-blocks
     {this.state.subscribers.map((sub) => (
@@ -275,7 +274,6 @@ class Classroom extends Component {
   doRolling(){
     const mySession = this.state.session;
     const pickone = Math.floor(Math.random()*this.state.subscribers.length) 
-    console.log("⭐랜덤함수:",JSON.parse(this.state.subscribers[pickone].stream.connection.data).clientData)
     this.setState({
       pickone:JSON.parse(this.state.subscribers[pickone].stream.connection.data).clientData
     })
@@ -509,7 +507,6 @@ class Classroom extends Component {
               this.setState({
                 speakingStudents: [...this.state.speakingStudents,whoSpeaking],
               })
-              console.log("⭐newspeakingStudents",this.state.speakingStudents)
             }
           })
 
@@ -522,16 +519,12 @@ class Classroom extends Component {
               this.setState({
                 speakingStudents:this.state.speakingStudents.filter(stu=>stu!==whoSpeaking),
               })
-              console.log('⭐⭐',this.state.speakingStudents)
             }
           })
       });
         
         mySession.on('signal:receiveStar',(event)=>{
           let student = JSON.parse(event.data)
-          console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐')
-          console.log(student.studentId)
-          console.log(JSON.parse(this.state.subscribers[0].stream.connection.data).studentId)
           this.state.subscribers.map((sub,i)=>{
             if(student.studentId === JSON.parse(sub.stream.connection.data).studentId){
               let tmp = JSON.parse(sub.stream.connection.data)
@@ -544,7 +537,6 @@ class Classroom extends Component {
             }
           })
           this.getAverage()
-          console.log(this.state.subscribers)
         })
         //quiz 학생 결과 가지기 용
         mySession.on('signal:studentQuizresult', (event) => {
