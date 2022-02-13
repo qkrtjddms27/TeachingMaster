@@ -95,11 +95,12 @@ const Folder = () => {
       </div>
 
 
-
       <div className="ev-fd-bottom">
         <div></div>
         <AddQuizPopover myFolders={myFolders} setMyFolders={setMyFolders}  />
       </div>
+      <img className='TM-circle-in' alt="TM" src="https://cdn.discordapp.com/attachments/885744368399560725/941713229422395452/TM_circle.png"/>
+      <img className='TM-circle-out' alt="TM" src="https://cdn.discordapp.com/attachments/885744368399560725/941713229422395452/TM_circle.png"/>
 
     </div>
   )

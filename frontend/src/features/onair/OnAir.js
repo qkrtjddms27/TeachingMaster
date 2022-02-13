@@ -46,6 +46,7 @@ const OnAir = () => {
 
   return (
     <div className='onair-page'>
+      <img className='TM-circle-out' alt="TM" src="https://cdn.discordapp.com/attachments/885744368399560725/941713229422395452/TM_circle.png"/>
       <div className='box'>
         <div className='onair-grade'>
           <p className='grade-p' onClick={() => setGrade('all')}><span className='grade-span'>전체</span></p>

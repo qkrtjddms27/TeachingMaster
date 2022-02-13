@@ -17,10 +17,13 @@
     height: 100vh;
     width: 20%;
     display: flex;
-    flex-flow: wrap;
+    position: relative;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    .blank {
+      height: 15rem;
+    }
     &:hover {
       transform: scaleX(1.07);
       transition: 0.5s;
@@ -32,11 +35,42 @@
         animation: rbSpinner 1s;
         animation-iteration-count: infinite;
       }
+      .speech-bubble {
+        transform: scale(1);
+        transition: 0.7s;
+        text-align: center;
+        font-size: 1.5rem;
+        position: relative;
+        background: #aeacee;
+        border-radius: 0.4em;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        width: 15vw;
+        color: black;
+        ::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 0;
+          height: 0;
+          border: 19px solid transparent;
+          border-top-color: #aeacee;
+          border-bottom: 0;
+          margin-left: -19px;
+          margin-bottom: -19px;
+        }
+      }
     }
     .rainbow-p {
+      position: absolute;
+      bottom: 50%;
       color: aliceblue;
       font-weight: bold;
       font-size: 5rem;
+    }
+    .speech-bubble {
+      transform: scale(0);
     }
     .rainbow-img {
       width: 15vw;

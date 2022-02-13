@@ -210,7 +210,7 @@ const InFolder = () => {
   return (
     <div className='in-fd'>
     <div className='in-fd-fileadd'></div>
-
+    <img className='TM-circle-out' alt="TM" src="https://cdn.discordapp.com/attachments/885744368399560725/941713229422395452/TM_circle.png"/>
     <div>
       <div className='in-fd-nav'>
         <div className='in-fd-menu' id={thisFolder === 'all' ? 'in-fd-here' : ''}>

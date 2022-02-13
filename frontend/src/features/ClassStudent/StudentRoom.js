@@ -191,7 +191,6 @@ class StudentRoom extends Component {
   //quiz 학생 결과 전송
   sendresultHandle(){
     const mySession = this.state.session
-    console.log('⭐⭐⭐⭐제출⭐⭐⭐⭐')
     mySession.signal({
       data:JSON.stringify({
         selectAnswer: localStorage.getItem('thisone'),
@@ -284,7 +283,6 @@ class StudentRoom extends Component {
             {if(JSON.parse(sub.stream.connection.data).role ==="student")
             {studentsName.push(JSON.parse(sub.stream.connection.data).clientData)}
           })
-          console.log("⭐⭐⭐⭐⭐⭐⭐⭐⭐",studentsName)
           studentsName.push(this.state.myUserName)
           this.setState({
             studentsName:studentsName,
@@ -343,8 +341,7 @@ class StudentRoom extends Component {
         });
         
         this.getToken().then((token) => {
-          console.log('⭐⭐⭐⭐⭐⭐⭐⭐')
-          console.log(this.state.student)
+          // console.log(this.state.student)
           mySession
             .connect(
               token,

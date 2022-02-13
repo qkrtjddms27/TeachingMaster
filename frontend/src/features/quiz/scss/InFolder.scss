@@ -1,4 +1,18 @@
 .in-fd {
+  .TM-circle-out {
+    position: absolute;
+    left: 10rem;
+    bottom: 1rem;
+    height: 14rem;
+    animation: rotate_image_out 8s linear infinite;
+    transform-origin: 50% 50%;
+    z-index: 1;
+    @keyframes rotate_image_out {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
   background-color: white;
   width: 65%;
   margin: 2rem auto;

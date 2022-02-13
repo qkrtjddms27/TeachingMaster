@@ -22,6 +22,34 @@
 }
 
 .every-folder {
+  .TM-circle-in {
+    position: absolute;
+    right: 21rem;
+    top: 6rem;
+    height: 7rem;
+    animation: rotate_image_in 8s linear infinite;
+    transform-origin: 50% 50%;
+    z-index: 1;
+    @keyframes rotate_image_in {
+      100% {
+        transform: rotate(-360deg);
+      }
+    }
+  }
+  .TM-circle-out {
+    position: absolute;
+    left: 17rem;
+    top: 55rem;
+    height: 14rem;
+    animation: rotate_image_out 8s linear infinite;
+    transform-origin: 50% 50%;
+    z-index: 1;
+    @keyframes rotate_image_out {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
   border-radius: 20px;
   box-shadow: 3px 3px 7px;
   background-color: #f1eae9;
