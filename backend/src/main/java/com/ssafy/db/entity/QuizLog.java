@@ -35,5 +35,5 @@ public class QuizLog {
     @CreationTimestamp
     private Date quizDate; //출제날짜
 
-    private int selectAnswer; //선택한 답
+    private int studentAnswer; //선택한 답
 }
