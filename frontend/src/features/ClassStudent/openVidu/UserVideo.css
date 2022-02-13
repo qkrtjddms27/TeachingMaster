@@ -19,12 +19,21 @@
   border: 3px solid #0c59a1;
   object-fit: cover;
 }
+#isSpeaking {
+  margin-top: 1rem;
+  width: 24rem;
+  height: auto;
+  float: left;
+  cursor: pointer;
+  border-radius: 15px;
+  border: 6px solid rgb(219, 86, 69);
+}
 
 #student div {
   position: absolute;
   background: #58cbcf;
   margin-left: 1rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   padding-left: 5px;
   padding-right: 5px;
   color: #0f0f0f;

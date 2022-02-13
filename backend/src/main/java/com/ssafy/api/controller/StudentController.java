@@ -147,7 +147,7 @@ public class StudentController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @PostMapping("/star/{student_id}")
+    @PostMapping("/star")
     @ApiOperation(value = "학생 점수 +1", notes = "학생의 countingstar와 studentscore을 1점 올림")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),

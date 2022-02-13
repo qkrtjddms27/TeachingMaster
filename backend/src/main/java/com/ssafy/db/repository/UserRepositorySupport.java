@@ -1,14 +1,13 @@
 package com.ssafy.db.repository;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.ssafy.db.entity.QQuiz;
-import com.ssafy.db.entity.QUser;
-import com.ssafy.db.entity.Quiz;
-import com.ssafy.db.entity.User;
+import com.ssafy.api.response.ConferenceRes;
+import com.ssafy.db.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +20,8 @@ public class UserRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
     QUser qUser = QUser.user;
     QQuiz qQuiz = QQuiz.quiz;
+    QConference qConference = QConference.conference;
+    QRoom qRoom = QRoom.room;
 
     public Optional<User> findUserByUserId(String userId) {
         User user = jpaQueryFactory.select(qUser).from(qUser)
@@ -42,4 +43,11 @@ public class UserRepositorySupport {
         return Optional.ofNullable(user);
     }
 
+    public List<ConferenceRes> findUserByRoomAndIsActive(){
+        List<ConferenceRes> conferenceResList = jpaQueryFactory
+                .select((Projections.bean(ConferenceRes.class, qUser.userId,qUser.userProfile,qRoom.roomGrade,qRoom.roomNum)))
+                .from(qUser).leftJoin(qRoom).on(qUser.room.eq(qRoom)).leftJoin(qConference).on(qConference.isActive.isTrue())
+                .where(qUser.room.eq(qConference.room)).fetch();
+        return conferenceResList;
+    }
 }

@@ -8,13 +8,13 @@ import axios from 'axios';
 import { setToken, serverUrl } from '../../../components/TOKEN';
 import { useEffect } from 'react';
 
-const StudentScreen = ({subscribers,highlighting,streamManager,total, i, announce, plusStar, results, answerCheck}) => {
+const StudentScreen = ({speakingStudents,highlighting,streamManager,total,getAverage, i, announce, plusStar, results, answerCheck}) => {
   const [memo,setMemo] = useState('')
   const [check, setCheck] = useState(true)
   const [scoreState,setScoreState] = useState("normal")
   const [student, setStudent] = useState(JSON.parse(streamManager.stream.connection.data))
   const [memoList, setMemoList] = useState([])
-
+  const [isSpeaking,setIsSpeaking] = useState(false)
   // 별점주기
   const star = (i) => {
     setStudent({...student, "countingStar": student.countingStar+1, "studentScore": student.studentScore+1})
@@ -65,9 +65,16 @@ const StudentScreen = ({subscribers,highlighting,streamManager,total, i, announc
     })
     .catch(err => console.log('get memo list err:', err))
   }
+  useEffect(()=>{
+    console.log("⭐⭐⭐⭐⭐⭐⭐","이스스피킹")
+    const isIn = speakingStudents.includes(student.studentId)
+    if (isIn){setIsSpeaking(true)}
+    else{setIsSpeaking(false)}
+  },[speakingStudents])
 
   useEffect(()=>{
     setScoreState("normal")
+    getAverage()
       // eslint-disable-next-line no-lone-blocks
     { if (highlighting){
       if(student.countingStar >=total){
@@ -93,6 +100,7 @@ const StudentScreen = ({subscribers,highlighting,streamManager,total, i, announc
         <PopoverTrigger>
           <div className='student_screen' >
             <UserVideoComponent 
+            isSpeaking = {isSpeaking}
             answerCheck={answerCheck}
             check={check}
             score={ scoreState}

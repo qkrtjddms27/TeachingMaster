@@ -20,7 +20,8 @@ export default class OpenViduVideoComponent extends Component {
     }
 
     render() {
-        return <video className={this.props.score}  autoPlay={true} ref={this.videoRef} />;
+        return <video id={this.props.isSpeaking ? "isSpeaking":undefined} 
+        className={this.props.score}  autoPlay={true} ref={this.videoRef} />;
     }
 
 }
