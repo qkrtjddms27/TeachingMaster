@@ -21,6 +21,7 @@ class Classroom extends Component {
     const user = JSON.parse(localStorage.getItem('user'))
     this.state = {
       // OV
+      speakingStudents: [],
       mySessionId: this.props.match.params.roomId,
       myUserName: user.userName,
       session: undefined,
@@ -499,15 +500,32 @@ class Classroom extends Component {
             });
           }
         });
-      //   mySession.on('publisherStartSpeaking', (event) => {
-      //     console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐')
-      //     console.log('User ' + (event.connection.data)+ ' start speaking');
-      //     console.log(this.state.subscribers.stream.connection)
-      //     console.log(this.state.subscribers.indexOf(event.connection.data))
-      //   });
-      //   mySession.on('publisherStopSpeaking', (event) => {
-      //     console.log('User ' + event.connection.connectionId + ' stop speaking');
-      // });
+
+        mySession.on('publisherStartSpeaking', (event) => {
+          const whoSpeaking = JSON.parse(event.connection.data).studentId
+          
+          this.state.subscribers.map((sub,i)=>{
+            if(whoSpeaking=== JSON.parse(sub.stream.connection.data).studentId){     
+              this.setState({
+                speakingStudents: [...this.state.speakingStudents,whoSpeaking],
+              })
+              console.log("⭐newspeakingStudents",this.state.speakingStudents)
+            }
+          })
+
+        });
+
+        mySession.on('publisherStopSpeaking', (event) => {
+          const whoSpeaking = JSON.parse(event.connection.data).studentId
+          this.state.subscribers.map((sub,i)=>{
+            if(whoSpeaking=== JSON.parse(sub.stream.connection.data).studentId){     
+              this.setState({
+                speakingStudents:this.state.speakingStudents.filter(stu=>stu!==whoSpeaking),
+              })
+              console.log('⭐⭐',this.state.speakingStudents)
+            }
+          })
+      });
         
         mySession.on('signal:receiveStar',(event)=>{
           let student = JSON.parse(event.data)
@@ -531,7 +549,6 @@ class Classroom extends Component {
         //quiz 학생 결과 가지기 용
         mySession.on('signal:studentQuizresult', (event) => {
           let resultsdata = JSON.parse(event.data);
-          // console.log('resultsdata', resultsdata)
           this.setState({
             results: [
               ...this.state.results,
@@ -540,7 +557,6 @@ class Classroom extends Component {
                 studentId:resultsdata.studentId,
                 quizId:resultsdata.quizId,
                 studentResult:resultsdata.studentResult,
-                // chatClass: 'quizs__item--visitor',
               },
             ],
           });
@@ -555,12 +571,11 @@ class Classroom extends Component {
           mySession
             .connect(
               token,
-              { clientData: this.state.myUserName, role:"teacher" },
+              { clientData: this.state.myUserName, 
+                role:"teacher",
+                studentId: this.state.userId },
             )
             .then(() => {
-              // --- 5) Get your own camera stream ---
-              // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
-              // element: we will manage it on our own) and with the desired properties
               let publisher = this.OV.initPublisher(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
@@ -658,8 +673,8 @@ class Classroom extends Component {
               <div className='student_box'>
                 {this.state.subscribers.map((sub, i) => (
                   <div key={i}>
-                    <StudentScreen  subscribers={this.state.subscribers} answerCheck={this.state.answerCheck} results={this.state.results} 
-                    highlighting={this.state.highlighting} total={this.state.total}  streamManager={sub} 
+                    <StudentScreen speakingStudents={this.state.speakingStudents}  answerCheck={this.state.answerCheck} results={this.state.results} 
+                    highlighting={this.state.highlighting} total={this.state.total} getAverage={this.getAverage}  streamManager={sub} 
                     i={i} announce={this.announceHandler} plusStar={this.plusStarHandler} />
                   </div>
                 ))}
@@ -755,18 +770,6 @@ class Classroom extends Component {
       </div>
     );
   }
-
-  /**
-   * --------------------------
-   * SERVER-SIDE RESPONSIBILITY
-   * --------------------------
-   * These methods retrieve the mandatory user token from OpenVidu Server.
-   * This behavior MUST BE IN YOUR SERVER-SIDE IN PRODUCTION (by using
-   * the API REST, openvidu-java-client or openvidu-node-client):
-   *   1) Initialize a Session in OpenVidu Server	(POST /openvidu/api/sessions)
-   *   2) Create a Connection in OpenVidu Server (POST /openvidu/api/sessions/<SESSION_ID>/connection)
-   *   3) The Connection.token must be consumed in Session.connect() method
-   */
 
   getToken() {
     return this.createSession(this.state.mySessionId).then((sessionId) => this.createToken(sessionId));
