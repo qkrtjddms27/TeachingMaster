@@ -20,5 +20,5 @@ public class QuizLogReq {
     Boolean studentResult;
 
     @ApiModelProperty(name="선택한 답")
-    int selectAnswer;
+    int studentAnswer;
 }

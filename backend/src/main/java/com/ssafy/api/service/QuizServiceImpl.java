@@ -299,7 +299,7 @@ System.out.println(folder.getUser().getUserId());
             quizLog.setQuiz(quiz);
             quizLog.setStudent(student);
             quizLog.setQuizResult(quizLogReq.get(i).getStudentResult());
-            quizLog.setQuizResult(quizLogReq.get(i).getStudentResult());
+            quizLog.setStudentAnswer(quizLogReq.get(i).getStudentAnswer());
 
             quizLogRepository.save(quizLog);
         }
