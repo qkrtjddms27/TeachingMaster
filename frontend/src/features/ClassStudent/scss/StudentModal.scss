@@ -131,6 +131,14 @@
   align-items: center;
   margin: 3rem;
   user-select: none;
+  .tiger {
+    position: absolute;
+    transform: scaleX(-1);
+    top: 3rem;
+    left: 5rem;
+    height: 8rem;
+    width: 8rem;
+  }
   .ox-quiz-name {
     width: 100%;
     padding: 1rem;
@@ -158,7 +166,7 @@
       font-weight: 400;
       font-size: 2rem;
       &#selected {
-        background-color: #f4f5a8;
+        background-color: #c2f5aafb;
       }
       &:hover {
         background-color: #f8f7e2;

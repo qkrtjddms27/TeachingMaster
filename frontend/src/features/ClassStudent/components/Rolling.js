@@ -3,7 +3,6 @@ import {  ModalContent,  ModalBody,  } from '@chakra-ui/react';
 import '../scss/rolling.scss'
 
 const Rolling = ({ isOpen, onOpen, onClose,student,pickone,studentsName }) => {
-  console.log("⭐⭐⭐⭐픽원 : ",pickone)
   const [sec, setSec] = useState(5)
   const time = useRef(5)
   const timerId = useRef(null)
@@ -27,6 +26,7 @@ const Rolling = ({ isOpen, onOpen, onClose,student,pickone,studentsName }) => {
         {pickone !== undefined &&<>
       <ModalBody className='rolling'>
       <div className="slider">
+        <img className='toto' src="https://cdn.discordapp.com/attachments/885744368399560725/942302025037803520/70dbef2f4ba4b5cd.png"/>
         <div className="caption">
           오늘의 발표자는 
           <div className="text-box">

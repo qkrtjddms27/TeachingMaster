@@ -1,5 +1,23 @@
 .rolling {
   .slider {
+    .toto {
+      height: 15rem;
+      position: fixed;
+      left: 43%;
+      animation: rbSpinner 0.8s;
+      animation-iteration-count: infinite;
+      @keyframes rbSpinner {
+        from {
+          transform: rotate(-5deg);
+        }
+        50% {
+          transform: scale(1.07) rotate(5deg);
+        }
+        to {
+          transform: rotate(-5deg);
+        }
+      }
+    }
     height: 40rem;
     margin-top: 3rem;
     background-color: #293132;
@@ -287,16 +305,22 @@
 
   @keyframes slideColor {
     0% {
-      background-color: #475d86;
+      background-color: #dd8990;
     }
-    33% {
-      background-color: #2f6b66;
+    20% {
+      background-color: #af7789;
     }
-    66% {
-      background-color: #6b7733;
+    40% {
+      background-color: #a965af;
+    }
+    60% {
+      background-color: #b474a9;
+    }
+    80% {
+      background-color: #ab66bd;
     }
     100% {
-      background-color: #475d86;
+      background-color: rgb(191, 144, 194);
     }
   }
 }
