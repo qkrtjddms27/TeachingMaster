@@ -24,7 +24,7 @@ const Updatequiz = () => {
   const [choice4,setChoice4] = useState(quiz.options[3])
 
   useEffect (()=>{
-    console.log(id)
+    // console.log(id)
     axios({
       url:`${serverUrl}/v1/quiz/find/Quiz/${id}`,
       method:"GET",
@@ -90,7 +90,7 @@ const Updatequiz = () => {
     ).then(res=>{
       setQuiz(data)
       alert('수정완료')
-      history.push('/quiz/')
+      history.push('/quiz/folder/imade')
     }).catch(err=>{
       alert('문제 UPDATE 실패')
     })
