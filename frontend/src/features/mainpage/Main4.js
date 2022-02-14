@@ -77,6 +77,11 @@ export default class Main4 extends Component {
         content: '실시간으로 학생들의 퀴즈 결과를 볼 수 있고, 나중에도 학생별로 퀴즈결과를 볼 수 있어서 학습 정도를 파악하기 편해서 좋아요',
         footer: '중앙초등학교 교사'
       },
+      {
+        title: '우리 아이가 달라졌어요', 
+        content: '수업 시간에 수업을 안 듣고 게임하는 모습을 보고 몇 번 혼낸 적 있는데 티칭 마스터로 바뀌고 나서 우리 아이가 달라졌어요!!',
+        footer: '양덕초등학교 모 학생의 학부모'
+      },
     ]
     return (
       <div className="Main4">

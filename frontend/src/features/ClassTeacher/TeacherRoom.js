@@ -169,14 +169,14 @@ class Classroom extends Component {
       results: newResults,
       answerCheck: true
     })
-    console.log('newResults:', this.state.results)
+    // console.log('newResults:', this.state.results)
     axios({
       url: `${serverUrl}/student/student`,
       method: 'POST',
       headers: setToken(),
       data: newResults
     })
-    .then(res => console.log(res))
+    // .then(res => console.log(res))
     .catch(err => console.log('quiz log err', err))
   }
 
@@ -439,7 +439,7 @@ class Classroom extends Component {
   }
 
   saveStudentQuizLog(data){
-    console.log(data)
+    // console.log(data)
     axios(
         {
           url : `${serverUrl}/student/student/`,
@@ -447,9 +447,11 @@ class Classroom extends Component {
           data,
           headers : setToken()
         }
-      ).then(res=>{
-        console.log(res)
-      }).catch(err=>{
+      )
+      // .then(res=>{
+      //   console.log(res)
+      // })
+      .catch(err=>{
         alert("학생 로그 UPDATE 에러")
       })
   }

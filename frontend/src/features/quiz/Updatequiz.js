@@ -56,7 +56,7 @@ const Updatequiz = () => {
       headers:setToken()
     }
     ).then(res=>{
-      console.log(res)
+      // console.log(res)
       alert('삭제되었습니다.')
       setQuiz([])
       history.push('/')
