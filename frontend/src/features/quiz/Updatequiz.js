@@ -109,12 +109,12 @@ const Updatequiz = () => {
       <div className='sub_time_grade_open-box'>
         <div className='subject-box'>
           <Select value={subject} onChange={(e)=>setSubject(e.target.value)} className='subject-select'>
-            <option value="korean">국어</option>
-            <option value="english">영어</option>
-            <option value="math">수학</option>
-            <option value="society">사회</option>
-            <option value="science">과학</option>
-            <option value="etc">기타</option>
+            <option value="국어">국어</option>
+            <option value="영어">영어</option>
+            <option value="수학">수학</option>
+            <option value="사회">사회</option>
+            <option value="과학">과학</option>
+            <option value="기타">기타</option>
           </Select>
         </div>
         <div className='time-box'>
