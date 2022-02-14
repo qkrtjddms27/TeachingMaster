@@ -8,8 +8,8 @@
   float: left;
   cursor: pointer;
   border-radius: 15px;
-  border: 5px solid rgb(97, 172, 0);
-  filter: hue-rotate(260deg);
+  border: 7px solid rgb(250, 100, 100);
+  /* filter: brightness(150%) hue-rotate(260deg); */
 }
 .high {
   margin-top: 1rem;
@@ -18,8 +18,19 @@
   float: left;
   cursor: pointer;
   border-radius: 15px;
-  border: 5px solid rgb(238, 234, 12);
-  filter: hue-rotate(70deg);
+  border: 7px solid rgb(43, 252, 1);
+  /* filter: hue-rotate(70deg); */
+}
+#high {
+  display: flex;
+  position: absolute;
+  margin-top: 1rem;
+  background: rgb(43, 252, 1);
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+  border-top-left-radius: 4px;
 }
 #isSpeaking {
   margin-top: 1rem;
@@ -28,16 +39,26 @@
   float: left;
   cursor: pointer;
   border-radius: 15px;
-  border: 6px solid rgb(219, 86, 69);
+  border: 7px solid rgb(250, 135, 3);
 }
-
+#isSpeakingname {
+  display: flex;
+  position: absolute;
+  margin-top: 1rem;
+  background: rgb(250, 135, 3);
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
 .normal {
   margin-top: 1rem;
   width: 24rem;
   height: auto;
   float: left;
   cursor: pointer;
-  border: 3px solid #58cbcf;
+  border: 3px solid #66d193;
   border-radius: 15px;
 }
 
@@ -48,14 +69,14 @@
   float: left;
   cursor: pointer;
   border-radius: 15px;
-  border: 3px solid rgb(65, 134, 37);
+  border: 3px solid rgb(39, 80, 190);
   object-fit: cover;
 }
 .studentName {
   display: flex;
   position: absolute;
   margin-top: 1rem;
-  background: #58cbcf;
+  background: #657da8;
   padding-left: 5px;
   padding-right: 5px;
   color: #ffffff;
@@ -70,7 +91,7 @@
 .teacherName {
   position: absolute;
   margin-top: 1rem;
-  background: rgb(65, 134, 37);
+  background: rgb(39, 80, 190);
   padding-left: 5px;
   padding-right: 5px;
   color: rgb(255, 253, 253);
