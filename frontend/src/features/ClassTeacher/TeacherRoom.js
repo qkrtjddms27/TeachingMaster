@@ -81,8 +81,6 @@ class Classroom extends Component {
     this.changeAudiostate = this.changeAudiostate.bind(this)
     this.changeHighlightingstate = this.changeHighlightingstate.bind(this)
     this.changeAnswerCheckstate = this.changeAnswerCheckstate.bind(this)
-    this.announceHandler = this.announceHandler.bind(this)
-    this.plusStarHandler = this.plusStarHandler.bind(this)
     this.resultsHandler = this.resultsHandler.bind(this)
     this.changeOnScreenShareState = this.changeOnScreenShareState.bind(this)
     this.changeOffScreenShareState = this.changeOffScreenShareState.bind(this)
@@ -336,22 +334,22 @@ class Classroom extends Component {
   }
 
   // 발표시키기
-  announceHandler(i){
-    const mySession = this.state.session;
-    mySession.signal({
-      to: [this.state.subscribers[i].stream.inboundStreamOpts.connection],
-      type: 'announcement',
-    });
-  }
+  // announceHandler(i){
+  //   const mySession = this.state.session;
+  //   mySession.signal({
+  //     to: [this.state.subscribers[i].stream.inboundStreamOpts.connection],
+  //     type: 'announcement',
+  //   });
+  // }
 
   // 별점 주기
-  plusStarHandler(i){
-    const mySession = this.state.session;
-    mySession.signal({
-      to: [this.state.subscribers[i].stream.inboundStreamOpts.connection],
-      type: 'star',
-    })
-  }
+  // plusStarHandler(i){
+  //   const mySession = this.state.session;
+  //   mySession.signal({
+  //     to: [this.state.subscribers[i].stream.inboundStreamOpts.connection],
+  //     type: 'star',
+  //   })
+  // }
 
   quizHandler(){
     let qox = sessionStorage.getItem('OXQuiz')
@@ -667,7 +665,7 @@ class Classroom extends Component {
                   <div key={i}>
                     <StudentScreen speakingStudents={this.state.speakingStudents}  answerCheck={this.state.answerCheck} results={this.state.results} 
                     highlighting={this.state.highlighting} total={this.state.total} getAverage={this.getAverage}  streamManager={sub} 
-                    i={i} announce={this.announceHandler} plusStar={this.plusStarHandler} />
+                   session={this.state.session}  />
                   </div>
                 ))}
                 
