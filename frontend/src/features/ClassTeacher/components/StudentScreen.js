@@ -8,17 +8,23 @@ import axios from 'axios';
 import { setToken, serverUrl } from '../../../components/TOKEN';
 import { useEffect } from 'react';
 
-const StudentScreen = ({speakingStudents,highlighting,streamManager,total,getAverage, i, announce, plusStar, results, answerCheck}) => {
+const StudentScreen = (
+  {session,speakingStudents,highlighting,
+    streamManager,total,getAverage, results, answerCheck}) => {
   const [memo,setMemo] = useState('')
   const [check, setCheck] = useState(true)
   const [scoreState,setScoreState] = useState("normal")
   const [student, setStudent] = useState(JSON.parse(streamManager.stream.connection.data))
   const [memoList, setMemoList] = useState([])
-  const [isSpeaking,setIsSpeaking] = useState(false)
+  const [isSpeaking,setIsSpeaking] = useState(false) 
+
   // 별점주기
-  const star = (i) => {
+  useEffect(()=>{
+    setStudent((JSON.parse(streamManager.stream.connection.data)))
+  },[streamManager])
+  const star = (index) => {
     setStudent({...student, "countingStar": student.countingStar+1, "studentScore": student.studentScore+1})
-    plusStar(i)
+    plusStarHandler()
     axios({
       url: `${serverUrl}/student/star`,
       method: 'POST',
@@ -28,11 +34,27 @@ const StudentScreen = ({speakingStudents,highlighting,streamManager,total,getAve
       }
     })
   }
+  const announceHandler=()=>{
+    const mySession = session;
+    mySession.signal({
+      to: [streamManager.stream.inboundStreamOpts.connection],
+      type: 'announcement',
+    });
+  }
+  // 별점 주기
+
+  const plusStarHandler = ()=>{
+    const mySession = session;
+    mySession.signal({
+      to: [streamManager.stream.inboundStreamOpts.connection],
+      type: 'star',
+    })
+  }
 
   // 발표시키기(+별점도 줌)
-  const ann = (i) => {
-    announce(i)
-    star(i)
+  const ann = () => {
+    announceHandler()
+    star()
   }
 
   // 메모작성
@@ -113,8 +135,8 @@ const StudentScreen = ({speakingStudents,highlighting,streamManager,total,getAve
             <Heading>{student.clientData}</Heading>
             <div> 주간⭐:{student.countingStar}</div>
             <div> 총 ⭐:{student.studentScore}</div>
-            <div onClick={() => ann(i)} className='pointer'> 발표 시키기</div>
-            <div onClick={() => star(i)} className='pointer'> 별점 주기</div>
+            <div onClick={() => ann()} className='pointer'> 발표 시키기</div>
+            <div onClick={() => star()} className='pointer'> 별점 주기</div>
             <Accordion allowToggle>
               <AccordionItem>
                 <h2>
