@@ -87,7 +87,7 @@ public class QuizRepositorySupport {
 
     public List<QuizLogRes> findQuizLog(String studentId) {
         List<QuizLogRes> quizLogResList = jpaQueryFactory
-                .select((Projections.bean(QuizLogRes.class, qQuizLog.student.studentId, qQuizLog.quiz.quizId, qQuizLog.quizResult, qQuizLog.quizDate, qQuizLog.selectAnswer
+                .select((Projections.bean(QuizLogRes.class, qQuizLog.student.studentId, qQuizLog.quiz.quizId, qQuizLog.quizResult, qQuizLog.quizDate, qQuizLog.studentAnswer
                         ,qQuiz.subject, qQuiz.quizPhoto , qQuiz.quizTitle
                         ,qQuiz.quizContents, qQuiz.quizAnswer, qQuiz.openStatus, qQuiz.quizTimeout
                         ,qQuiz.quizGrade, qQuiz.user.userId, qQuiz.option1, qQuiz.option2, qQuiz.option3
