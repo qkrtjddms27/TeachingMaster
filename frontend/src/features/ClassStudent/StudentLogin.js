@@ -18,8 +18,6 @@ const StudentLogin = ({student,setStudent,setHeader}) => {
   // 숫자 하나 넣으면 배열 return하는 함수
   const range = (size) => Array.from({length: size}, (_, index) => index + 1)
   const enterStudentClass = () => {
-    console.log('studentId:', studentId)
-    console.log('학년:', grade, '반: ', group)
     // axios 요청으로 studentId(학번)를 보내 학생정보 받아오기
     axios({
       url: `${serverUrl}/student/${studentId}`,

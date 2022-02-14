@@ -21,7 +21,7 @@ const Step2 = ({ step, setStep, isClassTeacher, setIsClassTeacher, grade, setGra
     e.preventDefault()
     if (schoolCode.length) {
       // roomData 받아오기
-      console.log('axios - check schoolCode:',schoolCode)
+      // console.log('axios - check schoolCode:', schoolCode)
       setChkSchool(true)
     } else {
       setOpenChkSchool(true)
@@ -39,11 +39,11 @@ const Step2 = ({ step, setStep, isClassTeacher, setIsClassTeacher, grade, setGra
       } else if (!group) {
         setChkG(true)
       } else {
-        console.log(grade+'학년'+group+'반 담임')
+        // console.log(grade+'학년'+group+'반 담임')
         setStep(step+1)
       }
     } else {
-      console.log('담임아님')
+      // console.log('담임아님')
       setStep(step+1)
     }
   }

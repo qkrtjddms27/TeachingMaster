@@ -128,7 +128,7 @@ const InFolder = () => {
       headers: setToken(),
     })
     .then(() => {
-      console.log(qzList)
+      // console.log(qzList)
       setQzList(qzList.filter(quiz => quiz.quizId !== quizId))
     })
     .catch(err => {
@@ -184,9 +184,9 @@ const InFolder = () => {
         headers: setToken(),
         data,
       })
-      .then(res => {
-        console.log(res)
-      })
+      // .then(res => {
+      //   console.log(res)
+      // })
       .catch(err => {
         console.log('InFolder: changeStar(post)', err)
       })

@@ -11,7 +11,7 @@ const OxQuiz = ({quizQ, onClose}) => {
   }
   const submitOX = () => {
     const q = {'quizContents': value, 'quizAnswer': Number(ans), 'quizTimeout': 5, 'quizId': 1004}
-    console.log('set OX Quiz:', q)
+    // console.log('set OX Quiz:', q)
     sessionStorage.setItem('OXQuiz', JSON.stringify(q))
     onClose()
     quizQ()
