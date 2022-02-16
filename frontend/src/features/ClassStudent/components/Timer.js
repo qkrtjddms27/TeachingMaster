@@ -7,8 +7,8 @@ const Timer = ({ quiz,setOX,setModalForm }) => {
   const timerId = useRef(null)
   
   const axiosMyQuiz = (choice) => {         // 퀴즈 제출
-    console.log(`quizId: ${quiz.quizId}`)
-    console.log(`choice: ${choice}`)
+    // console.log(`quizId: ${quiz.quizId}`)
+    // console.log(`choice: ${choice}`)
     sessionStorage.setItem('studentResult', quiz.quizAnswer === Number(choice))
     sessionStorage.setItem('quizId', quiz.quizId)
     

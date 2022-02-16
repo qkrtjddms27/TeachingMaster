@@ -27,13 +27,20 @@ const OnAir = () => {
   }, [])
 
   useEffect(() => {
-    setViewClass(onairClass)
+    setViewClass(onairClass.sort(function (a, b) {
+      if (a.roomGrade !== b.roomGrade) {
+        return a.roomGrade - b.roomGrade
+      } else {
+        return a.roomNum - b.roomNum
+      }
+    }))
   }, [onairClass])
+
   useEffect(() => {
     if (grade === 'all') {
       setViewClass(onairClass)
     } else {
-      setViewClass(onairClass.filter(v => v.roomeGrade === String(grade)))
+      setViewClass(onairClass.filter(v => v.roomGrade === grade))
     }
   }, [grade])
 
@@ -49,9 +56,9 @@ const OnAir = () => {
       <img className='TM-circle-out' alt="TM" src="https://cdn.discordapp.com/attachments/885744368399560725/941713229422395452/TM_circle.png"/>
       <div className='box'>
         <div className='onair-grade'>
-          <p className='grade-p' onClick={() => setGrade('all')}><span className='grade-span'>전체</span></p>
+          <p className='grade-p' onClick={() => setGrade('all')} id={grade === 'all' ? 'onair-on' : ''}><span className='grade-span'>전체</span></p>
           {[1, 2, 3, 4, 5, 6].map(v => (
-            <p key={v} className='grade-p' onClick={() => setGrade(v)}><span className='grade-span'>{v}학년</span></p>
+            <p key={v} className='grade-p' onClick={() => setGrade(v)} id={grade === v ? 'onair-on' : ''}><span className='grade-span'>{v}학년</span></p>
           ))}
         </div>
         <div className='onair-cards'>

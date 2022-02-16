@@ -12,11 +12,11 @@ const AlertDialogModal = ({ title, content, isOpen, setIsOpen }) => {
 
 
   return (
-    <>
       <AlertDialog
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}
         onClose={onClose}
+        isCentered
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
@@ -36,7 +36,6 @@ const AlertDialogModal = ({ title, content, isOpen, setIsOpen }) => {
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
-    </>
   );
 };
 

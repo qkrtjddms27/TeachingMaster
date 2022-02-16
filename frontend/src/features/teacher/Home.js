@@ -28,8 +28,7 @@ const Home = ({user,setUser,setHeader}) => {
       setUser(JSON.parse(localStorage.getItem("user")))
     })
     .catch(err=>{
-      console.log("홈 문제받기 에러")
-      console.log(err)
+      console.log("홈 문제받기 에러", err)
     })
   },[])
 

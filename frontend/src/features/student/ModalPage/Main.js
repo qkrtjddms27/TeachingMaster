@@ -35,11 +35,11 @@ const ModalMain = ({change,student,onClose}) => {
         <div className='left_bot'>
           <div className='contents'>  
             <p>메일주소 : {student.studentEmail}</p>
-            <p>연락처 : {student.studentPhone.slice(0,3)}-{student.studentPhone.slice(3,7)}-{student.studentPhone.slice(7,11)}</p>
+            <p>연락처 : 010-{student.studentPhone.slice(0,4)}-{student.studentPhone.slice(4,8)}</p>
             <p>주소 : {student.address}</p>
             <p>보호자 성함 : {student.parentsName}</p>
             <p>보호자 관계 : {student.relation}</p>
-            <p>보호자 연락처: {student.parentsPhone.slice(0,3)}-{student.parentsPhone.slice(3,7)}-{student.parentsPhone.slice(7,11)}</p>
+            <p>보호자 연락처: 010-{student.parentsPhone.slice(0,4)}-{student.parentsPhone.slice(4,8)}</p>
           </div>
           <Button onClick={()=>{change("quiz")}}>퀴즈 내역 보기</Button>
         </div>

@@ -14,7 +14,7 @@ const Modalquiz = ({change, student, onClose}) => {
       headers: setToken()
     })
     .then(({data}) => {
-      console.log('quiz log data:', data)
+      // console.log('quiz log data:', data)
       setLogs(data)
     })
     .catch(err => console.log('get memo list err:', err))

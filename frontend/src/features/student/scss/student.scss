@@ -151,6 +151,9 @@
   .grade-text {
     margin-top: 3rem;
     font-size: 1.5rem;
+    &#on-grade {
+      font-weight: bold;
+    }
   }
   :hover {
     cursor: pointer;

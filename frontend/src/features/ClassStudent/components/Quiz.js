@@ -8,7 +8,7 @@ const Quiz = ({ setModalForm, setOX, quizs }) => {
   const [choice, setChoice] = useState(0)
 
   useEffect(() => {
-    console.log('quizs', quizs)
+    // console.log('quizs', quizs)
     if (quizs !== undefined) {
       const tmp = {
         "quizId": quizs.quizId,
@@ -26,7 +26,7 @@ const Quiz = ({ setModalForm, setOX, quizs }) => {
         ]
       }
       setQuiz(tmp)
-      console.log('setQuiz', quiz)
+      // console.log('setQuiz', quiz)
     }
   }, [])
 

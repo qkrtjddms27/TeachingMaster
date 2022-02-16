@@ -24,7 +24,7 @@ const Updatequiz = () => {
   const [choice4,setChoice4] = useState(quiz.options[3])
 
   useEffect (()=>{
-    console.log(id)
+    // console.log(id)
     axios({
       url:`${serverUrl}/v1/quiz/find/Quiz/${id}`,
       method:"GET",
@@ -56,7 +56,7 @@ const Updatequiz = () => {
       headers:setToken()
     }
     ).then(res=>{
-      console.log(res)
+      // console.log(res)
       alert('삭제되었습니다.')
       setQuiz([])
       history.push('/')
@@ -90,7 +90,7 @@ const Updatequiz = () => {
     ).then(res=>{
       setQuiz(data)
       alert('수정완료')
-      history.push('/quiz/')
+      history.push('/quiz/folder/imade')
     }).catch(err=>{
       alert('문제 UPDATE 실패')
     })
@@ -109,12 +109,12 @@ const Updatequiz = () => {
       <div className='sub_time_grade_open-box'>
         <div className='subject-box'>
           <Select value={subject} onChange={(e)=>setSubject(e.target.value)} className='subject-select'>
-            <option value="korean">국어</option>
-            <option value="english">영어</option>
-            <option value="math">수학</option>
-            <option value="society">사회</option>
-            <option value="science">과학</option>
-            <option value="etc">기타</option>
+            <option value="국어">국어</option>
+            <option value="영어">영어</option>
+            <option value="수학">수학</option>
+            <option value="사회">사회</option>
+            <option value="과학">과학</option>
+            <option value="기타">기타</option>
           </Select>
         </div>
         <div className='time-box'>
