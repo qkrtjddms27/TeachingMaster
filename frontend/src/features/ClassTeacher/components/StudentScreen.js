@@ -150,7 +150,11 @@ const StudentScreen = (
                 <AccordionPanel pb={4}>
                   {memoList !== undefined && 
                     <div>
-                      {memoList.map((memo, idx) => <li key={idx}>{memo.memoContent}</li>)}
+                      {memoList.map((memo, idx) => 
+                      <ul key={idx}>{memo.memoContent.split("\\n").map((memo1,idx2) => 
+                        <li key={idx2}>
+                          {memo1}
+                        </li>)}</ul>)}
                     </div>
                   }
                 </AccordionPanel>

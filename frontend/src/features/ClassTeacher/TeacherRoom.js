@@ -541,6 +541,7 @@ class Classroom extends Component {
         //quiz 학생 결과 가지기 용
         mySession.on('signal:studentQuizresult', (event) => {
           let resultsdata = JSON.parse(event.data);
+          if (resultsdata.studentResult!==null){
           this.setState({
             results: [
               ...this.state.results,
@@ -551,8 +552,9 @@ class Classroom extends Component {
                 studentResult:resultsdata.studentResult,
               },
             ],
-          });
-          if ((2*this.state.subscribers.length === this.state.results.length) && (this.state.results.length!==0 )) {
+          });}
+          // this.resultsHandler()
+          if ((this.state.subscribers.length === this.state.results.length) && (this.state.results.length!==0 )) {
             this.resultsHandler()
           }
         });
