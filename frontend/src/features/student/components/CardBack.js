@@ -14,10 +14,10 @@ const CardBack = ({onOpen,student}) => {
       </div>
       <div className='memo'>
           <Text className='stars'>누적⭐&nbsp;{student.studentScore}</Text>
-          <Text className='stars'>연락처 : {student.studentPhone.slice(0,3)}-{student.studentPhone.slice(3,7)}-{student.studentPhone.slice(7,11)}</Text>
+          <Text className='stars'>연락처 : 010-{student.studentPhone.slice(0,4)}-{student.studentPhone.slice(4,8)}</Text>
           <Text className='memo-title'>보호자</Text>
           <Text className='memo-content'>이름 : {student.parentsName}</Text>
-          <Text className='memo-content'>연락처 : {student.parentsPhone.slice(0,3)}-{student.parentsPhone.slice(3,7)}-{student.parentsPhone.slice(7,11)}</Text>
+          <Text className='memo-content'>연락처 : 010-{student.parentsPhone.slice(0,4)}-{student.parentsPhone.slice(4,8)}</Text>
           <Text className='memo-content'>관계 : {student.relation}</Text>
       </div>   
     </Box>

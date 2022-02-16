@@ -16,7 +16,7 @@ const Login = ({isLogin,setisLogin,user,setUser}) => {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
   useEffect(() => {
-    console.log("확인")
+    // console.log("확인")
     setShowPassword(false)
     if(isLogin){history.push('/home')}
   }, [])
@@ -60,13 +60,11 @@ const Login = ({isLogin,setisLogin,user,setUser}) => {
         })
           // 비밀번호 빼고 저장하기 object -> string으로 저장되게 하기 사용할때는 parse를 이용
         .catch(err=>{
-          console.log(err)
-          console.log('App.js getme ERROR')
+          console.log('App.js getme ERROR', err)
         })})
 
     .catch(err => {
-      console.log("로그인실패")
-      console.log(err)
+      console.log("fail login", err)
       setIsOpen(true)
       setUserId('')
       setUserPassword('')

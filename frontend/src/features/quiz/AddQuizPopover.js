@@ -24,13 +24,12 @@ const AddQuizPopover = ({myFolders, setMyFolders}) => {
       data,
     })
     .then(res => {
-      console.log(res)
+      // console.log(res)
       setMyFolders(myFolders => [...myFolders, res.data])
     })
     .catch(err => {
-      console.log({userId, folderName})
-      console.log('폴더 추가하기 실패함')
-      console.log(err)
+      // console.log({userId, folderName})
+      console.log('folder add fail', err)
     })
     setFolderName("");
   }
