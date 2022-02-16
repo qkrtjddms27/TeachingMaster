@@ -441,8 +441,7 @@ class StudentRoom extends Component {
                           value={mySessionId}
                           onChange={this.handleChangeSessionId}
                           required
-                          // disabled
-
+                          disabled
                         />
                       </div>
                       <div className="btn_box">           
@@ -494,19 +493,19 @@ class StudentRoom extends Component {
                     <div className='state_button' >
                       {this.state.videostate ? (
                         <Toast setState={this.changeVideostate} iconAs={CamOff} title='영상끄기'
-                          change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.500'} />
+                          change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.300'} />
                         ) : (
                         <Toast setState={this.changeVideostate} iconAs={CamOn} title='영상켜기'
-                          change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.500'} />
+                          change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.300'} />
                       )}  
                     </div>
                     <div className='state_button'>
                       {this.state.audiostate ? (
                         <Toast setState={this.changeAudiostate} iconAs={micOff} title='음성끄기'
-                          message={'마이크를 껐습니다'} color={'white'} bg={'orange.500'} />
+                          message={'마이크를 껐습니다'} color={'white'} bg={'orange.300'} />
                         ) : (
                         <Toast setState={this.changeAudiostate} iconAs={micOn} title='음성켜기'
-                          message={'마이크를 켰습니다'} color={'white'} bg={'blue.200'} />
+                          message={'마이크를 켰습니다'} color={'white'} bg={'green.300'} />
                       )}
                     </div>
                   </div>
