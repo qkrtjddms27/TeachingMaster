@@ -23,7 +23,7 @@ const Step1 = ({ step, setStep }) => {
 
   return (
     <div>
-      <AlertDialogModal isCentered={true} title="동의가 필요합니다" content="필수 이용약관에 동의하지 않으면 서비스 제한이 있습니다" isOpen={isOpen} setIsOpen={setIsOpen} />
+      <AlertDialogModal  title="동의가 필요합니다" content="필수 이용약관에 동의하지 않으면 서비스 제한이 있습니다" isOpen={isOpen} setIsOpen={setIsOpen} />
       <Stack className='step1-stack'>
         <Box className='step1-first'>
           <Text>Teaching Master 이용약관</Text>

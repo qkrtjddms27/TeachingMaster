@@ -15,20 +15,26 @@ const Step2 = ({ step, setStep, isClassTeacher, setIsClassTeacher, grade, setGra
   const [schoolCode, setSchoolCode] = useState('')
   const [chkSchool, setChkSchool] = useState(false)
   const [openChkSchool, setOpenChkSchool] = useState(false)
-
+  const [chkG, setChkG] = useState(false)
+  const [OpenSchoolCode,setOpenSchoolCode] = useState(false)
+  const AUTH = "tmschool"
   // 학교코드 확인버튼
   const handleSchoolCheck = (e) => {
     e.preventDefault()
+    console.log(schoolCode)
     if (schoolCode.length) {
-      // roomData 받아오기
-      // console.log('axios - check schoolCode:', schoolCode)
+      if (schoolCode===AUTH){
       setChkSchool(true)
+      }
+      else{      
+      setChkSchool(false)
+
+      setOpenSchoolCode(true) }
     } else {
       setOpenChkSchool(true)
     }
   }
 
-  const [chkG, setChkG] = useState(false)
   // 다음버튼
   const onClickHandle = () => {
     if (!chkSchool) {
@@ -63,12 +69,15 @@ const Step2 = ({ step, setStep, isClassTeacher, setIsClassTeacher, grade, setGra
     <div className='step2'>
       <AlertDialogModal title="학교 코드를 확인하세요" content="학교 코드를 입력하고, 확인 버튼을 눌러 학교를 인증해주세요" isOpen={openChkSchool} setIsOpen={setOpenChkSchool} />
       <AlertDialogModal title="담임이네요?" content="학년과 반을 입력해주세요" isOpen={chkG} setIsOpen={setChkG} />
+      <AlertDialogModal title="학교코드가 일치하지 않습니다." content="학교코드를 알맞게 입력하세요 " 
+      isOpen={OpenSchoolCode} setIsOpen={setOpenSchoolCode} />
       <Stack className='step2-stack1'  direction='row' h='100px'>
         {/* 학교코드 */}
         <FormControl className='step2-form1'>
           <FormLabel>School Code</FormLabel>
-          <InputGroup className='step2-input'>
-            <Input type="text" placeholder="School Code" onChange={(e) => setSchoolCode(e.target.value)} value={schoolCode} autoFocus />
+          <InputGroup className='step2-input' >
+            <Input type="text" placeholder="School Code"  id = {chkSchool && "chkSchool"}
+            onChange={(e) => setSchoolCode(e.target.value)} value={schoolCode} autoFocus />
             <InputRightElement width="4.5rem">
               <Button h="1.75rem" size="sm" type='submit' onClick={handleSchoolCheck}>확인</Button>
             </InputRightElement>
