@@ -59,9 +59,9 @@ const Updatequiz = () => {
       // console.log(res)
       alert('삭제되었습니다.')
       setQuiz([])
-      history.push('/')
+      history.push('/quiz/folder/imade')
     }).catch(err=>{
-      console.log(err)
+      console.log('quiz delete err', err)
     })
   }
 
@@ -92,9 +92,10 @@ const Updatequiz = () => {
       alert('수정완료')
       history.push('/quiz/folder/imade')
     }).catch(err=>{
-      alert('문제 UPDATE 실패')
+      alert('문제 UPDATE 실패', err)
     })
   }
+
   return (
   <div>
     <div className='box'>
@@ -180,7 +181,7 @@ const Updatequiz = () => {
       <Stack className='step2-stack2'>
         <div className='quiz-create-button'>
           <Button borderRadius={0} variant="solid" className='prev-button' 
-            bgColor="#B5A18C" colorScheme="#c7baac" width="48%" 
+            bgColor="#B5A18C" colorScheme="#c7baac" width="48%" onClick={(() => history.push('/quiz/folder/imade'))}
           >이전</Button>
           <Button borderRadius={0} variant="solid" className="submit-button" 
             bgColor="#7e5526" colorScheme="#472b0a" width="48%" onClick={() => UPDATE()}

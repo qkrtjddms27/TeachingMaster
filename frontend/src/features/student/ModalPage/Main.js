@@ -49,8 +49,10 @@ const ModalMain = ({change,student,onClose}) => {
             <p className='memo_title'>메모</p>
             <div className='memo_contents'>
               {memos.map((memo, idx) => 
-                <li key={idx}>{memo.memoContent}</li>
-              )}
+              <ul key={idx}>{memo.memoContent.split("\\n").map((memo1,idx2) => 
+              <li key={idx2}>
+                {memo1}
+                </li>)}</ul>)} 
             </div>
           </div>
           <Button onClick={()=>{change("update")}} className='go_update'>수정</Button>
