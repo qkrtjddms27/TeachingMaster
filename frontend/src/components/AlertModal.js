@@ -12,7 +12,6 @@ const AlertDialogModal = ({ title, content, isOpen, setIsOpen }) => {
 
 
   return (
-    <>
       <AlertDialog
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}
@@ -36,7 +35,6 @@ const AlertDialogModal = ({ title, content, isOpen, setIsOpen }) => {
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
-    </>
   );
 };
 
