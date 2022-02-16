@@ -83,12 +83,22 @@ const Main3 = () => {
         <Img className="icon" src="https://cdn.discordapp.com/attachments/885744368399560725/940788485227421716/6bc81f0a2e2b6c56.png"/>
         <div className="content">
         <div className="ment">
-            <p>안녕하세요 마곰입니다. </p>
-            <p>저희는 이렇게 다르답니다 </p>
-            <p>1. 학생들의 참여도를 볼 수 있는 하이라이팅 효과</p>
-            <p>2. 선생님들끼리 공유 가능한 퀴즈 페이지 </p>
-            <p>2. 수업 중 출제 가능한 OX 퀴즈 </p>
-            <p>3. 별점을 이용한 간단한 학생 관리 기능 </p>
+            <p>선생님, 안녕하세요. </p>
+            <p>마곰이 티칭 마스터를 소개할게요 </p>
+            <br></br>
+            <p>1. 별점,메모를 이용한 학생 관리 기능 </p>
+            <p>2. 학생들의 참여도를 쉽게 확인 할 수 있는 하이라이팅 효과</p>
+            <div style={{display:"flex" }}>
+              <Img src="https://cdn.discordapp.com/attachments/885744368399560725/941676784351600660/f7cbd3db5297dccd.gif"/>
+              <Img src="https://cdn.discordapp.com/attachments/885744368399560725/941676784351600660/f7cbd3db5297dccd.gif"/>
+            </div>
+            <br></br>
+            <p>3. 선생님들끼리 공유 가능한 퀴즈 페이지 </p>
+            <p>4. 수업 중 출제 가능한 OX 퀴즈 </p>
+            <div style={{display:"flex" }}>
+              <Img src="https://cdn.discordapp.com/attachments/885744368399560725/941676784351600660/f7cbd3db5297dccd.gif"/>
+              <Img src="https://cdn.discordapp.com/attachments/885744368399560725/941676784351600660/f7cbd3db5297dccd.gif"/>
+            </div>
 
           </div>
         </div>

@@ -16,6 +16,7 @@ const AlertDialogModal = ({ title, content, isOpen, setIsOpen }) => {
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}
         onClose={onClose}
+        isCentered
       >
         <AlertDialogOverlay>
           <AlertDialogContent>

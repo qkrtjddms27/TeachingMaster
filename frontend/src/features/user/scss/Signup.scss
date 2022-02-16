@@ -10,7 +10,7 @@
     display: flex;
     flex-flow: column;
     background-color: #ffffff;
-    border: #B5A18C solid 1px;
+    border: #b5a18c solid 1px;
     border-radius: 5px;
     box-shadow: 1px 1px 1px;
     .signup-agreement {
@@ -20,7 +20,7 @@
       align-items: center;
     }
   }
-  .signup-agreement>li {
+  .signup-agreement > li {
     list-style: none;
     border-top-left-radius: 15%;
     border-bottom-right-radius: 15%;
@@ -39,7 +39,7 @@
       padding: 0 10px;
     }
   }
-  .signup-agreement>span {
+  .signup-agreement > span {
     padding: 50px;
   }
 }
@@ -127,6 +127,9 @@
   .step2-input {
     width: 20rem;
   }
+  #chkSchool {
+    border: 2px solid rgb(138, 216, 20);
+  }
 }
 .step2-form2 {
   padding: 0 1rem 0 1rem;
@@ -182,8 +185,8 @@
     height: 10rem;
     margin-bottom: 1rem;
   }
-  p>span {
-  color: #5c4428;
+  p > span {
+    color: #5c4428;
   }
 }
 .step4-last {
@@ -200,7 +203,7 @@
   display: flex;
   justify-content: space-around;
   line-height: 100%;
-  text-align:left;
+  text-align: left;
 }
 .step4-link {
   height: 56%;
@@ -212,7 +215,7 @@
   align-items: center;
   color: #f8f8f8;
   &#step4-main {
-    background-color: #B5A18C;
+    background-color: #b5a18c;
     &:hover {
       background-color: #c7baac;
       transition: 0.3s ease-in;
