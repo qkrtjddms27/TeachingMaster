@@ -42,7 +42,7 @@ public class MemoServiceImpl implements MemoService{
             memo.setMemoDate(date);
             memo.setUser(findUser);
             memo.setStudent(findStudent);
-            memo.setMemoContent((findMemo.getMemoContent() + "/n" + memoRegisterReq.getMemoContent()));
+            memo.setMemoContent((findMemo.getMemoContent() + "\\n" + memoRegisterReq.getMemoContent()));
 
             return memoRepository.save(memo);
         }else{
