@@ -647,6 +647,7 @@ class Classroom extends Component {
                     value={mySessionId}
                     onChange={this.handleChangeSessionId}
                     required
+                    disabled
                   />
                 </div>
                 <div className="btn_box">           
