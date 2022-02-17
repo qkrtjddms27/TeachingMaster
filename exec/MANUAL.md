@@ -121,3 +121,7 @@ docker push qkrtjddms27/frontend:1.0.0
 ```shell
 docker run -d --rm -p 80:80 -p 443:443 -v /home/ubuntu/docker-volume/ssl:/var/www/html qkrtjddms27/frontend:1.0.0
 ```
+
+## 시연 시나리오
+
+https://docs.google.com/presentation/d/1W5KspNC4dveI02Xz40-o9q5t4zEJRRg-O7mP-4TsTBQ/edit#slide=id.g115c2c82371_2_576
