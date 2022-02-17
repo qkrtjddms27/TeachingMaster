@@ -86,25 +86,15 @@ const Main3 = () => {
             <br></br>
             <div className="main-bear">
               <div className="bear-p" id='left'>
-                <div>1. 학생 관리 기능(별점, 메모)이 있어요</div>
-                <Img className="main-bear-img" src="https://i.ibb.co/sbnysxt/Main.gif"/>
+                <div>📝학생 관리 기능(별점, 메모, 하이라이팅)</div>
+                <Img className="main-bear-img" src="https://i.ibb.co/tX3nrpq/ezgif-com-gif-maker.gif"/>
               </div>
-              <div className="bear-p">
-                <div>2. 하이라이팅 기능(참여도)이 있어요</div>
-                <Img className="main-bear-img" src="https://i.ibb.co/bHtsyyp/Main.gif"/>
+              <div className="bear-p" id='left'>
+                <div>📂퀴즈 커뮤니티</div>
+                <Img className="main-bear-img" src="https://cdn.discordapp.com/attachments/932897209098305556/943949878067888148/Main_.gif"/>
               </div>
             </div>
             <br></br><br/>
-            <div className="main-bear">
-              <div className="bear-p" id='left'>
-                <div>3. 퀴즈 커뮤니티가 있어요</div>
-                <Img className="main-bear-img" src="https://i.ibb.co/vZBH5r0/Main.gif"/>
-              </div>
-              <div className="bear-p">
-                <div>4. 퀴즈와 OX 퀴즈를 출제할 수 있어요</div>
-                <Img className="main-bear-img" src="https://i.ibb.co/PD4KqMH/Main-OX.gif"/>
-              </div>
-            </div>
           </div>
         </div>
       </div>      
