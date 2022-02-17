@@ -87,7 +87,7 @@ const Main3 = () => {
             <div className="main-bear">
               <div className="bear-p" id='left'>
                 <div>1. 학생 관리 기능(별점, 메모)이 있어요</div>
-                <Img className="main-bear-img" src="https://i.ibb.co/DwT08Y2/54.gif"/>
+                <Img className="main-bear-img" src="https://i.ibb.co/sbnysxt/Main.gif"/>
               </div>
               <div className="bear-p">
                 <div>2. 하이라이팅 기능(참여도)이 있어요</div>
