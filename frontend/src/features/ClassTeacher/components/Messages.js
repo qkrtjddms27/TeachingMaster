@@ -9,7 +9,7 @@ class Messages extends Component {
 
     return messages.map((message, i) => (
       <div className='text' key={i}>
-        <Message text={message.text} userName={message.userName} />
+        <Message text={message.text} userName={message.userName} role={message.role} />
       </div>
     ));
   }

@@ -128,7 +128,7 @@ const InFolder = () => {
       headers: setToken(),
     })
     .then(() => {
-      console.log(qzList)
+      // console.log(qzList)
       setQzList(qzList.filter(quiz => quiz.quizId !== quizId))
     })
     .catch(err => {
@@ -184,9 +184,9 @@ const InFolder = () => {
         headers: setToken(),
         data,
       })
-      .then(res => {
-        console.log(res)
-      })
+      // .then(res => {
+      //   console.log(res)
+      // })
       .catch(err => {
         console.log('InFolder: changeStar(post)', err)
       })
@@ -210,7 +210,7 @@ const InFolder = () => {
   return (
     <div className='in-fd'>
     <div className='in-fd-fileadd'></div>
-
+    <img className='TM-circle-out' alt="TM" src="https://cdn.discordapp.com/attachments/885744368399560725/941713229422395452/TM_circle.png"/>
     <div>
       <div className='in-fd-nav'>
         <div className='in-fd-menu' id={thisFolder === 'all' ? 'in-fd-here' : ''}>
@@ -248,11 +248,11 @@ const InFolder = () => {
 
         <div className='in-fd-sub'>
           <p className='in-fd-each-sub' onClick={() => setSub('전체')}><span className={sub === '전체' ? 'in-fd-line' : ''}>전체</span></p>
-          <p className='in-fd-each-sub' onClick={() => setSub('Korean')}><span className={sub === 'Korean' ? 'in-fd-line' : ''}>국어</span></p>
-          <p className='in-fd-each-sub' onClick={() => setSub('English')}><span className={sub === 'English' ? 'in-fd-line' : ''}>영어</span></p>
-          <p className='in-fd-each-sub' onClick={() => setSub('Math')}><span className={sub === 'Math' ? 'in-fd-line' : ''}>수학</span></p>
-          <p className='in-fd-each-sub' onClick={() => setSub('Society')}><span className={sub === 'Society' ? 'in-fd-line' : ''}>사회</span></p>
-          <p className='in-fd-each-sub' onClick={() => setSub('Science')}><span className={sub === 'Science' ? 'in-fd-line' : ''}>과학</span></p>
+          <p className='in-fd-each-sub' onClick={() => setSub('국어')}><span className={sub === '국어' ? 'in-fd-line' : ''}>국어</span></p>
+          <p className='in-fd-each-sub' onClick={() => setSub('영어')}><span className={sub === '영어' ? 'in-fd-line' : ''}>영어</span></p>
+          <p className='in-fd-each-sub' onClick={() => setSub('수학')}><span className={sub === '수학' ? 'in-fd-line' : ''}>수학</span></p>
+          <p className='in-fd-each-sub' onClick={() => setSub('사회')}><span className={sub === '사회' ? 'in-fd-line' : ''}>사회</span></p>
+          <p className='in-fd-each-sub' onClick={() => setSub('과학')}><span className={sub === '과학' ? 'in-fd-line' : ''}>과학</span></p>
           <p className='in-fd-each-sub' onClick={() => setSub('기타')}><span className={sub === '기타' ? 'in-fd-line' : ''}>기타</span></p>
         </div>
 

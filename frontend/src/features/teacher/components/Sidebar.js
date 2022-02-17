@@ -23,14 +23,14 @@ function Sidebar({user,setUser}) {
             <div className='teacher_name'></div>
           </DrawerHeader>
           <DrawerBody className="DrawerBody">
-            <Link onClick={onClose} to="/home">홈</Link>
-            <Link onClick={onClose} to="/students">학생</Link>
-            <Link onClick={onClose} to="/quiz/folder">퀴즈</Link>
-            <Link onClick={onClose} to="/onair">수업중</Link>
-            <Link onClick={onClose} to="/myconference">내수업내역</Link>
-            <Link onClick={onClose} to="/settings">환경설정</Link>
-            <Link onClick={onClose} to="/settings">연극 / 공연</Link>
-            <Link onClick={onClose} to="/settings">추천도서</Link>
+            <div className='contents'>
+              <Link onClick={onClose} to="/home">홈</Link>
+              <Link onClick={onClose} to="/students">학생</Link>
+              <Link onClick={onClose} to="/quiz/folder">퀴즈</Link>
+              <Link onClick={onClose} to="/onair">수업중</Link>
+              <Link onClick={onClose} to="/settings">내 정보</Link>
+            </div>
+            <img className='icon' src="https://i.ibb.co/L8gSsGD/image-27.png" alt="마곰"/>
           </DrawerBody>
         </DrawerContent>
       </Drawer> 

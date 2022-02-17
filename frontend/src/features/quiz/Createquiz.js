@@ -43,7 +43,7 @@ const Createquiz = () => {
     ).then(() =>
       history.push("/quiz/folder/imade")
     ).catch(err=>{
-      console.log(data)
+      // console.log(data)
       alert('실패')
     })
   }

@@ -17,7 +17,7 @@ const OPENVIDU_SERVER_SECRET = 'ssafy';
 class StudentRoom extends Component {
   constructor(props) {
     super(props);
-    const student = this.props.student
+    const student = JSON.parse(localStorage.getItem('student'))
     this.state = {
       // OV
       session: undefined,
@@ -36,6 +36,7 @@ class StudentRoom extends Component {
       myUserName: student.studentName,
 
       //quiz
+      studentsName:[],
       quizs:{},
       quizId: '',
       subject: '',
@@ -51,7 +52,7 @@ class StudentRoom extends Component {
       option2:'',
       option3:'',
       option4:'',
-
+      pickone:'',
       results:[],
       studentAnswer:'',
 
@@ -112,6 +113,7 @@ class StudentRoom extends Component {
   componentDidMount() {
     window.addEventListener('beforeunload', this.onbeforeunload);
     this.leaveSession()
+    this.props.setHeader(false)
 
   }
 
@@ -143,6 +145,7 @@ class StudentRoom extends Component {
           {
             userName: this.state.myUserName,
             text: this.state.message,
+            role: 'student',
             chatClass: 'messages__item--operator',
           },
         ],
@@ -189,9 +192,9 @@ class StudentRoom extends Component {
   //quiz 학생 결과 전송
   sendresultHandle(){
     const mySession = this.state.session
-    console.log('⭐⭐⭐⭐제출⭐⭐⭐⭐')
     mySession.signal({
       data:JSON.stringify({
+        selectAnswer: localStorage.getItem('thisone'),
         studentId:this.state.student.studentId,
         quizId:sessionStorage.getItem('quizId'),
         studentResult:sessionStorage.getItem('studentResult')
@@ -273,6 +276,21 @@ class StudentRoom extends Component {
             type:'receiveStar'
           })
         })
+        // 롤링롤링롤링
+        mySession.on('signal:rolling', (event) => {
+          let data = event.data;
+          let studentsName  = []
+          this.state.subscribers.map(sub=> 
+            {if(JSON.parse(sub.stream.connection.data).role ==="student")
+            {studentsName.push(JSON.parse(sub.stream.connection.data).clientData)}
+          })
+          studentsName.push(this.state.myUserName)
+          this.setState({
+            studentsName:studentsName,
+            pickone:data
+          })
+            this.modalPop('rolling')         
+          });
         //quiz  
         //ox용
         mySession.on('signal:quiz', (event) => {
@@ -324,8 +342,7 @@ class StudentRoom extends Component {
         });
         
         this.getToken().then((token) => {
-          console.log('⭐⭐⭐⭐⭐⭐⭐⭐')
-          console.log(this.state.student)
+          // console.log(this.state.student)
           mySession
             .connect(
               token,
@@ -388,6 +405,7 @@ class StudentRoom extends Component {
     const micOff = 'https://cdn.discordapp.com/attachments/885744368399560725/940843036705959966/90b3c558d3543a12.png'
     const CamOn = "https://cdn.discordapp.com/attachments/885744368399560725/941232727225667594/07fcab7c699aa813.png"
     const CamOff = "https://cdn.discordapp.com/attachments/885744368399560725/941232721185873940/ffc10215d5c0b3bc.png"
+    const teacherScreen = this.state.subscribers.filter(sub=> JSON.parse(sub.stream.connection.data).role ==="teacher" )
     return (
       <div className="ClassStudent">
         {/* 세션에 참가하기 전 */}
@@ -424,8 +442,7 @@ class StudentRoom extends Component {
                           value={mySessionId}
                           onChange={this.handleChangeSessionId}
                           required
-                          // disabled
-
+                          disabled
                         />
                       </div>
                       <div className="btn_box">           
@@ -465,15 +482,7 @@ class StudentRoom extends Component {
                   <div className='teacher_button_box'>
                     {/* 선생님 화면 */}
                     <div className='teacher_box'>
-                      {this.state.subscribers.map((sub, i) => {
-                        if (JSON.parse(sub.stream.connection.data).role === "teacher") {
-                          return (
-                            <div key={i}>
-                              <UserVideoComponent who="teacher" streamManager={sub} />
-                            </div>
-                          )
-                        }
-                      } )}
+                      <UserVideoComponent who="teacher" streamManager={teacherScreen[0]} />
                     </div>
                     
                     {/* 버튼들 */}
@@ -485,19 +494,19 @@ class StudentRoom extends Component {
                     <div className='state_button' >
                       {this.state.videostate ? (
                         <Toast setState={this.changeVideostate} iconAs={CamOff} title='영상끄기'
-                          change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.500'} />
+                          change={false} message={'카메라를 껐습니다'} color={'white'} bg={'red.300'} />
                         ) : (
                         <Toast setState={this.changeVideostate} iconAs={CamOn} title='영상켜기'
-                          change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.500'} />
+                          change={true} message={'카메라를 켰습니다'} color={'white'} bg={'blue.300'} />
                       )}  
                     </div>
                     <div className='state_button'>
                       {this.state.audiostate ? (
                         <Toast setState={this.changeAudiostate} iconAs={micOff} title='음성끄기'
-                          message={'마이크를 껐습니다'} color={'white'} bg={'orange.500'} />
+                          message={'마이크를 껐습니다'} color={'white'} bg={'orange.300'} />
                         ) : (
                         <Toast setState={this.changeAudiostate} iconAs={micOn} title='음성켜기'
-                          message={'마이크를 켰습니다'} color={'white'} bg={'blue.200'} />
+                          message={'마이크를 켰습니다'} color={'white'} bg={'green.300'} />
                       )}
                     </div>
                   </div>
@@ -542,11 +551,12 @@ class StudentRoom extends Component {
                 <StudentModal kind='oxQuiz' quizs = {quizs} iconAs="" title='OX퀴즈' 
                   isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} 
                   setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
-                  mySession={this.state.session} student={this.state.student}  />
+                  mySession={this.state.session} student={this.state.student}  />         
 
-                <Button colorScheme='red' onClick={()=>{
-                  this.sendresultHandle()
-                }} /> 
+                <StudentModal kind='rolling'  iconAs="" title='롤링' pickone={this.state.pickone} studentsName={this.state.studentsName}
+                  isOpen={this.props.isOpen} onOpen={this.props.onOpen} onClose={this.props.onClose} modalForm={this.props.modalForm} 
+                  setModalForm={this.props.setModalForm} modalOpen={this.props.modalOpen}
+                  mySession={this.state.session} student={this.state.student}  /> 
                 </div>
           </Box>
         )}

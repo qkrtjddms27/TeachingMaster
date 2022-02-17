@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button,Input } from '@chakra-ui/react';
 import '../scss/modal.scss'
 import axios from 'axios';
@@ -12,6 +12,19 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
   const [relation,setRelation] = useState(student.relation)
   const [parentsPhone,setParentsPhone] = useState(student.parentsPhone)
   const [imgBase64,setImagbase64]=useState(student.studentProfile) // 파일 base64
+  const [memos,setMemos] = useState([])
+
+  useEffect(()=>{
+    axios({
+      url: `${serverUrl}/memo/${student.studentId}`,
+      method: 'GET',
+      headers: setToken()
+    })
+    .then(({data}) => {
+      setMemos(data)
+    })
+    .catch(err => console.log('get memo list err:', err))
+  }, [])
 
   const onSubmit = ()=>{
     const data ={
@@ -48,9 +61,8 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
       setStudent(stuData)
     })
     .catch(err=>{
-      console.log(data)
-      console.log("학생 수정 에러")
-      console.log(err)
+      // console.log(data)
+      console.log("학생 수정 에러", err)
     })
   }
   const handleChangeFile = event => {
@@ -60,13 +72,13 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
       const base64 = reader.result; //reader.result는 이미지를 인코딩(base64 ->이미지를 text인코딩)한 결괏값이 나온다.
       if (base64) {
         setImagbase64(base64.toString())
-        console.log(imgBase64)
+        // console.log(imgBase64)
       }
     };
     if (event.target.files[0]) {
       reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다. 저장후 onloadend 트리거
       // setImgFile(event.target.files[0])
-      console.log(imgBase64.length)
+      // console.log(imgBase64.length)
     }
   };
   return (
@@ -100,9 +112,9 @@ const ModalUpdate = ({change,student,onClose,setStudent}) => {
         <div className='memo'>
               <p className='memo_title'>메모</p>
               <div className='memo_contents'>
-                <p>우리반 반장</p>
-                <p>선생님을 잘 따른다</p>
-                <p>지난 기말고사 1등</p>
+                {memos.map((memo, idx) =>
+                  <li key={idx}>{memo.memoContent}</li>
+                )}
               </div>
             </div>
         <Button onClick={()=>{change("main")}} className='go_back'>

@@ -57,6 +57,7 @@ const Settings = ({user,setUser}) => {
             bgColor="#7e5526" colorScheme="#472b0a" width="48%"  onClick={()=>{onSubmit()}}
         >저장</Button>
       </div>
+      <img className='TM-circle' alt="TM" src="https://cdn.discordapp.com/attachments/885744368399560725/941713229422395452/TM_circle.png"/>
     </div>
   )
 }
