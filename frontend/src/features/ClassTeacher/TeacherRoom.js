@@ -164,6 +164,9 @@ class Classroom extends Component {
 
   resultsHandler() {
     const newResults = this.state.results.filter(result => result.studentResult)
+    if (newResults[0].quizId !== '1004') {
+      this.saveStudentQuizLog(newResults)
+    }
     // console.log(newResults)
     this.setState({
       results: newResults,
@@ -290,6 +293,7 @@ class Classroom extends Component {
           {
             userName: this.state.myUserName,
             text: this.state.message,
+            role: 'teacher',
             chatClass: 'messages__item--operator',
           },
         ],
@@ -748,16 +752,6 @@ class Classroom extends Component {
                   <Toast setState={this.changeOnScreenShareState} imgSrc='https://cdn.discordapp.com/attachments/885744368399560725/942115858157830204/monitor.png' title='화면공유'
                     change={true} message={'화면공유'} color={'black'} bg={'green.100'} />
                 )}
-                <div>
-                  <p>{this.state.subscribers.length}</p>
-                  <p>{this.state.results.length}</p>
-                  {/* 학생의 결과값이 세션에 있는 학생수 와 동일합니다.? (axios):null */
-                    (this.state.subscribers.length === this.state.results.length) && (this.state.results.length!==0 ) && (this.state.results[0].quizId !== "1004") ?
-                    this.saveStudentQuizLog(this.state.results)
-                    : null
-                  }
-                </div>
-
               </div>
             </div>
           </Box>
