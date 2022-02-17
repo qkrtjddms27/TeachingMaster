@@ -161,15 +161,15 @@
     margin-left: 6rem;
     width: 96rem;
     background-color: #e6c867c2;
-    height: 70rem;
+    height: 40rem;
     border-radius: 30px;
     display: flex;
     .icon {
-      margin-top: 5rem;
+      margin-top: 3rem;
       margin-left: 2rem;
     }
     .content {
-      margin-top: 5rem;
+      margin-top: 3rem;
     }
   }
   .movetoTop {
@@ -185,12 +185,13 @@
   justify-content: space-between;
   .bear-p {
     font-size: 2rem;
-    width: 35rem;
+    width: 40rem;
     &#left {
-      margin-right: 8rem;
+      margin-right: 3rem;
     }
   }
   .main-bear-img {
+    margin-top: 1rem;
     height: 20rem;
     width: 35rem;
   }

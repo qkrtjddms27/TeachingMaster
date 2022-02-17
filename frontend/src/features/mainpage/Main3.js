@@ -24,7 +24,7 @@ const Main3 = () => {
             <Text>나는 퀴즈를 좋아하는 티랑이야 </Text>
             <p>나랑 문제 풀지 않을래?</p>
           </div>
-          <Img src="https://i.ibb.co/TmSqsvg/mainquiz.gif"/>
+          <Img src="https://i.ibb.co/hcLch3X/mainquiz.gif"/>
         </div>
       </div>
       <div className="rabbit"
@@ -63,7 +63,7 @@ const Main3 = () => {
             className="dino"
             id="animal_box">
         <div className="content">
-          <Img src="https://i.ibb.co/0YqRzQj/maindino.gif"/>
+          <Img src="https://i.ibb.co/Fbbpfd6/Main.gif"/>
           <div className="ment">
             <p>디노의 친구들을 찾아줘 </p>
             <p>수업을 열심히 들으면 친구들이</p>
@@ -73,7 +73,7 @@ const Main3 = () => {
         <Img className="icon" src="https://cdn.discordapp.com/attachments/885744368399560725/940789109855748126/d58eac80c7e49975.png"/>
       </div>
       <div  className="bear"
-            data-aos="fade-right"      
+            data-aos="fade-right"
             data-aos-offset="300"
             data-aos-easing="linear"
             data-aos-duration="1000"
@@ -86,26 +86,15 @@ const Main3 = () => {
             <br></br>
             <div className="main-bear">
               <div className="bear-p" id='left'>
-                <div>1. 학생 관리 기능(별점, 메모)이 있어요</div>
-                <Img className="main-bear-img" src="https://i.ibb.co/DwT08Y2/54.gif"/>
+                <div>📝학생 관리 기능(별점, 메모, 하이라이팅)</div>
+                <Img className="main-bear-img" src="https://i.ibb.co/tX3nrpq/ezgif-com-gif-maker.gif"/>
               </div>
-              <div className="bear-p">
-                {/* <div>2. 학생들의 참여도를 쉽게 확인 할 수 있는 하이라이팅 기능이 있어요</div> */}
-                <div>2. 하이라이팅 기능(참여도)이 있어요</div>
-                <Img className="main-bear-img" src="https://i.ibb.co/8g6tZ1C/49.gif"/>
+              <div className="bear-p" id='left'>
+                <div>📂퀴즈 커뮤니티</div>
+                <Img className="main-bear-img" src="https://cdn.discordapp.com/attachments/932897209098305556/943949878067888148/Main_.gif"/>
               </div>
             </div>
             <br></br><br/>
-            <div className="main-bear">
-              <div className="bear-p" id='left'>
-                <div>3. 퀴즈 커뮤니티가 있어요</div>
-                <Img className="main-bear-img" src="https://i.ibb.co/8K3Ks5g/mainsharequiz.gif"/>
-              </div>
-              <div className="bear-p">
-                <div>4. 퀴즈와 OX 퀴즈를 출제할 수 있어요</div>
-                <Img className="main-bear-img" src="https://i.ibb.co/ZJ7sWqT/46.gif"/>
-              </div>
-            </div>
           </div>
         </div>
       </div>      
