@@ -145,6 +145,7 @@ class StudentRoom extends Component {
           {
             userName: this.state.myUserName,
             text: this.state.message,
+            role: 'student',
             chatClass: 'messages__item--operator',
           },
         ],
