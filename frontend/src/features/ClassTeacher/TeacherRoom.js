@@ -5,10 +5,6 @@ import React, { Component,createRef } from 'react';
 import { Button, Box, Input } from '@chakra-ui/react';
 import "./scss/ClassTeacher.scss"
 import TeacherModal from './components/TeacherModal';
-import { BsMicMute, BsFillMicFill, BsCameraVideoOff, BsFillCameraVideoFill, BsFillStarFill } from "react-icons/bs"
-import { MdExtension, MdOutlineExtensionOff, MdQuiz } from "react-icons/md"
-import { GiCoffeeCup } from "react-icons/gi"
-import { FaSchool } from "react-icons/fa"
 import { withRouter } from 'react-router-dom';
 import Toast from './components/Toast';
 import UserVideoComponent from './openVidu/UserVideoComponent';
@@ -16,19 +12,18 @@ import Messages from './components/Messages';
 import StudentScreen from './components/StudentScreen'
 import {serverUrl, setToken } from '../../components/TOKEN';
 
-
-
-// const OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
 const OPENVIDU_SERVER_URL = 'https://i6e107.p.ssafy.io:8443';
 const OPENVIDU_SERVER_SECRET = 'ssafy';
 
 class Classroom extends Component {
   constructor(props) {
     super(props);
+    const user = JSON.parse(localStorage.getItem('user'))
     this.state = {
       // OV
+      speakingStudents: [],
       mySessionId: this.props.match.params.roomId,
-      myUserName: JSON.parse(localStorage.getItem('user')).userName,
+      myUserName: user.userName,
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
@@ -39,9 +34,11 @@ class Classroom extends Component {
       message: '',
       videostate: true,
       audiostate: false,
+      screenShareState: false,
       highlighting: false,
       answerCheck: false,
-      user: JSON.parse(localStorage.getItem('user')),
+      user: user,
+      rollingStudent: undefined,
       //quiz
       quizs:{},
       quizId: '',
@@ -63,6 +60,8 @@ class Classroom extends Component {
       results:[],
       studentId:'',
       studentResult:'',
+      pickone:"랜덤뽑기",
+
     };
 
     // OV
@@ -82,24 +81,106 @@ class Classroom extends Component {
     this.changeAudiostate = this.changeAudiostate.bind(this)
     this.changeHighlightingstate = this.changeHighlightingstate.bind(this)
     this.changeAnswerCheckstate = this.changeAnswerCheckstate.bind(this)
-    this.announceHandler = this.announceHandler.bind(this)
-    this.plusStarHandler = this.plusStarHandler.bind(this)
     this.resultsHandler = this.resultsHandler.bind(this)
+    this.changeOnScreenShareState = this.changeOnScreenShareState.bind(this)
+    this.changeOffScreenShareState = this.changeOffScreenShareState.bind(this)
     // quiz
     this.quizHandler = this.quizHandler.bind(this);
     this.quizHandlerStar = this.quizHandlerStar.bind(this);
     this.getAverage = this.getAverage.bind(this);
+    this.doRolling = this.doRolling.bind(this)
+    this.screenShare = this.screenShare.bind(this);
+    this.stopScreenShare = this.stopScreenShare.bind(this);
   }
 
 
   // TM
+  screenShare() {
+    const videoSource =
+      navigator.userAgent.indexOf('Firefox') !== -1 ? 'window' : 'screen';
+    this.OV = new OpenVidu();
+    // publisher 정보 담기
+    const publisher = this.OV.initPublisher(
+      undefined,
+      {
+        videoSource: videoSource,
+        publishAudio: this.state.audiostate,
+        publishVideo: true,
+        mirror: false,
+      },
+      error => {
+        if (error && error.name === 'SCREEN_EXTENSION_NOT_INSTALLED') {
+          this.setState({ showExtensionDialog: true });
+        } else if (error && error.name === 'SCREEN_SHARING_NOT_SUPPORTED') {
+          alert('Your browser does not support screen sharing');
+        } else if (error && error.name === 'SCREEN_EXTENSION_DISABLED') {
+          alert('You need to enable screen sharing extension');
+        } else if (error && error.name === 'SCREEN_CAPTURE_DENIED') {
+          alert('You need to choose a window or application to share');
+        }
+      }
+    );
+
+    publisher.once('accessAllowed', () => {
+      this.state.session.unpublish(this.state.mainStreamManager); // 송출하고 있는거 중단 (안하면 에러)
+      this.state.session.publish(publisher).then(() => {
+        // 송출하기
+
+        // this.props.doMainStreamManagerInfo(publisher); // 스타 publisher 정보 바꾸기
+        // state 변경
+        this.setState({
+          screenShareState: true,
+          mainStreamManager:publisher
+        });
+      });
+    });
+  }
+  stopScreenShare() {
+    this.state.session.unpublish(this.state.mainStreamManager); // 화면 공유 중지
+    this.OV = new OpenVidu();
+    // publisher 설정
+    let publisher = this.OV.initPublisher(undefined, {
+      audioSource: undefined, // The source of audio. If undefined default microphone
+      videoSource: undefined, // The source of video. If undefined default webcam
+      publishAudio: this.state.audiostate, // Whether you want to start publishing with your audio unmuted or not
+      publishVideo: true, // Whether you want to start publishing with your video enabled or not
+      resolution: '640x480', // The resolution of your video
+      frameRate: 30, // The frame rate of your video
+      insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
+      mirror: false, // Whether to mirror your local video or not
+    });
+
+    this.state.session.publish(publisher); // 캠 송출하기
+    // this.props.doMainStreamManagerInfo(publisher); // 스타 publisher 정보 바꾸기
+    this.setState({
+      audioState: false,
+      videoState: true,
+      screenShareState: false,
+      mainStreamManager:publisher
+
+    });
+  }
+
+
   resultsHandler() {
     const newResults = this.state.results.filter(result => result.studentResult)
+    if (newResults[0].quizId !== '1004') {
+      this.saveStudentQuizLog(newResults)
+    }
     // console.log(newResults)
     this.setState({
       results: newResults,
       answerCheck: true
     })
+    // console.log('newResults:', this.state.results)
+    axios({
+      url: `${serverUrl}/student/student`,
+      method: 'POST',
+      headers: setToken(),
+      data: newResults
+    })
+    // .then(res => console.log(res))
+    .catch(err => console.log('quiz log err', err))
   }
 
   changeVideostate() {
@@ -117,7 +198,6 @@ class Classroom extends Component {
   }
   
   getAverage(){
-    console.log('⭐⭐⭐⭐계산중입니다⭐⭐⭐⭐')
     let total = 0
     // eslint-disable-next-line no-lone-blocks
     {this.state.subscribers.map((sub) => (
@@ -140,6 +220,19 @@ class Classroom extends Component {
       answerCheck: !this.state.answerCheck
     })
   }
+  
+  changeOnScreenShareState(){
+    this.screenShare();
+    this.setState({
+      screenShareState: true,
+    });
+  }
+  changeOffScreenShareState(){
+    this.stopScreenShare();
+    this.setState({
+      screenShareState: false,
+    });
+  }
 
   handleHistory(path) {
     this.props.history.push(path)
@@ -152,6 +245,7 @@ class Classroom extends Component {
     if (this.refs.chatoutput != null) {
       this.refs.chatoutput.scrollTop = this.refs.chatoutput.scrollHeight;
     }
+    this.props.setHeader(true)
   } 
   componentDidMount() {
     this.setState({ user : JSON.parse(localStorage.getItem('user'))})
@@ -178,6 +272,18 @@ class Classroom extends Component {
       message: e.target.value,
     });
   }
+  doRolling(){
+    const mySession = this.state.session;
+    const pickone = Math.floor(Math.random()*this.state.subscribers.length) 
+    this.setState({
+      pickone:JSON.parse(this.state.subscribers[pickone].stream.connection.data).clientData
+    })
+    mySession.signal({
+      data: JSON.parse(this.state.subscribers[pickone].stream.connection.data).clientData,
+      to: [],
+      type: 'rolling',
+    });
+  }
 
   sendmessageByEnter(e) {
     if (e.key === 'Enter') {
@@ -187,6 +293,7 @@ class Classroom extends Component {
           {
             userName: this.state.myUserName,
             text: this.state.message,
+            role: 'teacher',
             chatClass: 'messages__item--operator',
           },
         ],
@@ -231,22 +338,22 @@ class Classroom extends Component {
   }
 
   // 발표시키기
-  announceHandler(i){
-    const mySession = this.state.session;
-    mySession.signal({
-      to: [this.state.subscribers[i].stream.inboundStreamOpts.connection],
-      type: 'announcement',
-    });
-  }
+  // announceHandler(i){
+  //   const mySession = this.state.session;
+  //   mySession.signal({
+  //     to: [this.state.subscribers[i].stream.inboundStreamOpts.connection],
+  //     type: 'announcement',
+  //   });
+  // }
 
   // 별점 주기
-  plusStarHandler(i){
-    const mySession = this.state.session;
-    mySession.signal({
-      to: [this.state.subscribers[i].stream.inboundStreamOpts.connection],
-      type: 'star',
-    })
-  }
+  // plusStarHandler(i){
+  //   const mySession = this.state.session;
+  //   mySession.signal({
+  //     to: [this.state.subscribers[i].stream.inboundStreamOpts.connection],
+  //     type: 'star',
+  //   })
+  // }
 
   quizHandler(){
     let qox = sessionStorage.getItem('OXQuiz')
@@ -336,7 +443,7 @@ class Classroom extends Component {
   }
 
   saveStudentQuizLog(data){
-    console.log(data)
+    // console.log(data)
     axios(
         {
           url : `${serverUrl}/student/student/`,
@@ -344,9 +451,11 @@ class Classroom extends Component {
           data,
           headers : setToken()
         }
-      ).then(res=>{
-        console.log(res)
-      }).catch(err=>{
+      )
+      // .then(res=>{
+      //   console.log(res)
+      // })
+      .catch(err=>{
         alert("학생 로그 UPDATE 에러")
       })
   }
@@ -393,15 +502,33 @@ class Classroom extends Component {
             });
           }
         });
+
+        mySession.on('publisherStartSpeaking', (event) => {
+          const whoSpeaking = JSON.parse(event.connection.data).studentId
+          
+          this.state.subscribers.map((sub,i)=>{
+            if(whoSpeaking=== JSON.parse(sub.stream.connection.data).studentId){     
+              this.setState({
+                speakingStudents: [...this.state.speakingStudents,whoSpeaking],
+              })
+            }
+          })
+
+        });
+
+        mySession.on('publisherStopSpeaking', (event) => {
+          const whoSpeaking = JSON.parse(event.connection.data).studentId
+          this.state.subscribers.map((sub,i)=>{
+            if(whoSpeaking=== JSON.parse(sub.stream.connection.data).studentId){     
+              this.setState({
+                speakingStudents:this.state.speakingStudents.filter(stu=>stu!==whoSpeaking),
+              })
+            }
+          })
+      });
         
-        // {this.state.subscribers.map((sub) => (
-        //   total = total + Number(JSON.parse(sub.stream.connection.data).countingStar)
-        // ))}
         mySession.on('signal:receiveStar',(event)=>{
           let student = JSON.parse(event.data)
-          console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐')
-          console.log(student.studentId)
-          console.log(JSON.parse(this.state.subscribers[0].stream.connection.data).studentId)
           this.state.subscribers.map((sub,i)=>{
             if(student.studentId === JSON.parse(sub.stream.connection.data).studentId){
               let tmp = JSON.parse(sub.stream.connection.data)
@@ -414,24 +541,24 @@ class Classroom extends Component {
             }
           })
           this.getAverage()
-          console.log(this.state.subscribers)
         })
         //quiz 학생 결과 가지기 용
         mySession.on('signal:studentQuizresult', (event) => {
           let resultsdata = JSON.parse(event.data);
-          // console.log('resultsdata', resultsdata)
+          if (resultsdata.studentResult!==null){
           this.setState({
             results: [
               ...this.state.results,
               {
+                studentAnswer: resultsdata.studentAnswer,
                 studentId:resultsdata.studentId,
                 quizId:resultsdata.quizId,
                 studentResult:resultsdata.studentResult,
-                chatClass: 'quizs__item--visitor',
               },
             ],
-          });
-          if ((2*this.state.subscribers.length === this.state.results.length) && (this.state.results.length!==0 )) {
+          });}
+          // this.resultsHandler()
+          if ((this.state.subscribers.length === this.state.results.length) && (this.state.results.length!==0 )) {
             this.resultsHandler()
           }
         });
@@ -442,12 +569,11 @@ class Classroom extends Component {
           mySession
             .connect(
               token,
-              { clientData: this.state.myUserName, role:"teacher" },
+              { clientData: this.state.myUserName, 
+                role:"teacher",
+                studentId: this.state.userId },
             )
             .then(() => {
-              // --- 5) Get your own camera stream ---
-              // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
-              // element: we will manage it on our own) and with the desired properties
               let publisher = this.OV.initPublisher(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
@@ -486,8 +612,8 @@ class Classroom extends Component {
     this.setState({
       session: undefined,
       subscribers: [],
-      mySessionId: this.props.match.params.roomId,
-      myUserName: this.props.user.userName,
+      mySessionId: this.state.mySessionId,
+      myUserName: this.state.myUserName,
       mainStreamManager: undefined,
       publisher: undefined
     });
@@ -527,6 +653,7 @@ class Classroom extends Component {
                     value={mySessionId}
                     onChange={this.handleChangeSessionId}
                     required
+                    disabled
                   />
                 </div>
                 <div className="btn_box">           
@@ -545,15 +672,16 @@ class Classroom extends Component {
               <div className='student_box'>
                 {this.state.subscribers.map((sub, i) => (
                   <div key={i}>
-                    <StudentScreen  subscribers={this.state.subscribers} answerCheck={this.state.answerCheck} results={this.state.results} 
-                    highlighting={this.state.highlighting} total={this.state.total}  streamManager={sub} 
-                    i={i} announce={this.announceHandler} plusStar={this.plusStarHandler} />
+                    <StudentScreen speakingStudents={this.state.speakingStudents}  answerCheck={this.state.answerCheck} results={this.state.results} 
+                    highlighting={this.state.highlighting} total={this.state.total} getAverage={this.getAverage}  streamManager={sub} 
+                   session={this.state.session}  />
                   </div>
                 ))}
-                {this.state.publisher !== undefined && (
+                
+                
+                {this.state.mainStreamManager !== undefined && (
                   <div>
-                    {/* <UserVideoComponent streamManager={this.state.publisher} /> */}
-                    <UserVideoComponent score="teacherScore" streamManager={this.state.publisher} />
+                    <UserVideoComponent score="teacherScore" streamManager={this.state.mainStreamManager} />
                   </div>
                 )}
               </div>
@@ -585,6 +713,7 @@ class Classroom extends Component {
                 </Button>
               </div>
               <div className='right_btn_box'>
+              <Button onClick={()=>{this.doRolling()}}>{this.state.pickone}</Button>
                 <TeacherModal kind='ox' quizQ = {this.quizHandler} imgSrc='https://i.ibb.co/fDyyfz0/answer.png' title='OX 퀴즈' />
                 <TeacherModal kind='bookmark' quizQ = {this.quizHandlerStar} imgSrc='https://i.ibb.co/cg8bVJZ/laptop.png' title='즐겨찾기 퀴즈' />
                 {this.state.videostate ? (
@@ -608,6 +737,7 @@ class Classroom extends Component {
                   <Toast setState={this.changeHighlightingstate} imgSrc='https://i.ibb.co/pdJQQ89/highlighter-1.png' title='하이라이팅 켜기'
                     change={true} message={'하이라이팅을 켰습니다'} color={'black'} bg={'blue.100'} />
                 )}
+                
                 {this.state.answerCheck ? (
                   <Toast setState={this.changeAnswerCheckstate} imgSrc='https://cdn-icons-png.flaticon.com/512/3208/3208770.png' title='퀴즈결과 끄기'
                     change={false} message={'퀴즈결과 끄기'} color={'black'} bg={'orange.100'} />
@@ -615,16 +745,13 @@ class Classroom extends Component {
                   <Toast setState={this.changeAnswerCheckstate} imgSrc='https://cdn-icons-png.flaticon.com/512/3208/3208648.png' title='퀴즈결과 보기'
                     change={true} message={'퀴즈결과 보기'} color={'black'} bg={'green.100'} />
                 )}
-                <div>
-                  <p>{this.state.subscribers.length}</p>
-                  <p>{this.state.results.length}</p>
-                  {/* 학생의 결과값이 세션에 있는 학생수 와 동일합니다.? (axios):null */
-                    (this.state.subscribers.length === this.state.results.length) && (this.state.results.length!==0 ) && (this.state.results[0].quizId !== "1004") ?
-                    this.saveStudentQuizLog(this.state.results)
-                    : null
-                  }
-                </div>
-
+                {this.state.screenShareState ? (
+                  <Toast setState={this.changeOffScreenShareState} imgSrc='https://cdn.discordapp.com/attachments/885744368399560725/942115654251720724/share.png' title='화면공유 끄기'
+                    change={false} message={'화면공유 끄기'} color={'black'} bg={'orange.100'} />
+                    ) : (
+                  <Toast setState={this.changeOnScreenShareState} imgSrc='https://cdn.discordapp.com/attachments/885744368399560725/942115858157830204/monitor.png' title='화면공유'
+                    change={true} message={'화면공유'} color={'black'} bg={'green.100'} />
+                )}
               </div>
             </div>
           </Box>
@@ -632,18 +759,6 @@ class Classroom extends Component {
       </div>
     );
   }
-
-  /**
-   * --------------------------
-   * SERVER-SIDE RESPONSIBILITY
-   * --------------------------
-   * These methods retrieve the mandatory user token from OpenVidu Server.
-   * This behavior MUST BE IN YOUR SERVER-SIDE IN PRODUCTION (by using
-   * the API REST, openvidu-java-client or openvidu-node-client):
-   *   1) Initialize a Session in OpenVidu Server	(POST /openvidu/api/sessions)
-   *   2) Create a Connection in OpenVidu Server (POST /openvidu/api/sessions/<SESSION_ID>/connection)
-   *   3) The Connection.token must be consumed in Session.connect() method
-   */
 
   getToken() {
     return this.createSession(this.state.mySessionId).then((sessionId) => this.createToken(sessionId));

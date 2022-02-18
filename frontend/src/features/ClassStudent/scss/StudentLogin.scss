@@ -18,8 +18,8 @@
     url("../image/sky4.gif");
   background-repeat: repeat;
   background-size: 60%;
-  height: 60.9rem;
-  width: 120rem;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   flex-flow: wrap;
   .box {
@@ -51,12 +51,16 @@
 
       // flex-flow: wrap;
       justify-content: space-evenly;
-      .id {
+      .form {
         margin: 0 2rem;
         input {
           background-color: whitesmoke;
-          width: 10rem;
+          width: 100%;
         }
+      }
+      .btn {
+        margin-right: 2rem;
+        align-self: flex-end;
       }
       .grade_room {
         margin: 0 2rem;

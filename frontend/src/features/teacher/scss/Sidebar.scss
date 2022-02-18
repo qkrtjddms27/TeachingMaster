@@ -20,20 +20,29 @@
 }
 .DrawerBody {
   background-color: #f1eae9;
-
-  a {
-    margin-top: 1.5rem;
-    margin-left: 2rem;
-    display: block;
-    color: rgb(85, 84, 84);
-    font-weight: 1000;
-    font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .contents {
+    a {
+      margin-top: 1.5rem;
+      margin-left: 2rem;
+      display: block;
+      color: rgb(85, 84, 84);
+      font-weight: 1000;
+      font-size: 1.5rem;
+    }
+    a:hover {
+      transform: translateX(-10px);
+      transition: 0.2s ease;
+      background-color: rgb(219, 214, 214);
+      color: black;
+    }
   }
-  a:hover {
-    transform: translateX(-10px);
-    transition: 0.2s ease;
-    background-color: rgb(219, 214, 214);
-    color: black;
+  .icon {
+    margin-left: 3.5rem;
+    height: 10rem;
+    width: 10rem;
   }
 }
 .DrawerBody:hover a:not(:nover) {

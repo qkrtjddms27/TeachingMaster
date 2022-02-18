@@ -1,75 +1,14 @@
-.main4 {
-  @keyframes rbSpinner {
-    from {
-      transform: rotate(-5deg);
-    }
-    50% {
-      transform: rotate(5deg);
-    }
-    to {
-      transform: rotate(-5deg);
-    }
-  }
-  height: 100vh;
-  display: flex;
-  flex-flow: wrap;
-  .rainbow {
-    height: 100vh;
-    width: 20%;
-    display: flex;
-    flex-flow: wrap;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    &:hover {
-      transform: scaleX(1.07);
-      transition: 0.5s;
-      .rainbow-p {
-        transform: scale(1.2);
-        transition: 1s;
-      }
-      .rainbow-img {
-        animation: rbSpinner 1s;
-        animation-iteration-count: infinite;
-      }
-    }
-    .rainbow-p {
-      color: aliceblue;
-      font-weight: bold;
-      font-size: 5rem;
-    }
-    .rainbow-img {
-      width: 15vw;
-      height: 25vh;
-    }
-    &#rb1 {
-      background-color: #f1c46c;
-    }
-    &#rb2 {
-      background-color: #f6aaaa;
-    }
-    &#rb3 {
-      background-color: #b5e8f9;
-    }
-    &#rb4 {
-      background-color: #a7de93;
-    }
-    &#rb5 {
-      background-color: #707cef;
-    }
-  }
-}
-.main5 {
+.Main4 {
   height: 50vh;
   width: 99.1vw;
-  background-color: #443ed8;
+  background-color: #aeacee;
   .reviews {
     margin-top: 3rem;
     height: 40vh;
     padding: 1rem;
     .review {
       background-color: white;
-      height: 80%;
+      height: 88%;
       width: 80%;
       min-width: 15rem;
       border: 1px solid black;

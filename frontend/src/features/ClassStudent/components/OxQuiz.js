@@ -1,4 +1,4 @@
-import { ModalContent, ModalHeader, ModalCloseButton, ModalBody, Image } from '@chakra-ui/react';
+import { ModalContent,Img, ModalHeader, ModalCloseButton, ModalBody, Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import '../scss/StudentModal.scss'
 import Timer from './Timer';
@@ -7,8 +7,6 @@ const OxQuiz = ({ setModalForm, setOX , quizs}) => {
   const [quiz, setQuiz] = useState({})
   const [choice, setChoice] = useState(0)
   useEffect(()=>{
-    console.log("⭐⭐⭐⭐quizs⭐⭐⭐⭐⭐")
-    console.log(quizs)
     if(quizs !== undefined ){
       const tmp = {
         "quizTimeout": quizs.quizTimeout,
@@ -16,11 +14,7 @@ const OxQuiz = ({ setModalForm, setOX , quizs}) => {
         "quizAnswer": quizs.quizAnswer,
         "quizId": quizs.quizId
       }
-      console.log('⭐⭐⭐⭐tmp')
-      console.log(tmp)
       setQuiz(tmp)
-      console.log("⭐⭐⭐⭐setQuiz⭐⭐⭐⭐⭐")
-      console.log('setQuiz', quiz)
     }
   },[])
   const thisone = (idx)=>{
@@ -30,13 +24,14 @@ const OxQuiz = ({ setModalForm, setOX , quizs}) => {
   return (
     <div>
     {quizs !== undefined && (
-      <ModalContent bgColor='#c7e4f5' w='50rem' h='3rem' marginY='7rem' marginX='1rem' >
-      
+      <ModalContent bgColor='rgb(245, 198, 110)' w='70rem' h='3rem' marginY='7rem' marginX='1rem' >
+
       <ModalHeader className='student-modal-header'>
         <div style={{"fontSize": "xx-large"}}>신나는 OX퀴즈 시간</div>
         <Timer setOX={setOX} quiz={quizs} setModalForm={setModalForm}  />
       </ModalHeader>
       <ModalBody className='ox-quiz-body'>
+        <Img className='tiger' src="https://cdn.discordapp.com/attachments/885744368399560725/940788467040927744/1ebc39a1c15ce4e0.png"/>
         <div className='ox-quiz-name'>
           <span>{quizs.quizContents}</span>
         </div>

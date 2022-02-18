@@ -12,13 +12,13 @@ const CardBack = ({onOpen,student}) => {
           <div>{student.room.roomGrade}학년 {student.room.roomNum}반</div>
         </div>
       </div>
-
       <div className='memo'>
           <Text className='stars'>누적⭐&nbsp;{student.studentScore}</Text>
-          <Text className='memo-title'>메모</Text>
-          <Text className='memo-content'>우리반 반장</Text>
-          <Text className='memo-content'>선생님을 잘 따른다</Text>
-          <Text className='memo-content'>지난 기말고사 1등</Text>
+          <Text className='stars'>연락처 : 010-{student.studentPhone.slice(0,4)}-{student.studentPhone.slice(4,8)}</Text>
+          <Text className='memo-title'>보호자</Text>
+          <Text className='memo-content'>이름 : {student.parentsName}</Text>
+          <Text className='memo-content'>연락처 : 010-{student.parentsPhone.slice(0,4)}-{student.parentsPhone.slice(4,8)}</Text>
+          <Text className='memo-content'>관계 : {student.relation}</Text>
       </div>   
     </Box>
   );

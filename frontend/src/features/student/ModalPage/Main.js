@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@chakra-ui/react';
+import { serverUrl, setToken } from '../../../components/TOKEN';
+import axios from 'axios';
 import '../scss/modal.scss'
 
 const ModalMain = ({change,student,onClose}) => {
+  const [memos,setMemos] = useState([])
+  // 메모 get
+  useEffect(()=>{
+    axios({
+      url: `${serverUrl}/memo/${student.studentId}`,
+      method: 'GET',
+      headers: setToken()
+    })
+    .then(({data}) => {
+      setMemos(data)
+    })
+    .catch(err => console.log('get memo list err:', err))
+  }, [])
+
   return (
     <div className='modal-main'>
       <div className='left'>
@@ -19,27 +35,26 @@ const ModalMain = ({change,student,onClose}) => {
         <div className='left_bot'>
           <div className='contents'>  
             <p>메일주소 : {student.studentEmail}</p>
-            <p>연락처 : {student.studentPhone}</p>
+            <p>연락처 : 010-{student.studentPhone.slice(0,4)}-{student.studentPhone.slice(4,8)}</p>
             <p>주소 : {student.address}</p>
             <p>보호자 성함 : {student.parentsName}</p>
             <p>보호자 관계 : {student.relation}</p>
-            <p>보호자 연락처: {student.parentsPhone}</p>
+            <p>보호자 연락처: 010-{student.parentsPhone.slice(0,4)}-{student.parentsPhone.slice(4,8)}</p>
           </div>
           <Button onClick={()=>{change("quiz")}}>퀴즈 내역 보기</Button>
         </div>
       </div>
-
         <div className='right'>
           <div className='memo'>
             <p className='memo_title'>메모</p>
             <div className='memo_contents'>
-              <p>우리반 반장</p>
-              <p>선생님을 잘 따른다</p>
-              <p>지난 기말고사 1등</p>
+              {memos.map((memo, idx) => 
+              <ul key={idx}>{memo.memoContent.split("\\n").map((memo1,idx2) => 
+              <li key={idx2}>
+                {memo1}
+                </li>)}</ul>)} 
             </div>
-
           </div>
-
           <Button onClick={()=>{change("update")}} className='go_update'>수정</Button>
           <Button onClick={onClose} className='go_exit'>종료</Button>
         </div>

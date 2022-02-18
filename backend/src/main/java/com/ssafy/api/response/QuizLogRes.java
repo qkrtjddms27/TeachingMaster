@@ -27,7 +27,7 @@ public class QuizLogRes {
 	@ApiModelProperty(name="출제날짜")
 	Date quizDate;
 	@ApiModelProperty(name="선택한 답")
-	int selectAnswer;
+	int studentAnswer;
 
 	@ApiModelProperty(name="과목 이름", example="국어,영어,수학,사회,과학,기타")
 	String subject;
@@ -66,7 +66,7 @@ public class QuizLogRes {
 			res.setQuizId(quizlog.getQuiz().getQuizId());
 			res.setStudentId(quizlog.getStudent().getStudentId());
 			res.setQuizResult(quizlog.getQuizResult());
-			res.setSelectAnswer(quizlog.getSelectAnswer());
+			res.setStudentAnswer(quizlog.getStudentAnswer());
 
 		return res;
 	}
@@ -81,7 +81,7 @@ public class QuizLogRes {
 			res.setQuizId(quizLog.getQuizId());
 			res.setStudentId(quizLog.getStudentId());
 			res.setQuizResult(quizLog.getQuizResult());
-			res.setSelectAnswer(quizLog.getSelectAnswer());
+			res.setStudentAnswer(quizLog.getStudentAnswer());
 			res.setQuizDate(quizLog.getQuizDate());
 
 			res.setSubject(quizLog.getSubject());
