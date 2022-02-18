@@ -10,10 +10,10 @@ webserver :
 db : mysql, '8.0.28-0ubuntu0.20.04.3'
 ```
 ### DB 설정 값.
-hostname: i6e107.p.ssafy.io</br>
-port : 3306</br>
-username : ssafy</br>
-password : ssafy</br>
+hostname: i6e107.p.ssafy.io     
+port : 3306     
+username : ssafy        
+password : ssafy        
 
 ### ec2 환경에 SSL 인증서 받기
 ```shell
