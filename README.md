@@ -1,7 +1,9 @@
+
+
 # 웹 프로젝트 : 티칭마스터
 
 # 1. 서비스 소개 
-<!-- 필수 항목 -->
+
 
 ## 카테고리
 
@@ -11,11 +13,11 @@
 | :white_check_mark: Mobile Web | :black_square_button: Big Data | :black_square_button: TypeScript | :white_check_mark: React |
 | :white_check_mark: Responsive Web | :black_square_button: Blockchain | :black_square_button: C/C++ | :black_square_button: Angular |
 | :black_square_button: Android App | :black_square_button: IoT | :black_square_button: C# | :black_square_button: Node.js |
-| :black_square_button: iOS App | :black_square_button: AR/VR/Metaverse | :white_check_mark: Python | :white_check_mark: Flask/Django |
+| :black_square_button: iOS App | :black_square_button: AR/VR/Metaverse | :black_square_button: Python     | :black_square_button: Flask/Django |
 | :black_square_button: Desktop App | :black_square_button: Game | :white_check_mark: Java | :white_check_mark: Spring/Springboot |
 | | | :black_square_button: Kotlin | |
 
-<!-- 필수 항목 -->
+
 ## 1. 서비스 설명
 
 ### 개요
@@ -56,31 +58,31 @@
 
 ### 메인페이지
 
-![Untitled](1%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3%20%E1%84%89%206ca3c/Untitled.png)
+![Untitled](README.assets/Untitled-16456253811181.png)
 
 ### 학생 로그인
 
-![Untitled](1%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3%20%E1%84%89%206ca3c/Untitled%201.png)
+![Untitled 1](README.assets/Untitled 1.png)
 
 ### 학생 수업페이지
 
-![Untitled](1%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3%20%E1%84%89%206ca3c/Untitled%202.png)
+![Untitled 2](README.assets/Untitled 2.png)
 
 ### 선생님 Home
 
-![Untitled](1%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3%20%E1%84%89%206ca3c/Untitled%203.png)
+![Untitled 3](README.assets/Untitled 3.png)
 
 ### 선생님 수업페이지
 
-![Untitled](1%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3%20%E1%84%89%206ca3c/Untitled%204.png)
+![Untitled 4](README.assets/Untitled 4.png)
 
 ### 퀴즈 리스트페이지
 
-![Untitled](1%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3%20%E1%84%89%206ca3c/Untitled%205.png)
+![Untitled 5](README.assets/Untitled 5.png)
 
 ### 학생 정보페이지
 
-![Untitled](1%20%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3%20%E1%84%89%206ca3c/Untitled%206.png)
+![Untitled 6](README.assets/Untitled 6.png)
 
 ## 4. 발표 영상 or ucc
 
@@ -94,7 +96,7 @@
 ## 1. WebRTC
 
 
-![Untitled](2%20%E1%84%80%E1%85%B5%E1%84%89%E1%85%AE%E1%86%AF%20%E1%84%89%E1%85%B3%200c93e/Untitled.png)
+![Untitled](README.assets/Untitled-16456255437472.png)
 
 ```
 WebRTC란, Web Real-Time Communication의 준말로, 
@@ -104,7 +106,7 @@ WebRTC로 구성된 프로그램들은 별도의 플러그인이나 소프트웨
 음성, 영상 혹은 텍스트, 파일과 같은 데이터들을 브라우저끼리 주고받을 수 있습니다.
 ```
 
-![Untitled](2%20%E1%84%80%E1%85%B5%E1%84%89%E1%85%AE%E1%86%AF%20%E1%84%89%E1%85%B3%200c93e/Untitled%201.png)
+![Untitled 1](README.assets/Untitled 1-16456255530733.png)
 
 ```
 OpenVidu is a platform to facilitate the addition of video calls 
@@ -134,7 +136,7 @@ openVidu에 대해 자세히 알아보고 싶다면 [[https://docs.openvidu.io/e
 
 Web Socket ?
 
-![Untitled](2%20%E1%84%80%E1%85%B5%E1%84%89%E1%85%AE%E1%86%AF%20%E1%84%89%E1%85%B3%200c93e/Untitled%202.png)
+![Untitled 2](README.assets/Untitled 2-16456255625744.png)
 
 ```
 기존의 서버와 클라이언트간의 통신방법인 HTTP 는
@@ -162,7 +164,7 @@ Single Page Application 의 약자로, 단일 페이지로 구성된 웹 애플�
 
 렌더링의 역할을 서버에 넘기지 않고 브라우저에서 처리하는 방식입니다.
 
-![Untitled](2%20%E1%84%80%E1%85%B5%E1%84%89%E1%85%AE%E1%86%AF%20%E1%84%89%E1%85%B3%200c93e/Untitled%203.png)
+![Untitled 3](README.assets/Untitled 3-16456255708705.png)
 
 - 장점
   - 모듈화 또는 컴포넌트별 개발이 용이합니다.
@@ -175,7 +177,7 @@ Single Page Application 의 약자로, 단일 페이지로 구성된 웹 애플�
 
 ### 리액트?
 
-![Untitled](2%20%E1%84%80%E1%85%B5%E1%84%89%E1%85%AE%E1%86%AF%20%E1%84%89%E1%85%B3%200c93e/Untitled%204.png)
+![Untitled 4](README.assets/Untitled 4-16456255764506.png)
 
 리액트는 사실 프레임 워크가 아닌 라이브러리입니다. 하지만 컴포넌트를 사용하기 위해서는 프레임워크처럼 규칙을 지켜야 합니다.
 
@@ -206,7 +208,7 @@ JSP 서블릿과 데이터베이스 커넥션을 연결해주는 Mybatis, JPA �
 
 ### Spring Boot란?
 
-![Untitled](2%20%E1%84%80%E1%85%B5%E1%84%89%E1%85%AE%E1%86%AF%20%E1%84%89%E1%85%B3%200c93e/Untitled%205.png)
+![Untitled 5](README.assets/Untitled 5-16456255852117.png)
 
 SpringBoot는 SpringFramework 기반의 프로젝트를 복잡한 설정없이 쉽고 빠르게 만들어주는 라이브러리
 
@@ -220,8 +222,7 @@ SpringBoot는 SpringFramework 기반의 프로젝트를 복잡한 설정없이 �
 
 ## 5. JPA & Hibernate
 
-
-![Untitled](2%20%E1%84%80%E1%85%B5%E1%84%89%E1%85%AE%E1%86%AF%20%E1%84%89%E1%85%B3%200c93e/Untitled%206.png)
+<img src="README.assets/Untitled 6-16456255936128.png" alt="Untitled 6" style="zoom: 67%;" />
 
 ### JPA란?
 
@@ -245,72 +246,138 @@ SpringBoot는 SpringFramework 기반의 프로젝트를 복잡한 설정없이 �
 
 **1. 교실 열기/닫기**
 
-- 선생님은 교실을 열거나 닫을 수 있으며, 교실을 열고 나면 교실에 입장할 수 있습니다.(O)
+- 선생님은 교실을 열거나 닫을 수 있으며, 교실을 열고 나면 교실에 입장할 수 있습니다.
+
+  <img src="README.assets/선생님-1-교실입장.gif" alt="선생님-1-교실입장" height="400px" width="700px"/>
+
+
 
 **2. 퀴즈 관리 및 공유**
 
-- 원하는 퀴즈를 전체보기/과목별, 학년별로 찾아서 저장 할 수 있습니다.(O)
-- 원하는 퀴즈가 없다면 직접 제작도 가능합니다.(O)
+- 원하는 퀴즈를 전체보기/과목별, 학년별로 찾아서 저장 할 수 있습니다.
+
+  <img src="README.assets/선생님-2_1-퀴즈 폴더에 넣기.gif" alt="선생님-2_1-퀴즈 폴더에 넣기" height="400px" width="700px" />
+
+- 원하는 퀴즈가 없다면 직접 제작도 가능합니다.
+
+  <img src="README.assets/선생님-2_2-퀴즈제작.gif" alt="선생님-2_2-퀴즈제작" height="400px" width="700px" />
 
 **3. 퀴즈 출제**
 
-- 선생님은 즐겨찾기 했던 퀴즈들을 수업중에 학생들에게 제출할 수 있습니다.(O)
+- 선생님은 즐겨찾기 했던 퀴즈들을 수업중에 학생들에게 제출할 수 있습니다.
+
+  <img src="README.assets/선생님-3-퀴즈-16456262249329.gif" alt="선생님-3-퀴즈" height="400px" width="700px" />
+
+  <img src="README.assets/선생님-3-퀴즈(학생화면)-164562624975211.gif" alt="선생님-3-퀴즈(학생화면)" height="400px" width="700px" />
 
 **4. 별점 부여**
 
-- 학생에게 별점을 부여할 수 있습니다(O)
-- 별점은 주간/당일 별점으로 나뉘어 저장됩니다(사진으로대체)
+- 학생에게 별점을 부여할 수 있습니다
+
+  <img src="README.assets/선생님-4_1-하이라이팅 + 별점.gif" alt="선생님-4_1-하이라이팅 + 별점" height="400px" width="700px" />
+
+- 별점은 주간/당일 별점으로 나뉘어 저장됩니다.
+
+  <img src="README.assets/선생님-4-2-주간,당일별점.PNG" alt="선생님-4-2-주간,당일별점" height="400px" width="700px" />
 
 **5. 발표 시키기**
 
-- 특정 학생을 지정해서 발표시킬 수 있습니다.(O)
+- 특정 학생을 지정해서 발표시킬 수 있습니다.
+
+<img src="README.assets/선생님-5-발표.gif" alt="선생님-5-발표" height="400px" width="700px" />
+
+<img src="README.assets/선생님-5-발표(학생화면).gif" alt="선생님-5-발표(학생화면)" height="400px" width="700px" />
 
 **6. 하이라이팅**
 
-- 별점으로 평균을 내서 수업 집중도를 파악하고 붉은색, 초록색으로 나누어 하이라이팅을 제공합니다. (O)
+- 별점으로 평균을 내서 수업 집중도를 파악하고 붉은색, 초록색으로 나누어 하이라이팅을 제공합니다. 
+
+  <img src="README.assets/선생님-6-하이라이팅 + 별점.gif" alt="선생님-6-하이라이팅 + 별점" height="400px" width="700px" />
 
 **7. 학생 관리 - 학생로그 확인**
 
-- 학생의 사진, 정보를 확인, 수정할 수 있고 별점과 메모 또한 확인 가능합니다.(O)
+- 학생의 사진, 정보를 확인, 수정할 수 있고 별점과 메모 또한 확인 가능합니다.
+
+  <img src="README.assets/선생님-7-학생정보확인.gif" alt="선생님-7-학생정보확인" height="400px" width="700px" />
 
 **8. 랜덤 뽑기**
 
-- 수업에 참여중인 학생들 중 랜덤으로 한 명을 뽑을 수 있습니다.(O)
+- 수업에 참여중인 학생들 중 랜덤으로 한 명을 뽑을 수 있습니다.
+
+  <img src="README.assets/선생님-8-발표랜덤 (선생님 + 학생).gif" alt="선생님-8-발표랜덤 (선생님 + 학생)" height="400px" width="700px" />
 
 **9. 화면 공유**
 
-- 수업에 사용할 화면이나 어플리케이션을 지정해서 공유 가능합니다.니다.(O)
+- 수업에 사용할 화면이나 어플리케이션을 지정해서 공유 가능합니다.
+
+  <img src="README.assets/선생님-9-화면공유.gif" alt="선생님-9-화면공유" height="400px" width="700px" />
 
 **10. 메모**
 
-- 학생에 대한 메모를 작성하거나 작성했던 메모를 확인할 수 있습니다.(O)
+- 학생에 대한 메모를 작성하거나 작성했던 메모를 확인할 수 있습니다.
+
+  <img src="README.assets/선생님-10- 학생 메모작성.gif" alt="선생님-10- 학생 메모작성" height="400px" width="700px" />
 
 **11. O/X**
 
-- 학생들에게 즉석에서 O / X 문제를 만들어 출제할 수 있습니다.(O)
+- 학생들에게 즉석에서 O / X 문제를 만들어 출제할 수 있습니다.
+
+  <img src="README.assets/선생님-11-ox퀴즈.gif" alt="선생님-11-ox퀴즈" height="400px" width="700px" />
+
+  <img src="README.assets/선생님-11-ox 퀴즈(학생화면).gif" alt="선생님-11-ox 퀴즈(학생화면)" height="400px" width="700px" />
 
 **12. 다른 교실 입장**
 
-- 열려있는 다른 교실에 입장 가능합니다.(O)
-1. **선생님 정보 수정**
+- 열려있는 다른 교실에 입장 가능합니다.
 
-   사진을 포함한  정보 수정이 가능합니다.(O)
+  <img src="README.assets/선생님-12-다른반참가.gif" alt="선생님-12-다른반참가" height="400px" width="700px" />
+
+  
+
+**13. 선생님 정보 수정 **
+
+- 사진을 포함한  정보 수정이 가능합니다.
+
+<img src="README.assets/선생님-13-사진변경.gif" alt="선생님-13-사진변경" height="400px" width="700px" />
 
 
 ## 학생 제공 기술
 
-1. 별점 보기
-- 본인의 별점을 확인 가능합니다.(O)
-1. 로그인 및 수업 입장
-- 학번과 이름으로 로그인하고 본인의 반에 입장 가능합니다.(O)
-1. 카메라/마이크 켜고 끄기
-- 카메라와 마이크를 자유롭게 on/off가 가능합니다(O)
-1. 채팅
-- web socket을 이용한 채팅이 가능합니다.(O)
+**1. 별점 보기**
+
+- 본인의 별점을 확인 가능합니다.
+
+  <img src="README.assets/학생-1-별점보기.gif" alt="학생-1-별점보기" height="400px" width="700px" />
+
+
+
+**2. 로그인 및 수업 입장**
+
+- 학번과 이름으로 로그인하고 본인의 반에 입장 가능합니다
+
+  <img src="README.assets/학생-2-로그인.gif" alt="학생-2-로그인" height="400px" width="700px" />
+
+
+
+**3. 카메라/마이크 켜고 끄기**
+
+- 카메라와 마이크를 자유롭게 on/off가 가능합니다
+
+  <img src="README.assets/학생-3-마이크카메라.gif" alt="학생-3-마이크카메라" height="400px" width="700px"/>
+
+
+
+**4. 채팅**
+
+- web socket을 이용한 채팅이 가능합니다.
+
+  <img src="README.assets/학생-4-채팅.gif" alt="학생-4-채팅" height="400px" width="700px" />
+
+
 
 # 4. 프로젝트 진행
 
---- 
+---
 
 ## 1. Agile
 
@@ -361,13 +428,13 @@ SpringBoot는 SpringFramework 기반의 프로젝트를 복잡한 설정없이 �
 
 ## 4. Discord
 
-![Untitled](4%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%206e11d/Untitled.png)
+![Untitled](README.assets/Untitled-164562666044212.png)
 
 모두가 공유해야할 자료 및 링크는 디스코드에 정리하여 불필요한 커뮤니케이션 리소스를 줄였습니다.
 
 또한 음성채널에 항상 참여해 있는 상태로 작업을 하기로 약속했습니다. 갑자기 프로젝트의 변화가 생기더라도 원활한 소통을 할 수 있게 하였습니다.
 
-![Untitled](4%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%206e11d/Untitled%201.png)
+<img src="README.assets/Untitled 1-164562666440113.png" alt="Untitled 1" style="zoom:67%;" />
 
 중요한 정보나 다같이 참여해야 하는 링크는 `[이름]` 을 작성하고  `내용이나 링크` 를 추가하는 방식으로 정리를 하였습니다.
 
@@ -515,9 +582,17 @@ server.ssl.key-store-password=ssafy
 
 ## 3. 아키텍처 설계
 
-![Untitled](5%20%E1%84%87%E1%85%A2%E1%84%91%E1%85%A9%20d8fd2/Untitled.png)
+### 시스템 구조
 
-## 4. HTTPS (사용한 이유 화이팅!)
+![Untitled](README.assets/Untitled-164562671712714.png)
+
+### DB 구조
+
+<img src="README.assets/ERD_220128.png" alt="ERD_220128" style="zoom: 67%;" />
+
+
+
+## 4. HTTPS
 
 ### HTTP란?
 
@@ -543,7 +618,7 @@ Client(Web Browser)와 Server가 정보를 암호화하는 SSL(Secure Socket Lay
 
 ---
 
-![Untitled](5%20%E1%84%87%E1%85%A2%E1%84%91%E1%85%A9%20d8fd2/Untitled%201.png)
+![Untitled 1](README.assets/Untitled 1-164562672320715.png)
 
 - HTTPS Everywhere을 위해 무료 SSL을 보급하는 비영리 프로젝트
 
@@ -586,7 +661,7 @@ $ sudo cp privkey.pem /home/ubuntu/docker-volume/ssl
 $ sudo cp key.p12 /home/ubuntu/docker-volume/ssl
 ```
 
-![Untitled](5%20%E1%84%87%E1%85%A2%E1%84%91%E1%85%A9%20d8fd2/Untitled%202.png)
+
 
 ## 5. **Openvidu 설치**
 
@@ -634,6 +709,8 @@ HTTPS_PORT=8443
 $ ./openvidu start
 ```
 
+
+
 # 6. UI/UX
 
 ## 1. wireframe
@@ -642,13 +719,15 @@ $ ./openvidu start
 
 figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런스를 참고하고, 서비스 특성에 맞게 제작했습니다.
 
-![Untitled](6%20UI%20UX%20dcf77/Untitled.png)
+![Untitled](README.assets/Untitled-164562684336817.png)
 
 ### **2) 수업 페이지**
 
-![Untitled](6%20UI%20UX%20dcf77/Untitled%201.png)
+![Untitled 1](README.assets/Untitled 1-164562685179518.png)
 
 컴포넌트 단위로 디자인하였고, 선생님과 학생의 화면을 다르게 구성하였습니다. `수업`에 초점을 맞춰 웹 사이트에 맞는 모습으로 구성했습니다.
+
+
 
 ## 2. 디자인 소개
 
@@ -657,44 +736,43 @@ figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런�
 - 저희의 서비스를 처음 들어오게 되면 대표 캐릭터들이 맞이해줍니다.
 - 화면을 내리게 되면 각각의 캐릭터들이 티칭마스터의 기능들을 설명하는 방법을 통하여 새로운 유저가 유입이 되더라도 쉽게 저희의 서비스를 알 수 있도록 만들었습니다.
 
-![ezgif.com-gif-maker.gif](6%20UI%20UX%20dcf77/ezgif.com-gif-maker.gif)
+![ezgif.com-gif-maker](README.assets/ezgif.com-gif-maker.gif)
 
 ### 2) 퀴즈 폴더 페이지
 
 - flaticon 의 아이콘을 이용해서 폴더 페이지를 구성했습니다.
 - 매번 들어올 때마다 랜덤으로 모든 아이콘들이 달라지게 만들어 재미를 더했습니다.
 
-
-    ![폴더페이지.gif](6%20UI%20UX%20dcf77/%ED%8F%B4%EB%8D%94%ED%8E%98%EC%9D%B4%EC%A7%80.gif)
+![폴더페이지](README.assets/폴더페이지.gif)
 
 
 ### 3) 여기저기 숨은 캐릭터들
 
 - 티칭마스터 여기저기에 귀여운 캐릭터들을 배치해서 사용자들이 티칭마스터에 친근감을 느끼도록 했습니다.
 
-![Untitled](6%20UI%20UX%20dcf77/Untitled%202.png)
+![ezgif.com-gif-maker](README.assets/ezgif.com-gif-maker-164562688325919.gif)
 
 ### 4) 퀴즈 로그
 
 - 학생들이 어떤 문제를 맞았고 틀렸는지 ⭕❌로 바로 알 수 있도록 했습니다.
 - 퀴즈를 선택하면 학생이 어떤 답을 선택했고, 원래 정답은 무엇인지 알기 쉽도록 색깔로 구분지었습니다.
 
-![quizLog.gif](6%20UI%20UX%20dcf77/quizLog.gif)
+![quizLog](README.assets/quizLog.gif)
 
 ### 5) 학생 정보 확인
 
 - 간단하게 학생 정보를 확인할 수 있도록 마우스를 학생 카드 위에 올렸을 때 필요 정보가 보이도록 하였습니다.
 
-  ![학생 호버.gif](6%20UI%20UX%20dcf77/%ED%95%99%EC%83%9D_%ED%98%B8%EB%B2%84.gif)
+  ![학생_호버](README.assets/학생_호버.gif)
 
 
 ### 6) 말할래요, 쉿 버튼
 
 - 어린 학생들도 사용하기 편하게 버튼 UI를 구성하였습니다.
 
-![Untitled](6%20UI%20UX%20dcf77/Untitled%203.png)
+![Untitled 3](README.assets/Untitled 3-164562690604920.png)
 
-![Untitled](6%20UI%20UX%20dcf77/Untitled%204.png)
+![Untitled 4](README.assets/Untitled 4-164562691289821.png)
 
 
 # 7. 소감 및 배운점
@@ -716,8 +794,5 @@ figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런�
 - 명확한 기획의 중요성
   - 프로젝트를 기획부터 설계, 개발, 배포하는 경험이 모두 처음이다 보니 확실하게 했음에도 개발하면서 적지 않은 수정을 거쳤습니다.
   - 설계를 시작하기전 기획을 명확하게 하는 것의 중요성을 느꼈습니다.
-- 일신우일신(日新又日新)
-  - 매일 매일 배우고 익히고 나아간다는 말이다. 프로젝트를 진행하면서 점점 많은 난관에 부딪히고, 새로운 오류에 힘들어했지만 지나고 보니 그 난관들은 우리를 발전시켰고, 그 오류들은 이제 어렵지 않게 느껴진다. 시간에 쫓기듯 작업했다 생각했지만 매일매일 나를 발전시키고 있는 것이었다. 앞으로 어떤 일을 하더라도 배우고 익히는 자세로 임하자.
-## ERD
-
-![ERD_220128](README.assets/ERD_220128.png)
+- **일신우일신(日新又日新)**
+  - **매일 매일 배우고 익히고 나아간다는 말이다**. 프로젝트를 진행하면서 점점 많은 난관에 부딪히고, 새로운 오류에 힘들어했지만 지나고 보니 그 난관들은 우리를 발전시켰고, 그 오류들은 이제 어렵지 않게 느껴진다. 시간에 쫓기듯 작업했다 생각했지만 매일매일 나를 발전시키고 있는 것이었다. 앞으로 어떤 일을 하더라도 배우고 익히는 자세로 임하자.
