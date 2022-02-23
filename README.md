@@ -248,7 +248,7 @@ SpringBoot는 SpringFramework 기반의 프로젝트를 복잡한 설정없이 �
 
 - 선생님은 교실을 열거나 닫을 수 있으며, 교실을 열고 나면 교실에 입장할 수 있습니다.
 
-  <img src="README.assets/선생님-1-교실입장.gif" alt="선생님-1-교실입장" height="400px" width="700px"/>
+  <img src="README.assets/1.gif" alt="선생님-1-교실입장" height="400px" width="700px"/>
 
 
 
@@ -256,81 +256,81 @@ SpringBoot는 SpringFramework 기반의 프로젝트를 복잡한 설정없이 �
 
 - 원하는 퀴즈를 전체보기/과목별, 학년별로 찾아서 저장 할 수 있습니다.
 
-  <img src="README.assets/선생님-2_1-퀴즈 폴더에 넣기.gif" alt="선생님-2_1-퀴즈 폴더에 넣기" height="400px" width="700px" />
+  <img src="README.assets/2.gif" alt="2" style="zoom:80%;" />
 
 - 원하는 퀴즈가 없다면 직접 제작도 가능합니다.
 
-  <img src="README.assets/선생님-2_2-퀴즈제작.gif" alt="선생님-2_2-퀴즈제작" height="400px" width="700px" />
+  <img src="README.assets/3.gif" alt="선생님-2_2-퀴즈제작" height="400px" width="700px" />
 
 **3. 퀴즈 출제**
 
 - 선생님은 즐겨찾기 했던 퀴즈들을 수업중에 학생들에게 제출할 수 있습니다.
 
-  <img src="README.assets/선생님-3-퀴즈-16456262249329.gif" alt="선생님-3-퀴즈" height="400px" width="700px" />
+  <img src="README.assets/5.gif" alt="선생님-3-퀴즈" height="400px" width="700px" />
 
-  <img src="README.assets/선생님-3-퀴즈(학생화면)-164562624975211.gif" alt="선생님-3-퀴즈(학생화면)" height="400px" width="700px" />
+  <img src="README.assets/4.gif" alt="선생님-3-퀴즈(학생화면)" height="400px" width="700px" />
 
 **4. 별점 부여**
 
 - 학생에게 별점을 부여할 수 있습니다
 
-  <img src="README.assets/선생님-4_1-하이라이팅 + 별점.gif" alt="선생님-4_1-하이라이팅 + 별점" height="400px" width="700px" />
+  <img src="README.assets/6.gif" alt="선생님-4_1-하이라이팅 + 별점" height="400px" width="700px" />
 
 - 별점은 주간/당일 별점으로 나뉘어 저장됩니다.
 
-  <img src="README.assets/선생님-4-2-주간,당일별점.PNG" alt="선생님-4-2-주간,당일별점" height="400px" width="700px" />
+  <img src="README.assets/7.PNG" alt="선생님-4-2-주간,당일별점" height="400px" width="700px" />
 
 **5. 발표 시키기**
 
 - 특정 학생을 지정해서 발표시킬 수 있습니다.
 
-<img src="README.assets/선생님-5-발표.gif" alt="선생님-5-발표" height="400px" width="700px" />
+<img src="README.assets/9.gif" alt="선생님-5-발표" height="400px" width="700px" />
 
-<img src="README.assets/선생님-5-발표(학생화면).gif" alt="선생님-5-발표(학생화면)" height="400px" width="700px" />
+<img src="README.assets/8.gif" alt="선생님-5-발표(학생화면)" height="400px" width="700px" />
 
 **6. 하이라이팅**
 
 - 별점으로 평균을 내서 수업 집중도를 파악하고 붉은색, 초록색으로 나누어 하이라이팅을 제공합니다. 
 
-  <img src="README.assets/선생님-6-하이라이팅 + 별점.gif" alt="선생님-6-하이라이팅 + 별점" height="400px" width="700px" />
+  <img src="README.assets/10.gif" alt="선생님-6-하이라이팅 + 별점" height="400px" width="700px" />
 
 **7. 학생 관리 - 학생로그 확인**
 
 - 학생의 사진, 정보를 확인, 수정할 수 있고 별점과 메모 또한 확인 가능합니다.
 
-  <img src="README.assets/선생님-7-학생정보확인.gif" alt="선생님-7-학생정보확인" height="400px" width="700px" />
+  <img src="README.assets/11.gif" alt="선생님-7-학생정보확인" height="400px" width="700px" />
 
 **8. 랜덤 뽑기**
 
 - 수업에 참여중인 학생들 중 랜덤으로 한 명을 뽑을 수 있습니다.
 
-  <img src="README.assets/선생님-8-발표랜덤 (선생님 + 학생).gif" alt="선생님-8-발표랜덤 (선생님 + 학생)" height="400px" width="700px" />
+  <img src="README.assets/13.gif" alt="선생님-8-발표랜덤 (선생님 + 학생)" height="400px" width="700px" />
 
 **9. 화면 공유**
 
 - 수업에 사용할 화면이나 어플리케이션을 지정해서 공유 가능합니다.
 
-  <img src="README.assets/선생님-9-화면공유.gif" alt="선생님-9-화면공유" height="400px" width="700px" />
+  <img src="README.assets/14.gif" alt="선생님-9-화면공유" height="400px" width="700px" />
 
 **10. 메모**
 
 - 학생에 대한 메모를 작성하거나 작성했던 메모를 확인할 수 있습니다.
 
-  <img src="README.assets/선생님-10- 학생 메모작성.gif" alt="선생님-10- 학생 메모작성" height="400px" width="700px" />
+  <img src="README.assets/15.gif" alt="선생님-10- 학생 메모작성" height="400px" width="700px" />
 
 **11. O/X**
 
 - 학생들에게 즉석에서 O / X 문제를 만들어 출제할 수 있습니다.
 
-  <img src="README.assets/선생님-11-ox퀴즈.gif" alt="선생님-11-ox퀴즈" height="400px" width="700px" />
+  <img src="README.assets/17.gif" alt="선생님-11-ox퀴즈" height="400px" width="700px" />
 
-  <img src="README.assets/선생님-11-ox 퀴즈(학생화면).gif" alt="선생님-11-ox 퀴즈(학생화면)" height="400px" width="700px" />
+  <img src="README.assets/16.gif" alt="선생님-11-ox 퀴즈(학생화면)" height="400px" width="700px" />
 
 **12. 다른 교실 입장**
 
 - 열려있는 다른 교실에 입장 가능합니다.
 
-  <img src="README.assets/선생님-12-다른반참가.gif" alt="선생님-12-다른반참가" height="400px" width="700px" />
+  <img src="README.assets/18.gif" alt="선생님-12-다른반참가" height="400px" width="700px" />
 
   
 
@@ -338,7 +338,7 @@ SpringBoot는 SpringFramework 기반의 프로젝트를 복잡한 설정없이 �
 
 - 사진을 포함한  정보 수정이 가능합니다.
 
-<img src="README.assets/선생님-13-사진변경.gif" alt="선생님-13-사진변경" height="400px" width="700px" />
+<img src="README.assets/19.gif" alt="선생님-13-사진변경" height="400px" width="700px" />
 
 
 ## 학생 제공 기술
@@ -347,7 +347,7 @@ SpringBoot는 SpringFramework 기반의 프로젝트를 복잡한 설정없이 �
 
 - 본인의 별점을 확인 가능합니다.
 
-  <img src="README.assets/학생-1-별점보기.gif" alt="학생-1-별점보기" height="400px" width="700px" />
+  <img src="README.assets/20.gif" alt="학생-1-별점보기" height="400px" width="700px" />
 
 
 
@@ -355,7 +355,7 @@ SpringBoot는 SpringFramework 기반의 프로젝트를 복잡한 설정없이 �
 
 - 학번과 이름으로 로그인하고 본인의 반에 입장 가능합니다
 
-  <img src="README.assets/학생-2-로그인.gif" alt="학생-2-로그인" height="400px" width="700px" />
+  <img src="README.assets/21.gif" alt="학생-2-로그인" height="400px" width="700px" />
 
 
 
@@ -363,7 +363,7 @@ SpringBoot는 SpringFramework 기반의 프로젝트를 복잡한 설정없이 �
 
 - 카메라와 마이크를 자유롭게 on/off가 가능합니다
 
-  <img src="README.assets/학생-3-마이크카메라.gif" alt="학생-3-마이크카메라" height="400px" width="700px"/>
+  <img src="README.assets/22.gif" alt="학생-3-마이크카메라" height="400px" width="700px"/>
 
 
 
@@ -371,7 +371,7 @@ SpringBoot는 SpringFramework 기반의 프로젝트를 복잡한 설정없이 �
 
 - web socket을 이용한 채팅이 가능합니다.
 
-  <img src="README.assets/학생-4-채팅.gif" alt="학생-4-채팅" height="400px" width="700px" />
+  <img src="README.assets/23.gif" alt="학생-4-채팅" height="400px" width="700px" />
 
 
 
