@@ -60,30 +60,6 @@
 
 ![Untitled](README.assets/Untitled-16456253811181.png)
 
-### 학생 로그인
-
-![Untitled 1](README.assets/Untitled 1.png)
-
-### 학생 수업페이지
-
-![Untitled 2](README.assets/Untitled 2.png)
-
-### 선생님 Home
-
-![Untitled 3](README.assets/Untitled 3.png)
-
-### 선생님 수업페이지
-
-![Untitled 4](README.assets/Untitled 4.png)
-
-### 퀴즈 리스트페이지
-
-![Untitled 5](README.assets/Untitled 5.png)
-
-### 학생 정보페이지
-
-![Untitled 6](README.assets/Untitled 6.png)
-
 ## 4. 발표 영상 or ucc
 
 [싸피(SSAFY) 6기 공동프로젝트 UCC(티칭마스터 )](https://youtu.be/k_EJWArFbyw)
